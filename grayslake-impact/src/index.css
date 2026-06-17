@@ -1,0 +1,106 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Design tokens ─────────────────────────────────────────────────────────── */
+:root {
+  --bg-base:        #090910;
+  --bg-surface:     #0d0d1c;
+  --bg-raised:      #111128;
+  --accent:         #0ea5e9;   /* sky-cobalt — single confident accent */
+  --accent-muted:   rgba(14, 165, 233, 0.10);
+  --border-subtle:  rgba(255, 255, 255, 0.04);
+  --border-default: rgba(255, 255, 255, 0.07);
+  --border-strong:  rgba(255, 255, 255, 0.12);
+}
+
+/* ─── Base ──────────────────────────────────────────────────────────────────── */
+html {
+  scroll-behavior: smooth;
+  background-color: #090910;
+}
+
+body {
+  background-color: #090910;
+  color: #eeeef8;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Tabular figures for all data contexts */
+.font-mono, [class*="font-mono"] {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum';
+}
+
+/* ─── Grid background (hero) ────────────────────────────────────────────────── */
+.bg-grid {
+  background-image:
+    linear-gradient(rgba(14, 165, 233, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(14, 165, 233, 0.03) 1px, transparent 1px);
+  background-size: 36px 36px;
+}
+
+/* ─── Custom scrollbar ──────────────────────────────────────────────────────── */
+::-webkit-scrollbar              { width: 5px; height: 5px; }
+::-webkit-scrollbar-track        { background: #090910; }
+::-webkit-scrollbar-thumb        { background: #1e1e33; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover  { background: #2c2c45; }
+
+/* ─── Selection ─────────────────────────────────────────────────────────────── */
+::selection {
+  background: rgba(14, 165, 233, 0.20);
+  color: #eeeef8;
+}
+
+/* ─── Focus ─────────────────────────────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid rgba(14, 165, 233, 0.7);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+/* ─── Recharts ──────────────────────────────────────────────────────────────── */
+.recharts-tooltip-wrapper { outline: none; }
+.recharts-surface          { overflow: visible; }
+
+/* ─── Mapbox control theming ────────────────────────────────────────────────── */
+.mapboxgl-ctrl-group {
+  background: rgba(9, 9, 16, 0.92) !important;
+  border: 1px solid rgba(255,255,255,0.08) !important;
+  border-radius: 6px !important;
+  backdrop-filter: blur(12px);
+}
+.mapboxgl-ctrl-group button {
+  background: transparent !important;
+  color: #52527c !important;
+  border-bottom: 1px solid rgba(255,255,255,0.06) !important;
+}
+.mapboxgl-ctrl-group button:hover { background: rgba(255,255,255,0.05) !important; }
+.mapboxgl-ctrl-group button:last-child { border-bottom: none !important; }
+.mapboxgl-ctrl-scale {
+  background: rgba(9, 9, 16, 0.88) !important;
+  border-color: rgba(255,255,255,0.10) !important;
+  color: #52527c !important;
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 9px !important;
+  padding: 2px 6px !important;
+}
+.mapboxgl-ctrl-attrib {
+  background: rgba(9, 9, 16, 0.75) !important;
+  color: #3d3d5e !important;
+  font-size: 9px !important;
+}
+.mapboxgl-ctrl-attrib a { color: #52527c !important; }
+
+/* ─── Reduced motion ─────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration:       0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration:      0.01ms !important;
+  }
+  html { scroll-behavior: auto; }
+}
