@@ -26,11 +26,12 @@ export default function Footer() {
                   <rect x="7.8" y="5" width="2.2" height="6" rx="0.4" fill="#0284c7"/>
                 </svg>
               </div>
-              <span className="text-sm font-display font-semibold text-gray-300">T5 @ Chicago IV</span>
+              <span className="text-sm font-display font-semibold text-gray-300">Grayslake Data Center Tracker</span>
             </div>
             <p className="text-xs text-gray-500 leading-relaxed">
-              A civic data tool tracking the fiscal, employment, energy, and education
-              impacts of the hyperscale AI data center development in Grayslake, Illinois.
+              A civic data tool tracking the fiscal, employment, energy, and environmental
+              impacts of T5 @ Chicago IV — the hyperscale AI data center campus under
+              development in Grayslake, Illinois.
             </p>
           </div>
 
@@ -66,7 +67,7 @@ export default function Footer() {
             Peterson Rd & Route 83 · Grayslake, IL 60030 · Lake County
           </p>
           <p className="text-2xs text-gray-500">
-            Not affiliated with T5 Data Centers, LLC or the Village of Grayslake. For informational purposes only.
+            Grayslake Data Center Tracker is an independent civic resource. Not affiliated with T5 Data Centers, LLC or the Village of Grayslake. For informational purposes only.
           </p>
         </div>
 

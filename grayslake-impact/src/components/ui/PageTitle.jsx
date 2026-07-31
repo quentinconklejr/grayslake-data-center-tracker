@@ -1,10 +1,10 @@
 import { useEffect } from 'react'
 
-const BASE = 'T5 @ Chicago IV — Grayslake Community Impact'
+const BASE = 'Grayslake Data Center Tracker'
 
 export default function PageTitle({ title }) {
   useEffect(() => {
-    document.title = title ? `${title} — T5 @ Chicago IV` : BASE
+    document.title = title ? `${title} — Grayslake Data Center Tracker` : BASE
     return () => { document.title = BASE }
   }, [title])
   return null

@@ -37,7 +37,7 @@ const PHASES = [
     dot: 'bg-emerald-500',
     label: 'text-emerald-400',
     jobs: '1,500 permanent positions',
-    note: 'Village projection. Data center ops, IT, facilities, security.',
+    note: 'Village estimate of 1,500; the Village FAQ\'s per-sq-ft figure (50 jobs per 300,000 sq ft) extrapolates to ~1,680 at full buildout.',
   },
 ]
 
@@ -88,7 +88,7 @@ export default function Jobs() {
         </div>
         <p className="text-xs text-gray-500 mb-8">
           Construction count at ~400 represents "hundreds" per Village docs — clearly estimated.
-          Permanent count (1,500) is a sourced Village projection.
+          Permanent count (1,500) is the Village projection; the Village FAQ's per-sq-ft rate (50 jobs / 300,000 sq ft) extrapolates to ~1,680 at full buildout.
         </p>
         <JobsTimelineChart />
       </FadeIn>

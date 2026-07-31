@@ -31,11 +31,11 @@ export default function Header() {
               </svg>
             </div>
             <div className="leading-none">
-              <span className="text-sm font-display font-semibold text-gray-100 group-hover:text-white transition-colors">
-                T5 Chicago IV
+              <span className="text-sm font-display font-semibold text-gray-100 group-hover:text-white transition-colors block">
+                Grayslake Data Center Tracker
               </span>
-              <span className="ml-2 text-2xs font-mono text-gray-600 hidden md:inline tracking-widest uppercase">
-                Impact
+              <span className="text-2xs font-mono text-gray-600 hidden md:block tracking-wide mt-0.5">
+                Tracking T5 @ Chicago IV · Grayslake, IL · Lake County
               </span>
             </div>
           </Link>

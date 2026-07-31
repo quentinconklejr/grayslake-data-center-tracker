@@ -27,7 +27,7 @@ export default function Energy() {
       {/* Stats */}
       <FadeIn className="grid grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
         <StatCard label="Secured Power"     value={`${project.securedPowerMW.toLocaleString()} MW`}  sub="Utility-contracted capacity"   accent="amber" sourceKey="baxtel2026" />
-        <StatCard label="IT Capacity"       value={`${project.totalCapacityMW.toLocaleString()} MW`} sub="Leasable at full buildout"      accent="blue"  sourceKey="dcd2026" />
+        <StatCard label="IT Capacity"       value={`${project.totalCapacityMW.toLocaleString()} MW`} sub="Leasable at full buildout"      accent="blue"  sourceKey="dcdGW2026" />
         <StatCard label="Power Buffer"      value={`${buffer} MW`}                                    sub="Secured above leasable cap"    accent="amber" sourceKey="baxtel2026" />
         <StatCard label="PJM Zone"          value="COMED"                                             sub="ComEd transmission zone, PJM"  accent="blue"  sourceKey="dceo2026" />
       </FadeIn>
@@ -41,11 +41,12 @@ export default function Energy() {
           </div>
           <div className="flex items-center gap-3">
             <SourceCitation sourceKey="baxtel2026" />
-            <SourceCitation sourceKey="dcd2026" />
+            <SourceCitation sourceKey="dcdGW2026" />
           </div>
         </div>
         <p className="text-xs text-gray-500 mb-8">
           Both figures are sourced from public developer disclosures — no estimation involved.
+          T5 originally announced the campus at 480 MW (2024); subsequent developer plans expanded the leasable IT capacity target to 1,200 MW.
         </p>
         <EnergyDrawChart />
       </FadeIn>
@@ -113,7 +114,7 @@ export default function Energy() {
           <div className="space-y-0">
             {[
               ['Secured Power',         `${project.securedPowerMW.toLocaleString()} MW`, 'baxtel2026'],
-              ['Leasable IT Capacity',  `${project.totalCapacityMW.toLocaleString()} MW`, 'dcd2026'],
+              ['Leasable IT Capacity',  `${project.totalCapacityMW.toLocaleString()} MW`, 'dcdGW2026'],
               ['Power Buffer',          `${buffer} MW`, null],
               ['PJM Queue ID',          '— not yet public', null],
               ['Interconnect Voltage',  '— pending', null],

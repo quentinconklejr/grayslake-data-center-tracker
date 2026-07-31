@@ -83,6 +83,7 @@ export default function SiteMap({ className = 'h-[480px]' }) {
   const mapRef       = useRef(null)
   const animRef      = useRef(null)
   const [panelOpen, setPanelOpen] = useState(false)
+  const [mapLoaded, setMapLoaded] = useState(false)
 
   useEffect(() => {
     if (!TOKEN || !containerRef.current || mapRef.current) return
@@ -109,6 +110,7 @@ export default function SiteMap({ className = 'h-[480px]' }) {
       // Fly in on load for a subtle cinematic entrance
       map.on('style.load', () => {
         if (cancelled) return
+        setMapLoaded(true)
 
         // ── Recolor base layers to match design system ──────────────────
         for (const { id, type, val } of LAYER_RECOLORS) {
@@ -252,6 +254,14 @@ export default function SiteMap({ className = 'h-[480px]' }) {
 
       {/* Map canvas */}
       <div ref={containerRef} className="w-full h-full" />
+
+      {/* Loading skeleton */}
+      {!mapLoaded && (
+        <div className="absolute inset-0 z-30 bg-gray-950 flex flex-col items-center justify-center gap-3 pointer-events-none">
+          <div className="w-8 h-8 rounded-full border-2 border-blue-500/20 border-t-blue-400 animate-spin" />
+          <p className="text-2xs font-mono text-gray-600 uppercase tracking-widest">Loading map</p>
+        </div>
+      )}
 
       {/* Legend */}
       <div className="absolute top-4 left-4 flex flex-col gap-1.5 pointer-events-none z-10">

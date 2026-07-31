@@ -37,7 +37,7 @@ export const projections = {
     program: "Illinois Data Center Investment Tax Exemption",
     minInvestmentRequired: 250, // million, over 60 months
     constructionWageTaxCredit: 20, // percent, for underserved areas
-    statusChange: "Governor directive: DCEO stops processing new applications as of July 1, 2026",
+    statusChange: "Two-year suspension of new data center tax incentive applications, effective July 1, 2026 (Governor's directive, June 5, 2026)",
   },
   residentialRateImpact: {
     directImpact: "tariff-walled",

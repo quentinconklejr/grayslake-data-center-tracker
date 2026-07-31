@@ -22,10 +22,14 @@ export const questions = [
         text: 'The Citizens Utility Board projected that the Meta data center in DeKalb would contribute to a local water deficit by 2030 under current draw rates — the closest Illinois precedent for this scale of data center water demand.',
         sourceKey: 'cub2026',
       },
+      {
+        text: 'The Chicago Tribune (July 2, 2026) reported an extrapolated figure of approximately 19.2 million gallons total water use for the full 1.2 GW buildout. This is a journalist-derived calculation — not an official T5 disclosure, not a figure from any regulatory filing, and not independently confirmed by T5 or the Village.',
+        sourceKey: 'chitrib2026',
+      },
     ],
     unknown: [
       {
-        text: "T5's specific cooling method, municipal or well water source, and daily water volume (gallons per day) for the Grayslake campus are not in any public filing.",
+        text: "T5 has not publicly disclosed its specific cooling method, water source (municipal or well), or daily water volume for the Grayslake campus in any regulatory filing. An extrapolated estimate has appeared in press reporting (see Disputed above); no official water usage figure has been submitted to IEPA or other regulatory bodies.",
         sourceKey: null,
       },
       {
@@ -109,7 +113,7 @@ export const questions = [
         sourceKey: null,
       },
       {
-        text: 'Whether T5 secured Illinois Data Center Investment Tax Exemption status before the program closed to new applications (July 1, 2026 per Governor directive) is not publicly confirmed.',
+        text: 'Whether T5 secured Illinois Data Center Investment Tax Exemption status before the two-year suspension of new applications (effective July 1, 2026, per the Governor\'s June 5, 2026 directive) is not publicly confirmed.',
         sourceKey: 'dceo2026',
       },
     ],
