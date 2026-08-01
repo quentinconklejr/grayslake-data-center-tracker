@@ -1,14 +1,13 @@
 /*
  * DESIGN SYSTEM — T5 @ Chicago IV Impact Dashboard
  * ─────────────────────────────────────────────────
- * Typography:  Space Grotesk (display/headings) · Inter (body/UI) · JetBrains Mono (data/labels)
+ * Typography:  Montserrat (display/headings, 600-800) · Open Sans (body/UI, 400-600) · Roboto Mono (data/labels)
  *              Rule: mono ONLY for numbers, data labels, eyebrows, citations.
  *              All prose text uses the sans family.
  *
- * Color:       Violet-tinted near-black base (#090910).
- *              ONE accent: sky-cobalt (#0ea5e9) — used sparingly.
+ * Color:       Near-white base (#f2f2f8). Text: #111111 primary, gray-600/700 secondary.
+ *              ONE accent: blue-600 (#0284c7) — used sparingly.
  *              Semantic: emerald = confirmed, amber = estimated, red = legal/opposition.
- *              Most values display as near-white; accent reserved for the 1-2 key figures.
  *
  * Eyebrows:    2xs mono, uppercase, tracking-[0.2em], muted (whisper, not shout).
  * Motion:      Framer Motion — scroll fade/translate, count-ups, bounce scroll cue.
@@ -20,9 +19,9 @@ export default {
     extend: {
       // ── Typefaces ────────────────────────────────────────────────────────────
       fontFamily: {
-        display: ['"Space Grotesk"', 'system-ui', 'sans-serif'],
-        sans:    ['"Inter"', 'system-ui', '-apple-system', 'sans-serif'],
-        mono:    ['"JetBrains Mono"', 'ui-monospace', 'Menlo', 'monospace'],
+        display: ['"Montserrat"', 'system-ui', 'sans-serif'],
+        sans:    ['"Open Sans"', 'system-ui', '-apple-system', 'sans-serif'],
+        mono:    ['"Roboto Mono"', 'ui-monospace', 'Menlo', 'monospace'],
       },
 
       // ── Color palette ────────────────────────────────────────────────────────
@@ -84,19 +83,19 @@ export default {
 
       // ── Type scale ────────────────────────────────────────────────────────────
       fontSize: {
-        '2xs': ['10px', { lineHeight: '1.4', letterSpacing: '0.04em' }],
-        'xs':  ['11px', { lineHeight: '1.5', letterSpacing: '0.01em' }],
-        'sm':  ['13px', { lineHeight: '1.6' }],
-        'base':['15px', { lineHeight: '1.65' }],
-        'lg':  ['17px', { lineHeight: '1.6' }],
+        '2xs': ['10px', { lineHeight: '1.4', letterSpacing: '0.05em' }],
+        'xs':  ['12px', { lineHeight: '1.5', letterSpacing: '0.01em' }],
+        'sm':  ['14px', { lineHeight: '1.6' }],
+        'base':['16px', { lineHeight: '1.75' }],
+        'lg':  ['18px', { lineHeight: '1.65' }],
         'xl':  ['20px', { lineHeight: '1.5' }],
-        '2xl': ['24px', { lineHeight: '1.35' }],
-        '3xl': ['30px', { lineHeight: '1.25', letterSpacing: '-0.02em' }],
-        '4xl': ['38px', { lineHeight: '1.15', letterSpacing: '-0.025em' }],
-        '5xl': ['48px', { lineHeight: '1.1',  letterSpacing: '-0.03em' }],
-        '6xl': ['60px', { lineHeight: '1.05', letterSpacing: '-0.035em' }],
-        '7xl': ['76px', { lineHeight: '1.0',  letterSpacing: '-0.04em' }],
-        '8xl': ['96px', { lineHeight: '0.95', letterSpacing: '-0.04em' }],
+        '2xl': ['24px', { lineHeight: '1.3' }],
+        '3xl': ['30px', { lineHeight: '1.2',  letterSpacing: '-0.01em' }],
+        '4xl': ['38px', { lineHeight: '1.1',  letterSpacing: '-0.02em' }],
+        '5xl': ['48px', { lineHeight: '1.05', letterSpacing: '-0.025em' }],
+        '6xl': ['60px', { lineHeight: '1.0',  letterSpacing: '-0.03em' }],
+        '7xl': ['76px', { lineHeight: '0.95', letterSpacing: '-0.035em' }],
+        '8xl': ['96px', { lineHeight: '0.9',  letterSpacing: '-0.04em' }],
       },
 
       // ── Shadows ──────────────────────────────────────────────────────────────
