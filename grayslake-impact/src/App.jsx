@@ -12,6 +12,7 @@ import Sources from './pages/Sources'
 import MapPage from './pages/Map'
 import OpenQuestions from './pages/OpenQuestions'
 import NotFound from './pages/NotFound'
+import About from './pages/About'
 
 export default function App() {
   return (
@@ -30,6 +31,7 @@ export default function App() {
             <Route path="/questions" element={<OpenQuestions />} />
             <Route path="/map" element={<MapPage />} />
             <Route path="/sources" element={<Sources />} />
+            <Route path="/about" element={<About />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </main>

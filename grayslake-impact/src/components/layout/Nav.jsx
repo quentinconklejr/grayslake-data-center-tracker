@@ -10,6 +10,7 @@ const LINKS = [
   { to: '/questions',  label: 'Questions',  end: false },
   { to: '/map',        label: 'Map',        end: false },
   { to: '/sources',    label: 'Sources',    end: false },
+  { to: '/about',      label: 'About',      end: false },
 ]
 
 export default function Nav() {

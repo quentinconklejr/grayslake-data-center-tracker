@@ -33,6 +33,8 @@ export default function TimelinePage() {
           <span className="text-2xs font-mono text-gray-500">{dateRange}</span>
           <span className="text-gray-700">·</span>
           <span className="text-2xs font-mono text-gray-500">Oldest → newest</span>
+          <span className="text-gray-700">·</span>
+          <span className="text-2xs font-mono text-gray-600">Updated Jul 31, 2026</span>
         </div>
       </FadeIn>
 
