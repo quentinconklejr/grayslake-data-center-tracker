@@ -25,7 +25,9 @@ async function checkUrl(key, url) {
       redirect: 'follow',
     })
     clearTimeout(timer)
-    return { key, url, status: res.status, ok: res.ok }
+    // 403/405/429 mean the server is alive but blocking bots — not a dead link
+    const ok = res.ok || [403, 405, 429].includes(res.status)
+    return { key, url, status: res.status, ok }
   } catch (err) {
     clearTimeout(timer)
     const reason = err.name === 'AbortError' ? 'timeout' : err.message
@@ -55,7 +57,7 @@ async function main() {
   const failures = results.filter((r) => !r.ok)
 
   if (failures.length === 0) {
-    console.log(`\n✓ All ${results.length} links returned 200.\n`)
+    console.log(`\n✓ All ${results.length} links OK (200/403/405/429 accepted).\n`)
     process.exit(0)
   }
 
