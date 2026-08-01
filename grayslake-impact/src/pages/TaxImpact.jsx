@@ -45,11 +45,11 @@ export default function TaxImpact() {
           <div className="flex items-start justify-between mb-1">
             <div>
               <p className="text-2xs font-mono text-gray-400 uppercase tracking-widest mb-1">Village Agreement</p>
-              <h2 className="text-lg font-display font-bold text-gray-900">Developer Fee Allocation</h2>
+              <h2 className="text-2xl font-display font-bold text-gray-900">Developer Fee Allocation</h2>
             </div>
             <SourceCitation sourceKey="villageoffaq" />
           </div>
-          <p className="text-xs text-gray-500 mb-8">Per Village of Grayslake agreement · % of total fees collected</p>
+          <p className="text-sm text-gray-500 mb-8">Per Village of Grayslake agreement · % of total fees collected</p>
           <TaxRevenueChart data={FEE_DATA} />
         </FadeIn>
 
@@ -57,11 +57,11 @@ export default function TaxImpact() {
           <div className="flex items-start justify-between mb-1">
             <div>
               <p className="text-2xs font-mono text-gray-400 uppercase tracking-widest mb-1">Illinois Precedent</p>
-              <h2 className="text-lg font-display font-bold text-gray-900">Meta / DeKalb, IL</h2>
+              <h2 className="text-2xl font-display font-bold text-gray-900">Meta / DeKalb, IL</h2>
             </div>
             <SourceCitation sourceKey="capitolnews2026" />
           </div>
-          <p className="text-xs text-gray-500 mb-6">Closest publicly documented Illinois data center tax case</p>
+          <p className="text-sm text-gray-500 mb-6">Closest publicly documented Illinois data center tax case</p>
 
           <SchoolFundingChart />
 
@@ -76,8 +76,8 @@ export default function TaxImpact() {
               ['Outcome',          meta.outcome],
             ].map(([k, v]) => (
               <div key={k} className="flex justify-between items-start gap-4 py-2.5 border-b border-gray-100 last:border-0">
-                <dt className="text-xs text-gray-500 shrink-0">{k}</dt>
-                <dd className="text-xs text-gray-800 font-medium text-right">{v}</dd>
+                <dt className="text-sm text-gray-500 shrink-0">{k}</dt>
+                <dd className="text-sm text-gray-800 font-medium text-right">{v}</dd>
               </div>
             ))}
           </dl>
@@ -89,7 +89,7 @@ export default function TaxImpact() {
           <div className="flex items-start justify-between gap-4">
             <div>
               <p className="text-2xs font-mono text-amber-700 uppercase tracking-widest mb-2">State Incentive Program — Status Change</p>
-              <p className="text-sm text-gray-600 leading-relaxed">
+              <p className="text-base text-gray-600 leading-relaxed">
                 {incentive.statusChange}. The program had required ${incentive.minInvestmentRequired}M+ investment over
                 60 months and offered a {incentive.constructionWageTaxCredit}% construction wage tax credit for projects
                 in underserved areas. Whether T5 secured incentive status before the deadline is not publicly confirmed.

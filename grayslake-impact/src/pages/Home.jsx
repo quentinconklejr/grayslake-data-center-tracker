@@ -107,19 +107,14 @@ export default function Home() {
                   Grayslake, Illinois · Lake County
                 </motion.p>
 
-                <h1 className="text-5xl sm:text-6xl lg:text-7xl font-display font-bold leading-none mb-8">
-                  <motion.span variants={heroLine} className="block text-gray-400">Tracking the</motion.span>
-                  <motion.span variants={heroLine} className="block text-gray-900">$8.5–18B</motion.span>
-                  <motion.span variants={heroLine} className="block text-gray-900">AI campus</motion.span>
-                  <motion.span variants={heroLine} className="block text-gray-400">reshaping</motion.span>
-                  <motion.span variants={heroLine} className="block text-gray-900">a village.</motion.span>
+                <h1 className="text-5xl sm:text-6xl lg:text-7xl font-display font-bold leading-[1.05] tracking-tight mb-6">
+                  <motion.span variants={heroLine} className="block text-gray-900">Grayslake</motion.span>
+                  <motion.span variants={heroLine} className="block text-gray-900">Data Center</motion.span>
+                  <motion.span variants={heroLine} className="block text-blue-600">Tracker.</motion.span>
                 </h1>
 
-                <motion.p variants={heroLine} className="text-base text-gray-600 max-w-lg leading-relaxed mb-8">
-                  T5 @ Chicago IV — a hyperscale AI data center campus planned for Peterson
-                  Road &amp; Route 83. Up to {project.maxBuildings} buildings, {project.totalCapacityMW.toLocaleString()} MW of IT
-                  capacity, and {jobs.permanent.toLocaleString()} permanent jobs. This dashboard tracks every
-                  public claim, sourced and cited.
+                <motion.p variants={heroLine} className="text-base text-gray-600 max-w-md leading-relaxed mb-8">
+                  Civic data on T5 @ Chicago IV — {project.maxBuildings} buildings, {project.totalCapacityMW.toLocaleString()} MW, {jobs.permanent.toLocaleString()} permanent jobs. Every claim sourced and cited.
                 </motion.p>
 
                 <motion.div variants={heroLine} className="flex flex-wrap gap-3">
@@ -273,7 +268,7 @@ export default function Home() {
                       <p className="text-2xs font-mono text-gray-400 uppercase tracking-widest mt-1">{highlight.label}</p>
                     </div>
                   )}
-                  <p className="text-sm text-gray-600 leading-relaxed mb-5">{body}</p>
+                  <p className="text-base text-gray-600 leading-relaxed mb-5">{body}</p>
                   <div className="flex items-center gap-4">
                     <Link
                       to={to}

@@ -82,19 +82,20 @@ export default {
       },
 
       // ── Type scale ────────────────────────────────────────────────────────────
+      // base=18px (body), 2xl=28px (section h2), 4xl=42px (page h1)
       fontSize: {
         '2xs': ['10px', { lineHeight: '1.4', letterSpacing: '0.05em' }],
-        'xs':  ['12px', { lineHeight: '1.5', letterSpacing: '0.01em' }],
-        'sm':  ['14px', { lineHeight: '1.6' }],
-        'base':['16px', { lineHeight: '1.75' }],
-        'lg':  ['18px', { lineHeight: '1.65' }],
-        'xl':  ['20px', { lineHeight: '1.5' }],
-        '2xl': ['24px', { lineHeight: '1.3' }],
-        '3xl': ['30px', { lineHeight: '1.2',  letterSpacing: '-0.01em' }],
-        '4xl': ['38px', { lineHeight: '1.1',  letterSpacing: '-0.02em' }],
-        '5xl': ['48px', { lineHeight: '1.05', letterSpacing: '-0.025em' }],
-        '6xl': ['60px', { lineHeight: '1.0',  letterSpacing: '-0.03em' }],
-        '7xl': ['76px', { lineHeight: '0.95', letterSpacing: '-0.035em' }],
+        'xs':  ['13px', { lineHeight: '1.5', letterSpacing: '0.01em' }],
+        'sm':  ['15px', { lineHeight: '1.6' }],
+        'base':['18px', { lineHeight: '1.75' }],
+        'lg':  ['20px', { lineHeight: '1.65' }],
+        'xl':  ['22px', { lineHeight: '1.5' }],
+        '2xl': ['28px', { lineHeight: '1.3' }],
+        '3xl': ['34px', { lineHeight: '1.2',  letterSpacing: '-0.01em' }],
+        '4xl': ['42px', { lineHeight: '1.1',  letterSpacing: '-0.02em' }],
+        '5xl': ['52px', { lineHeight: '1.05', letterSpacing: '-0.025em' }],
+        '6xl': ['64px', { lineHeight: '1.0',  letterSpacing: '-0.03em' }],
+        '7xl': ['80px', { lineHeight: '0.95', letterSpacing: '-0.035em' }],
         '8xl': ['96px', { lineHeight: '0.9',  letterSpacing: '-0.04em' }],
       },
 

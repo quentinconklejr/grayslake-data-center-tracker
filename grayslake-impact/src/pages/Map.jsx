@@ -7,13 +7,14 @@ export default function MapPage() {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
       <PageTitle title="Site Map" />
 
-      <FadeIn className="mb-6 pb-6 border-b border-gray-200">
-        <p className="text-2xs font-mono text-blue-600/60 uppercase tracking-[0.2em] mb-3">Site</p>
-        <h1 className="text-4xl font-display font-bold text-gray-900 tracking-tight mb-3">Site Map</h1>
+      <FadeIn className="mb-8 pb-8 border-b border-gray-200">
+        <p className="text-2xs font-mono text-blue-600/60 uppercase tracking-[0.2em] mb-3">T5 @ Chicago IV · Peterson Rd &amp; Route 83</p>
+        <h1 className="text-4xl font-display font-bold text-gray-900 tracking-tight mb-4">Campus Site Map</h1>
         <p className="text-base text-gray-600 max-w-2xl leading-relaxed">
-          Peterson Road &amp; Route 83, Grayslake, IL 60030. Approximate parcel boundaries
-          drawn from public records — not derived from survey or GIS data. Click the site
-          boundary to view project statistics.
+          The blue boundary outlines the ~160-acre main parcel; the amber dashed line marks the
+          ~45-acre option parcel to the south. Boundaries are drawn from public records and are
+          approximate — not derived from survey or GIS data.
+          <span className="block mt-2 text-sm text-gray-400">Click either boundary or the orange marker to view project statistics.</span>
         </p>
       </FadeIn>
 

@@ -76,14 +76,14 @@ export default function Jobs() {
         <div className="flex items-start justify-between mb-1">
           <div>
             <p className="text-2xs font-mono text-gray-400 uppercase tracking-widest mb-1">Workforce Comparison</p>
-            <h2 className="text-lg font-display font-bold text-gray-900">Permanent vs. Construction</h2>
+            <h2 className="text-2xl font-display font-bold text-gray-900">Permanent vs. Construction</h2>
           </div>
           <div className="flex items-center gap-3">
             <span className="text-2xs font-mono text-amber-600">Est. included</span>
             <SourceCitation sourceKey="govtech2025" />
           </div>
         </div>
-        <p className="text-xs text-gray-500 mb-8">
+        <p className="text-sm text-gray-500 mb-8">
           Construction count at ~400 represents "hundreds" per Village docs — clearly estimated.
           Permanent count (1,500) is the Village projection; the Village FAQ's per-sq-ft rate (50 jobs / 300,000 sq ft) extrapolates to ~1,680 at full buildout.
         </p>
@@ -104,9 +104,9 @@ export default function Jobs() {
                     <span className="text-2xs font-mono text-gray-500">{period}</span>
                     <span className={`text-2xs font-mono uppercase tracking-widest ${label}`}>{status}</span>
                   </div>
-                  <p className="text-sm font-display font-semibold text-gray-900 mb-0.5">{phase}</p>
-                  <p className="text-xs text-gray-600">{jobDesc}</p>
-                  <p className="text-xs text-gray-400 mt-1">{note}</p>
+                  <p className="text-base font-display font-semibold text-gray-900 mb-0.5">{phase}</p>
+                  <p className="text-sm text-gray-600">{jobDesc}</p>
+                  <p className="text-sm text-gray-400 mt-1">{note}</p>
                 </div>
               </div>
             </div>
@@ -123,8 +123,8 @@ export default function Jobs() {
           <div className="space-y-0">
             {PERM_ROLES.map(([role, desc]) => (
               <div key={role} className="py-3 border-b border-gray-100 last:border-0">
-                <p className="text-xs font-medium text-gray-800 mb-0.5">{role}</p>
-                <p className="text-xs text-gray-500">{desc}</p>
+                <p className="text-sm font-medium text-gray-800 mb-0.5">{role}</p>
+                <p className="text-sm text-gray-500">{desc}</p>
               </div>
             ))}
           </div>
@@ -135,7 +135,7 @@ export default function Jobs() {
             <p className="text-2xs font-mono text-gray-400 uppercase tracking-widest">Construction Workforce</p>
             <SourceCitation sourceKey="dailyherald2026" />
           </div>
-          <p className="text-sm text-gray-600 leading-relaxed mb-5">
+          <p className="text-base text-gray-600 leading-relaxed mb-5">
             Large-scale data center construction requires electricians, ironworkers, HVAC
             installers, and civil workers. Projects at this scale often include project labor
             agreements (PLAs) with regional trade unions.
@@ -151,13 +151,13 @@ export default function Jobs() {
                 'Operating Engineers Local 150',
                 'Laborers Local 149',
               ].map(u => (
-                <li key={u} className="text-xs text-gray-500 flex gap-2">
+                <li key={u} className="text-sm text-gray-500 flex gap-2">
                   <span className="text-gray-300 shrink-0 mt-0.5">·</span>
                   {u}
                 </li>
               ))}
             </ul>
-            <p className="text-xs text-gray-400 mt-4">
+            <p className="text-sm text-gray-400 mt-4">
               Union involvement unconfirmed — based on comparable IL projects.
             </p>
           </div>

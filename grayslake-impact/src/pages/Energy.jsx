@@ -34,14 +34,14 @@ export default function Energy() {
         <div className="flex items-start justify-between mb-1">
           <div>
             <p className="text-2xs font-mono text-gray-400 uppercase tracking-widest mb-1">Power Profile</p>
-            <h2 className="text-lg font-display font-bold text-gray-900">Secured Power vs. IT Capacity</h2>
+            <h2 className="text-2xl font-display font-bold text-gray-900">Secured Power vs. IT Capacity</h2>
           </div>
           <div className="flex items-center gap-3">
             <SourceCitation sourceKey="baxtel2026" />
             <SourceCitation sourceKey="dcdGW2026" />
           </div>
         </div>
-        <p className="text-xs text-gray-500 mb-8">
+        <p className="text-sm text-gray-500 mb-8">
           Both figures are sourced from public developer disclosures — no estimation involved.
           T5 originally announced the campus at 480 MW (2024); subsequent developer plans expanded the leasable IT capacity target to 1,200 MW.
         </p>
@@ -54,10 +54,10 @@ export default function Energy() {
 
           <div className="pl-4 border-l-2 border-gray-300 py-1">
             <div className="flex items-center gap-2 mb-1.5">
-              <p className="text-xs font-display font-semibold text-gray-800">Direct distribution costs: tariff-walled</p>
+              <p className="text-sm font-display font-semibold text-gray-800">Direct distribution costs: tariff-walled</p>
               <SourceCitation sourceKey="dceo2026" />
             </div>
-            <p className="text-sm text-gray-600 leading-relaxed">
+            <p className="text-base text-gray-600 leading-relaxed">
               Illinois maintains a separate utility rate class for large industrial users including data centers.
               The ICC-approved ComEd tariff requires data centers to fund their own transmission and
               distribution upgrade costs — those costs do not flow through to residential rate classes as a direct line item.
@@ -66,10 +66,10 @@ export default function Energy() {
 
           <div className="pl-4 border-l-2 border-amber-400 bg-amber-50/60 rounded-r py-3 pr-3">
             <div className="flex items-center gap-2 mb-1.5">
-              <p className="text-xs font-display font-semibold text-amber-800">Regional capacity prices: an open question</p>
+              <p className="text-sm font-display font-semibold text-amber-800">Regional capacity prices: an open question</p>
               <SourceCitation sourceKey="cub2026" />
             </div>
-            <p className="text-sm text-gray-600 leading-relaxed">
+            <p className="text-base text-gray-600 leading-relaxed">
               ComEd residential bills rose approximately 12% in June 2026. The Citizens Utility Board
               links up to ~25% of that increase to data-center-driven PJM capacity price increases —
               a wholesale electricity market effect. PJM capacity prices are set by aggregate regional
@@ -84,7 +84,7 @@ export default function Energy() {
       <div className="grid md:grid-cols-2 gap-4">
         <FadeIn className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
           <p className="text-2xs font-mono text-gray-400 uppercase tracking-widest mb-5">Grid &amp; Interconnection Context</p>
-          <div className="space-y-4 text-sm text-gray-600 leading-relaxed">
+          <div className="space-y-4 text-base text-gray-600 leading-relaxed">
             <p>
               The ComEd transmission zone covers northeastern Illinois and is managed by PJM Interconnection.
               New large loads require interconnection studies evaluating substation capacity, transmission
@@ -117,8 +117,8 @@ export default function Energy() {
               ['PUE Target',            '— not disclosed', null],
             ].map(([k, v, src]) => (
               <div key={k} className="flex justify-between items-center py-2.5 border-b border-gray-100 last:border-0">
-                <span className="text-xs text-gray-500">{k}</span>
-                <span className="flex items-center gap-1.5 text-xs font-mono text-gray-800">
+                <span className="text-sm text-gray-500">{k}</span>
+                <span className="flex items-center gap-1.5 text-sm font-mono text-gray-800">
                   {v}
                   {src && <SourceCitation sourceKey={src} />}
                 </span>

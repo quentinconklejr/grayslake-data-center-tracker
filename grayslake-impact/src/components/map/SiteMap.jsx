@@ -72,7 +72,7 @@ export default function SiteMap({ className = 'h-[480px]' }) {
       mgl.accessToken = TOKEN
       const map = new mgl.Map({
         container:          containerRef.current,
-        style:              'mapbox://styles/mapbox/light-v11',
+        style:              'mapbox://styles/mapbox/outdoors-v12',
         center:             CENTER,
         zoom:               ZOOM,
         attributionControl: false,
@@ -136,9 +136,9 @@ export default function SiteMap({ className = 'h-[480px]' }) {
             'text-letter-spacing': 0.08,
           },
           paint: {
-            'text-color': '#0284c7',
+            'text-color': '#ea6b00',
             'text-halo-color': '#ffffff',
-            'text-halo-width': 2,
+            'text-halo-width': 2.5,
           },
         })
 
@@ -165,10 +165,10 @@ export default function SiteMap({ className = 'h-[480px]' }) {
 
       const el = document.createElement('div')
       Object.assign(el.style, {
-        width: '10px', height: '10px', borderRadius: '50%',
-        background: '#0284c7', border: '2px solid rgba(255,255,255,0.95)',
+        width: '14px', height: '14px', borderRadius: '50%',
+        background: '#f97316', border: '2.5px solid rgba(255,255,255,0.98)',
         cursor: 'pointer',
-        boxShadow: '0 0 0 5px rgba(2,132,199,0.18)',
+        boxShadow: '0 0 0 5px rgba(249,115,22,0.22), 0 0 0 10px rgba(249,115,22,0.09)',
       })
       el.title = 'T5 @ Chicago IV'
       el.addEventListener('click', (e) => { e.stopPropagation(); setPanelOpen(true) })
