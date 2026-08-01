@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom'
-import { motion } from 'framer-motion'
 import PageTitle from '../components/ui/PageTitle'
 import AnimatedNumber from '../components/ui/AnimatedNumber'
 import FadeIn from '../components/ui/FadeIn'
@@ -13,14 +12,40 @@ import { projections } from '../data/projections'
 
 const { project, jobs } = projections
 
-const heroLines = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.12 } },
-}
-const heroLine = {
-  hidden:  { opacity: 0, y: 24 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.65, ease: [0.25, 0.46, 0.45, 0.94] } },
-}
+const STATS = [
+  {
+    label: 'IT Capacity',
+    display: `${project.totalCapacityMW.toLocaleString()} MW`,
+    value: project.totalCapacityMW,
+    animated: true,
+    suffix: ' MW',
+    sub: 'Leasable at full buildout',
+    sourceKey: 'baxtel2026',
+  },
+  {
+    label: 'Permanent Jobs',
+    display: jobs.permanent.toLocaleString(),
+    value: jobs.permanent,
+    animated: true,
+    suffix: '',
+    sub: 'Projected by 2029',
+    sourceKey: 'govtech2025',
+  },
+  {
+    label: 'Phase 1 Online',
+    display: project.firstBuildingOnline,
+    animated: false,
+    sub: 'Under construction now',
+    sourceKey: 'dcd2026',
+  },
+  {
+    label: 'Total Investment',
+    display: `$${project.costLow}–${project.costHigh}B`,
+    animated: false,
+    sub: 'Developer estimate',
+    sourceKey: 'dcd2026',
+  },
+]
 
 const FACETS = [
   {
@@ -30,7 +55,6 @@ const FACETS = [
     catBorder: 'border-blue-200',
     headline: 'Developer fees in the tens of millions.',
     body: 'Village officials project "tens of millions" in developer fees if fully built out — split 50% to major infrastructure, 25% community projects, 25% resident cost-control. Property tax revenue depends on Lake County assessor valuation, not yet projected.',
-    highlight: null,
     chart: <TaxRevenueChart />,
     chartLabel: 'Developer Fee Allocation',
     sourceKey: 'villageoffaq',
@@ -43,7 +67,6 @@ const FACETS = [
     catBorder: 'border-emerald-200',
     headline: '1,500 permanent positions at full buildout.',
     body: 'The Village projects 1,500 permanent data center jobs by 2029. Construction through 2027–2029 will employ "hundreds" of trade workers — electricians, ironworkers, HVAC installers — in roles typical of large-scale data center projects.',
-    highlight: { value: 1500, suffix: ' jobs', label: 'Projected permanent' },
     chart: <JobsTimelineChart />,
     chartLabel: 'Permanent vs. Construction Workforce',
     sourceKey: 'govtech2025',
@@ -56,7 +79,6 @@ const FACETS = [
     catBorder: 'border-amber-200',
     headline: '1,600 MW secured. 1,200 MW leasable.',
     body: 'T5 has secured 1,600 MW of utility power against a planned 1,200 MW of leasable IT capacity — a 400 MW buffer for redundancy and phased buildout. Residential electric rates are not directly affected under Illinois\'s separate utility rate class structure for data centers.',
-    highlight: { value: 1600, suffix: ' MW', label: 'Secured utility power' },
     chart: <EnergyDrawChart />,
     chartLabel: 'Secured Power vs. IT Capacity',
     sourceKey: 'baxtel2026',
@@ -69,7 +91,6 @@ const FACETS = [
     catBorder: 'border-violet-200',
     headline: 'In DeKalb, 60.9% went to schools.',
     body: 'No Grayslake-specific school funding projection has been released. The Meta data center in DeKalb, IL provides the closest Illinois precedent: of $31.1M in annual property taxes, 60.9% ($18.9M) went to School District 428 — which funded construction of Mitchell Elementary.',
-    highlight: null,
     chart: <SchoolFundingChart />,
     chartLabel: 'DeKalb / Meta Precedent (2025)',
     sourceKey: 'capitolnews2026',
@@ -82,146 +103,54 @@ export default function Home() {
     <div>
       <PageTitle />
 
-      {/* ── Hero ─────────────────────────────────────────────────────────────── */}
-      <section className="relative bg-grid bg-white min-h-[92vh] flex flex-col justify-center overflow-hidden">
+      {/* ── Intro + key stats ──────────────────────────────────────────────── */}
+      <section className="bg-white border-b border-gray-200">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 pt-14 pb-14">
 
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            background: 'radial-gradient(ellipse 70% 60% at 60% 40%, rgba(2,132,199,0.04) 0%, transparent 70%)',
-          }}
-        />
+          <FadeIn>
+            <p className="text-xl text-gray-600 leading-relaxed max-w-2xl mx-auto text-center mb-12">
+              T5 @ Chicago IV is a proposed hyperscale AI data center campus on Peterson Road
+              and Route 83 in Grayslake, Illinois. This tracker collects every public record on
+              the project — jobs, taxes, energy, school funding — and links every claim to its source.
+            </p>
+          </FadeIn>
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 w-full py-16 lg:py-20">
-          <div className="grid lg:grid-cols-12 gap-12 lg:gap-8 items-center">
-
-            {/* Left — editorial headline */}
-            <div className="lg:col-span-7">
-              <motion.div initial="hidden" animate="visible" variants={heroLines}>
-
-                <motion.p
-                  variants={heroLine}
-                  className="text-2xs font-mono text-blue-600/60 uppercase tracking-[0.2em] mb-6 flex items-center gap-2"
-                >
-                  <span className="inline-block w-6 h-px bg-blue-500/40" />
-                  Grayslake, Illinois · Lake County
-                </motion.p>
-
-                <h1 className="text-5xl sm:text-6xl lg:text-7xl font-display font-bold leading-[1.05] tracking-tight mb-6">
-                  <motion.span variants={heroLine} className="block text-gray-900">Grayslake</motion.span>
-                  <motion.span variants={heroLine} className="block text-gray-900">Data Center</motion.span>
-                  <motion.span variants={heroLine} className="block text-blue-600">Tracker.</motion.span>
-                </h1>
-
-                <motion.p variants={heroLine} className="text-base text-gray-600 max-w-md leading-relaxed mb-8">
-                  Civic data on T5 @ Chicago IV — {project.maxBuildings} buildings, {project.totalCapacityMW.toLocaleString()} MW, {jobs.permanent.toLocaleString()} permanent jobs. Every claim sourced and cited.
-                </motion.p>
-
-                <motion.div variants={heroLine} className="flex flex-wrap gap-3">
-                  <Link
-                    to="/timeline"
-                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-blue-600 text-white hover:bg-blue-700 text-sm font-medium transition-all duration-150 shadow-sm"
-                  >
-                    View timeline
-                    <svg className="w-4 h-4" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
-                      <path d="M3 8h10M9 4l4 4-4 4" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  </Link>
-                  <Link
-                    to="/sources"
-                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-gray-300 hover:border-gray-400 text-gray-600 hover:text-gray-900 bg-white text-sm font-medium transition-all duration-150"
-                  >
-                    Primary sources
-                  </Link>
-                </motion.div>
-              </motion.div>
-            </div>
-
-            {/* Right — asymmetric stat cluster */}
-            <div className="lg:col-span-5">
-              <div className="space-y-3">
-
-                {/* Primary stat */}
-                <FadeIn delay={0.4} className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
-                  <p className="text-2xs font-mono text-gray-400 uppercase tracking-widest mb-3">IT Capacity at Full Buildout</p>
-                  <div className="flex items-end gap-2">
-                    <AnimatedNumber
-                      value={project.totalCapacityMW}
-                      delay={0.5}
-                      duration={1.8}
-                      className="text-6xl font-display font-bold text-blue-600 leading-none tracking-tight"
-                    />
-                    <span className="text-2xl font-display font-bold text-blue-600/30 mb-1">MW</span>
-                  </div>
-                  <div className="flex items-center gap-2 mt-3">
-                    <span className="text-2xs font-mono text-gray-400">+{project.securedPowerMW - project.totalCapacityMW} MW buffer</span>
-                    <SourceCitation sourceKey="dcd2026" />
-                  </div>
-                </FadeIn>
-
-                {/* Secondary stats — 2×2 grid */}
-                <div className="grid grid-cols-2 gap-3">
-                  {[
-                    { label: 'Site area',      value: project.totalAcres,  suffix: ' ac', delay: 0.55 },
-                    { label: 'Perm. jobs',     value: jobs.permanent,       suffix: '',    delay: 0.6  },
-                    { label: 'Max buildings',  value: project.maxBuildings, suffix: '',    delay: 0.65 },
-                    { label: 'Phase 1 online', value: null, static: project.firstBuildingOnline, delay: 0.7 },
-                  ].map(({ label, value, suffix, static: staticVal, delay }) => (
-                    <FadeIn key={label} delay={delay} className="bg-white border border-gray-200 rounded-lg p-4 shadow-sm">
-                      <p className="text-2xs font-mono text-gray-400 uppercase tracking-widest mb-2">{label}</p>
-                      {staticVal ? (
-                        <p className="text-2xl font-display font-bold text-gray-900">{staticVal}</p>
-                      ) : (
-                        <AnimatedNumber
-                          value={value}
-                          suffix={suffix}
-                          delay={delay + 0.1}
-                          duration={1.4}
-                          className="text-2xl font-display font-bold text-gray-900"
-                        />
-                      )}
-                    </FadeIn>
-                  ))}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+            {STATS.map(({ label, display, value, animated, suffix, sub, sourceKey }, i) => (
+              <FadeIn key={label} delay={i * 0.08} className="bg-white border border-gray-200 rounded-xl p-7 shadow-sm">
+                <p className="text-xl font-display font-bold text-gray-700 leading-tight mb-3">{label}</p>
+                {animated ? (
+                  <AnimatedNumber
+                    value={value}
+                    suffix={suffix}
+                    duration={1.6}
+                    delay={i * 0.08 + 0.15}
+                    className="text-3xl font-display font-black text-gray-900 leading-none block"
+                  />
+                ) : (
+                  <span className="text-3xl font-display font-black text-gray-900 leading-none block">{display}</span>
+                )}
+                <p className="text-base text-gray-500 mt-3 leading-snug">{sub}</p>
+                <div className="mt-3 pt-3 border-t border-gray-100">
+                  <SourceCitation sourceKey={sourceKey} />
                 </div>
-
-                <FadeIn delay={0.75} className="text-2xs text-gray-400 text-right font-mono">
-                  Under construction · Phase 1 target Q4 2027
-                </FadeIn>
-              </div>
-            </div>
+              </FadeIn>
+            ))}
           </div>
         </div>
-
-        {/* Scroll cue */}
-        <motion.div
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 2.0, duration: 0.7 }}
-        >
-          <span className="text-2xs font-mono text-gray-400 uppercase tracking-[0.2em]">Scroll</span>
-          <motion.svg
-            width="20" height="12" viewBox="0 0 20 12" fill="none"
-            className="text-gray-400"
-            animate={{ y: [0, 5, 0] }}
-            transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
-          >
-            <path d="M2 2l8 8 8-8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-          </motion.svg>
-        </motion.div>
       </section>
 
       {/* ── Site map ─────────────────────────────────────────────────────────── */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 pt-4 pb-14">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 pt-12 pb-14">
         <FadeIn>
-          <div className="flex items-end justify-between mb-4">
+          <div className="flex items-end justify-between mb-5">
             <div>
               <p className="text-2xs font-mono text-blue-600/60 uppercase tracking-[0.2em] mb-1">Site Location</p>
               <h2 className="text-2xl font-display font-bold text-gray-900">Peterson Rd &amp; Route 83</h2>
             </div>
-            <Link to="/map" className="text-xs text-gray-500 hover:text-gray-900 transition-colors flex items-center gap-1">
+            <Link to="/map" className="text-sm text-gray-500 hover:text-gray-900 transition-colors flex items-center gap-1">
               Full map
-              <svg className="w-3 h-3" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5">
+              <svg className="w-3.5 h-3.5" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5">
                 <path d="M2 6h8M6 2l4 4-4 4" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </Link>
@@ -239,40 +168,26 @@ export default function Home() {
             Impact by category
           </p>
           <h2 className="text-3xl font-display font-bold text-gray-900">Four dimensions of impact.</h2>
-          <p className="text-sm text-gray-500 mt-2 max-w-xl leading-relaxed">
-            Each section below links to a full page with all sourced data, charts, and methodology notes.
+          <p className="text-base text-gray-500 mt-2 max-w-xl leading-relaxed">
+            Each section links to a full page with all sourced data, charts, and methodology notes.
           </p>
         </FadeIn>
 
         <div className="space-y-0">
-          {FACETS.map(({ to, cat, catColor, catBorder, headline, body, highlight, chart, chartLabel, sourceKey, textCls, chartCls, flip }, i) => (
+          {FACETS.map(({ to, cat, catColor, catBorder, headline, body, chart, chartLabel, sourceKey, textCls, chartCls, flip }, i) => (
             <FadeIn key={to} delay={i * 0.08}>
               <div className={`border-t ${catBorder} pt-10 pb-14 grid lg:grid-cols-12 gap-8 lg:gap-12`}>
 
-                {/* Text column */}
                 <div className={`${textCls}${flip ? ' lg:order-last' : ''}`}>
-                  <p className={`text-2xs font-mono uppercase tracking-[0.2em] mb-3 ${catColor}`}>
-                    {cat}
-                  </p>
-                  <h3 className="text-2xl font-display font-bold text-gray-900 leading-tight mb-4">
+                  <p className={`text-2xs font-mono uppercase tracking-[0.2em] mb-3 ${catColor}`}>{cat}</p>
+                  <h3 className="text-2xl font-display font-bold text-gray-900 leading-tight mb-5">
                     {headline}
                   </h3>
-                  {highlight && (
-                    <div className="mb-5">
-                      <AnimatedNumber
-                        value={highlight.value}
-                        suffix={highlight.suffix}
-                        duration={1.6}
-                        className="text-5xl font-display font-bold tracking-tight text-gray-900"
-                      />
-                      <p className="text-2xs font-mono text-gray-400 uppercase tracking-widest mt-1">{highlight.label}</p>
-                    </div>
-                  )}
                   <p className="text-base text-gray-600 leading-relaxed mb-5">{body}</p>
                   <div className="flex items-center gap-4">
                     <Link
                       to={to}
-                      className="text-xs font-medium text-blue-600 hover:text-blue-700 transition-colors flex items-center gap-1.5"
+                      className="text-sm font-medium text-blue-600 hover:text-blue-700 transition-colors flex items-center gap-1.5"
                     >
                       View full analysis
                       <svg className="w-3.5 h-3.5" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5">
@@ -283,7 +198,6 @@ export default function Home() {
                   </div>
                 </div>
 
-                {/* Chart column */}
                 <div className={`${chartCls}${flip ? ' lg:order-first' : ''}`}>
                   <p className="text-2xs font-mono text-gray-400 uppercase tracking-widest mb-5">{chartLabel}</p>
                   {chart}
