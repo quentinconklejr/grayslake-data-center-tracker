@@ -11,8 +11,8 @@ const NAV = [
 ]
 
 const FOOTER_LINKS = [
-  { to: '/about',                            label: 'About',   external: false },
-  { to: 'mailto:walterjr.quentin@gmail.com', label: 'Contact', external: true },
+  { to: '/about',                       label: 'About',   external: false },
+  { to: 'mailto:qconkle2@illinois.edu', label: 'Contact', external: true  },
 ]
 
 export default function Footer() {
@@ -60,16 +60,16 @@ export default function Footer() {
           <div>
             <p className="text-2xs font-mono text-gray-400 uppercase tracking-widest mb-3">Methodology</p>
             <p className="text-xs text-gray-500 leading-relaxed">
-              All data is sourced from public filings, Village records, court documents, and
-              verified press coverage. Projections are labeled; only figures traceable to a
-              primary source are presented as facts.
+              All data is sourced from public filings, Village records, and verified press
+              coverage. Projections are labeled; only figures traceable to a primary source
+              are presented as facts.
             </p>
           </div>
         </div>
 
         <div className="border-t border-gray-200 pt-6 flex flex-col sm:flex-row justify-between gap-3">
           <p className="text-2xs font-mono text-gray-400">
-            Peterson Rd & Route 83 · Grayslake, IL 60030 · Lake County
+            Compiled by Quentin Conkle Jr. · Updated August 1, 2026 · Peterson Rd &amp; Route 83, Grayslake, IL 60030
           </p>
           <div className="flex items-center gap-4">
             {FOOTER_LINKS.map(({ to, label, external }) =>

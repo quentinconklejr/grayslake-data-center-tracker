@@ -110,8 +110,8 @@ export default function Home() {
           <FadeIn>
             <p className="text-xl text-gray-600 leading-relaxed max-w-[65ch] mb-12">
               T5 @ Chicago IV is a proposed hyperscale AI data center campus on Peterson Road
-              and Route 83 in Grayslake, Illinois. This tracker collects every public record on
-              the project — jobs, taxes, energy, school funding — and links every claim to its source.
+              and Route 83 in Grayslake, Illinois. This tracker collects public records and press
+              coverage on the project — jobs, taxes, energy, school funding — and links every claim to its source.
             </p>
           </FadeIn>
 

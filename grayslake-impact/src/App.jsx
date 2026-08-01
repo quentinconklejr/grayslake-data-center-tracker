@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import Header from './components/layout/Header'
 import Footer from './components/layout/Footer'
 import ScrollToTop from './components/layout/ScrollToTop'
@@ -23,6 +23,7 @@ export default function App() {
         <main className="flex-1">
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/tax" element={<Navigate to="/tax-impact" replace />} />
             <Route path="/tax-impact" element={<TaxImpact />} />
             <Route path="/jobs" element={<Jobs />} />
             <Route path="/energy" element={<Energy />} />

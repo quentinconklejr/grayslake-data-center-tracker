@@ -3,9 +3,8 @@ import FadeIn from '../components/ui/FadeIn'
 import { sources } from '../data/sources'
 
 const SOURCE_CATEGORIES = [
-  { label: 'Government Records',  desc: 'Village of Grayslake meeting minutes, Lake County assessor filings, IEPA notices, zoning resolutions' },
-  { label: 'Court Documents',     desc: 'Circuit Court filings, injunction records, Lake County zoning appeal documents' },
-  { label: 'Press Coverage',      desc: "Lake County News-Sun, Chicago Tribune, Crain's Chicago Business, data center trade press" },
+  { label: 'Government Records', desc: 'Village of Grayslake meeting minutes, Lake County assessor filings, IEPA notices, zoning resolutions' },
+  { label: 'Press Coverage',     desc: 'Chicago Tribune, Capitol News Illinois, Daily Herald, Government Technology, data center trade press' },
 ]
 
 const SOURCE_ENTRIES = Object.entries(sources)
@@ -20,8 +19,7 @@ export default function Sources() {
         <h1 className="text-4xl font-display font-bold text-gray-900 tracking-tight mb-3">Primary Sources</h1>
         <p className="text-base text-gray-600 max-w-2xl leading-relaxed">
           All data in this dashboard is derived from publicly available documents, government
-          filings, court records, and verified journalism. No data is estimated without explicit
-          notation.
+          filings, and verified journalism. No data is estimated without explicit notation.
         </p>
       </FadeIn>
 
@@ -53,6 +51,9 @@ export default function Sources() {
               )}
             </div>
             <div className="shrink-0 flex flex-col items-end gap-1 self-start">
+              {source.verified && (
+                <span className="text-2xs font-mono text-gray-400">verified {source.verified}</span>
+              )}
               {source.status === 'unverified' && (
                 <span className="text-2xs font-mono text-amber-600 uppercase tracking-widest">unverified</span>
               )}
@@ -68,7 +69,7 @@ export default function Sources() {
       <FadeIn>
         <div className="bg-gray-50 border border-gray-200 rounded-xl p-6">
           <p className="text-2xs font-mono text-gray-400 uppercase tracking-widest mb-5">Source Categories</p>
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-2 gap-6">
             {SOURCE_CATEGORIES.map(({ label, desc }) => (
               <div key={label}>
                 <p className="text-xs font-display font-semibold text-gray-800 mb-1.5">{label}</p>
