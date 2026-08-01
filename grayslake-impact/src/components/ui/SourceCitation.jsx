@@ -7,13 +7,13 @@ export default function SourceCitation({ sourceKey }) {
 
   if (source.status === 'unverified') {
     return (
-      <span className="inline-flex items-center gap-1 text-2xs font-mono text-gray-600">
-        <svg className="w-2.5 h-2.5 shrink-0 text-amber-700" viewBox="0 0 10 10" fill="none" stroke="currentColor" strokeWidth="1.5">
+      <span className="inline-flex items-center gap-1 text-2xs font-mono text-gray-400">
+        <svg className="w-2.5 h-2.5 shrink-0 text-amber-500" viewBox="0 0 10 10" fill="none" stroke="currentColor" strokeWidth="1.5">
           <circle cx="5" cy="5" r="4" />
           <path d="M5 3v2.5M5 7h.01" strokeLinecap="round" />
         </svg>
         {label}
-        <span className="text-gray-700 italic">· link pending verification</span>
+        <span className="text-gray-300 italic">· link pending verification</span>
       </span>
     )
   }
@@ -24,17 +24,17 @@ export default function SourceCitation({ sourceKey }) {
       target="_blank"
       rel="noopener noreferrer"
       title={source.title}
-      className="inline-flex items-center gap-1 text-2xs font-mono text-gray-600 hover:text-blue-400 transition-colors duration-150 group"
+      className="inline-flex items-center gap-1 text-2xs font-mono text-gray-400 hover:text-blue-600 transition-colors duration-150 group"
     >
       <svg
-        className="w-2.5 h-2.5 shrink-0 text-gray-700 group-hover:text-blue-500 transition-colors"
+        className="w-2.5 h-2.5 shrink-0 text-gray-300 group-hover:text-blue-500 transition-colors"
         viewBox="0 0 10 10" fill="none" stroke="currentColor" strokeWidth="1.5"
       >
         <path d="M1 9L9 1M9 1H4M9 1v5" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
       {label}
       {source.status === 'background' && (
-        <span className="text-gray-700 italic">· background</span>
+        <span className="text-gray-300 italic">· background</span>
       )}
     </a>
   )

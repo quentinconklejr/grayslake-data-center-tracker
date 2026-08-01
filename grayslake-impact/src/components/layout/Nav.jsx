@@ -23,8 +23,8 @@ export default function Nav() {
           className={({ isActive }) =>
             `px-2.5 py-1.5 rounded text-xs font-medium tracking-wide transition-all duration-150 whitespace-nowrap ${
               isActive
-                ? 'text-blue-400 bg-blue-500/10 shadow-[inset_0_0_0_1px_rgba(14,165,233,0.2)]'
-                : 'text-gray-500 hover:text-gray-200 hover:bg-gray-800/60'
+                ? 'text-blue-600 bg-blue-50 shadow-[inset_0_0_0_1px_rgba(2,132,199,0.18)]'
+                : 'text-gray-500 hover:text-gray-900 hover:bg-gray-100'
             }`
           }
         >
