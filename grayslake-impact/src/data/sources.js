@@ -57,11 +57,13 @@ export const sources = {
     title: "Data Center Playbook: A Regional Guide for Managing Data Center Impacts in the Great Lakes",
     publisher: "Alliance for the Great Lakes",
     url: "https://greatlakes.org/2026/03/data-center-playbook/",
+    status: "background",
   },
   insideclimate: {
     title: "Could a New Illinois Bill Be a Blueprint for Curbing Data Centers' Climate Impacts?",
     publisher: "Inside Climate News",
     url: "https://insideclimatenews.org/news/19022026/illinois-data-center-impacts-bill/",
+    status: "background",
   },
   wttw2026: {
     title: "Consumer Advocates Link Data Centers to Higher Electric Bills. Here's What to Know",
@@ -74,14 +76,16 @@ export const sources = {
     url: "https://www.fox32chicago.com/news/illinois-data-center-utility-bills",
   },
   suntimes: {
-    title: "Chicago Sun-Times — T5 Grayslake data center coverage (specific article URL pending)",
+    title: "Chicago Sun-Times — T5 Grayslake data center coverage",
     publisher: "Chicago Sun-Times",
     url: "https://chicago.suntimes.com",
+    status: "background",
   },
   chitrib2026: {
     title: "Grayslake data center opponents call for wetlands protection",
     publisher: "Chicago Tribune",
     url: "https://www.chicagotribune.com/2026/07/02/grayslake-data-center-opponents-call-for-wetlands-protection/",
+    status: "unverified",
   },
   chitrib_june2026: {
     title: "Legal challenge to Grayslake data center project likely: 'The juice isn't worth the squeeze'",
@@ -92,11 +96,13 @@ export const sources = {
     title: "Avon Township voices opposition to Grayslake data center; 'we represent the people'",
     publisher: "Chicago Tribune",
     url: "https://www.chicagotribune.com/2026/06/11/avon-township-voices-opposition-to-grayslake-data-center/",
+    status: "unverified",
   },
   illenvcouncil: {
     title: "Illinois Environmental Council — Data Center Wetlands and Environmental Coverage",
     publisher: "Illinois Environmental Council",
     url: "https://ilenviro.org/",
+    status: "background",
   },
   chronicle2026: {
     title: "Grayslake data center approval sparks growing controversy",

@@ -39,7 +39,9 @@ export default function Sources() {
               {source.publisher && (
                 <p className="text-xs text-gray-500 mb-1">{source.publisher}</p>
               )}
-              {source.url && (
+              {source.status === 'unverified' ? (
+                <span className="text-2xs font-mono text-amber-700/80 italic">link pending verification</span>
+              ) : source.url && (
                 <a
                   href={source.url}
                   target="_blank"
@@ -50,9 +52,15 @@ export default function Sources() {
                 </a>
               )}
             </div>
-            <span className="shrink-0 text-2xs font-mono text-gray-700 uppercase tracking-widest self-start">
-              {key}
-            </span>
+            <div className="shrink-0 flex flex-col items-end gap-1 self-start">
+              {source.status === 'unverified' && (
+                <span className="text-2xs font-mono text-amber-700/80 uppercase tracking-widest">unverified</span>
+              )}
+              {source.status === 'background' && (
+                <span className="text-2xs font-mono text-gray-600 uppercase tracking-widest">background</span>
+              )}
+              <span className="text-2xs font-mono text-gray-700 uppercase tracking-widest">{key}</span>
+            </div>
           </div>
         ))}
       </FadeIn>
