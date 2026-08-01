@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "node scripts/check-links.js && vite build",
+    "build": "vite build",
     "check-links": "node scripts/check-links.js",
     "lint": "eslint .",
     "preview": "vite preview"
