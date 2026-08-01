@@ -10,6 +10,11 @@ const NAV = [
   { to: '/sources',    label: 'Sources' },
 ]
 
+const FOOTER_LINKS = [
+  { to: '/about',                        label: 'About',   external: false },
+  { to: 'mailto:walterjr.quentin@gmail.com', label: 'Contact', external: true },
+]
+
 export default function Footer() {
   return (
     <footer className="border-t border-gray-800/60 mt-24">
@@ -66,9 +71,27 @@ export default function Footer() {
           <p className="text-2xs font-mono text-gray-500">
             Peterson Rd & Route 83 · Grayslake, IL 60030 · Lake County
           </p>
-          <p className="text-2xs text-gray-500">
-            Grayslake Data Center Tracker is an independent civic resource. Not affiliated with T5 Data Centers, LLC or the Village of Grayslake. For informational purposes only.
-          </p>
+          <div className="flex items-center gap-4">
+            {FOOTER_LINKS.map(({ to, label, external }) =>
+              external ? (
+                <a
+                  key={to}
+                  href={to}
+                  className="text-2xs font-mono text-gray-500 hover:text-gray-300 transition-colors"
+                >
+                  {label}
+                </a>
+              ) : (
+                <Link
+                  key={to}
+                  to={to}
+                  className="text-2xs font-mono text-gray-500 hover:text-gray-300 transition-colors"
+                >
+                  {label}
+                </Link>
+              )
+            )}
+          </div>
         </div>
 
       </div>

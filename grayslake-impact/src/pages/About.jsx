@@ -18,31 +18,16 @@ export default function About() {
       <FadeIn className="mb-10">
         <div className="prose-custom space-y-4 text-sm text-gray-400 leading-relaxed">
           <p>
-            I'm Quentin Conkle Jr. — a sophomore at the University of Illinois Urbana-Champaign
-            studying Information Sciences and Data Science. I grew up in Grayslake, so when I
-            started hearing about a massive data center campus going up near town, I paid attention.
+            I'm Quentin Conkle Jr., a sophomore at UIUC studying information sciences and data science. I grew up in Grayslake. When I heard a data center campus was going in near town, I realized I knew basically nothing about it and figured I should fix that.
           </p>
           <p>
-            At first I didn't know much about it beyond the basics: big tech company, wetlands
-            nearby, people upset at town hall. So I started digging. What I found wasn't a clean
-            story — it was village meeting minutes scattered across a government site, trade press
-            written for industry insiders, and social media arguments with a lot of heat and not
-            much sourcing. Every time I tried to understand what was actually happening, I had to
-            piece it together from five different places.
+            Finding real information was harder than it should have been. Some of it sat in village meeting minutes. Some was in trade press written for industry people. A lot of it was people arguing online with nothing to back it up. Every time I wanted a straight answer, like how much tax revenue the village actually gets or what the lawsuits are even about, I had to pull it from five different places.
           </p>
           <p>
-            The more I talked to people in Grayslake, the more I realized this wasn't just my
-            problem. A lot of residents genuinely couldn't find the basic facts in one place —
-            how much tax revenue the village would actually see, what the energy draw would mean
-            for bills, what the legal challenges were about, or what questions still didn't have
-            public answers. I kept thinking someone should build a clear, neutral resource for
-            this. Eventually I figured it might as well be me.
+            When I started asking around, everybody else was stuck the same way. Nobody could find the basics in one spot. So I made this.
           </p>
           <p>
-            That's what this site is. I'm not trying to tell you what to think about the data
-            center. I'm trying to collect the public record — village approvals, tax filings,
-            press coverage, legal developments — and present it clearly so you can form your own
-            opinion. If there's a claim on this site, it links to a source.
+            I'm not here to tell you what to think about the data center. I'm collecting the public record, meaning village approvals, tax filings, press coverage, and legal developments, and laying it out so you can decide for yourself. Everything on here links to a source. If I got something wrong or I'm missing a document, email me. I'd rather fix it than leave it up.
           </p>
         </div>
       </FadeIn>
