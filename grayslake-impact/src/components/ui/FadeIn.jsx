@@ -5,7 +5,7 @@ export default function FadeIn({
   delay = 0,
   y = 20,
   className = '',
-  once = false,
+  once = true,
   as = 'div',
 }) {
   const shouldReduce = useReducedMotion()

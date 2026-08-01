@@ -25,8 +25,18 @@ for (const vp of VIEWPORTS) {
 
   for (const pg of PAGES) {
     await page.goto(`${BASE}${pg.path}`, { waitUntil: 'networkidle', timeout: 15000 })
-    // Let animations settle
-    await page.waitForTimeout(800)
+    await page.waitForTimeout(300)
+
+    // Scroll through the full page in steps to trigger all IntersectionObserver-based
+    // animations (Framer Motion whileInView / FadeIn), then return to top.
+    const pageHeight = await page.evaluate(() => document.body.scrollHeight)
+    const step = vp.height * 0.8
+    for (let y = 0; y <= pageHeight; y += step) {
+      await page.evaluate((scrollY) => window.scrollTo(0, scrollY), y)
+      await page.waitForTimeout(120)
+    }
+    await page.evaluate(() => window.scrollTo(0, 0))
+    await page.waitForTimeout(600)
 
     const file = `screenshots/${pg.name}-${vp.name}.png`
     await page.screenshot({ path: file, fullPage: true })
