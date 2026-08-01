@@ -60,7 +60,7 @@ export default function About() {
           </p>
           <div className="space-y-3">
             <a
-              href="mailto:walterjr.quentin@gmail.com"
+              href="mailto:qconkle2@illinois.edu"
               className="flex items-center gap-3 group"
             >
               <div className="w-7 h-7 rounded bg-gray-100 border border-gray-200 flex items-center justify-center shrink-0 group-hover:border-blue-300 group-hover:bg-blue-50 transition-colors">
@@ -70,7 +70,7 @@ export default function About() {
                 </svg>
               </div>
               <span className="text-sm font-mono text-gray-600 group-hover:text-blue-600 transition-colors">
-                walterjr.quentin@gmail.com
+                qconkle2@illinois.edu
               </span>
             </a>
             <a
