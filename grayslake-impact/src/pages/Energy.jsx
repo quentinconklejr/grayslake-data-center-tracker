@@ -55,19 +55,20 @@ export default function Energy() {
         <p className="text-2xs font-mono text-gray-400 uppercase tracking-widest mb-5">Residential Rate Impact</p>
         <div className="space-y-3">
 
-          <EvidenceBlock type="stated" title="Direct distribution costs: tariff-walled" sourceKey="villageoffaq">
+          <EvidenceBlock type="stated" title="Power costs: T5 responsible under Illinois rate standards" sourceKey="villageoffaq">
             <p className="text-sm text-gray-600 leading-relaxed">
-              Illinois maintains a separate utility rate class for large industrial users including data centers.
-              The ICC-approved ComEd tariff requires data centers to fund their own transmission and
-              distribution upgrade costs. Those costs do not flow through to residential rate classes as a direct line item.
+              The Village FAQ states that T5 will pay for its own power under State of Illinois
+              electric rate standards. Residential customers would not be directly billed for T5's
+              energy costs.
             </p>
           </EvidenceBlock>
 
           <EvidenceBlock type="unknown" title="Regional capacity prices: an open question">
             <p className="text-sm text-gray-600 leading-relaxed">
-              The ICC tariff wall contains distribution and transmission upgrade costs within the large
-              industrial rate class. PJM capacity auction clearing prices, however, are set by aggregate
-              regional demand across all load, a wholesale market effect the distribution tariff does not address. Whether and by how much data center growth is contributing to higher
+              Illinois utility regulation may address direct distribution and transmission costs,
+              but PJM capacity auction clearing prices are set by aggregate regional demand across
+              all load. That is a wholesale market effect that state utility rules do not address
+              directly. Whether and by how much data center growth is contributing to higher
               capacity prices in the ComEd zone is not yet established by any verified public study.
               No confirmed figure is available.
             </p>

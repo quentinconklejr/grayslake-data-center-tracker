@@ -49,7 +49,7 @@ export const questions = [
     category: 'energy',
     stated: [
       {
-        text: 'Illinois utility regulation maintains a separate rate class for large industrial users including data centers. The ICC approved a ComEd tariff structure that requires data centers to bear their own transmission and distribution upgrade costs, containing those costs within the business rate class.',
+        text: 'The Village FAQ states that T5 will pay for its own power under State of Illinois electric rate standards. The FAQ does not specify the regulatory mechanism in further detail.',
         sourceKey: 'villageoffaq',
       },
     ],
