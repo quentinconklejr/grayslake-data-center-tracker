@@ -3,8 +3,8 @@ import FadeIn from '../components/ui/FadeIn'
 import { sources } from '../data/sources'
 
 const SOURCE_CATEGORIES = [
-  { label: 'Government Records', desc: 'Village of Grayslake meeting minutes, Lake County assessor filings, IEPA notices, zoning resolutions' },
-  { label: 'Press Coverage',     desc: 'Chicago Tribune, Capitol News Illinois, Daily Herald, Government Technology, data center trade press' },
+  { label: 'Government Records', desc: 'Village of Grayslake FAQs and meeting records, Village of Mundelein statement, Illinois DCEO program pages' },
+  { label: 'Press Coverage',     desc: 'Chicago Tribune, Capitol News Illinois, Daily Herald, Chronicle Media, Government Technology, Data Center Dynamics, Patch, Hoodline' },
 ]
 
 const SOURCE_ENTRIES = Object.entries(sources)
@@ -36,6 +36,9 @@ export default function Sources() {
               <p className="text-sm font-medium text-gray-900 leading-snug mb-0.5">{source.title}</p>
               {source.publisher && (
                 <p className="text-xs text-gray-500 mb-1">{source.publisher}</p>
+              )}
+              {source.note && (
+                <p className="text-xs text-amber-700/80 italic mb-1">{source.note}</p>
               )}
               {source.status === 'unverified' ? (
                 <span className="text-2xs font-mono text-amber-600 italic">link pending verification</span>

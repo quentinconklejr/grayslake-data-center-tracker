@@ -22,11 +22,13 @@ export const sources = {
     title: "Grayslake T5 Data Center Moves Ahead Amid Local Protests",
     publisher: "Hoodline",
     url: "https://hoodline.com/2026/05/grayslake-erupts-as-mega-data-campus-plows-ahead/",
+    note: "Hoodline aggregates and republishes local news; this article draws on Chicago Tribune source reporting.",
   },
   govtech2025: {
     title: "Data Center Could Be Largest Lake County, Ill., Development",
     publisher: "Government Technology",
     url: "https://www.govtech.com/artificial-intelligence/data-center-could-be-largest-lake-county-ill-development",
+    note: "Government Technology article draws on Chicago Tribune source reporting; cited here for the October 2025 public meeting record.",
   },
   patch2026: {
     title: "Plans Move Forward For Massive Data Center Campus In Grayslake",
@@ -59,38 +61,10 @@ export const sources = {
     url: "https://greatlakes.org/2026/03/data-center-playbook/",
     status: "background",
   },
-  insideclimate: {
-    title: "Could a New Illinois Bill Be a Blueprint for Curbing Data Centers' Climate Impacts?",
-    publisher: "Inside Climate News",
-    url: "https://insideclimatenews.org/news/19022026/illinois-data-center-impacts-bill/",
-    status: "background",
-  },
-  wttw2026: {
-    title: "Consumer Advocates Link Data Centers to Higher Electric Bills. Here's What to Know",
-    publisher: "WTTW News",
-    url: "https://news.wttw.com/2026/01/13/consumer-advocates-link-data-centers-higher-electric-bills-here-s-what-know",
-  },
-  fox32: {
-    title: "Illinois data center boom tied to rising utility bills, experts say",
-    publisher: "FOX 32 Chicago",
-    url: "https://www.fox32chicago.com/news/illinois-data-center-utility-bills",
-  },
-  suntimes: {
-    title: "Chicago Sun-Times — T5 Grayslake data center coverage",
-    publisher: "Chicago Sun-Times",
-    url: "https://chicago.suntimes.com",
-    status: "background",
-  },
   chitrib_june2026: {
     title: "Legal challenge to Grayslake data center project likely: 'The juice isn't worth the squeeze'",
     publisher: "Chicago Tribune",
     url: "https://www.chicagotribune.com/2026/06/05/grayslake-data-center-3/",
-  },
-  illenvcouncil: {
-    title: "Illinois Environmental Council — Data Center Wetlands and Environmental Coverage",
-    publisher: "Illinois Environmental Council",
-    url: "https://ilenviro.org/",
-    status: "background",
   },
   chronicle2026: {
     title: "Grayslake data center approval sparks growing controversy",
