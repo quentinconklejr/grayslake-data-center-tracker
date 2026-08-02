@@ -78,8 +78,8 @@ export const timelineEvents = [
   },
   {
     date: "2026-07-11",
-    title: "Civil actions expected within three weeks",
-    description: "Chronicle Media reported that civil legal actions against the project are expected 'within three weeks' as the Village continues to process design and technical permits for the campus.",
+    title: "Opposition coalition signals intent to file civil actions",
+    description: "Chronicle Media reported that the opposition coalition indicated it may pursue civil litigation against the project. No filings had been made at the time of publication.",
     category: "legal",
     sourceKey: "chronicle2026",
   },
