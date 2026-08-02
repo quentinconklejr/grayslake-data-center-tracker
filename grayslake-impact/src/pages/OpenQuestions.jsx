@@ -155,8 +155,7 @@ export default function OpenQuestions() {
         <p className="text-2xs font-mono text-blue-600/60 uppercase tracking-[0.2em] mb-3">Unresolved Issues</p>
         <h1 className="text-4xl font-display font-bold text-gray-900 tracking-tight mb-3">Open Questions</h1>
         <p className="text-base text-gray-600 max-w-2xl leading-relaxed">
-          The key disputes and data gaps around T5 @ Chicago IV — organized by topic,
-          sourced to the record, and updated as new public information becomes available.
+          Disputes and data gaps around T5 @ Chicago IV, organized by topic and sourced to the public record.
         </p>
         <p className="text-2xs font-mono text-gray-400 mt-3">Last verified Aug 2, 2026</p>
       </FadeIn>
@@ -170,11 +169,11 @@ export default function OpenQuestions() {
             <div>
               <p className="text-xs font-display font-semibold text-blue-800 mb-1.5">How this page works</p>
               <p className="text-sm text-gray-600 leading-relaxed">
-                This page organizes publicly sourced statements around genuinely unresolved questions.
-                It does not characterize, evaluate, or endorse any position.
+                This page organizes publicly sourced statements around unresolved questions.
+                It takes no position.
                 <span className="text-emerald-700"> "Stated"</span> reflects what officials or the developer have said on record.
                 <span className="text-amber-700"> "Disputed"</span> reflects what critics, advocates, or independent researchers have said on record.
-                <span className="text-gray-400"> "Not Yet Public"</span> identifies what has no public answer yet.
+                <span className="text-gray-400"> "Not Yet Public"</span> marks questions with no public answer.
                 Every claim links to its source.
               </p>
             </div>
@@ -237,8 +236,8 @@ export default function OpenQuestions() {
           <p className="text-xs text-gray-500 leading-relaxed">
             Questions are added as new disputes emerge in public documents, journalism, or legal filings.
             This site is not affiliated with T5 Data Centers, LLC or the Village of Grayslake.
-            Source citations on this page link to the outlet or organization that made the statement —
-            specific article URLs for newer sources will be added as they become available.
+            Source citations link to the outlet or organization that made the statement.
+            Specific article URLs for newer sources will be added as records are made available.
           </p>
         </div>
       </FadeIn>

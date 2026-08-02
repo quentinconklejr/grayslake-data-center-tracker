@@ -25,9 +25,9 @@ export default function TimelinePage() {
         <p className="text-2xs font-mono text-blue-600/60 uppercase tracking-[0.2em] mb-3">Project History</p>
         <h1 className="text-4xl font-display font-bold text-gray-900 tracking-tight mb-3">Sourced Event Timeline</h1>
         <p className="text-base text-gray-600 max-w-2xl leading-relaxed">
-          Key milestones in the T5 @ Chicago IV development — village approvals, community
-          opposition, legal challenges, construction activity, and state policy changes.
-          All events sourced and cited.
+          Key milestones in the T5 @ Chicago IV development. Entries span village approvals,
+          community opposition, legal challenges, construction activity, and state policy changes.
+          All events are sourced and cited.
         </p>
         <div className="flex items-center gap-4 mt-4">
           <span className="text-2xs font-mono text-gray-400">{timelineEvents.length} events</span>

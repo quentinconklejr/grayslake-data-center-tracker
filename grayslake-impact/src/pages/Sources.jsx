@@ -18,8 +18,8 @@ export default function Sources() {
         <p className="text-2xs font-mono text-blue-600/60 uppercase tracking-[0.2em] mb-3">Transparency</p>
         <h1 className="text-4xl font-display font-bold text-gray-900 tracking-tight mb-3">Primary Sources</h1>
         <p className="text-base text-gray-600 max-w-2xl leading-relaxed">
-          All data in this dashboard is derived from publicly available documents, government
-          filings, and verified journalism. No data is estimated without explicit notation.
+          All figures in this tracker come from publicly available documents and verified journalism.
+          Estimated figures are labeled.
         </p>
         <p className="text-2xs font-mono text-gray-400 mt-3">Last verified Aug 2, 2026</p>
       </FadeIn>
