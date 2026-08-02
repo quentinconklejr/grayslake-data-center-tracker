@@ -81,12 +81,6 @@ export const sources = {
     url: "https://chicago.suntimes.com",
     status: "background",
   },
-  chitrib2026: {
-    title: "Grayslake data center opponents call for wetlands protection",
-    publisher: "Chicago Tribune",
-    url: "https://www.chicagotribune.com/2026/07/02/grayslake-data-center-opponents-call-for-wetlands-protection/",
-    status: "unverified",
-  },
   chitrib_june2026: {
     title: "Legal challenge to Grayslake data center project likely: 'The juice isn't worth the squeeze'",
     publisher: "Chicago Tribune",

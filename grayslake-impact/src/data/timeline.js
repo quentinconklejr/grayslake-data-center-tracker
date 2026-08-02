@@ -77,13 +77,6 @@ export const timelineEvents = [
     sourceKey: "chitrib_avon2026",
   },
   {
-    date: "2026-07-02",
-    title: "Tribune reports unofficial water extrapolation for full buildout",
-    description: "The Chicago Tribune cited an extrapolated figure of approximately 19.2 million gallons for the full 1.2 GW buildout. This was not an official T5 disclosure or regulatory filing — it was a journalist-derived calculation. The Village FAQ has since stated the official figure: no more than 50,000 gallons per day at full buildout.",
-    category: "development",
-    sourceKey: "chitrib2026",
-  },
-  {
     date: "2026-07-11",
     title: "Opposition coalition signals intent to file civil actions",
     description: "Chronicle Media reported that the opposition coalition indicated it may pursue civil litigation against the project. No filings had been made at the time of publication.",
