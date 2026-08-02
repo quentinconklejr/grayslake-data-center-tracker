@@ -67,14 +67,14 @@ export default function Energy() {
           <div className="pl-4 border-l-2 border-amber-400 bg-amber-50/60 rounded-r py-3 pr-3">
             <div className="flex items-center gap-2 mb-1.5">
               <p className="text-sm font-display font-semibold text-amber-800">Regional capacity prices: an open question</p>
-              <SourceCitation sourceKey="cub2026" />
             </div>
             <p className="text-base text-gray-600 leading-relaxed">
-              ComEd residential bills rose approximately 12% in June 2026. The Citizens Utility Board
-              links up to ~25% of that increase to data-center-driven PJM capacity price increases —
-              a wholesale electricity market effect. PJM capacity prices are set by aggregate regional
-              demand across all load; the tariff wall on distribution does not insulate residents from
-              capacity auction outcomes driven by the regional surge in data center load.
+              The ICC tariff wall contains distribution and transmission upgrade costs within the large
+              industrial rate class. However, PJM capacity auction clearing prices are set by aggregate
+              regional demand across all load — a wholesale market effect that the distribution tariff
+              does not address. Whether and by how much data center growth is contributing to higher
+              capacity prices in the ComEd zone is not yet established by any verified public study.
+              No confirmed figure is available.
             </p>
           </div>
 

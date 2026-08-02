@@ -49,13 +49,12 @@ export const questions = [
         sourceKey: 'dceo2026',
       },
     ],
-    disputed: [
-      {
-        text: 'ComEd residential bills rose approximately 12% in June 2026. The Citizens Utility Board links up to ~25% of that increase to data-center-driven PJM capacity price increases — a regional wholesale electricity market effect. PJM capacity prices are set by the aggregate demand of all load in the grid region, not by direct billing line items, so the tariff wall does not insulate residents from capacity auction outcomes.',
-        sourceKey: 'cub2026',
-      },
-    ],
+    disputed: [],
     unknown: [
+      {
+        text: "Whether the regional surge in data center load is contributing to higher PJM capacity auction clearing prices — and by how much — is not yet established by any verified, publicly available study specific to this project or to Illinois. No confirmed figure is available.",
+        sourceKey: null,
+      },
       {
         text: "T5's PJM interconnection queue position, any power purchase agreement (PPA), and whether its specific load will affect future PJM capacity auction clearing prices are not yet publicly filed.",
         sourceKey: null,

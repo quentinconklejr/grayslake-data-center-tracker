@@ -42,6 +42,6 @@ export const projections = {
   residentialRateImpact: {
     directImpact: "tariff-walled",
     tariffNote: "Illinois ICC-approved ComEd tariff requires data centers to fund their own transmission and distribution upgrade costs within the large industrial rate class.",
-    capacityNote: "CUB links data-center-driven PJM capacity price increases to broader regional rate increases — a wholesale market effect not contained by the distribution tariff wall.",
+    capacityNote: "Whether data center load growth is driving higher PJM capacity auction prices in the ComEd zone is not yet established by any verified public study. No confirmed figure is available.",
   },
 };
