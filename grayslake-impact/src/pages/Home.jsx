@@ -8,6 +8,7 @@ import EnergyDrawChart from '../components/charts/EnergyDrawChart'
 import SchoolFundingChart from '../components/charts/SchoolFundingChart'
 import SiteMap from '../components/map/SiteMap'
 import SourceCitation from '../components/ui/SourceCitation'
+import { FootnoteProvider, FootnoteList } from '../components/ui/FootnoteContext'
 import { projections } from '../data/projections'
 
 const { project, jobs } = projections
@@ -100,6 +101,7 @@ const FACETS = [
 
 export default function Home() {
   return (
+    <FootnoteProvider>
     <div>
       <PageTitle />
 
@@ -130,10 +132,7 @@ export default function Home() {
                 ) : (
                   <span className="text-3xl font-display font-black text-gray-900 leading-none block">{display}</span>
                 )}
-                <p className="text-base text-gray-500 mt-3 leading-snug">{sub}</p>
-                <div className="mt-3 pt-3 border-t border-gray-100">
-                  <SourceCitation sourceKey={sourceKey} />
-                </div>
+                <p className="text-base text-gray-500 mt-3 leading-snug">{sub}{sourceKey && <SourceCitation sourceKey={sourceKey} />}</p>
               </FadeIn>
             ))}
           </div>
@@ -208,7 +207,10 @@ export default function Home() {
           ))}
         </div>
       </section>
-
+      <div className="max-w-5xl mx-auto px-4 sm:px-6">
+        <FootnoteList />
+      </div>
     </div>
+    </FootnoteProvider>
   )
 }

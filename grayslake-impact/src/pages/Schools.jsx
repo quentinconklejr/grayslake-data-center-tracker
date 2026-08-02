@@ -3,6 +3,7 @@ import StatCard from '../components/ui/StatCard'
 import SchoolFundingChart from '../components/charts/SchoolFundingChart'
 import SourceCitation from '../components/ui/SourceCitation'
 import FadeIn from '../components/ui/FadeIn'
+import { FootnoteProvider, FootnoteList } from '../components/ui/FootnoteContext'
 import { projections } from '../data/projections'
 
 const { schoolFundingComparable: meta } = projections
@@ -19,6 +20,7 @@ const GRAYSLAKE_DISTRICTS = [
 
 export default function Schools() {
   return (
+    <FootnoteProvider>
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
       <PageTitle title="School Funding" />
 
@@ -175,7 +177,8 @@ export default function Schools() {
           ))}
         </div>
       </FadeIn>
-
+      <FootnoteList />
     </div>
+    </FootnoteProvider>
   )
 }

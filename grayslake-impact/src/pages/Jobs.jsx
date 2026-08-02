@@ -4,6 +4,7 @@ import JobsTimelineChart from '../components/charts/JobsTimelineChart'
 import SourceCitation from '../components/ui/SourceCitation'
 import FadeIn from '../components/ui/FadeIn'
 import AnimatedNumber from '../components/ui/AnimatedNumber'
+import { FootnoteProvider, FootnoteList } from '../components/ui/FootnoteContext'
 import { projections } from '../data/projections'
 
 const { project, jobs } = projections
@@ -52,6 +53,7 @@ const PERM_ROLES = [
 
 export default function Jobs() {
   return (
+    <FootnoteProvider>
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
       <PageTitle title="Job Creation" />
 
@@ -164,7 +166,8 @@ export default function Jobs() {
           </div>
         </FadeIn>
       </div>
-
+      <FootnoteList />
     </div>
+    </FootnoteProvider>
   )
 }

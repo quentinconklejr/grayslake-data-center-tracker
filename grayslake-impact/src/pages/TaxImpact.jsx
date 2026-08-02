@@ -4,6 +4,7 @@ import TaxRevenueChart from '../components/charts/TaxRevenueChart'
 import SchoolFundingChart from '../components/charts/SchoolFundingChart'
 import SourceCitation from '../components/ui/SourceCitation'
 import FadeIn from '../components/ui/FadeIn'
+import { FootnoteProvider, FootnoteList } from '../components/ui/FootnoteContext'
 import { projections } from '../data/projections'
 
 const { project, fees, schoolFundingComparable: meta, stateIncentiveContext: incentive } = projections
@@ -18,6 +19,7 @@ const FEE_DATA = [
 
 export default function TaxImpact() {
   return (
+    <FootnoteProvider>
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
       <PageTitle title="Tax Impact" />
 
@@ -97,7 +99,8 @@ export default function TaxImpact() {
           </div>
         </div>
       </FadeIn>
-
+      <FootnoteList />
     </div>
+    </FootnoteProvider>
   )
 }

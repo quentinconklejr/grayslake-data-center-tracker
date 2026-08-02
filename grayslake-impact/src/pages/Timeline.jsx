@@ -1,6 +1,7 @@
 import PageTitle from '../components/ui/PageTitle'
 import TimelineUI from '../components/ui/Timeline'
 import FadeIn from '../components/ui/FadeIn'
+import { FootnoteProvider, FootnoteList } from '../components/ui/FootnoteContext'
 import { timelineEvents } from '../data/timeline'
 
 const LEGEND = [
@@ -16,6 +17,7 @@ const dateRange = `${timelineEvents[0]?.date?.slice(0,4) ?? '—'} – ${timelin
 
 export default function TimelinePage() {
   return (
+    <FootnoteProvider>
     <div className="max-w-3xl mx-auto px-4 sm:px-6 py-12">
       <PageTitle title="Timeline" />
 
@@ -56,6 +58,8 @@ export default function TimelinePage() {
           are projected milestones per developer filings, not confirmed completions.
         </p>
       </div>
+      <FootnoteList />
     </div>
+    </FootnoteProvider>
   )
 }

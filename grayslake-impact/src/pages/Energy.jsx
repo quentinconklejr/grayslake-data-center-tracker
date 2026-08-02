@@ -3,6 +3,7 @@ import StatCard from '../components/ui/StatCard'
 import EnergyDrawChart from '../components/charts/EnergyDrawChart'
 import SourceCitation from '../components/ui/SourceCitation'
 import FadeIn from '../components/ui/FadeIn'
+import { FootnoteProvider, FootnoteList } from '../components/ui/FootnoteContext'
 import { projections } from '../data/projections'
 
 const { project } = projections
@@ -10,6 +11,7 @@ const buffer = project.securedPowerMW - project.totalCapacityMW
 
 export default function Energy() {
   return (
+    <FootnoteProvider>
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
       <PageTitle title="Energy Draw" />
 
@@ -128,7 +130,8 @@ export default function Energy() {
           </div>
         </FadeIn>
       </div>
-
+      <FootnoteList />
     </div>
+    </FootnoteProvider>
   )
 }

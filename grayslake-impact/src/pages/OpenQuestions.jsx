@@ -3,7 +3,21 @@ import { AnimatePresence, motion } from 'framer-motion'
 import PageTitle from '../components/ui/PageTitle'
 import SourceCitation from '../components/ui/SourceCitation'
 import FadeIn from '../components/ui/FadeIn'
+import { FootnoteProvider, FootnoteList } from '../components/ui/FootnoteContext'
 import { questions } from '../data/questions'
+
+// Pre-collect all sourceKeys in order of first appearance across all questions
+// so footnote numbers are stable even when accordion items are collapsed.
+const PRELOAD_KEYS = []
+for (const q of questions) {
+  for (const block of ['stated', 'disputed', 'unknown']) {
+    for (const item of q[block] ?? []) {
+      if (item.sourceKey && !PRELOAD_KEYS.includes(item.sourceKey)) {
+        PRELOAD_KEYS.push(item.sourceKey)
+      }
+    }
+  }
+}
 
 const CAT_META = {
   water:   { label: 'Water',   active: 'text-sky-700 bg-sky-50 border-sky-300',          inactive: 'text-gray-500 border-gray-200 hover:text-sky-700 hover:border-sky-300' },
@@ -99,14 +113,10 @@ function QuestionCard({ q, isExpanded, onToggle }) {
                       {items.map((item, i) => (
                         <li key={i} className="flex gap-2.5 items-start">
                           <span className={`shrink-0 mt-1 ${dotCls}`}>·</span>
-                          <div className="flex-1 min-w-0">
-                            <p className={`text-xs leading-relaxed ${textCls}`}>{item.text}</p>
-                            {item.sourceKey && (
-                              <div className="mt-1.5">
-                                <SourceCitation sourceKey={item.sourceKey} />
-                              </div>
-                            )}
-                          </div>
+                          <p className={`flex-1 min-w-0 text-xs leading-relaxed ${textCls}`}>
+                            {item.text}
+                            {item.sourceKey && <SourceCitation sourceKey={item.sourceKey} />}
+                          </p>
                         </li>
                       ))}
                     </ul>
@@ -161,6 +171,7 @@ export default function OpenQuestions() {
   }
 
   return (
+    <FootnoteProvider preload={PRELOAD_KEYS}>
     <div className="max-w-4xl mx-auto px-4 sm:px-6 py-12">
       <PageTitle title="Open Questions" />
 
@@ -255,6 +266,8 @@ export default function OpenQuestions() {
           </p>
         </div>
       </FadeIn>
+      <FootnoteList />
     </div>
+    </FootnoteProvider>
   )
 }

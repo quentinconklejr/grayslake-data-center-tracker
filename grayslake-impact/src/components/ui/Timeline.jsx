@@ -57,10 +57,14 @@ export default function Timeline({ events = [] }) {
               </h3>
 
               {event.description && (
-                <p className="text-sm text-gray-600 leading-relaxed mb-2.5">{event.description}</p>
+                <p className="text-sm text-gray-600 leading-relaxed">
+                  {event.description}
+                  {event.sourceKey && <SourceCitation sourceKey={event.sourceKey} />}
+                </p>
               )}
-
-              {event.sourceKey && <SourceCitation sourceKey={event.sourceKey} />}
+              {!event.description && event.sourceKey && (
+                <SourceCitation sourceKey={event.sourceKey} />
+              )}
             </div>
           </li>
         )

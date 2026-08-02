@@ -15,18 +15,13 @@ export default function StatCard({ label, value, sub, badge, accent = 'blue', so
         {label}
       </p>
       <p className="text-3xl sm:text-4xl font-display font-bold leading-none tracking-tight mb-2 text-gray-900">
-        {value}
+        {value}{sourceKey && <SourceCitation sourceKey={sourceKey} />}
       </p>
       {sub && <p className="text-xs text-gray-500 leading-relaxed flex-1">{sub}</p>}
       {badge && (
         <span className="mt-2 self-start text-2xs font-mono font-semibold px-1.5 py-0.5 rounded-sm border border-gray-300 text-gray-500">
           {badge}
         </span>
-      )}
-      {sourceKey && (
-        <div className="mt-3 pt-3 border-t border-gray-200">
-          <SourceCitation sourceKey={sourceKey} />
-        </div>
       )}
     </div>
   )
