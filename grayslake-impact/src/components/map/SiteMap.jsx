@@ -32,8 +32,7 @@ const PANEL_ROWS = [
   ['Developer',      project.developer],
   ['Location',       'Peterson Rd & Route 83'],
   ['Status',         'Under Construction'],
-  ['Main parcel',    `~${project.totalAcres} ac (approx.)`],
-  ['Option parcel',  `~${project.optionAcres} ac (approx.)`],
+  ['Campus area',    `${project.totalAcres.toLocaleString()} ac · ${(project.totalSqFt / 1_000_000).toFixed(1)}M sq ft`],
   ['Max buildings',  project.maxBuildings],
   ['IT capacity',    `${project.totalCapacityMW.toLocaleString()} MW`],
   ['Secured power',  `${project.securedPowerMW.toLocaleString()} MW`],
@@ -202,7 +201,7 @@ export default function SiteMap({ className = 'h-[480px]' }) {
           <div className="text-2xs font-mono text-gray-400 space-y-1">
             <p>Peterson Rd &amp; Route 83 · Grayslake, IL 60030</p>
             <p>42.337°N, 88.001°W · Lake County</p>
-            <p>~160 ac main · ~45 ac option parcel</p>
+            <p>472 ac · 10,100,000 sq ft (Village FAQ)</p>
           </div>
         </div>
       </div>
@@ -294,13 +293,13 @@ export default function SiteMap({ className = 'h-[480px]' }) {
       <div className="flex flex-wrap gap-2 mt-3">
         <div className="flex items-center gap-2 bg-white px-3 py-1.5 rounded-lg border border-gray-200">
           <div className="w-4 h-0.5 bg-blue-500 rounded-full shrink-0" />
-          <span className="text-xs font-mono text-gray-500">Main parcel (~160 ac)</span>
+          <span className="text-xs font-mono text-gray-500">Main campus boundary</span>
         </div>
         <div className="flex items-center gap-2 bg-white px-3 py-1.5 rounded-lg border border-gray-200">
           <svg width="16" height="4" className="shrink-0">
             <line x1="0" y1="2" x2="16" y2="2" stroke="#d97706" strokeWidth="1.5" strokeDasharray="3 2" />
           </svg>
-          <span className="text-xs font-mono text-gray-500">Option parcel (~45 ac)</span>
+          <span className="text-xs font-mono text-gray-500">Option parcel</span>
         </div>
         <div className="flex items-center gap-1.5 bg-amber-50 px-3 py-1.5 rounded-lg border border-amber-200">
           <svg className="w-3 h-3 text-amber-500 shrink-0" viewBox="0 0 12 12" fill="currentColor">

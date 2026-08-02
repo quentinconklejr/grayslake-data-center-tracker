@@ -2,7 +2,7 @@ export const timelineEvents = [
   {
     date: "2024",
     title: "Initial village paperwork filed",
-    description: "Village paperwork described a roughly 225-acre plan.",
+    description: "Village FAQ records 472 acres and 10,100,000 sq ft of total buildable area.",
     category: "approval",
     sourceKey: "hoodline2026",
   },

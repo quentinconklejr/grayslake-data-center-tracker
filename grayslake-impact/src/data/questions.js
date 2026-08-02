@@ -69,23 +69,23 @@ export const questions = [
     category: 'scale',
     stated: [
       {
-        text: 'Village zoning documentation from 2024 references approximately 225 acres for the approved campus area near the Peterson Road and Route 83 intersection.',
+        text: 'The Village of Grayslake FAQ records the campus site as 472 acres and 10,100,000 sq ft of total buildable area at full buildout.',
         sourceKey: 'villageoffaq',
       },
       {
-        text: 'Developer disclosures describe up to 20 buildings and 1,200 MW of leasable IT capacity at full buildout, with a separate ~45-acre option parcel adjacent to the primary site.',
+        text: 'Developer disclosures describe up to 20 buildings and 1,200 MW of leasable IT capacity at full buildout.',
         sourceKey: 'govtech2025',
       },
     ],
     disputed: [
       {
-        text: "Developer marketing materials and the opposition's attorney both cite 10.1 million square feet of total buildable area and 1.55 GW of total ComEd capacity requested — metrics that, if realized, would make T5 @ Chicago IV among the largest single data center campuses in the United States.",
+        text: "The opposition's attorney and some developer marketing materials separately cited 1.55 GW of total ComEd capacity requested — if realized, that would exceed the 1.2 GW leasable figure the Village FAQ states.",
         sourceKey: 'dailyherald2026',
       },
     ],
     unknown: [
       {
-        text: 'Final building count, phasing schedule beyond Phase 1, and whether the ~45-acre option parcel adjacent to the primary site will be exercised are not determined.',
+        text: 'Final building count, phasing schedule beyond Phase 1, and whether the option parcel will be exercised are not determined.',
         sourceKey: null,
       },
     ],

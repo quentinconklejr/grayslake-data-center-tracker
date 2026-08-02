@@ -3,10 +3,10 @@ export const projections = {
     name: "T5 @ Chicago IV",
     developer: "T5 Data Centers",
     location: "Grayslake, IL (Peterson Road & Route 83)",
-    totalAcres: 160,
-    optionAcres: 45,
+    totalAcres: 472,
+    totalSqFt: 10_100_000,
     maxBuildings: 20,
-    maxSqFt: "10 million+",
+    maxSqFt: "10,100,000",
     totalCapacityMW: 1200,
     securedPowerMW: 1600,
     costLow: 8.5, // billions

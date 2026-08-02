@@ -11,9 +11,10 @@ export default function MapPage() {
         <p className="text-2xs font-mono text-blue-600/60 uppercase tracking-[0.2em] mb-3">T5 @ Chicago IV · Peterson Rd &amp; Route 83</p>
         <h1 className="text-4xl font-display font-bold text-gray-900 tracking-tight mb-4">Campus Site Map</h1>
         <p className="text-base text-gray-600 max-w-2xl leading-relaxed">
-          The blue boundary outlines the ~160-acre main parcel; the amber dashed line marks the
-          ~45-acre option parcel to the south. Boundaries are drawn from public records and are
-          approximate — not derived from survey or GIS data.
+          The Village of Grayslake FAQ records the campus site as 472 acres and 10,100,000 sq ft
+          of total buildable area. The blue boundary marks the main campus footprint; the amber
+          dashed line marks the option parcel to the south. Boundaries are approximate — not
+          derived from survey or GIS data.
           <span className="block mt-2 text-sm text-gray-400">Click either boundary or the orange marker to view project statistics.</span>
         </p>
       </FadeIn>
