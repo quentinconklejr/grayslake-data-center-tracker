@@ -31,7 +31,7 @@ export default function Energy() {
       <FadeIn className="grid grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
         <StatCard label="Secured Power"     value={`${project.securedPowerMW.toLocaleString()} MW`}  sub="Utility-contracted capacity"   accent="amber" sourceKey="dcdGW2026" />
         <StatCard label="IT Capacity"       value={`${project.totalCapacityMW.toLocaleString()} MW`} sub="Leasable at full buildout"      accent="blue"  sourceKey="dcdGW2026" />
-        <StatCard label="Power Buffer"      value={`${buffer} MW`}                                    sub="Calculated: 1,600 − 1,200 MW"  accent="amber" />
+        <StatCard label="Power Buffer"      value={`${buffer} MW`}                                    sub="Calculated: 1,600 − 1,200 MW"  accent="amber" badge="Derived" />
         <StatCard label="PJM Zone"          value="COMED"                                             sub="ComEd transmission zone, PJM"  accent="blue"  sourceKey="villageoffaq" />
       </FadeIn>
 
@@ -88,7 +88,7 @@ export default function Energy() {
               upgrades, and system reliability.
             </p>
             <p>
-              At {project.totalCapacityMW.toLocaleString()} MW, T5 would be one of the largest single-campus
+              At {project.totalCapacityMW.toLocaleString()} MW<SourceCitation sourceKey="dcdGW2026" />, T5 would be one of the largest single-campus
               loads in the ComEd zone, comparable to a medium-sized city. Interconnection agreements
               typically require the developer to fund necessary substation upgrades.
             </p>
@@ -105,7 +105,7 @@ export default function Energy() {
             {[
               ['Secured Power',         `${project.securedPowerMW.toLocaleString()} MW`, 'dcdGW2026'],
               ['Leasable IT Capacity',  `${project.totalCapacityMW.toLocaleString()} MW`, 'dcdGW2026'],
-              ['Power Buffer',          `${buffer} MW`, null],
+              ['Power Buffer',          `${buffer} MW`, null, '1,600 − 1,200'],
               ['PJM Queue ID',          '— not yet public', null],
               ['Interconnect Voltage',  '— pending', null],
               ['Power Purchase (PPA)',  '— not disclosed', null],
@@ -113,11 +113,12 @@ export default function Energy() {
               ['Cooling Approach',         'Primarily air-cooled',  'villageoffaq'],
               ['Water Use (full buildout)', '≤ 50,000 gal / day',   'villageoffaq'],
               ['PUE Target',            '— not disclosed', null],
-            ].map(([k, v, src]) => (
+            ].map(([k, v, src, note]) => (
               <div key={k} className="flex justify-between items-center py-2.5 border-b border-gray-100 last:border-0">
                 <span className="text-sm text-gray-500">{k}</span>
                 <span className="flex items-center gap-1.5 text-sm font-mono text-gray-800">
                   {v}
+                  {note && <span className="text-xs font-mono text-gray-400">(calc: {note})</span>}
                   {src && <SourceCitation sourceKey={src} />}
                 </span>
               </div>

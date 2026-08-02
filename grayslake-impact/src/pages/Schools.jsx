@@ -98,7 +98,7 @@ export default function Schools() {
       <FadeIn className="grid grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
         <StatCard label="One Facility — 2025 Tax"   value={`$${meta.totalPropertyTaxBilled2025}M`} sub="Single facility, 2025 tax year"                                       accent="green" sourceKey="capitolnews2026" />
         <StatCard label="School District Share"     value={`${meta.percentToSchoolDistrict}%`}     sub="Avg. across three properties, 2021–2024"              accent="green" sourceKey="capitolnews2026" />
-        <StatCard label="Other Taxing Bodies"       value={`${metaOtherPct}%`}                     sub="of school-share total · calculated"                   accent="blue" />
+        <StatCard label="Other Taxing Bodies"       value={`${metaOtherPct}%`}                     sub={`Calculated: 100% − ${meta.percentToSchoolDistrict}%`} accent="blue" badge="Derived" />
         <StatCard label="Documented Outcome"        value="1 School Built"                         sub={meta.outcome}                                          accent="green" sourceKey="capitolnews2026" />
       </FadeIn>
 

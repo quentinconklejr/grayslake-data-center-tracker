@@ -40,6 +40,7 @@ const PHASES = [
     label: 'text-emerald-700',
     jobs: '1,680 permanent positions',
     note: 'Current Village FAQ estimate. An earlier figure of 1,500 was cited at the October 2025 public meeting (Government Technology, 2025).',
+    sourceKey: 'villageoffaq',
   },
 ]
 
@@ -98,7 +99,7 @@ export default function Jobs() {
       <FadeIn className="mb-10">
         <p className="text-2xs font-mono text-gray-400 uppercase tracking-widest mb-5">Employment by Phase</p>
         <div className="space-y-3">
-          {PHASES.map(({ period, phase, status, accent, dot, label, jobs: jobDesc, note }) => (
+          {PHASES.map(({ period, phase, status, accent, dot, label, jobs: jobDesc, note, sourceKey }) => (
             <div key={phase} className={`border rounded-xl px-6 py-5 ${accent}`}>
               <div className="flex items-start gap-5">
                 <div className="flex flex-col items-center gap-1 shrink-0 pt-1">
@@ -111,7 +112,10 @@ export default function Jobs() {
                   </div>
                   <p className="text-base font-display font-semibold text-gray-900 mb-0.5">{phase}</p>
                   <p className="text-sm text-gray-600">{jobDesc}</p>
-                  <p className="text-sm text-gray-400 mt-1">{note}</p>
+                  <p className="text-sm text-gray-400 mt-1">
+                    {note}
+                    {sourceKey && <SourceCitation sourceKey={sourceKey} />}
+                  </p>
                 </div>
               </div>
             </div>
