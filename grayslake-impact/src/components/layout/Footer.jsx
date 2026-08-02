@@ -1,15 +1,9 @@
 import { Link } from 'react-router-dom'
 import { SITE_CONTACT } from '../../data/siteConfig'
+import { NAV_LINKS } from '../../data/navLinks'
 
-const NAV = [
-  { to: '/tax-impact', label: 'Tax Impact' },
-  { to: '/jobs',       label: 'Jobs' },
-  { to: '/energy',     label: 'Energy' },
-  { to: '/schools',    label: 'Schools' },
-  { to: '/timeline',   label: 'Timeline' },
-  { to: '/map',        label: 'Map' },
-  { to: '/sources',    label: 'Sources' },
-]
+// Footer pages grid: all routes except the home root
+const NAV = NAV_LINKS.filter(l => l.to !== '/')
 
 const FOOTER_LINKS = [
   { to: '/about',                       label: 'About',   external: false },

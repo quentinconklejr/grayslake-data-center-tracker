@@ -1,18 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
-
-const NAV = [
-  { to: '/',           label: 'Home',      end: true  },
-  { to: '/tax-impact', label: 'Tax',       end: false },
-  { to: '/jobs',       label: 'Jobs',      end: false },
-  { to: '/energy',     label: 'Energy',    end: false },
-  { to: '/schools',    label: 'Schools',   end: false },
-  { to: '/timeline',   label: 'Timeline',  end: false },
-  { to: '/questions',  label: 'Questions', end: false },
-  { to: '/map',        label: 'Map',       end: false },
-  { to: '/sources',    label: 'Sources',   end: false },
-  { to: '/about',      label: 'About',     end: false },
-]
+import { NAV_LINKS } from '../../data/navLinks'
 
 function NavLink_({ to, label, end }) {
   return (
@@ -80,7 +68,7 @@ export default function Header() {
 
         {/* Desktop nav */}
         <nav className="hidden md:flex items-center gap-5 flex-1 justify-end">
-          {NAV.map(l => <NavLink_ key={l.to} {...l} />)}
+          {NAV_LINKS.map(l => <NavLink_ key={l.to} {...l} />)}
         </nav>
 
         {/* Mobile hamburger */}
@@ -106,7 +94,7 @@ export default function Header() {
       {mobileOpen && (
         <div className="md:hidden border-t border-gray-100 bg-white">
           <nav className="max-w-7xl mx-auto px-6 py-1">
-            {NAV.map(l => <MobileNavLink key={l.to} {...l} />)}
+            {NAV_LINKS.map(l => <MobileNavLink key={l.to} {...l} />)}
           </nav>
         </div>
       )}
