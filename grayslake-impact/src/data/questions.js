@@ -103,10 +103,18 @@ export const questions = [
         text: 'Village officials project "tens of millions of dollars in developer fees" if the campus is fully built out — allocated 50% to major infrastructure, 25% to special community projects, and 25% to resident cost-control measures.',
         sourceKey: 'villageoffaq',
       },
+      {
+        text: 'The Mayor of Grayslake has publicly cited approximately $300 million in property tax revenue over the coming decades, across all taxing districts. This is an official projection — not an independently verified figure or a confirmed outcome.',
+        sourceKey: 'chitrib_june2026',
+      },
+      {
+        text: 'The Deputy Village Manager has publicly cited over $1 billion across all taxing districts over 20 years. This is an official projection — not an independently verified figure or a confirmed outcome.',
+        sourceKey: 'chronicle2026',
+      },
     ],
     disputed: [
       {
-        text: 'No independent, Grayslake-specific property tax revenue projection has been released by the Village, T5, or Lake County. The only comparable public data is the DeKalb/Meta precedent — a different county with different levy rates — where 60.9% of a $31.1M annual tax bill went to School District 428. That figure is not transferable without a Lake County assessor valuation.',
+        text: 'Neither official projection has been independently verified. The only comparable publicly documented Illinois data is the DeKalb/Meta precedent — a different county with different levy rates — where 60.9% of a $31.1M annual tax bill went to School District 428. That ratio is not directly applicable without a Lake County Assessor valuation of the T5 campus.',
         sourceKey: 'capitolnews2026',
       },
     ],

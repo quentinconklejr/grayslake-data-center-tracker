@@ -25,10 +25,46 @@ export default function Schools() {
         <p className="text-2xs font-mono text-blue-600/60 uppercase tracking-[0.2em] mb-3">Education</p>
         <h1 className="text-4xl font-display font-bold text-gray-900 tracking-tight mb-3">School Funding Impact</h1>
         <p className="text-base text-gray-600 max-w-2xl leading-relaxed">
-          No Grayslake-specific school funding projections exist yet. This page presents the
-          DeKalb/Meta data center as an Illinois precedent case and identifies the districts
-          that would receive revenue if a similar allocation model applies.
+          Village officials have publicly cited projections ranging from approximately $300 million
+          to over $1 billion in property tax revenue across all taxing districts over the coming
+          decades. Those are official statements — not independently verified figures and not
+          confirmed outcomes. The Lake County Assessor has not yet valued the campus, and actual
+          revenue depends on that valuation and applicable levy rates.
         </p>
+      </FadeIn>
+
+      <FadeIn className="mb-10">
+        <p className="text-2xs font-mono text-gray-400 uppercase tracking-widest mb-4">Official Projections — Not Confirmed Outcomes</p>
+        <div className="grid md:grid-cols-2 gap-4">
+          <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
+            <p className="text-2xs font-mono text-blue-500 uppercase tracking-widest mb-2">Mayor of Grayslake</p>
+            <p className="text-4xl font-display font-bold text-gray-900 tracking-tight mb-1">~$300M</p>
+            <p className="text-sm text-gray-500 mb-4">projected property tax revenue over the coming decades</p>
+            <p className="text-xs text-gray-400 leading-relaxed">
+              Official statement from the Mayor of Grayslake. Not independently verified.
+              Actual revenue depends on the Lake County Assessor's campus valuation, which
+              has not been publicly released.
+            </p>
+            <div className="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between">
+              <span className="text-2xs font-mono text-amber-600 uppercase tracking-widest">Official projection</span>
+              <SourceCitation sourceKey="chitrib_june2026" />
+            </div>
+          </div>
+          <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
+            <p className="text-2xs font-mono text-blue-500 uppercase tracking-widest mb-2">Deputy Village Manager</p>
+            <p className="text-4xl font-display font-bold text-gray-900 tracking-tight mb-1">$1B+</p>
+            <p className="text-sm text-gray-500 mb-4">projected across all taxing districts over 20 years</p>
+            <p className="text-xs text-gray-400 leading-relaxed">
+              Official statement from the Deputy Village Manager. Not independently verified.
+              Actual revenue depends on the Lake County Assessor's campus valuation, which
+              has not been publicly released.
+            </p>
+            <div className="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between">
+              <span className="text-2xs font-mono text-amber-600 uppercase tracking-widest">Official projection</span>
+              <SourceCitation sourceKey="chronicle2026" />
+            </div>
+          </div>
+        </div>
       </FadeIn>
 
       <FadeIn>
@@ -38,12 +74,13 @@ export default function Schools() {
               <circle cx="8" cy="8" r="7" /><path d="M8 7v4M8 5.5v.5" strokeLinecap="round" />
             </svg>
             <div>
-              <p className="text-sm font-display font-semibold text-blue-800 mb-1.5">Comparable Case Study — Not a Grayslake Projection</p>
+              <p className="text-sm font-display font-semibold text-blue-800 mb-1.5">Comparable Case Study — Illinois Precedent for Distribution Pattern</p>
               <p className="text-base text-gray-600 leading-relaxed">
                 The data below comes from the Meta data center in DeKalb, IL — a similar AI/hyperscale
-                facility elsewhere in Illinois. It is used here as the best available public precedent
-                for how a large data center's property taxes are distributed to schools. No Lake County
-                assessor valuation or Grayslake school district revenue figure has been publicly released.
+                facility elsewhere in Illinois. It is used here to illustrate how a comparable campus's
+                property tax bill is typically distributed across school and other taxing bodies. Village
+                officials have cited total projections (above), but no Lake County Assessor valuation
+                or independently verified per-district figure has been publicly released.
               </p>
               <div className="mt-3"><SourceCitation sourceKey="capitolnews2026" /></div>
             </div>
@@ -101,9 +138,9 @@ export default function Schools() {
             <p className="text-2xs font-mono text-emerald-700 uppercase tracking-widest mb-2">Key Takeaway</p>
             <p className="text-base text-gray-600 leading-relaxed">
               In DeKalb, over 60% of a hyperscale data center's annual property tax bill flows
-              directly to the school district. If a similar allocation applies in Grayslake,
-              District 127 and District 46 would be the primary beneficiaries — but this depends
-              entirely on the Lake County assessor's valuation, which has not been publicly projected.
+              directly to the school district. Village officials' projections suggest a significant
+              school funding impact in Grayslake — but the per-district breakdown depends entirely
+              on the Lake County Assessor's valuation, which has not been publicly released.
             </p>
           </div>
         </FadeIn>
@@ -111,12 +148,13 @@ export default function Schools() {
 
       <FadeIn>
         <div className="bg-amber-50 border border-amber-200 rounded-xl px-6 py-5 mb-8">
-          <p className="text-2xs font-mono text-amber-700 uppercase tracking-widest mb-2">Data Gap — What We Don't Know Yet</p>
+          <p className="text-2xs font-mono text-amber-700 uppercase tracking-widest mb-2">What's Still Needed for a Verified Figure</p>
           <p className="text-base text-gray-600 leading-relaxed">
-            No Grayslake-specific school funding estimate exists in any public document. The Village
-            FAQ states the development agreements provide no financial incentives to T5. To project
-            actual revenue to CUSD 127 or District 46, you would still need: (1) a Lake County
-            Assessor valuation of the T5 campus and (2) the applicable tax levy rates for each district.
+            The Village FAQ states the development agreements provide no financial incentives to T5.
+            The official projections above are village officials' statements — not independently
+            verified estimates. To produce a verified per-district revenue figure, you would still
+            need: (1) a Lake County Assessor valuation of the T5 campus and (2) the applicable tax
+            levy rates for each district.
           </p>
         </div>
       </FadeIn>
