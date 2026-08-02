@@ -47,12 +47,18 @@ export default function Timeline({ events = [] }) {
             <div className="flex-1 min-w-0 sm:pt-px">
               <p className="text-sm font-display font-semibold text-gray-900 leading-snug">
                 {event.title}
-                {!event.description && event.sourceKey && <SourceCitation sourceKey={event.sourceKey} />}
+                {!event.description && (
+                  event.sourceKeys
+                    ? event.sourceKeys.map(k => <SourceCitation key={k} sourceKey={k} />)
+                    : event.sourceKey && <SourceCitation sourceKey={event.sourceKey} />
+                )}
               </p>
               {event.description && (
                 <p className="text-xs text-gray-500 leading-relaxed mt-0.5">
                   {event.description}
-                  {event.sourceKey && <SourceCitation sourceKey={event.sourceKey} />}
+                  {event.sourceKeys
+                    ? event.sourceKeys.map(k => <SourceCitation key={k} sourceKey={k} />)
+                    : event.sourceKey && <SourceCitation sourceKey={event.sourceKey} />}
                 </p>
               )}
             </div>

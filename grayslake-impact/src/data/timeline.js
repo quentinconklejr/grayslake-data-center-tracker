@@ -11,7 +11,7 @@ export const timelineEvents = [
     title: "Village approval process complete",
     description: "The Village FAQ records the approval process as spanning September 23, 2024 through May 6, 2025. Officials cited up to 1,500 permanent jobs and major tax revenue at public meetings during this period.",
     category: "approval",
-    sourceKey: "villageoffaq",
+    sourceKeys: ["villageoffaq", "govtech2025"],
   },
   {
     date: "2025-09",
@@ -25,7 +25,7 @@ export const timelineEvents = [
     title: "Site work begins",
     description: "Earthmoving and site preparation work underway on the first phase near Alleghany Road, documented in October 2025 reporting.",
     category: "construction",
-    sourceKey: "govtech2025",
+    sourceKey: "dailyherald2026",
   },
   {
     date: "2026-03",
@@ -71,8 +71,8 @@ export const timelineEvents = [
   },
   {
     date: "2026-06-05",
-    title: "Wetlands and federal jurisdiction flagged",
-    description: "T5 applied to fill approximately 15.75 acres of wetlands on the site. A September 2025 Stormwater Management Commission letter reportedly indicates some of those wetlands may fall under US Army Corps of Engineers jurisdiction, which would require a federal Section 404 permit. The Illinois Environmental Council has flagged the issue. Opponents have identified the USACE jurisdiction question as a key avenue of challenge.",
+    title: "Wetlands fill permit sought",
+    description: "T5 applied for a US Army Corps of Engineers permit to fill approximately 15.75 acres of wetlands on the site. As of the June 5, 2026 publication date, Lake County's Stormwater Management Commission had not yet received an application and did not expect one for about a month.",
     category: "legal",
     sourceKey: "chitrib_june2026",
   },
@@ -100,8 +100,8 @@ export const timelineEvents = [
   {
     date: "2029",
     title: "Full build-out projected",
-    description: "Campus could reach full 1.2 GW IT capacity. 18 buildings approved; CEO Pete Marin cited up to 20 as an upper estimate.",
+    description: "Campus could reach full 1.2 GW IT capacity. Village approvals cover 18 buildings; CEO Pete Marin cited up to 20 as an upper estimate.",
     category: "construction",
-    sourceKey: "patch2026",
+    sourceKeys: ["govtech2025", "dailyherald2026", "patch2026"],
   },
 ];
