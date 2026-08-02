@@ -113,10 +113,10 @@ export default function Schools() {
         <div className="bg-amber-50 border border-amber-200 rounded-xl px-6 py-5 mb-8">
           <p className="text-2xs font-mono text-amber-700 uppercase tracking-widest mb-2">Data Gap — What We Don't Know Yet</p>
           <p className="text-base text-gray-600 leading-relaxed">
-            No Grayslake-specific school funding estimate exists in any public document. To project
-            actual revenue to CUSD 127 or District 46, you would need: (1) a Lake County Assessor
-            valuation of the T5 campus, (2) the applicable tax levy rates for each district, and
-            (3) any abatement or incentive agreements that reduce taxable value.
+            No Grayslake-specific school funding estimate exists in any public document. The Village
+            FAQ states the development agreements provide no financial incentives to T5. To project
+            actual revenue to CUSD 127 or District 46, you would still need: (1) a Lake County
+            Assessor valuation of the T5 campus and (2) the applicable tax levy rates for each district.
           </p>
         </div>
       </FadeIn>

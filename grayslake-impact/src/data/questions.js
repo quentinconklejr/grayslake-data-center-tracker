@@ -112,8 +112,8 @@ export const questions = [
     ],
     unknown: [
       {
-        text: 'The Lake County Assessor has not yet publicly valued the T5 campus. Any tax abatement or TIF agreements that would reduce the taxable assessed value have not been disclosed.',
-        sourceKey: null,
+        text: 'The Village FAQ states that the development agreements provide no financial incentives to T5. The Lake County Assessor has not yet publicly valued the campus.',
+        sourceKey: 'villageoffaq',
       },
       {
         text: 'Whether T5 secured Illinois Data Center Investment Tax Exemption status before the two-year suspension of new applications (effective July 1, 2026, per the Governor\'s June 5, 2026 directive) is not publicly confirmed.',
