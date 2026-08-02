@@ -20,7 +20,7 @@ const STATS = [
     animated: true,
     suffix: ' MW',
     sub: 'Leasable at full buildout',
-    sourceKey: 'baxtel2026',
+    sourceKey: 'dcdGW2026',
   },
   {
     label: 'Permanent Jobs',
