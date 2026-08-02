@@ -1,9 +1,11 @@
 import PageTitle from '../components/ui/PageTitle'
 import SiteMap from '../components/map/SiteMap'
 import FadeIn from '../components/ui/FadeIn'
+import { FootnoteProvider, FootnoteList } from '../components/ui/FootnoteContext'
 
 export default function MapPage() {
   return (
+    <FootnoteProvider>
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
       <PageTitle title="Site Map" />
 
@@ -21,7 +23,8 @@ export default function MapPage() {
       </FadeIn>
 
       <SiteMap className="h-[calc(100vh-280px)] min-h-[520px]" />
-
+      <FootnoteList />
     </div>
+    </FootnoteProvider>
   )
 }
