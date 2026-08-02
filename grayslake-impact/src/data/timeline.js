@@ -64,6 +64,13 @@ export const timelineEvents = [
   },
   {
     date: "2026-06-05",
+    title: "Village FAQ updated — litigation notice added",
+    description: "The Village of Grayslake FAQ was updated as of June 5, 2026. The revised document states the Village can no longer respond to further questions about the project due to pending litigation.",
+    category: "legal",
+    sourceKey: "villageoffaq",
+  },
+  {
+    date: "2026-06-05",
     title: "Wetlands and federal jurisdiction flagged",
     description: "T5 applied to fill approximately 15.75 acres of wetlands on the site. A September 2025 Stormwater Management Commission letter reportedly indicates some of those wetlands may fall under US Army Corps of Engineers jurisdiction, which would require a federal Section 404 permit. The Illinois Environmental Council has flagged the issue. Opponents have identified the USACE jurisdiction question as a key avenue of challenge.",
     category: "legal",

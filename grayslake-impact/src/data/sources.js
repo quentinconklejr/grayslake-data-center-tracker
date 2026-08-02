@@ -14,7 +14,7 @@ export const sources = {
   dcdGW2026: {
     title: "T5 plans five gigawatt-scale data center campuses, announces Chicago campus",
     publisher: "Data Center Dynamics",
-    date: "2026",
+    date: "Feb. 10, 2025",
     url: "https://www.datacenterdynamics.com/en/news/t5-plans-five-gigawatt-scale-data-center-campuses-announces-chicago-campus/",
   },
   dailyherald2026: {
@@ -57,8 +57,9 @@ export const sources = {
   villageoffaq: {
     title: "Approved T5 Data Center Campus FAQs",
     publisher: "Village of Grayslake",
-    date: "2025",
+    date: "June 5, 2026",
     url: "https://villageofgrayslake.com/DocumentCenter/View/15282",
+    note: "Document updated as of June 5, 2026. The revised version includes a notice that the Village can no longer respond to further questions due to pending litigation.",
   },
   cub2026: {
     title: "How data centers are raising our bills in Illinois — and what we should do about it",

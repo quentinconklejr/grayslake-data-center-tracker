@@ -138,6 +138,10 @@ export const questions = [
         text: 'The Mayor of Grayslake has stated that T5 received all required land-use and zoning approvals.',
         sourceKey: 'dailyherald2026',
       },
+      {
+        text: 'The Village FAQ, updated June 5, 2026, states the Village can no longer respond to further questions about the project due to pending litigation.',
+        sourceKey: 'villageoffaq',
+      },
     ],
     disputed: [
       {
