@@ -10,6 +10,7 @@ import SiteMap from '../components/map/SiteMap'
 import SourceCitation from '../components/ui/SourceCitation'
 import { FootnoteProvider, FootnoteList } from '../components/ui/FootnoteContext'
 import { projections } from '../data/projections'
+import { LAST_VERIFIED } from '../data/siteConfig'
 
 const { project, jobs } = projections
 
@@ -80,7 +81,7 @@ export default function Home() {
               and Route 83 in Grayslake, Illinois. This tracker collects public records and press
               coverage on the project and links every claim to its source.
             </p>
-            <p className="text-2xs font-mono text-gray-400 mb-12">Last verified Aug 2, 2026</p>
+            <p className="text-2xs font-mono text-gray-400 mb-12">Last verified {LAST_VERIFIED}</p>
           </FadeIn>
 
           {/* Headline stats — typographically dominant */}

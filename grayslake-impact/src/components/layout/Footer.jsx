@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { SITE_CONTACT } from '../../data/siteConfig'
 
 const NAV = [
   { to: '/tax-impact', label: 'Tax Impact' },
@@ -12,7 +13,7 @@ const NAV = [
 
 const FOOTER_LINKS = [
   { to: '/about',                       label: 'About',   external: false },
-  { to: 'mailto:qconkle2@illinois.edu', label: 'Contact', external: true  },
+  { to: `mailto:${SITE_CONTACT.email}`, label: 'Contact', external: true  },
 ]
 
 export default function Footer() {

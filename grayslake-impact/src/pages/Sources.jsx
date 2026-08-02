@@ -1,6 +1,7 @@
 import PageTitle from '../components/ui/PageTitle'
 import FadeIn from '../components/ui/FadeIn'
 import { sources } from '../data/sources'
+import { LAST_VERIFIED } from '../data/siteConfig'
 
 const SOURCE_CATEGORIES = [
   { label: 'Government Records', desc: 'Village of Grayslake FAQs and meeting records, Village of Mundelein statement, Illinois DCEO program pages' },
@@ -21,7 +22,7 @@ export default function Sources() {
           All figures in this tracker come from publicly available documents and verified journalism.
           Estimated figures are labeled.
         </p>
-        <p className="text-2xs font-mono text-gray-400 mt-3">Last verified Aug 2, 2026</p>
+        <p className="text-2xs font-mono text-gray-400 mt-3">Last verified {LAST_VERIFIED}</p>
       </FadeIn>
 
       <FadeIn className="space-y-1.5 mb-12">

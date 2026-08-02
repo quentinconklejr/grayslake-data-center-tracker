@@ -6,6 +6,7 @@ import FadeIn from '../components/ui/FadeIn'
 import AnimatedNumber from '../components/ui/AnimatedNumber'
 import { FootnoteProvider, FootnoteList } from '../components/ui/FootnoteContext'
 import { projections } from '../data/projections'
+import { LAST_VERIFIED } from '../data/siteConfig'
 
 const { project, jobs } = projections
 
@@ -65,7 +66,7 @@ export default function Jobs() {
           Village documents describe construction phase employment as "{jobs.constructionPhase}."
           No precise headcount has been publicly sourced for that period.
         </p>
-        <p className="text-2xs font-mono text-gray-400 mt-3">Last verified Aug 2, 2026</p>
+        <p className="text-2xs font-mono text-gray-400 mt-3">Last verified {LAST_VERIFIED}</p>
       </FadeIn>
 
       <FadeIn className="grid grid-cols-2 lg:grid-cols-4 gap-8 mb-12">

@@ -6,6 +6,7 @@ import SourceCitation from '../components/ui/SourceCitation'
 import FadeIn from '../components/ui/FadeIn'
 import { FootnoteProvider, FootnoteList } from '../components/ui/FootnoteContext'
 import { projections } from '../data/projections'
+import { LAST_VERIFIED } from '../data/siteConfig'
 
 const { project, fees, schoolFundingComparable: meta, stateIncentiveContext: incentive } = projections
 
@@ -31,7 +32,7 @@ export default function TaxImpact() {
           Property tax revenue depends on Lake County assessor valuation, which has not been
           publicly projected. The DeKalb/Meta data center provides the closest Illinois precedent.
         </p>
-        <p className="text-2xs font-mono text-gray-400 mt-3">Last verified Aug 2, 2026</p>
+        <p className="text-2xs font-mono text-gray-400 mt-3">Last verified {LAST_VERIFIED}</p>
       </FadeIn>
 
       <FadeIn className="grid grid-cols-2 lg:grid-cols-4 gap-8 mb-12">

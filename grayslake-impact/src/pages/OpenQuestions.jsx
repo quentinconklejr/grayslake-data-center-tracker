@@ -6,6 +6,7 @@ import FadeIn from '../components/ui/FadeIn'
 import { FootnoteProvider, FootnoteList } from '../components/ui/FootnoteContext'
 import { EVIDENCE } from '../components/ui/EvidenceBlock'
 import { questions } from '../data/questions'
+import { LAST_VERIFIED } from '../data/siteConfig'
 
 // Pre-collect all sourceKeys in order of first appearance across all questions
 // so footnote numbers are stable even when accordion items are collapsed.
@@ -157,7 +158,7 @@ export default function OpenQuestions() {
         <p className="text-base text-gray-600 max-w-2xl leading-relaxed">
           Disputes and data gaps around T5 @ Chicago IV, organized by topic and sourced to the public record.
         </p>
-        <p className="text-2xs font-mono text-gray-400 mt-3">Last verified Aug 2, 2026</p>
+        <p className="text-2xs font-mono text-gray-400 mt-3">Last verified {LAST_VERIFIED}</p>
       </FadeIn>
 
       <FadeIn>

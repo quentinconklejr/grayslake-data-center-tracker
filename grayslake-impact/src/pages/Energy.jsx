@@ -6,6 +6,7 @@ import FadeIn from '../components/ui/FadeIn'
 import { FootnoteProvider, FootnoteList } from '../components/ui/FootnoteContext'
 import EvidenceBlock from '../components/ui/EvidenceBlock'
 import { projections } from '../data/projections'
+import { LAST_VERIFIED } from '../data/siteConfig'
 
 const { project } = projections
 const buffer = project.securedPowerMW - project.totalCapacityMW
@@ -24,7 +25,7 @@ export default function Energy() {
           {project.totalCapacityMW.toLocaleString()} MW of leasable IT capacity. The {buffer} MW difference
           serves as a buffer for redundancy and future phases. Both figures are from public developer disclosures.
         </p>
-        <p className="text-2xs font-mono text-gray-400 mt-3">Last verified Aug 2, 2026</p>
+        <p className="text-2xs font-mono text-gray-400 mt-3">Last verified {LAST_VERIFIED}</p>
       </FadeIn>
 
       <FadeIn className="grid grid-cols-2 lg:grid-cols-4 gap-8 mb-12">

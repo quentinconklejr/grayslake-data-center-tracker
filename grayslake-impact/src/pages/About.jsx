@@ -1,5 +1,6 @@
 import PageTitle from '../components/ui/PageTitle'
 import FadeIn from '../components/ui/FadeIn'
+import { LAST_VERIFIED, SITE_CONTACT } from '../data/siteConfig'
 
 export default function About() {
   return (
@@ -12,7 +13,7 @@ export default function About() {
         <p className="text-base text-gray-600 max-w-2xl leading-relaxed">
           A resident-built resource. No affiliation with T5 Data Centers or the Village of Grayslake.
         </p>
-        <p className="text-2xs font-mono text-gray-400 mt-3">Last updated Aug 2, 2026</p>
+        <p className="text-2xs font-mono text-gray-400 mt-3">Last updated {LAST_VERIFIED}</p>
       </FadeIn>
 
       <FadeIn className="mb-10">
@@ -60,7 +61,7 @@ export default function About() {
           </p>
           <div className="space-y-3">
             <a
-              href="mailto:qconkle2@illinois.edu"
+              href={`mailto:${SITE_CONTACT.email}`}
               className="flex items-center gap-3 group"
             >
               <div className="w-7 h-7 rounded bg-gray-100 border border-gray-200 flex items-center justify-center shrink-0 group-hover:border-blue-300 group-hover:bg-blue-50 transition-colors">
@@ -70,11 +71,11 @@ export default function About() {
                 </svg>
               </div>
               <span className="text-sm font-mono text-gray-600 group-hover:text-blue-600 transition-colors">
-                qconkle2@illinois.edu
+                {SITE_CONTACT.email}
               </span>
             </a>
             <a
-              href="tel:+12243309078"
+              href={`tel:${SITE_CONTACT.phoneTel}`}
               className="flex items-center gap-3 group"
             >
               <div className="w-7 h-7 rounded bg-gray-100 border border-gray-200 flex items-center justify-center shrink-0 group-hover:border-blue-300 group-hover:bg-blue-50 transition-colors">
@@ -83,7 +84,7 @@ export default function About() {
                 </svg>
               </div>
               <span className="text-sm font-mono text-gray-600 group-hover:text-blue-600 transition-colors">
-                224-330-9078
+                {SITE_CONTACT.phone}
               </span>
             </a>
           </div>

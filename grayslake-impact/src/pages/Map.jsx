@@ -2,6 +2,7 @@ import PageTitle from '../components/ui/PageTitle'
 import SiteMap from '../components/map/SiteMap'
 import FadeIn from '../components/ui/FadeIn'
 import { FootnoteProvider, FootnoteList } from '../components/ui/FootnoteContext'
+import { LAST_VERIFIED } from '../data/siteConfig'
 
 export default function MapPage() {
   return (
@@ -19,7 +20,7 @@ export default function MapPage() {
           derived from survey or GIS data.
           <span className="block mt-2 text-sm text-gray-400">Click either boundary or the orange marker to view project statistics.</span>
         </p>
-        <p className="text-2xs font-mono text-gray-400 mt-3">Last verified Aug 2, 2026</p>
+        <p className="text-2xs font-mono text-gray-400 mt-3">Last verified {LAST_VERIFIED}</p>
       </FadeIn>
 
       <SiteMap className="h-[calc(100vh-280px)] min-h-[520px]" />

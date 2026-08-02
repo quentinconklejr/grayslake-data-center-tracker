@@ -3,6 +3,7 @@ import TimelineUI from '../components/ui/Timeline'
 import FadeIn from '../components/ui/FadeIn'
 import { FootnoteProvider, FootnoteList } from '../components/ui/FootnoteContext'
 import { timelineEvents } from '../data/timeline'
+import { LAST_VERIFIED } from '../data/siteConfig'
 
 const LEGEND = [
   { label: 'Approval',     cls: 'text-blue-700 bg-blue-50 border-blue-200' },
@@ -36,7 +37,7 @@ export default function TimelinePage() {
           <span className="text-gray-300">·</span>
           <span className="text-2xs font-mono text-gray-400">Oldest → newest</span>
           <span className="text-gray-300">·</span>
-          <span className="text-2xs font-mono text-gray-400">Last verified Aug 2, 2026</span>
+          <span className="text-2xs font-mono text-gray-400">Last verified {LAST_VERIFIED}</span>
         </div>
       </FadeIn>
 
