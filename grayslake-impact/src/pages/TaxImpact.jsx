@@ -29,13 +29,14 @@ export default function TaxImpact() {
           Property tax revenue depends on Lake County assessor valuation, which has not been
           publicly projected. The DeKalb/Meta data center provides the closest Illinois precedent.
         </p>
+        <p className="text-2xs font-mono text-gray-400 mt-3">Last verified Aug 2, 2026</p>
       </FadeIn>
 
       <FadeIn className="grid grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
-        <StatCard label="Total Investment"    value={`$${project.costLow}–${project.costHigh}B`} sub="Developer-stated range" badge="Range" accent="blue"  sourceKey="dcd2026" />
+        <StatCard label="Total Investment"    value={`$${project.costLow}–${project.costHigh}B`} sub="Mayor Davies: $8.5B · CEO Marin: up to $18B" badge="Range" accent="blue"  sourceKey="govtech2025" />
         <StatCard label="Developer Fees"      value="Tens of millions"                             sub="If fully built out"                  accent="blue"  sourceKey="villageoffaq" />
-        <StatCard label="Meta / DeKalb Ref."  value={`$${meta.totalPropertyTaxBilled2025}M`}      sub="Annual property tax (2025)"           accent="green" sourceKey="capitolnews2026" />
-        <StatCard label="DeKalb → Schools"    value={`${meta.percentToSchoolDistrict}%`}            sub="of DeKalb tax to schools"                        accent="green" sourceKey="capitolnews2026" />
+        <StatCard label="Meta / DeKalb Ref."  value={`$${meta.totalPropertyTaxBilled2025}M`}      sub="One facility, 2025 tax year"          accent="green" sourceKey="capitolnews2026" />
+        <StatCard label="DeKalb → Schools"    value={`${meta.percentToSchoolDistrict}%`}            sub="Avg. across 3 properties, 2021–2024"              accent="green" sourceKey="capitolnews2026" />
       </FadeIn>
 
       <div className="grid lg:grid-cols-2 gap-px bg-gray-200 rounded-xl overflow-hidden border border-gray-200 mb-8">
@@ -43,12 +44,12 @@ export default function TaxImpact() {
         <FadeIn className="bg-white p-8">
           <div className="flex items-start justify-between mb-1">
             <div>
-              <p className="text-2xs font-mono text-gray-400 uppercase tracking-widest mb-1">Village Agreement</p>
+              <p className="text-2xs font-mono text-gray-400 uppercase tracking-widest mb-1">Mayor's Estimate</p>
               <h2 className="text-2xl font-display font-bold text-gray-900">Developer Fee Allocation</h2>
             </div>
-            <SourceCitation sourceKey="villageoffaq" />
+            <SourceCitation sourceKey="govtech2025" />
           </div>
-          <p className="text-sm text-gray-500 mb-8">Per Village of Grayslake agreement · % of total fees collected</p>
+          <p className="text-sm text-gray-500 mb-8">Per Mayor Davies (Government Technology) · ballpark figures, still under negotiation</p>
           <TaxRevenueChart data={FEE_DATA} />
         </FadeIn>
 
@@ -66,13 +67,11 @@ export default function TaxImpact() {
 
           <dl className="mt-8 space-y-0 border-t border-gray-200 pt-6">
             {[
-              ['Facility',         meta.source],
-              ['Tax year',         '2025'],
-              ['Total billed',     `$${meta.totalPropertyTaxBilled2025}M / year`],
-              ['School district',  meta.districtName],
-              ['School share',     `${meta.percentToSchoolDistrict}% of total`],
-              ['Other bodies',     `${metaOtherPct}% of total`],
-              ['Outcome',          meta.outcome],
+              ['Facility',              meta.source],
+              ['One-facility tax (2025)', `$${meta.totalPropertyTaxBilled2025}M / year`],
+              ['School share',          `~${meta.percentToSchoolDistrict}% — avg. across 3 properties, 2021–2024`],
+              ['School district',       meta.districtName],
+              ['Outcome',               meta.outcome],
             ].map(([k, v]) => (
               <div key={k} className="flex justify-between items-start gap-4 py-2.5 border-b border-gray-100 last:border-0">
                 <dt className="text-sm text-gray-500 shrink-0">{k}</dt>

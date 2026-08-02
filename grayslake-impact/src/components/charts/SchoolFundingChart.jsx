@@ -12,11 +12,19 @@ export default function SchoolFundingChart() {
   return (
     <div ref={ref} className="space-y-6">
 
-      {/* Total callout */}
-      <div className="flex items-baseline gap-2">
-        <span className="text-4xl font-display font-bold text-gray-900 tracking-tight">${TOTAL_M}M</span>
-        <span className="text-sm text-gray-500">annual property tax — DeKalb, IL (2025)</span>
+      {/* Total callout — one facility, 2025 */}
+      <div>
+        <div className="flex items-baseline gap-2 mb-0.5">
+          <span className="text-4xl font-display font-bold text-gray-900 tracking-tight">${TOTAL_M}M</span>
+          <span className="text-sm text-gray-500">2025 tax bill — one DeKalb facility</span>
+        </div>
+        <p className="text-2xs font-mono text-gray-400">Single-facility figure · 2025 tax year</p>
       </div>
+
+      {/* Separator note */}
+      <p className="text-2xs font-mono text-amber-600 uppercase tracking-widest border-t border-amber-100 pt-3">
+        School share below — three-property average, 2021–2024
+      </p>
 
       {/* Proportion bar */}
       <div className="space-y-1.5">
@@ -49,12 +57,12 @@ export default function SchoolFundingChart() {
         <div className="border-l-2 border-emerald-500 pl-3">
           <p className="text-2xs font-mono text-gray-400 uppercase tracking-widest mb-1">School District 428</p>
           <p className="text-2xl font-display font-bold text-gray-900">{SCHOOL_PCT}%</p>
-          <p className="text-xs text-gray-500 mt-0.5">of total tax bill</p>
+          <p className="text-xs text-gray-500 mt-0.5">avg. share across three properties</p>
         </div>
         <div className="border-l-2 border-gray-300 pl-3">
           <p className="text-2xs font-mono text-gray-400 uppercase tracking-widest mb-1">Other Taxing Bodies</p>
           <p className="text-2xl font-display font-bold text-gray-500">{OTHER_PCT}%</p>
-          <p className="text-xs text-gray-500 mt-0.5">of total tax bill</p>
+          <p className="text-xs text-gray-500 mt-0.5">calculated complement</p>
         </div>
       </div>
 

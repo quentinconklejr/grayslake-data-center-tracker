@@ -33,7 +33,7 @@ export default function JobsTimelineChart() {
       {ITEMS.map((item, i) => (
         <div key={item.label} className="space-y-2">
           <div className="flex items-start justify-between gap-4">
-            <div>
+            <div className="min-w-0">
               <div className="flex items-center gap-2">
                 <span className="text-sm font-display font-semibold text-gray-900">{item.label}</span>
                 {!item.sourced && (

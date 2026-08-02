@@ -42,8 +42,8 @@ const STATS = [
     label: 'Total Investment',
     display: `$${project.costLow}–${project.costHigh}B`,
     animated: false,
-    sub: 'Developer estimate',
-    sourceKey: 'dcd2026',
+    sub: 'Mayor Davies: $8.5B · CEO Marin: up to $18B',
+    sourceKey: 'govtech2025',
   },
 ]
 
@@ -54,10 +54,10 @@ const FACETS = [
     catColor: 'text-blue-600',
     catBorder: 'border-blue-200',
     headline: 'Developer fees in the tens of millions.',
-    body: 'Village officials project "tens of millions" in developer fees if fully built out — split 50% to major infrastructure, 25% community projects, 25% resident cost-control. Property tax revenue depends on Lake County assessor valuation, not yet projected.',
+    body: 'Mayor Davies described the developer fee split as approximately 50% to major infrastructure, 25% community projects, 25% resident cost-control — characterized as ballpark figures still under negotiation. Property tax revenue depends on Lake County assessor valuation, not yet projected.',
     chart: <TaxRevenueChart />,
     chartLabel: 'Developer Fee Allocation',
-    sourceKey: 'villageoffaq',
+    sourceKey: 'govtech2025',
     textCls: 'lg:col-span-5', chartCls: 'lg:col-span-7', flip: false,
   },
   {
@@ -90,7 +90,7 @@ const FACETS = [
     catColor: 'text-violet-600',
     catBorder: 'border-violet-200',
     headline: 'In DeKalb, 60.9% went to schools.',
-    body: 'No Grayslake-specific school funding projection has been released. The Meta data center in DeKalb, IL provides the closest Illinois precedent: of $31.1M in annual property taxes, 60.9% went to School District 428 — which funded construction of Mitchell Elementary.',
+    body: 'No Grayslake-specific school funding projection has been released. The Meta data center in DeKalb provides the closest Illinois precedent: School District 428 received ~60.9% of Meta\'s taxes across three properties (multi-year data). The 2025 bill for one facility was $31.1M — a separate figure from a different dataset.',
     chart: <SchoolFundingChart />,
     chartLabel: 'DeKalb / Meta Precedent (2025)',
     sourceKey: 'capitolnews2026',

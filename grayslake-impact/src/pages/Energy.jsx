@@ -21,13 +21,14 @@ export default function Energy() {
           {project.totalCapacityMW.toLocaleString()} MW of leasable IT capacity — a {buffer} MW buffer
           for redundancy and future phases. Both figures are sourced from public developer disclosures.
         </p>
+        <p className="text-2xs font-mono text-gray-400 mt-3">Last verified Aug 2, 2026</p>
       </FadeIn>
 
       <FadeIn className="grid grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
         <StatCard label="Secured Power"     value={`${project.securedPowerMW.toLocaleString()} MW`}  sub="Utility-contracted capacity"   accent="amber" sourceKey="dcdGW2026" />
         <StatCard label="IT Capacity"       value={`${project.totalCapacityMW.toLocaleString()} MW`} sub="Leasable at full buildout"      accent="blue"  sourceKey="dcdGW2026" />
-        <StatCard label="Power Buffer"      value={`${buffer} MW`}                                    sub="Secured above leasable cap"    accent="amber" sourceKey="dcdGW2026" />
-        <StatCard label="PJM Zone"          value="COMED"                                             sub="ComEd transmission zone, PJM"  accent="blue"  sourceKey="dceo2026" />
+        <StatCard label="Power Buffer"      value={`${buffer} MW`}                                    sub="Calculated: 1,600 − 1,200 MW"  accent="amber" />
+        <StatCard label="PJM Zone"          value="COMED"                                             sub="ComEd transmission zone, PJM"  accent="blue"  sourceKey="villageoffaq" />
       </FadeIn>
 
       <FadeIn className="bg-white border border-gray-200 rounded-xl p-8 mb-6 shadow-sm">
@@ -54,7 +55,7 @@ export default function Energy() {
           <div className="pl-4 border-l-2 border-gray-300 py-1">
             <div className="flex items-center gap-2 mb-1.5">
               <p className="text-sm font-display font-semibold text-gray-800">Direct distribution costs: tariff-walled</p>
-              <SourceCitation sourceKey="dceo2026" />
+              <SourceCitation sourceKey="villageoffaq" />
             </div>
             <p className="text-base text-gray-600 leading-relaxed">
               Illinois maintains a separate utility rate class for large industrial users including data centers.

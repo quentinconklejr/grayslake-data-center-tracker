@@ -7,7 +7,7 @@ export default function SourceCitation({ sourceKey }) {
 
   if (source.status === 'unverified') {
     return (
-      <span className="inline-flex items-center gap-1 text-2xs font-mono text-gray-400">
+      <span className="inline-flex items-center gap-1 text-xs font-mono text-gray-400">
         <svg className="w-2.5 h-2.5 shrink-0 text-amber-500" viewBox="0 0 10 10" fill="none" stroke="currentColor" strokeWidth="1.5">
           <circle cx="5" cy="5" r="4" />
           <path d="M5 3v2.5M5 7h.01" strokeLinecap="round" />
@@ -24,7 +24,7 @@ export default function SourceCitation({ sourceKey }) {
       target="_blank"
       rel="noopener noreferrer"
       title={source.title}
-      className="inline-flex items-center gap-1 text-2xs font-mono text-gray-400 hover:text-blue-600 transition-colors duration-150 group"
+      className="inline-flex items-center gap-1 text-xs font-mono text-gray-400 hover:text-blue-600 transition-colors duration-150 group"
     >
       <svg
         className="w-2.5 h-2.5 shrink-0 text-gray-300 group-hover:text-blue-500 transition-colors"

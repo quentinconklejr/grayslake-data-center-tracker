@@ -50,7 +50,7 @@ export const questions = [
     stated: [
       {
         text: 'Illinois utility regulation maintains a separate rate class for large industrial users including data centers. The ICC approved a ComEd tariff structure that requires data centers to bear their own transmission and distribution upgrade costs, containing those costs within the business rate class.',
-        sourceKey: 'dceo2026',
+        sourceKey: 'villageoffaq',
       },
     ],
     disputed: [],
@@ -76,17 +76,16 @@ export const questions = [
         sourceKey: 'villageoffaq',
       },
       {
-        text: 'Developer disclosures describe up to 20 buildings and 1,200 MW of leasable IT capacity at full buildout.',
+        text: '18 buildings were approved per Daily Herald and Government Technology reporting. Developer CEO Pete Marin cited up to 20 buildings as an upper estimate. Leasable IT capacity is 1,200 MW at full buildout.',
         sourceKey: 'govtech2025',
       },
     ],
-    disputed: [
-      {
-        text: "The opposition's attorney and some developer marketing materials separately cited 1.55 GW of total ComEd capacity requested — if realized, that would exceed the 1.2 GW leasable figure the Village FAQ states.",
-        sourceKey: 'dailyherald2026',
-      },
-    ],
+    disputed: [],
     unknown: [
+      {
+        text: 'T5 CEO Pete Marin stated a total ComEd capacity request of 1.55 GW. The Village FAQ records only leasable IT capacity at 1.2 GW — no gigawatt ceiling appears in Village documents. The gap between those two figures has not been publicly explained, and no official ceiling has been published.',
+        sourceKey: 'govtech2025',
+      },
       {
         text: 'Final building count, phasing schedule beyond Phase 1, and whether the option parcel will be exercised are not determined.',
         sourceKey: null,
@@ -100,8 +99,8 @@ export const questions = [
     category: 'tax',
     stated: [
       {
-        text: 'Village officials project "tens of millions of dollars in developer fees" if the campus is fully built out — allocated 50% to major infrastructure, 25% to special community projects, and 25% to resident cost-control measures.',
-        sourceKey: 'villageoffaq',
+        text: 'Mayor Davies described the fee split as approximately 50% to major infrastructure, 25% to special community projects, and 25% to resident cost-control measures. These figures were characterized as ballpark estimates and the final allocation was still under negotiation at the time of the Government Technology article.',
+        sourceKey: 'govtech2025',
       },
       {
         text: 'The Mayor of Grayslake has publicly cited approximately $300 million in property tax revenue over the coming decades, across all taxing districts. This is an official projection — not an independently verified figure or a confirmed outcome.',
@@ -114,7 +113,7 @@ export const questions = [
     ],
     disputed: [
       {
-        text: 'Neither official projection has been independently verified. The only comparable publicly documented Illinois data is the DeKalb/Meta precedent — a different county with different levy rates — where 60.9% of a $31.1M annual tax bill went to School District 428. That ratio is not directly applicable without a Lake County Assessor valuation of the T5 campus.',
+        text: 'Neither official projection has been independently verified. The only comparable publicly documented Illinois data is the DeKalb/Meta precedent — a different county with different levy rates. Capitol News Illinois reported School District 428 received approximately 60.9% of Meta\'s property taxes across three DeKalb County properties (multi-year data). The 2025 tax bill for one Meta facility was $31.1M. These figures come from different datasets and cannot be combined into a single per-district ratio. Neither is directly applicable without a Lake County Assessor valuation of the T5 campus.',
         sourceKey: 'capitolnews2026',
       },
     ],
@@ -124,7 +123,7 @@ export const questions = [
         sourceKey: 'villageoffaq',
       },
       {
-        text: 'Whether T5 secured Illinois Data Center Investment Tax Exemption status before the two-year suspension of new applications (effective July 1, 2026, per the Governor\'s June 5, 2026 directive) is not publicly confirmed.',
+        text: 'Whether T5 secured Illinois Data Center Investment Tax Exemption status before the suspension of new applications (effective July 1, 2026, per the Governor\'s June 5, 2026 directive) is not publicly confirmed. No stated duration for the suspension appears on the DCEO page.',
         sourceKey: 'dceo2026',
       },
     ],
@@ -136,13 +135,13 @@ export const questions = [
     category: 'process',
     stated: [
       {
-        text: 'The Mayor of Grayslake has stated that T5 received all required land-use and zoning approvals and that environmental reviews were conducted in accordance with Village procedures.',
+        text: 'The Mayor of Grayslake has stated that T5 received all required land-use and zoning approvals.',
         sourceKey: 'dailyherald2026',
       },
     ],
     disputed: [
       {
-        text: "The opposition lawsuit argues that public hearings were inadequate: that residents had no meaningful opportunity for cross-examination of expert witnesses, that the Village commissioned no independent third-party environmental, water, or traffic studies before approval, and that the process did not comply with applicable procedural requirements.",
+        text: "The opposition lawsuit argues that public hearings were inadequate: that residents had no meaningful opportunity for cross-examination of expert witnesses, that the Village commissioned no independent third-party environmental or water studies before approval, and that the process did not comply with applicable procedural requirements.",
         sourceKey: 'dailyherald2026',
       },
       {

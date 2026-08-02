@@ -33,7 +33,7 @@ const PANEL_ROWS = [
   ['Location',       'Peterson Rd & Route 83'],
   ['Status',         'Under Construction'],
   ['Campus area',    `${project.totalAcres.toLocaleString()} ac · ${(project.totalSqFt / 1_000_000).toFixed(1)}M sq ft`],
-  ['Max buildings',  project.maxBuildings],
+  ['Buildings',      `${project.approvedBuildings} approved (${project.maxBuildings} max)`],
   ['IT capacity',    `${project.totalCapacityMW.toLocaleString()} MW`],
   ['Secured power',  `${project.securedPowerMW.toLocaleString()} MW`],
   ['Investment',     `$${project.costLow}–${project.costHigh}B est.`],

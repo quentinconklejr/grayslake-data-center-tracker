@@ -171,7 +171,7 @@ export default function OpenQuestions() {
           The key disputes and data gaps around T5 @ Chicago IV — organized by topic,
           sourced to the record, and updated as new public information becomes available.
         </p>
-        <p className="text-2xs font-mono text-gray-400 mt-3">Updated Jul 31, 2026</p>
+        <p className="text-2xs font-mono text-gray-400 mt-3">Updated Aug 2, 2026</p>
       </FadeIn>
 
       <FadeIn>

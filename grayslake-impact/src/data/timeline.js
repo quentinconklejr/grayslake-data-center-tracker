@@ -2,7 +2,7 @@ export const timelineEvents = [
   {
     date: "2024",
     title: "Initial village paperwork filed",
-    description: "Village FAQ records 472 acres and 10,100,000 sq ft of total buildable area.",
+    description: "T5 files for village approvals; the formal approval process begins September 2024.",
     category: "approval",
     sourceKey: "hoodline2026",
   },
@@ -23,9 +23,9 @@ export const timelineEvents = [
   {
     date: "2025-10",
     title: "Site work begins",
-    description: "Earthmoving and site preparation work underway on the first phase near Alleghany Road, per Daily Herald reporting and photo documentation from October 2025.",
+    description: "Earthmoving and site preparation work underway on the first phase near Alleghany Road, documented in October 2025 reporting.",
     category: "construction",
-    sourceKey: "dailyherald2026",
+    sourceKey: "govtech2025",
   },
   {
     date: "2026-03",
@@ -58,7 +58,7 @@ export const timelineEvents = [
   {
     date: "2026-06-05",
     title: "State incentive program changes",
-    description: "Governor directs DCEO to implement a two-year suspension of new data center tax incentive applications, effective July 1, 2026 (directive issued June 5, 2026).",
+    description: "Governor directs DCEO to stop processing new data center tax incentive applications, effective July 1, 2026 (directive issued June 5, 2026). No stated duration appears on the DCEO page.",
     category: "policy",
     sourceKey: "dceo2026",
   },
@@ -70,14 +70,14 @@ export const timelineEvents = [
     sourceKey: "chitrib_june2026",
   },
   {
-    date: "2026-06-11",
+    date: "2026-06",
     title: "Avon Township board adopts transparency resolution",
     description: "Avon Township's elected board adopted a resolution calling for greater transparency and community engagement regarding the T5 development. Avon Township is a township government, not a municipality.",
     category: "policy",
-    sourceKey: "chitrib_june2026",
+    sourceKey: "chronicle2026",
   },
   {
-    date: "2026-07-11",
+    date: "2026-06-26",
     title: "Opposition coalition signals intent to file civil actions",
     description: "Chronicle Media reported that the opposition coalition indicated it may pursue civil litigation against the project. No filings had been made at the time of publication.",
     category: "legal",
@@ -93,7 +93,7 @@ export const timelineEvents = [
   {
     date: "2029",
     title: "Full build-out projected",
-    description: "Campus could reach full 1.2GW capacity across up to 20 buildings.",
+    description: "Campus could reach full 1.2 GW IT capacity. 18 buildings approved; CEO Pete Marin cited up to 20 as an upper estimate.",
     category: "construction",
     sourceKey: "patch2026",
   },

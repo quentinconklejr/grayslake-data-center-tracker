@@ -10,10 +10,11 @@ const { schoolFundingComparable: meta } = projections
 const metaOtherPct = +(100 - meta.percentToSchoolDistrict).toFixed(1)
 
 const GRAYSLAKE_DISTRICTS = [
-  { name: 'Grayslake CUSD 127',    desc: 'High school and middle school district. Includes Grayslake Central and North High Schools.', sub: 'Largest district taxing body by levy share' },
-  { name: 'Grade School District 46', desc: 'Elementary schools within Avon Township. Likely the primary beneficiary after CUSD 127.', sub: 'Elementary through 8th grade' },
-  { name: 'College of Lake County', desc: 'Community college receiving a share of Lake County property tax extensions.', sub: 'CLC — Grayslake campus' },
-  { name: 'Other Taxing Bodies',    desc: 'Grayslake Public Library, Grayslake-Avon Fire Protection District, Avon Township road district.', sub: 'Fire, library, township' },
+  { name: 'Fremont Elementary District 79',    desc: 'Elementary school district named in the Village FAQ as a taxing body for the campus area.', sub: 'Per Village FAQ' },
+  { name: 'Mundelein High School District 120', desc: 'High school district named in the Village FAQ as a taxing body for the campus area.',      sub: 'Per Village FAQ' },
+  { name: 'Fremont Library',                    desc: 'Public library district named in the Village FAQ as a taxing body.',                        sub: 'Per Village FAQ' },
+  { name: 'Round Lake Area Park District',      desc: 'Park district named in the Village FAQ as a taxing body for the campus area.',             sub: 'Per Village FAQ' },
+  { name: 'Grayslake Park District',            desc: 'Park district named in the Village FAQ as a taxing body.',                                 sub: 'Per Village FAQ' },
 ]
 
 export default function Schools() {
@@ -76,11 +77,11 @@ export default function Schools() {
             <div>
               <p className="text-sm font-display font-semibold text-blue-800 mb-1.5">Comparable Case Study — Illinois Precedent for Distribution Pattern</p>
               <p className="text-base text-gray-600 leading-relaxed">
-                The data below comes from the Meta data center in DeKalb, IL — a similar AI/hyperscale
-                facility elsewhere in Illinois. It is used here to illustrate how a comparable campus's
-                property tax bill is typically distributed across school and other taxing bodies. Village
-                officials have cited total projections (above), but no Lake County Assessor valuation
-                or independently verified per-district figure has been publicly released.
+                The data below comes from the Meta data center in DeKalb, IL. Two figures are cited:
+                (1) the 2025 property tax bill for one Meta facility ($31.1M), and (2) School District 428's
+                ~60.9% share of Meta's taxes across three DeKalb County properties averaged over 2021–2024.
+                These are from different datasets and cannot be combined into a per-district dollar figure.
+                Neither is directly applicable without a Lake County Assessor valuation of the T5 campus.
               </p>
               <div className="mt-3"><SourceCitation sourceKey="capitolnews2026" /></div>
             </div>
@@ -89,9 +90,9 @@ export default function Schools() {
       </FadeIn>
 
       <FadeIn className="grid grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
-        <StatCard label="Meta / DeKalb — Total Tax" value={`$${meta.totalPropertyTaxBilled2025}M`} sub="Annual property tax (2025)"                                          accent="green" sourceKey="capitolnews2026" />
-        <StatCard label="School District Share"     value={`${meta.percentToSchoolDistrict}%`}     sub={`of total to ${meta.districtName}`}                   accent="green" sourceKey="capitolnews2026" />
-        <StatCard label="Other Taxing Bodies"       value={`${metaOtherPct}%`}                     sub="of total to county, library, etc."                    accent="blue"  sourceKey="capitolnews2026" />
+        <StatCard label="One Facility — 2025 Tax"   value={`$${meta.totalPropertyTaxBilled2025}M`} sub="Single facility, 2025 tax year"                                       accent="green" sourceKey="capitolnews2026" />
+        <StatCard label="School District Share"     value={`${meta.percentToSchoolDistrict}%`}     sub="Avg. across three properties, 2021–2024"              accent="green" sourceKey="capitolnews2026" />
+        <StatCard label="Other Taxing Bodies"       value={`${metaOtherPct}%`}                     sub="of school-share total · calculated"                   accent="blue" />
         <StatCard label="Documented Outcome"        value="1 School Built"                         sub={meta.outcome}                                          accent="green" sourceKey="capitolnews2026" />
       </FadeIn>
 
@@ -104,7 +105,7 @@ export default function Schools() {
             </div>
             <SourceCitation sourceKey="capitolnews2026" />
           </div>
-          <p className="text-2xs font-mono text-gray-400 mb-8">Meta / DeKalb, IL · 2025 tax year</p>
+          <p className="text-2xs font-mono text-gray-400 mb-8">Meta / DeKalb, IL · two separate datasets</p>
           <SchoolFundingChart />
         </FadeIn>
 
@@ -120,12 +121,11 @@ export default function Schools() {
 
           <dl className="space-y-0 mb-6">
             {[
-              ['Facility',            meta.source],
-              ['Year',                '2025 tax year'],
-              ['Total property tax',  `$${meta.totalPropertyTaxBilled2025}M billed`],
-              ['To schools',          `${meta.percentToSchoolDistrict}% of total`],
-              ['District',            meta.districtName],
-              ['Documented outcome',  meta.outcome],
+              ['Facility',              meta.source],
+              ['One-facility tax (2025)', `$${meta.totalPropertyTaxBilled2025}M billed`],
+              ['School share',          `~${meta.percentToSchoolDistrict}% — avg. across 3 properties, 2021–2024`],
+              ['District',              meta.districtName],
+              ['Documented outcome',    meta.outcome],
             ].map(([k, v]) => (
               <div key={k} className="flex justify-between items-start gap-3 py-2.5 border-b border-gray-100 last:border-0">
                 <dt className="text-sm text-gray-500 shrink-0">{k}</dt>

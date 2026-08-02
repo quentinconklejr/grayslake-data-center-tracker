@@ -11,6 +11,7 @@ const NAV = [
   { to: '/questions',  label: 'Questions', end: false },
   { to: '/map',        label: 'Map',       end: false },
   { to: '/sources',    label: 'Sources',   end: false },
+  { to: '/about',      label: 'About',     end: false },
 ]
 
 function NavLink_({ to, label, end }) {
