@@ -1,8 +1,9 @@
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
+import { projections } from '../../data/projections'
 
-const SECURED = 1600
-const CAPACITY = 1200
+const SECURED  = projections.project.securedPowerMW
+const CAPACITY = projections.project.totalCapacityMW
 const BUFFER   = SECURED - CAPACITY
 
 export default function EnergyDrawChart() {

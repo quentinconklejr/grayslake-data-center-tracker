@@ -1,25 +1,27 @@
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
+import { projections } from '../../data/projections'
 
+const { permanent, constructionMidpoint } = projections.jobs
 const ITEMS = [
   {
     label:    'Permanent Positions',
     sublabel: 'Current Village FAQ estimate — full buildout (2029)',
-    value:    1680,
-    max:      1680,
+    value:    permanent,
+    max:      permanent,
     color:    '#059669',
     bg:       'rgba(5,150,105,0.08)',
-    display:  '1,680',
+    display:  permanent.toLocaleString(),
     sourced:  true,
   },
   {
     label:    'Construction Workforce',
     sublabel: '"Hundreds" per Village documents — shown at ~400 (estimated)',
-    value:    400,
-    max:      1680,
+    value:    constructionMidpoint,
+    max:      permanent,
     color:    '#d97706',
     bg:       'rgba(217,119,6,0.08)',
-    display:  '~400',
+    display:  `~${constructionMidpoint}`,
     sourced:  false,
   },
 ]

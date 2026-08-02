@@ -1,8 +1,10 @@
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
+import { projections } from '../../data/projections'
 
-const TOTAL_M    = 31.1
-const SCHOOL_PCT = 60.9
+const { schoolFundingComparable } = projections
+const TOTAL_M    = schoolFundingComparable.totalPropertyTaxBilled2025
+const SCHOOL_PCT = schoolFundingComparable.percentToSchoolDistrict
 const OTHER_PCT  = +(100 - SCHOOL_PCT).toFixed(1)
 
 export default function SchoolFundingChart() {

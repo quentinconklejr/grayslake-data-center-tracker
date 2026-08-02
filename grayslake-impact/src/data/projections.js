@@ -19,6 +19,9 @@ export const projections = {
     permanent: 1680,
     permanentEarlier: 1500,
     constructionPhase: "hundreds of construction and trade jobs during buildout",
+    // Editorial midpoint for chart display only — not a cited figure.
+    // The sourced description is "hundreds"; 400 is used as a visual estimate.
+    constructionMidpoint: 400,
   },
   fees: {
     totalDescription: "tens of millions of dollars if fully built out",
