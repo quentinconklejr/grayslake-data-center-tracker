@@ -24,9 +24,9 @@ export default function Energy() {
       </FadeIn>
 
       <FadeIn className="grid grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
-        <StatCard label="Secured Power"     value={`${project.securedPowerMW.toLocaleString()} MW`}  sub="Utility-contracted capacity"   accent="amber" sourceKey="baxtel2026" />
+        <StatCard label="Secured Power"     value={`${project.securedPowerMW.toLocaleString()} MW`}  sub="Utility-contracted capacity"   accent="amber" sourceKey="dcdGW2026" />
         <StatCard label="IT Capacity"       value={`${project.totalCapacityMW.toLocaleString()} MW`} sub="Leasable at full buildout"      accent="blue"  sourceKey="dcdGW2026" />
-        <StatCard label="Power Buffer"      value={`${buffer} MW`}                                    sub="Secured above leasable cap"    accent="amber" sourceKey="baxtel2026" />
+        <StatCard label="Power Buffer"      value={`${buffer} MW`}                                    sub="Secured above leasable cap"    accent="amber" sourceKey="dcdGW2026" />
         <StatCard label="PJM Zone"          value="COMED"                                             sub="ComEd transmission zone, PJM"  accent="blue"  sourceKey="dceo2026" />
       </FadeIn>
 
@@ -37,7 +37,6 @@ export default function Energy() {
             <h2 className="text-2xl font-display font-bold text-gray-900">Secured Power vs. IT Capacity</h2>
           </div>
           <div className="flex items-center gap-3">
-            <SourceCitation sourceKey="baxtel2026" />
             <SourceCitation sourceKey="dcdGW2026" />
           </div>
         </div>
@@ -106,7 +105,7 @@ export default function Energy() {
           <p className="text-2xs font-mono text-gray-400 uppercase tracking-widest mb-5">Technical Key Metrics</p>
           <div className="space-y-0">
             {[
-              ['Secured Power',         `${project.securedPowerMW.toLocaleString()} MW`, 'baxtel2026'],
+              ['Secured Power',         `${project.securedPowerMW.toLocaleString()} MW`, 'dcdGW2026'],
               ['Leasable IT Capacity',  `${project.totalCapacityMW.toLocaleString()} MW`, 'dcdGW2026'],
               ['Power Buffer',          `${buffer} MW`, null],
               ['PJM Queue ID',          '— not yet public', null],

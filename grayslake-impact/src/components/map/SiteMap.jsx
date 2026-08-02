@@ -283,7 +283,7 @@ export default function SiteMap({ className = 'h-[480px]' }) {
               <p className="text-xs text-amber-600/70 leading-relaxed">
                 Boundaries approximate — not from survey, parcel, or GIS data.
               </p>
-              <SourceCitation sourceKey="baxtel2026" />
+              <SourceCitation sourceKey="dcdGW2026" />
             </div>
           </div>
         )}

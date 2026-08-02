@@ -81,7 +81,7 @@ const FACETS = [
     body: 'T5 has secured 1,600 MW of utility power against a planned 1,200 MW of leasable IT capacity — a 400 MW buffer for redundancy and phased buildout. Residential electric rates are not directly affected under Illinois\'s separate utility rate class structure for data centers.',
     chart: <EnergyDrawChart />,
     chartLabel: 'Secured Power vs. IT Capacity',
-    sourceKey: 'baxtel2026',
+    sourceKey: 'dcdGW2026',
     textCls: 'lg:col-span-5', chartCls: 'lg:col-span-7', flip: true,
   },
   {
