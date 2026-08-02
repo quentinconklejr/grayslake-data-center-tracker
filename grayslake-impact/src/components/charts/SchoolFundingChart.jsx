@@ -4,8 +4,6 @@ import { motion, useInView } from 'framer-motion'
 const TOTAL_M    = 31.1
 const SCHOOL_PCT = 60.9
 const OTHER_PCT  = +(100 - SCHOOL_PCT).toFixed(1)
-const SCHOOL_M   = +(TOTAL_M * SCHOOL_PCT / 100).toFixed(1)
-const OTHER_M    = +(TOTAL_M * OTHER_PCT  / 100).toFixed(1)
 
 export default function SchoolFundingChart() {
   const ref = useRef(null)
@@ -50,13 +48,13 @@ export default function SchoolFundingChart() {
       <div className="grid grid-cols-2 gap-4">
         <div className="border-l-2 border-emerald-500 pl-3">
           <p className="text-2xs font-mono text-gray-400 uppercase tracking-widest mb-1">School District 428</p>
-          <p className="text-2xl font-display font-bold text-gray-900">${SCHOOL_M}M</p>
-          <p className="text-xs text-gray-500 mt-0.5">{SCHOOL_PCT}% of total</p>
+          <p className="text-2xl font-display font-bold text-gray-900">{SCHOOL_PCT}%</p>
+          <p className="text-xs text-gray-500 mt-0.5">of total tax bill</p>
         </div>
         <div className="border-l-2 border-gray-300 pl-3">
           <p className="text-2xs font-mono text-gray-400 uppercase tracking-widest mb-1">Other Taxing Bodies</p>
-          <p className="text-2xl font-display font-bold text-gray-500">${OTHER_M}M</p>
-          <p className="text-xs text-gray-500 mt-0.5">{OTHER_PCT}% of total</p>
+          <p className="text-2xl font-display font-bold text-gray-500">{OTHER_PCT}%</p>
+          <p className="text-xs text-gray-500 mt-0.5">of total tax bill</p>
         </div>
       </div>
 

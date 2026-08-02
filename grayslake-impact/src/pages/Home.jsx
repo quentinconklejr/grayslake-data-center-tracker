@@ -90,7 +90,7 @@ const FACETS = [
     catColor: 'text-violet-600',
     catBorder: 'border-violet-200',
     headline: 'In DeKalb, 60.9% went to schools.',
-    body: 'No Grayslake-specific school funding projection has been released. The Meta data center in DeKalb, IL provides the closest Illinois precedent: of $31.1M in annual property taxes, 60.9% ($18.9M) went to School District 428 — which funded construction of Mitchell Elementary.',
+    body: 'No Grayslake-specific school funding projection has been released. The Meta data center in DeKalb, IL provides the closest Illinois precedent: of $31.1M in annual property taxes, 60.9% went to School District 428 — which funded construction of Mitchell Elementary.',
     chart: <SchoolFundingChart />,
     chartLabel: 'DeKalb / Meta Precedent (2025)',
     sourceKey: 'capitolnews2026',

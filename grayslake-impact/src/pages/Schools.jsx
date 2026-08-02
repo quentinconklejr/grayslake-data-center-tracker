@@ -7,8 +7,6 @@ import { projections } from '../data/projections'
 
 const { schoolFundingComparable: meta } = projections
 
-const metaSchoolM = +(meta.totalPropertyTaxBilled2025 * meta.percentToSchoolDistrict / 100).toFixed(1)
-const metaOtherM  = +(meta.totalPropertyTaxBilled2025 - metaSchoolM).toFixed(1)
 const metaOtherPct = +(100 - meta.percentToSchoolDistrict).toFixed(1)
 
 const GRAYSLAKE_DISTRICTS = [
@@ -54,10 +52,10 @@ export default function Schools() {
       </FadeIn>
 
       <FadeIn className="grid grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
-        <StatCard label="Meta / DeKalb — Total Tax" value={`$${meta.totalPropertyTaxBilled2025}M`} sub="Annual property tax (2025)"                          accent="green" sourceKey="capitolnews2026" />
-        <StatCard label="School District Share"     value={`${meta.percentToSchoolDistrict}%`}     sub={`$${metaSchoolM}M / yr to ${meta.districtName}`}    accent="green" sourceKey="capitolnews2026" />
-        <StatCard label="Other Taxing Bodies"       value={`${metaOtherPct}%`}                     sub={`$${metaOtherM}M / yr to county, library, etc.`}    accent="blue"  sourceKey="capitolnews2026" />
-        <StatCard label="Documented Outcome"        value="1 School Built"                         sub={meta.outcome}                                         accent="green" sourceKey="capitolnews2026" />
+        <StatCard label="Meta / DeKalb — Total Tax" value={`$${meta.totalPropertyTaxBilled2025}M`} sub="Annual property tax (2025)"                                          accent="green" sourceKey="capitolnews2026" />
+        <StatCard label="School District Share"     value={`${meta.percentToSchoolDistrict}%`}     sub={`of total to ${meta.districtName}`}                   accent="green" sourceKey="capitolnews2026" />
+        <StatCard label="Other Taxing Bodies"       value={`${metaOtherPct}%`}                     sub="of total to county, library, etc."                    accent="blue"  sourceKey="capitolnews2026" />
+        <StatCard label="Documented Outcome"        value="1 School Built"                         sub={meta.outcome}                                          accent="green" sourceKey="capitolnews2026" />
       </FadeIn>
 
       <div className="grid lg:grid-cols-5 gap-4 mb-8">
@@ -88,7 +86,7 @@ export default function Schools() {
               ['Facility',            meta.source],
               ['Year',                '2025 tax year'],
               ['Total property tax',  `$${meta.totalPropertyTaxBilled2025}M billed`],
-              ['To schools',          `${meta.percentToSchoolDistrict}% → $${metaSchoolM}M / yr`],
+              ['To schools',          `${meta.percentToSchoolDistrict}% of total`],
               ['District',            meta.districtName],
               ['Documented outcome',  meta.outcome],
             ].map(([k, v]) => (

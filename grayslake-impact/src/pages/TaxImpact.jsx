@@ -8,8 +8,7 @@ import { projections } from '../data/projections'
 
 const { project, fees, schoolFundingComparable: meta, stateIncentiveContext: incentive } = projections
 
-const metaSchoolM = +(meta.totalPropertyTaxBilled2025 * meta.percentToSchoolDistrict / 100).toFixed(1)
-const metaOtherM  = +(meta.totalPropertyTaxBilled2025 - metaSchoolM).toFixed(1)
+const metaOtherPct = +(100 - meta.percentToSchoolDistrict).toFixed(1)
 
 const FEE_DATA = [
   { name: 'Major infrastructure projects', pct: 50, color: '#d97706', bg: 'rgba(217,119,6,0.09)', label: '50%' },
@@ -36,7 +35,7 @@ export default function TaxImpact() {
         <StatCard label="Total Investment"    value={`$${project.costLow}–${project.costHigh}B`} sub="Developer-stated range" badge="Range" accent="blue"  sourceKey="dcd2026" />
         <StatCard label="Developer Fees"      value="Tens of millions"                             sub="If fully built out"                  accent="blue"  sourceKey="villageoffaq" />
         <StatCard label="Meta / DeKalb Ref."  value={`$${meta.totalPropertyTaxBilled2025}M`}      sub="Annual property tax (2025)"           accent="green" sourceKey="capitolnews2026" />
-        <StatCard label="DeKalb → Schools"    value={`$${metaSchoolM}M`}                          sub={`${meta.percentToSchoolDistrict}% of DeKalb tax`} accent="green" sourceKey="capitolnews2026" />
+        <StatCard label="DeKalb → Schools"    value={`${meta.percentToSchoolDistrict}%`}            sub="of DeKalb tax to schools"                        accent="green" sourceKey="capitolnews2026" />
       </FadeIn>
 
       <div className="grid lg:grid-cols-2 gap-px bg-gray-200 rounded-xl overflow-hidden border border-gray-200 mb-8">
@@ -71,8 +70,8 @@ export default function TaxImpact() {
               ['Tax year',         '2025'],
               ['Total billed',     `$${meta.totalPropertyTaxBilled2025}M / year`],
               ['School district',  meta.districtName],
-              ['School share',     `${meta.percentToSchoolDistrict}% → $${metaSchoolM}M / yr`],
-              ['Other bodies',     `${(100 - meta.percentToSchoolDistrict).toFixed(1)}% → $${metaOtherM}M / yr`],
+              ['School share',     `${meta.percentToSchoolDistrict}% of total`],
+              ['Other bodies',     `${metaOtherPct}% of total`],
               ['Outcome',          meta.outcome],
             ].map(([k, v]) => (
               <div key={k} className="flex justify-between items-start gap-4 py-2.5 border-b border-gray-100 last:border-0">
