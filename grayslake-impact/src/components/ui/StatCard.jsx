@@ -14,7 +14,7 @@ export default function StatCard({ label, value, sub, badge, accent = 'blue', so
       <p className="text-2xs font-mono text-gray-400 uppercase tracking-[0.18em] mb-3">
         {label}
       </p>
-      <p className="text-3xl sm:text-4xl font-display font-bold leading-none tracking-tight mb-2 text-gray-900">
+      <p className="text-3xl sm:text-4xl font-display font-bold leading-none tracking-tight mb-2 text-gray-900 break-words">
         {value}{sourceKey && <SourceCitation sourceKey={sourceKey} />}
       </p>
       {sub && <p className="text-xs text-gray-500 leading-relaxed flex-1">{sub}</p>}

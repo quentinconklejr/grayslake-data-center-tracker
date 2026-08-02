@@ -4,7 +4,6 @@ import SchoolFundingChart from '../components/charts/SchoolFundingChart'
 import SourceCitation from '../components/ui/SourceCitation'
 import FadeIn from '../components/ui/FadeIn'
 import { FootnoteProvider, FootnoteList } from '../components/ui/FootnoteContext'
-import SourceArtifact from '../components/ui/SourceArtifact'
 import { projections } from '../data/projections'
 
 const { schoolFundingComparable: meta } = projections
@@ -12,11 +11,14 @@ const { schoolFundingComparable: meta } = projections
 const metaOtherPct = +(100 - meta.percentToSchoolDistrict).toFixed(1)
 
 const GRAYSLAKE_DISTRICTS = [
-  { name: 'Fremont Elementary District 79',    desc: 'Elementary school district named in the Village FAQ as a taxing body for the campus area.', sub: 'Per Village FAQ' },
-  { name: 'Mundelein High School District 120', desc: 'High school district named in the Village FAQ as a taxing body for the campus area.',      sub: 'Per Village FAQ' },
-  { name: 'Fremont Library',                    desc: 'Public library district named in the Village FAQ as a taxing body.',                        sub: 'Per Village FAQ' },
-  { name: 'Round Lake Area Park District',      desc: 'Park district named in the Village FAQ as a taxing body for the campus area.',             sub: 'Per Village FAQ' },
-  { name: 'Grayslake Park District',            desc: 'Park district named in the Village FAQ as a taxing body.',                                 sub: 'Per Village FAQ' },
+  { name: 'Fremont Elementary District 79',             desc: 'Elementary school district. Named in Village FAQ as a taxing body.',          sub: 'Village FAQ p. 2' },
+  { name: 'Grayslake Community High School Dist. 127',  desc: 'High school district serving Grayslake. Named in Village FAQ as a taxing body.', sub: 'Village FAQ p. 2' },
+  { name: 'Mundelein High School District 120',          desc: 'High school district. Named in Village FAQ as a taxing body.',                sub: 'Village FAQ p. 2' },
+  { name: 'Fremont Library',                             desc: 'Public library district. Named in Village FAQ as a taxing body.',             sub: 'Village FAQ p. 2' },
+  { name: 'Round Lake Area Park District',               desc: 'Park district. Named in Village FAQ as a taxing body.',                       sub: 'Village FAQ p. 2' },
+  { name: 'Grayslake Park District',                     desc: 'Park district. Named in Village FAQ as a taxing body.',                       sub: 'Village FAQ p. 2' },
+  { name: 'Grayslake Fire Protection District',          desc: 'Fire protection district. Named in Village FAQ as a taxing body.',            sub: 'Village FAQ p. 2' },
+  { name: 'Village of Grayslake',                        desc: 'The Village itself receives a share as a taxing body. Named in Village FAQ.', sub: 'Village FAQ p. 2' },
 ]
 
 export default function Schools() {
@@ -164,18 +166,30 @@ export default function Schools() {
 
       <FadeIn>
         <p className="text-2xs font-mono text-gray-400 uppercase tracking-widest mb-5">Grayslake Districts That Would Receive Revenue</p>
-        <div className="mb-6">
-          <SourceArtifact
-            publisher="Village of Grayslake — Official FAQ"
-            date="2025"
-            pageRef="p. 2"
-            url="https://villageofgrayslake.com/DocumentCenter/View/15282"
-            excerpts={[
-              "The following taxing bodies will receive tax revenue from the T5 campus: Fremont Elementary District 79, Mundelein High School District 120, Fremont Library, Round Lake Area Park District, and Grayslake Park District.",
-              "The development agreements provide no financial incentives to T5 Data Centers.",
-            ]}
-            annotation="Source: Village of Grayslake Approved T5 Data Center Campus FAQs (2025). Quoted as published."
-          />
+        <div className="mb-6 border border-gray-300 rounded-sm bg-white overflow-hidden shadow-sm">
+          <div className="bg-gray-100 border-b border-gray-300 px-4 py-2.5 flex items-center justify-between gap-3">
+            <div>
+              <p className="text-2xs font-mono text-gray-500 uppercase tracking-widest leading-none mb-0.5">Village of Grayslake — Official FAQ</p>
+              <div className="flex items-center gap-2 mt-0.5">
+                <span className="text-xs text-gray-500">2025</span>
+                <span className="text-2xs font-mono bg-white border border-gray-300 text-gray-500 px-1.5 py-0.5 rounded-sm">p. 2</span>
+              </div>
+            </div>
+            <a href="https://villageofgrayslake.com/DocumentCenter/View/15282" target="_blank" rel="noopener noreferrer"
+               className="shrink-0 text-2xs font-mono text-blue-600 hover:text-blue-800 transition-colors">View ↗</a>
+          </div>
+          <div className="px-4 py-3 bg-[#fafaf8] space-y-2">
+            <p className="text-xs text-gray-700 leading-relaxed">
+              Per page 2 of the Village FAQ, eight taxing bodies will receive property tax revenue from the T5 campus:
+              Fremont Elementary District 79, Grayslake Community High School District 127, Mundelein High School District 120,
+              Fremont Library, Round Lake Area Park District, Grayslake Park District, Grayslake Fire Protection District,
+              and the Village of Grayslake.
+            </p>
+            <p className="text-xs text-gray-700 leading-relaxed">
+              The FAQ also states that the development agreements provide no financial incentives to T5 Data Centers.
+            </p>
+            <p className="text-2xs font-mono text-gray-400 pt-1 border-t border-gray-200">Paraphrase — not a verbatim quote. Verify against the linked original.</p>
+          </div>
         </div>
         <div className="grid md:grid-cols-2 gap-3">
           {GRAYSLAKE_DISTRICTS.map(({ name, desc, sub }) => (

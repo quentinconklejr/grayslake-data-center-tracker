@@ -74,11 +74,11 @@ export default function Jobs() {
         <StatCard label="Full Buildout"        value={project.fullBuildOut}             sub={`${project.approvedBuildings} approved · CEO est. up to ${project.maxBuildings}`} accent="blue" sourceKey="govtech2025" />
       </FadeIn>
 
-      <FadeIn className="bg-white border border-gray-200 rounded-xl p-8 mb-3 shadow-sm">
-        <div className="flex items-start justify-between mb-1">
+      <FadeIn className="bg-white border border-gray-200 rounded-xl p-6 sm:p-8 mb-3 shadow-sm">
+        <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-1 mb-1">
           <div>
             <p className="text-2xs font-mono text-gray-400 uppercase tracking-widest mb-1">Workforce Comparison</p>
-            <h2 className="text-2xl font-display font-bold text-gray-900">Permanent vs. Construction</h2>
+            <h2 className="text-xl sm:text-2xl font-display font-bold text-gray-900">Permanent vs. Construction</h2>
           </div>
           <div className="flex items-center gap-3">
             <span className="text-2xs font-mono text-amber-600">Est. included</span>
