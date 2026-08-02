@@ -12,7 +12,7 @@ const { project, jobs } = projections
 const PHASES = [
   {
     period: '2025 – Q4 2027',
-    phase: 'Construction — Phase 1',
+    phase: 'Construction: Phase 1',
     status: 'Active now',
     accent: 'border-amber-300 bg-amber-50',
     dot: 'bg-amber-500',
@@ -22,7 +22,7 @@ const PHASES = [
   },
   {
     period: '2027 – 2029',
-    phase: 'Construction — Full Buildout',
+    phase: 'Construction: Full Buildout',
     status: 'Projected',
     accent: 'border-blue-300 bg-blue-50',
     dot: 'bg-blue-500',
@@ -32,7 +32,7 @@ const PHASES = [
   },
   {
     period: '2029+',
-    phase: 'Operations — Full Buildout',
+    phase: 'Operations: Full Buildout',
     status: 'Projected',
     accent: 'border-emerald-300 bg-emerald-50',
     dot: 'bg-emerald-500',
@@ -62,8 +62,8 @@ export default function Jobs() {
         <h1 className="text-4xl font-display font-bold text-gray-900 tracking-tight mb-3">Job Creation</h1>
         <p className="text-base text-gray-600 max-w-2xl leading-relaxed">
           T5 has projected {jobs.permanent.toLocaleString()} permanent positions at full buildout.
-          Construction phase employment is described in Village documents as "{jobs.constructionPhase}" —
-          no precise headcount is publicly sourced for that period.
+          Village documents describe construction phase employment as "{jobs.constructionPhase}."
+          No precise headcount has been publicly sourced for that period.
         </p>
         <p className="text-2xs font-mono text-gray-400 mt-3">Last verified Aug 2, 2026</p>
       </FadeIn>
@@ -87,8 +87,8 @@ export default function Jobs() {
           </div>
         </div>
         <p className="text-sm text-gray-500 mb-8">
-          Construction count at ~400 represents "hundreds" per Village docs — clearly estimated.
-          Permanent count (1,680) is the current Village FAQ estimate. An earlier figure of 1,500
+          Construction count at ~400 represents "hundreds" per Village documents and is treated as an estimate.
+          The permanent count (1,680) is the current Village FAQ figure. An earlier figure of 1,500
           was cited at the October 2025 public meeting.
         </p>
         <JobsTimelineChart />
@@ -140,9 +140,8 @@ export default function Jobs() {
             <SourceCitation sourceKey="dailyherald2026" />
           </div>
           <p className="text-base text-gray-600 leading-relaxed mb-5">
-            Large-scale data center construction requires electricians, ironworkers, HVAC
-            installers, and civil workers. Projects at this scale often include project labor
-            agreements (PLAs) with regional trade unions.
+            Data center construction at this scale draws on multiple skilled trades.
+            Projects of this size often include project labor agreements (PLAs) with regional trade unions.
           </p>
           <div className="border-t border-gray-100 pt-5">
             <p className="text-2xs font-mono text-gray-400 uppercase tracking-widest mb-3">
@@ -162,7 +161,7 @@ export default function Jobs() {
               ))}
             </ul>
             <p className="text-sm text-gray-400 mt-4">
-              Union involvement unconfirmed — based on comparable IL projects.
+              Union involvement is unconfirmed. Names are drawn from comparable Illinois projects.
             </p>
           </div>
         </FadeIn>

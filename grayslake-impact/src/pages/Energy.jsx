@@ -21,8 +21,8 @@ export default function Energy() {
         <h1 className="text-4xl font-display font-bold text-gray-900 tracking-tight mb-3">Energy Draw</h1>
         <p className="text-base text-gray-600 max-w-2xl leading-relaxed">
           T5 has secured {project.securedPowerMW.toLocaleString()} MW of utility power against a planned{' '}
-          {project.totalCapacityMW.toLocaleString()} MW of leasable IT capacity — a {buffer} MW buffer
-          for redundancy and future phases. Both figures are sourced from public developer disclosures.
+          {project.totalCapacityMW.toLocaleString()} MW of leasable IT capacity. The {buffer} MW difference
+          serves as a buffer for redundancy and future phases. Both figures are from public developer disclosures.
         </p>
         <p className="text-2xs font-mono text-gray-400 mt-3">Last verified Aug 2, 2026</p>
       </FadeIn>
@@ -45,8 +45,8 @@ export default function Energy() {
           </div>
         </div>
         <p className="text-sm text-gray-500 mb-8">
-          Both figures are sourced from public developer disclosures — no estimation involved.
-          T5 originally announced the campus at 480 MW (2024); subsequent developer plans expanded the leasable IT capacity target to 1,200 MW.
+          Both figures are from public developer disclosures. No estimation is involved.
+          T5 originally announced the campus at 480 MW (2024). Developer plans later expanded the leasable IT capacity target to 1,200 MW.
         </p>
         <EnergyDrawChart />
       </FadeIn>
@@ -59,16 +59,15 @@ export default function Energy() {
             <p className="text-sm text-gray-600 leading-relaxed">
               Illinois maintains a separate utility rate class for large industrial users including data centers.
               The ICC-approved ComEd tariff requires data centers to fund their own transmission and
-              distribution upgrade costs — those costs do not flow through to residential rate classes as a direct line item.
+              distribution upgrade costs. Those costs do not flow through to residential rate classes as a direct line item.
             </p>
           </EvidenceBlock>
 
           <EvidenceBlock type="unknown" title="Regional capacity prices: an open question">
             <p className="text-sm text-gray-600 leading-relaxed">
               The ICC tariff wall contains distribution and transmission upgrade costs within the large
-              industrial rate class. However, PJM capacity auction clearing prices are set by aggregate
-              regional demand across all load — a wholesale market effect that the distribution tariff
-              does not address. Whether and by how much data center growth is contributing to higher
+              industrial rate class. PJM capacity auction clearing prices, however, are set by aggregate
+              regional demand across all load, a wholesale market effect the distribution tariff does not address. Whether and by how much data center growth is contributing to higher
               capacity prices in the ComEd zone is not yet established by any verified public study.
               No confirmed figure is available.
             </p>
@@ -88,7 +87,7 @@ export default function Energy() {
             </p>
             <p>
               At {project.totalCapacityMW.toLocaleString()} MW, T5 would be one of the largest single-campus
-              loads in the ComEd zone — comparable to a medium-sized city. Interconnection agreements
+              loads in the ComEd zone, comparable to a medium-sized city. Interconnection agreements
               typically require the developer to fund necessary substation upgrades.
             </p>
             <p>

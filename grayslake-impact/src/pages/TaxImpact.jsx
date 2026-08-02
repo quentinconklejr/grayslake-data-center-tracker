@@ -71,7 +71,7 @@ export default function TaxImpact() {
             {[
               ['Facility',              meta.source],
               ['One-facility tax (2025)', `$${meta.totalPropertyTaxBilled2025}M / year`],
-              ['School share',          `~${meta.percentToSchoolDistrict}% — avg. across 3 properties, 2021–2024`],
+              ['School share',          `~${meta.percentToSchoolDistrict}%, avg. across 3 properties, 2021–2024`],
               ['School district',       meta.districtName],
               ['Outcome',               meta.outcome],
             ].map(([k, v]) => (

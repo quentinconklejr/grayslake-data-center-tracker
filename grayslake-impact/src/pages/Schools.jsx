@@ -33,9 +33,8 @@ export default function Schools() {
         <p className="text-base text-gray-600 max-w-2xl leading-relaxed">
           Village officials have publicly cited projections ranging from approximately $300 million
           to over $1 billion in property tax revenue across all taxing districts over the coming
-          decades. Those are official statements — not independently verified figures and not
-          confirmed outcomes. The Lake County Assessor has not yet valued the campus, and actual
-          revenue depends on that valuation and applicable levy rates.
+          decades. Those are official statements, not independently verified estimates. The Lake County Assessor
+          has not yet valued the campus. Actual revenue depends on that valuation and applicable levy rates.
         </p>
         <p className="text-2xs font-mono text-gray-400 mt-3">Last verified Aug 2, 2026</p>
       </FadeIn>
@@ -84,7 +83,7 @@ export default function Schools() {
               <p className="text-sm font-display font-semibold text-blue-800 mb-1.5">Comparable Case Study — Illinois Precedent for Distribution Pattern</p>
               <p className="text-base text-gray-600 leading-relaxed">
                 The data below comes from the Meta data center in DeKalb, IL. Two figures are cited:
-                (1) the 2025 property tax bill for one Meta facility ($31.1M), and (2) School District 428's
+                the 2025 property tax bill for one Meta facility ($31.1M), and School District 428's
                 ~60.9% share of Meta's taxes across three DeKalb County properties averaged over 2021–2024.
                 These are from different datasets and cannot be combined into a per-district dollar figure.
                 Neither is directly applicable without a Lake County Assessor valuation of the T5 campus.
@@ -129,7 +128,7 @@ export default function Schools() {
             {[
               ['Facility',              meta.source],
               ['One-facility tax (2025)', `$${meta.totalPropertyTaxBilled2025}M billed`],
-              ['School share',          `~${meta.percentToSchoolDistrict}% — avg. across 3 properties, 2021–2024`],
+              ['School share',          `~${meta.percentToSchoolDistrict}%, avg. across 3 properties, 2021–2024`],
               ['District',              meta.districtName],
               ['Documented outcome',    meta.outcome],
             ].map(([k, v]) => (
@@ -144,8 +143,7 @@ export default function Schools() {
             <p className="text-2xs font-mono text-emerald-700 uppercase tracking-widest mb-2">Key Takeaway</p>
             <p className="text-base text-gray-600 leading-relaxed">
               In DeKalb, over 60% of a hyperscale data center's annual property tax bill flows
-              directly to the school district. Village officials' projections suggest a significant
-              school funding impact in Grayslake — but the per-district breakdown depends entirely
+              directly to the school district. What that precedent means for Grayslake schools depends
               on the Lake County Assessor's valuation, which has not been publicly released.
             </p>
           </div>
@@ -157,10 +155,9 @@ export default function Schools() {
           <p className="text-2xs font-mono text-amber-700 uppercase tracking-widest mb-2">What's Still Needed for a Verified Figure</p>
           <p className="text-base text-gray-600 leading-relaxed">
             The Village FAQ states the development agreements provide no financial incentives to T5.
-            The official projections above are village officials' statements — not independently
-            verified estimates. To produce a verified per-district revenue figure, you would still
-            need: (1) a Lake County Assessor valuation of the T5 campus and (2) the applicable tax
-            levy rates for each district.
+            The official projections above are village officials' statements, not independently
+            verified estimates. A verified per-district revenue figure requires a Lake County Assessor
+            valuation of the T5 campus and the applicable levy rates for each district.
           </p>
         </div>
       </FadeIn>
@@ -172,7 +169,7 @@ export default function Schools() {
             <div>
               <p className="text-2xs font-mono text-gray-500 uppercase tracking-widest leading-none mb-0.5">Village of Grayslake — Official FAQ</p>
               <div className="flex items-center gap-2 mt-0.5">
-                <span className="text-xs text-gray-500">2025</span>
+                <span className="text-xs text-gray-500">June 2026</span>
                 <span className="text-2xs font-mono bg-white border border-gray-300 text-gray-500 px-1.5 py-0.5 rounded-sm">p. 2</span>
               </div>
             </div>
