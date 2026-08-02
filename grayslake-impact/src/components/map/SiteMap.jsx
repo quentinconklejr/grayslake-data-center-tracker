@@ -37,7 +37,7 @@ const PANEL_ROWS = [
   ['IT capacity',    `${project.totalCapacityMW.toLocaleString()} MW`],
   ['Secured power',  `${project.securedPowerMW.toLocaleString()} MW`],
   ['Investment',     `$${project.costLow}–${project.costHigh}B est.`],
-  ['Perm. jobs',     project.permanent ?? jobs.permanent],
+  ['Perm. jobs',     jobs.permanent],
   ['Phase 1',        project.firstBuildingOnline],
   ['Full buildout',  project.fullBuildOut],
 ]
