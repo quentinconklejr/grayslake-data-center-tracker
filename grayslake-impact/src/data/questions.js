@@ -9,31 +9,35 @@ export const questions = [
         sourceKey: 'villageoffaq',
       },
       {
-        text: "T5's specific cooling approach — air-cooled, water-cooled, or hybrid — has not been publicly disclosed in any Grayslake filing.",
+        text: 'The Village FAQ identifies the cooling approach as primarily air-cooled.',
         sourceKey: 'villageoffaq',
+      },
+      {
+        text: 'The Village FAQ states the campus will use no more than 50,000 gallons of water per day at full buildout.',
+        sourceKey: 'villageoffaq',
+      },
+      {
+        text: 'Hoodline reported a one-time commissioning flush of approximately 3.2 million gallons.',
+        sourceKey: 'hoodline2026',
       },
     ],
     disputed: [
       {
-        text: 'The Alliance for the Great Lakes has noted that air-cooling configurations shift water demand upstream to power plants rather than eliminating it — grid-level thermal generation still consumes significant water per megawatt-hour of output.',
+        text: 'The Alliance for the Great Lakes has noted that air-cooling configurations shift water demand upstream to power plants rather than eliminating it — grid-level thermal generation still consumes significant water per megawatt-hour of output. This applies to the confirmed air-cooled design.',
         sourceKey: 'alliancegreatlakes',
       },
       {
         text: 'The Citizens Utility Board projected that the Meta data center in DeKalb would contribute to a local water deficit by 2030 under current draw rates — the closest Illinois precedent for this scale of data center water demand.',
         sourceKey: 'cub2026',
       },
-      {
-        text: 'The Chicago Tribune (July 2, 2026) reported an extrapolated figure of approximately 19.2 million gallons total water use for the full 1.2 GW buildout. This is a journalist-derived calculation — not an official T5 disclosure, not a figure from any regulatory filing, and not independently confirmed by T5 or the Village.',
-        sourceKey: 'chitrib2026',
-      },
     ],
     unknown: [
       {
-        text: "T5 has not publicly disclosed its specific cooling method, water source (municipal or well), or daily water volume for the Grayslake campus in any regulatory filing. An extrapolated estimate has appeared in press reporting (see Disputed above); no official water usage figure has been submitted to IEPA or other regulatory bodies.",
+        text: 'Water source (municipal supply or on-site well) has not been publicly confirmed in any regulatory filing.',
         sourceKey: null,
       },
       {
-        text: 'No utility agreement, water allocation study, or IEPA permit covering campus water draw has been made public.',
+        text: 'No IEPA permit or water allocation study covering campus water draw has been made public.',
         sourceKey: null,
       },
     ],

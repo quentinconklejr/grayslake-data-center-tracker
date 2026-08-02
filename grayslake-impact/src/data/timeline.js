@@ -64,8 +64,8 @@ export const timelineEvents = [
   },
   {
     date: "2026-07-02",
-    title: "Tribune reports extrapolated water estimate for full buildout",
-    description: "The Chicago Tribune reported an extrapolated figure of approximately 19.2 million gallons total water use for the full 1.2 GW buildout — a journalist-derived calculation, not an official T5 disclosure or figure from any regulatory filing.",
+    title: "Tribune reports unofficial water extrapolation for full buildout",
+    description: "The Chicago Tribune cited an extrapolated figure of approximately 19.2 million gallons for the full 1.2 GW buildout. This was not an official T5 disclosure or regulatory filing — it was a journalist-derived calculation. The Village FAQ has since stated the official figure: no more than 50,000 gallons per day at full buildout.",
     category: "development",
     sourceKey: "chitrib2026",
   },

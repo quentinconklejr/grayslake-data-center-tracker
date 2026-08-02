@@ -112,7 +112,8 @@ export default function Energy() {
               ['Interconnect Voltage',  '— pending', null],
               ['Power Purchase (PPA)',  '— not disclosed', null],
               ['Renewable Commitment',  '— not disclosed', null],
-              ['Cooling Approach',      '— not disclosed', null],
+              ['Cooling Approach',         'Primarily air-cooled',  'villageoffaq'],
+              ['Water Use (full buildout)', '≤ 50,000 gal / day',   'villageoffaq'],
               ['PUE Target',            '— not disclosed', null],
             ].map(([k, v, src]) => (
               <div key={k} className="flex justify-between items-center py-2.5 border-b border-gray-100 last:border-0">
