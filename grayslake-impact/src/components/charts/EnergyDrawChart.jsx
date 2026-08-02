@@ -31,25 +31,29 @@ export default function EnergyDrawChart() {
         <p className="text-2xs font-mono text-gray-400 uppercase tracking-widest">Power allocation (% of secured)</p>
         <div className="h-5 w-full rounded overflow-hidden flex bg-gray-100">
           <motion.div
-            className="h-full bg-blue-600 flex items-center justify-end pr-2"
+            className="h-full bg-blue-600"
             initial={{ width: 0 }}
             animate={inView ? { width: `${capPct}%` } : { width: 0 }}
             transition={{ delay: 0.1, duration: 0.9, ease: [0.25, 0.46, 0.45, 0.94] }}
-          >
-            <span className="text-2xs font-mono font-bold text-white whitespace-nowrap">
-              {capPct.toFixed(0)}% IT
-            </span>
-          </motion.div>
+          />
           <motion.div
-            className="h-full bg-amber-400/50 border-l border-amber-500/40 flex items-center justify-center"
+            className="h-full bg-amber-400/50 border-l border-amber-500/40"
             initial={{ width: 0 }}
             animate={inView ? { width: `${bufPct}%` } : { width: 0 }}
             transition={{ delay: 0.55, duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
-          >
-            <span className="text-2xs font-mono text-amber-700 whitespace-nowrap px-1">
-              {bufPct.toFixed(0)}% buffer
-            </span>
-          </motion.div>
+          />
+        </div>
+
+        {/* Labels below bar — never inside a width-constrained animated segment */}
+        <div className="flex gap-4 pt-0.5">
+          <span className="flex items-center gap-1.5 text-2xs font-mono text-blue-700">
+            <span className="w-2.5 h-2.5 rounded-sm bg-blue-600 shrink-0" />
+            {capPct.toFixed(0)}% IT capacity
+          </span>
+          <span className="flex items-center gap-1.5 text-2xs font-mono text-amber-700">
+            <span className="w-2.5 h-2.5 rounded-sm bg-amber-400/70 shrink-0" />
+            {bufPct.toFixed(0)}% buffer
+          </span>
         </div>
 
         <div className="flex justify-between text-2xs font-mono text-gray-400 pt-1">

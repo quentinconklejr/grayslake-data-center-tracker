@@ -12,6 +12,7 @@ export default function About() {
         <p className="text-base text-gray-600 max-w-2xl leading-relaxed">
           A resident-built resource. No affiliation with T5 Data Centers or the Village of Grayslake.
         </p>
+        <p className="text-2xs font-mono text-gray-400 mt-3">Last updated Aug 2, 2026</p>
       </FadeIn>
 
       <FadeIn className="mb-10">

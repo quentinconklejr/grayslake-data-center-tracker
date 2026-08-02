@@ -37,6 +37,7 @@ export default function Schools() {
           confirmed outcomes. The Lake County Assessor has not yet valued the campus, and actual
           revenue depends on that valuation and applicable levy rates.
         </p>
+        <p className="text-2xs font-mono text-gray-400 mt-3">Last verified Aug 2, 2026</p>
       </FadeIn>
 
       <FadeIn className="mb-10">

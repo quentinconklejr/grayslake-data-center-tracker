@@ -65,6 +65,7 @@ export default function Jobs() {
           Construction phase employment is described in Village documents as "{jobs.constructionPhase}" —
           no precise headcount is publicly sourced for that period.
         </p>
+        <p className="text-2xs font-mono text-gray-400 mt-3">Last verified Aug 2, 2026</p>
       </FadeIn>
 
       <FadeIn className="grid grid-cols-2 lg:grid-cols-4 gap-8 mb-12">

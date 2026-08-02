@@ -75,11 +75,12 @@ export default function Home() {
         <div className="max-w-5xl mx-auto px-4 sm:px-6 pt-14 pb-14">
 
           <FadeIn>
-            <p className="text-xl text-gray-600 leading-relaxed max-w-[65ch] mb-12">
+            <p className="text-xl text-gray-600 leading-relaxed max-w-[65ch] mb-4">
               T5 @ Chicago IV is a proposed hyperscale AI data center campus on Peterson Road
               and Route 83 in Grayslake, Illinois. This tracker collects public records and press
               coverage on the project — jobs, taxes, energy, school funding — and links every claim to its source.
             </p>
+            <p className="text-2xs font-mono text-gray-400 mb-12">Last verified Aug 2, 2026</p>
           </FadeIn>
 
           {/* Headline stats — typographically dominant */}

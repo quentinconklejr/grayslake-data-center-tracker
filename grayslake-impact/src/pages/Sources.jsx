@@ -21,6 +21,7 @@ export default function Sources() {
           All data in this dashboard is derived from publicly available documents, government
           filings, and verified journalism. No data is estimated without explicit notation.
         </p>
+        <p className="text-2xs font-mono text-gray-400 mt-3">Last verified Aug 2, 2026</p>
       </FadeIn>
 
       <FadeIn className="space-y-1.5 mb-12">

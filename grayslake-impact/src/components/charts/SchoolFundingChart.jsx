@@ -27,28 +27,31 @@ export default function SchoolFundingChart() {
       </p>
 
       {/* Proportion bar */}
-      <div className="space-y-1.5">
+      <div className="space-y-2">
         <div className="h-6 w-full rounded overflow-hidden flex bg-gray-100">
           <motion.div
-            className="h-full bg-emerald-600 flex items-center justify-start pl-3"
+            className="h-full bg-emerald-600"
             initial={{ width: 0 }}
             animate={inView ? { width: `${SCHOOL_PCT}%` } : { width: 0 }}
             transition={{ delay: 0.1, duration: 0.9, ease: [0.25, 0.46, 0.45, 0.94] }}
-          >
-            <span className="text-2xs font-mono font-bold text-white whitespace-nowrap">
-              {SCHOOL_PCT}% Schools
-            </span>
-          </motion.div>
+          />
           <motion.div
-            className="h-full bg-gray-300 flex items-center justify-end pr-3"
+            className="h-full bg-gray-300"
             initial={{ width: 0 }}
             animate={inView ? { width: `${OTHER_PCT}%` } : { width: 0 }}
             transition={{ delay: 0.65, duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
-          >
-            <span className="text-2xs font-mono text-gray-600 whitespace-nowrap">
-              {OTHER_PCT}% Other
-            </span>
-          </motion.div>
+          />
+        </div>
+
+        <div className="flex gap-4 pt-0.5">
+          <span className="flex items-center gap-1.5 text-2xs font-mono text-emerald-700">
+            <span className="w-2.5 h-2.5 rounded-sm bg-emerald-600 shrink-0" />
+            {SCHOOL_PCT}% Schools
+          </span>
+          <span className="flex items-center gap-1.5 text-2xs font-mono text-gray-500">
+            <span className="w-2.5 h-2.5 rounded-sm bg-gray-300 shrink-0" />
+            {OTHER_PCT}% Other
+          </span>
         </div>
       </div>
 

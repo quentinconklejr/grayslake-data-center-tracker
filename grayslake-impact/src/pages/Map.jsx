@@ -17,6 +17,7 @@ export default function MapPage() {
           derived from survey or GIS data.
           <span className="block mt-2 text-sm text-gray-400">Click either boundary or the orange marker to view project statistics.</span>
         </p>
+        <p className="text-2xs font-mono text-gray-400 mt-3">Last verified Aug 2, 2026</p>
       </FadeIn>
 
       <SiteMap className="h-[calc(100vh-280px)] min-h-[520px]" />

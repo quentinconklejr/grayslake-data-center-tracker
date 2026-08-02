@@ -69,7 +69,7 @@ export default function Footer() {
 
         <div className="border-t border-gray-200 pt-6 flex flex-col sm:flex-row justify-between gap-3">
           <p className="text-2xs font-mono text-gray-400">
-            Compiled by Quentin Conkle Jr. · Updated Aug 2, 2026 · Peterson Rd &amp; Route 83, Grayslake, IL 60030
+            Compiled by Quentin Conkle Jr. · Peterson Rd &amp; Route 83, Grayslake, IL 60030
           </p>
           <div className="flex items-center gap-4">
             {FOOTER_LINKS.map(({ to, label, external }) =>
