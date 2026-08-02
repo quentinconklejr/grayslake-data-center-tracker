@@ -36,8 +36,8 @@ const PHASES = [
     accent: 'border-emerald-300 bg-emerald-50',
     dot: 'bg-emerald-500',
     label: 'text-emerald-700',
-    jobs: '1,500 permanent positions',
-    note: 'Village estimate of 1,500; the Village FAQ\'s per-sq-ft figure (50 jobs per 300,000 sq ft) extrapolates to ~1,680 at full buildout.',
+    jobs: '1,680 permanent positions',
+    note: 'Current Village FAQ estimate. An earlier figure of 1,500 was cited at the October 2025 public meeting (Government Technology, 2025).',
   },
 ]
 
@@ -66,7 +66,7 @@ export default function Jobs() {
       </FadeIn>
 
       <FadeIn className="grid grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
-        <StatCard label="Permanent Jobs"       value={jobs.permanent.toLocaleString()} sub="At full buildout (2029)"    accent="green" sourceKey="govtech2025" />
+        <StatCard label="Permanent Jobs"       value={jobs.permanent.toLocaleString()} sub="At full buildout (2029)"    accent="green" sourceKey="villageoffaq" />
         <StatCard label="Construction"         value="Hundreds"                         sub="Active 2025–2029 (est.)"  badge="Est." accent="amber" sourceKey="govtech2025" />
         <StatCard label="Phase 1 Online"       value={project.firstBuildingOnline}      sub="First building operational" accent="blue" sourceKey="dcd2026" />
         <StatCard label="Full Buildout"        value={project.fullBuildOut}             sub={`Up to ${project.maxBuildings} buildings`} accent="blue" sourceKey="patch2026" />
@@ -80,12 +80,13 @@ export default function Jobs() {
           </div>
           <div className="flex items-center gap-3">
             <span className="text-2xs font-mono text-amber-600">Est. included</span>
-            <SourceCitation sourceKey="govtech2025" />
+            <SourceCitation sourceKey="villageoffaq" />
           </div>
         </div>
         <p className="text-sm text-gray-500 mb-8">
           Construction count at ~400 represents "hundreds" per Village docs — clearly estimated.
-          Permanent count (1,500) is the Village projection; the Village FAQ's per-sq-ft rate (50 jobs / 300,000 sq ft) extrapolates to ~1,680 at full buildout.
+          Permanent count (1,680) is the current Village FAQ estimate. An earlier figure of 1,500
+          was cited at the October 2025 public meeting.
         </p>
         <JobsTimelineChart />
       </FadeIn>

@@ -15,7 +15,8 @@ export const projections = {
     fullBuildOut: "2029",
   },
   jobs: {
-    permanent: 1500,
+    permanent: 1680,
+    permanentEarlier: 1500,
     constructionPhase: "hundreds of construction and trade jobs during buildout",
   },
   fees: {

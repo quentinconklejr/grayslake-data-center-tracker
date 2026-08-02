@@ -29,7 +29,7 @@ const STATS = [
     animated: true,
     suffix: '',
     sub: 'Projected by 2029',
-    sourceKey: 'govtech2025',
+    sourceKey: 'villageoffaq',
   },
   {
     label: 'Phase 1 Online',
@@ -65,11 +65,11 @@ const FACETS = [
     cat: 'Employment',
     catColor: 'text-emerald-600',
     catBorder: 'border-emerald-200',
-    headline: '1,500 permanent positions at full buildout.',
-    body: 'The Village projects 1,500 permanent data center jobs by 2029. Construction through 2027–2029 will employ "hundreds" of trade workers — electricians, ironworkers, HVAC installers — in roles typical of large-scale data center projects.',
+    headline: '1,680 permanent positions at full buildout.',
+    body: 'The Village FAQ\'s current estimate is 1,680 permanent jobs at full buildout. An earlier figure of 1,500 was cited at the October 2025 public meeting. Construction through 2027–2029 will employ "hundreds" of trade workers — electricians, ironworkers, HVAC installers — in roles typical of large-scale data center projects.',
     chart: <JobsTimelineChart />,
     chartLabel: 'Permanent vs. Construction Workforce',
-    sourceKey: 'govtech2025',
+    sourceKey: 'villageoffaq',
     textCls: 'lg:col-span-6', chartCls: 'lg:col-span-6', flip: true,
   },
   {
