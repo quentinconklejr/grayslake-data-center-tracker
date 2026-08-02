@@ -18,16 +18,16 @@ export default function About() {
       <FadeIn className="mb-10">
         <div className="space-y-4 text-sm text-gray-600 leading-relaxed">
           <p>
-            I'm Quentin Conkle Jr., a sophomore at UIUC studying information sciences and data science. I grew up in Grayslake. When I heard a data center campus was going in near town, I realized I knew basically nothing about it and figured I should fix that.
+            I'm Quentin Conkle Jr., a sophomore at UIUC studying information sciences and data science. I grew up in Grayslake. When the T5 campus was announced, I found there was no single resource covering what was actually proposed, so I built one.
           </p>
           <p>
-            Finding real information was harder than it should have been. Some of it sat in village meeting minutes. Some was in trade press written for industry people. A lot of it was people arguing online with nothing to back it up. Every time I wanted a straight answer, like how much tax revenue the village actually gets or what the lawsuits are even about, I had to pull it from five different places.
+            Public information on the project was scattered across village meeting minutes, trade coverage, and local reporting. A sourced answer to a basic question, like projected tax revenue or what the lawsuits claim, required reading across multiple documents.
           </p>
           <p>
-            When I started asking around, everybody else was stuck the same way. Nobody could find the basics in one spot. So I made this.
+            Neighbors and community members were in the same position. This site is an attempt to collect the basics in one place.
           </p>
           <p>
-            I'm not here to tell you what to think about the data center. I'm collecting the public record, meaning village approvals, tax filings, press coverage, and legal developments, and laying it out so you can decide for yourself. Everything on here links to a source. If I got something wrong or I'm missing a document, email me. I'd rather fix it than leave it up.
+            I'm not here to advocate a position on the data center. I collect the public record, including village approvals, tax filings, press coverage, and legal developments, and link every figure to a source. If something is wrong or a document is missing, I want to know.
           </p>
         </div>
       </FadeIn>
@@ -43,8 +43,8 @@ export default function About() {
               <p className="text-sm text-gray-600 leading-relaxed">
                 This site is not affiliated with T5 Data Centers, LLC, the Village of Grayslake,
                 or any advocacy group on either side of this project. It was built independently,
-                on my own time, using publicly available documents and verified journalism.
-                No organization has reviewed or approved the content here.
+                from publicly available documents and verified journalism.
+                No organization has reviewed or approved the content.
               </p>
             </div>
           </div>
@@ -55,9 +55,8 @@ export default function About() {
         <div className="border border-gray-200 rounded-xl px-6 py-6 bg-white">
           <p className="text-2xs font-mono text-gray-400 uppercase tracking-widest mb-4">Contact</p>
           <p className="text-sm text-gray-600 leading-relaxed mb-5">
-            If you have a correction, a document I'm missing, or updated information — I want to
-            hear from you. This site is only as accurate as the public record I've been able to
-            find, and I'd rather fix a mistake than leave it up.
+            If you have a correction or a document this site is missing, please reach out.
+            I'd rather fix a mistake than leave it standing.
           </p>
           <div className="space-y-3">
             <a

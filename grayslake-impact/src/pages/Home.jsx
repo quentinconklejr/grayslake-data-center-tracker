@@ -20,7 +20,7 @@ const FACETS = [
     catColor: 'text-blue-600',
     catBorder: 'border-blue-200',
     headline: 'Developer fees in the tens of millions.',
-    body: 'Mayor Davies described the developer fee split as approximately 50% to major infrastructure, 25% community projects, 25% resident cost-control — characterized as ballpark figures still under negotiation. Property tax revenue depends on Lake County assessor valuation, not yet projected.',
+    body: 'Mayor Davies described the developer fee split as approximately 50% to major infrastructure, 25% community projects, and 25% to resident cost-control. He characterized those as ballpark figures still under negotiation. Property tax revenue depends on Lake County assessor valuation. No projection has been released.',
     chart: <TaxRevenueChart />,
     chartLabel: 'Developer Fee Allocation',
     sourceKey: 'govtech2025',
@@ -32,7 +32,7 @@ const FACETS = [
     catColor: 'text-emerald-600',
     catBorder: 'border-emerald-200',
     headline: '1,680 permanent positions at full buildout.',
-    body: 'The Village FAQ\'s current estimate is 1,680 permanent jobs at full buildout. An earlier figure of 1,500 was cited at the October 2025 public meeting. Construction through 2027–2029 will employ "hundreds" of trade workers — electricians, ironworkers, HVAC installers — in roles typical of large-scale data center projects.',
+    body: 'The Village FAQ\'s current estimate is 1,680 permanent jobs at full buildout. An earlier figure of 1,500 was cited at the October 2025 public meeting. Construction through 2027–2029 will employ "hundreds" of trade workers, per Village documents.',
     chart: <JobsTimelineChart />,
     chartLabel: 'Permanent vs. Construction Workforce',
     sourceKey: 'villageoffaq',
@@ -44,7 +44,7 @@ const FACETS = [
     catColor: 'text-amber-600',
     catBorder: 'border-amber-200',
     headline: '1,600 MW secured. 1,200 MW leasable.',
-    body: 'T5 has secured 1,600 MW of utility power against a planned 1,200 MW of leasable IT capacity — a 400 MW buffer for redundancy and phased buildout. Residential electric rates are not directly affected under Illinois\'s separate utility rate class structure for data centers.',
+    body: 'T5 has secured 1,600 MW of utility power against a planned 1,200 MW of leasable IT capacity. The 400 MW difference serves as a buffer for redundancy and phased buildout. Residential electric rates are not directly affected under Illinois\'s separate utility rate class structure for data centers.',
     chart: <EnergyDrawChart />,
     chartLabel: 'Secured Power vs. IT Capacity',
     sourceKey: 'dcdGW2026',
@@ -56,7 +56,7 @@ const FACETS = [
     catColor: 'text-violet-600',
     catBorder: 'border-violet-200',
     headline: 'In DeKalb, 60.9% went to schools.',
-    body: 'No Grayslake-specific school funding projection has been released. The Meta data center in DeKalb provides the closest Illinois precedent: School District 428 received ~60.9% of Meta\'s taxes across three properties (multi-year data). The 2025 bill for one facility was $31.1M — a separate figure from a different dataset.',
+    body: 'No Grayslake-specific school funding projection has been released. The Meta data center in DeKalb provides the closest Illinois precedent: School District 428 received ~60.9% of Meta\'s taxes across three properties (multi-year data). The 2025 bill for one facility was $31.1M, a figure drawn from a separate dataset.',
     chart: <SchoolFundingChart />,
     chartLabel: 'DeKalb / Meta Precedent (2025)',
     sourceKey: 'capitolnews2026',
@@ -78,7 +78,7 @@ export default function Home() {
             <p className="text-xl text-gray-600 leading-relaxed max-w-[65ch] mb-4">
               T5 @ Chicago IV is a proposed hyperscale AI data center campus on Peterson Road
               and Route 83 in Grayslake, Illinois. This tracker collects public records and press
-              coverage on the project — jobs, taxes, energy, school funding — and links every claim to its source.
+              coverage on the project and links every claim to its source.
             </p>
             <p className="text-2xs font-mono text-gray-400 mb-12">Last verified Aug 2, 2026</p>
           </FadeIn>
@@ -96,7 +96,7 @@ export default function Home() {
                 className="text-7xl sm:text-8xl font-display font-black text-gray-900 leading-none tracking-tighter block"
               />
               <p className="text-sm text-gray-500 mt-4 leading-snug">
-                Projected by 2029 — Village FAQ estimate<SourceCitation sourceKey="villageoffaq" />
+                Projected by 2029. Village FAQ estimate.<SourceCitation sourceKey="villageoffaq" />
               </p>
             </FadeIn>
 
@@ -159,9 +159,9 @@ export default function Home() {
             <span className="inline-block w-4 h-px bg-gray-300" />
             Impact by category
           </p>
-          <h2 className="text-3xl font-display font-bold text-gray-900">Four dimensions of impact.</h2>
+          <h2 className="text-3xl font-display font-bold text-gray-900">Four areas of impact.</h2>
           <p className="text-base text-gray-500 mt-2 max-w-xl leading-relaxed">
-            Each section links to a full page with all sourced data, charts, and methodology notes.
+            Each section links to a full page with sourced data and methodology.
           </p>
         </FadeIn>
 
