@@ -86,12 +86,6 @@ export const sources = {
     publisher: "Chicago Tribune",
     url: "https://www.chicagotribune.com/2026/06/05/grayslake-data-center-3/",
   },
-  chitrib_avon2026: {
-    title: "Avon Township voices opposition to Grayslake data center; 'we represent the people'",
-    publisher: "Chicago Tribune",
-    url: "https://www.chicagotribune.com/2026/06/11/avon-township-voices-opposition-to-grayslake-data-center/",
-    status: "unverified",
-  },
   illenvcouncil: {
     title: "Illinois Environmental Council — Data Center Wetlands and Environmental Coverage",
     publisher: "Illinois Environmental Council",

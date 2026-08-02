@@ -74,7 +74,7 @@ export const timelineEvents = [
     title: "Avon Township board adopts transparency resolution",
     description: "Avon Township's elected board adopted a resolution calling for greater transparency and community engagement regarding the T5 development. Avon Township is a township government, not a municipality.",
     category: "policy",
-    sourceKey: "chitrib_avon2026",
+    sourceKey: "chitrib_june2026",
   },
   {
     date: "2026-07-11",
