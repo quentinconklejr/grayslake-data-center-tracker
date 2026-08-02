@@ -25,7 +25,7 @@ export default function TaxImpact() {
         <p className="text-2xs font-mono text-blue-600/60 uppercase tracking-[0.2em] mb-3">Fiscal Impact</p>
         <h1 className="text-4xl font-display font-bold text-gray-900 tracking-tight mb-3">Tax Revenue &amp; Developer Fees</h1>
         <p className="text-base text-gray-600 max-w-2xl leading-relaxed">
-          Village officials project "{fees.totalDescription}" in developer fees at full buildout.
+          Village officials project "{fees.totalDescription}" in developer fees.
           Property tax revenue depends on Lake County assessor valuation, which has not been
           publicly projected. The DeKalb/Meta data center provides the closest Illinois precedent.
         </p>
