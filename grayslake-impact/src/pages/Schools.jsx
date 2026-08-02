@@ -4,6 +4,7 @@ import SchoolFundingChart from '../components/charts/SchoolFundingChart'
 import SourceCitation from '../components/ui/SourceCitation'
 import FadeIn from '../components/ui/FadeIn'
 import { FootnoteProvider, FootnoteList } from '../components/ui/FootnoteContext'
+import SourceArtifact from '../components/ui/SourceArtifact'
 import { projections } from '../data/projections'
 
 const { schoolFundingComparable: meta } = projections
@@ -163,6 +164,19 @@ export default function Schools() {
 
       <FadeIn>
         <p className="text-2xs font-mono text-gray-400 uppercase tracking-widest mb-5">Grayslake Districts That Would Receive Revenue</p>
+        <div className="mb-6">
+          <SourceArtifact
+            publisher="Village of Grayslake — Official FAQ"
+            date="2025"
+            pageRef="p. 2"
+            url="https://villageofgrayslake.com/DocumentCenter/View/15282"
+            excerpts={[
+              "The following taxing bodies will receive tax revenue from the T5 campus: Fremont Elementary District 79, Mundelein High School District 120, Fremont Library, Round Lake Area Park District, and Grayslake Park District.",
+              "The development agreements provide no financial incentives to T5 Data Centers.",
+            ]}
+            annotation="Source: Village of Grayslake Approved T5 Data Center Campus FAQs (2025). Quoted as published."
+          />
+        </div>
         <div className="grid md:grid-cols-2 gap-3">
           {GRAYSLAKE_DISTRICTS.map(({ name, desc, sub }) => (
             <div key={name} className="bg-white border border-gray-200 rounded-xl p-5 hover:border-gray-300 hover:shadow-sm transition-all duration-150">

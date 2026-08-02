@@ -71,7 +71,7 @@ export default function SiteMap({ className = 'h-[480px]' }) {
       mgl.accessToken = TOKEN
       const map = new mgl.Map({
         container:          containerRef.current,
-        style:              'mapbox://styles/mapbox/outdoors-v12',
+        style:              'mapbox://styles/mapbox/satellite-streets-v12',
         center:             CENTER,
         zoom:               ZOOM,
         attributionControl: false,
@@ -104,14 +104,14 @@ export default function SiteMap({ className = 'h-[480px]' }) {
         map.addSource('opt-parcel',  { type: 'geojson', data: geojson(OPT_RING)  })
 
         map.addLayer({ id: 'main-fill', type: 'fill', source: 'main-parcel',
-          paint: { 'fill-color': '#0284c7', 'fill-opacity': 0.12 } })
+          paint: { 'fill-color': '#3b82f6', 'fill-opacity': 0.2 } })
         map.addLayer({ id: 'opt-fill', type: 'fill', source: 'opt-parcel',
-          paint: { 'fill-color': '#d97706', 'fill-opacity': 0.08 } })
+          paint: { 'fill-color': '#f59e0b', 'fill-opacity': 0.15 } })
 
         map.addLayer({ id: 'main-outline', type: 'line', source: 'main-parcel',
-          paint: { 'line-color': '#0284c7', 'line-width': 2, 'line-opacity': 0.9 } })
+          paint: { 'line-color': '#60a5fa', 'line-width': 2.5, 'line-opacity': 1 } })
         map.addLayer({ id: 'opt-outline', type: 'line', source: 'opt-parcel',
-          paint: { 'line-color': '#d97706', 'line-width': 1.5, 'line-opacity': 0.7,
+          paint: { 'line-color': '#fbbf24', 'line-width': 2, 'line-opacity': 0.9,
                    'line-dasharray': [3, 2] } })
 
         map.addSource('site-label-pt', {
@@ -135,9 +135,9 @@ export default function SiteMap({ className = 'h-[480px]' }) {
             'text-letter-spacing': 0.08,
           },
           paint: {
-            'text-color': '#ea6b00',
-            'text-halo-color': '#ffffff',
-            'text-halo-width': 2.5,
+            'text-color': '#ffffff',
+            'text-halo-color': '#000000',
+            'text-halo-width': 2,
           },
         })
 
@@ -145,7 +145,7 @@ export default function SiteMap({ className = 'h-[480px]' }) {
         function animateGlow() {
           if (cancelled) return
           t = Date.now() / 1000
-          const glow = 0.08 + 0.06 * Math.sin(t * 0.7)
+          const glow = 0.15 + 0.08 * Math.sin(t * 0.7)
           try { map.setPaintProperty('main-fill', 'fill-opacity', glow) } catch (_) {}
           animRef.current = requestAnimationFrame(animateGlow)
         }

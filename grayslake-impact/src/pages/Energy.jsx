@@ -4,6 +4,7 @@ import EnergyDrawChart from '../components/charts/EnergyDrawChart'
 import SourceCitation from '../components/ui/SourceCitation'
 import FadeIn from '../components/ui/FadeIn'
 import { FootnoteProvider, FootnoteList } from '../components/ui/FootnoteContext'
+import EvidenceBlock from '../components/ui/EvidenceBlock'
 import { projections } from '../data/projections'
 
 const { project } = projections
@@ -54,23 +55,16 @@ export default function Energy() {
         <p className="text-2xs font-mono text-gray-400 uppercase tracking-widest mb-5">Residential Rate Impact</p>
         <div className="space-y-3">
 
-          <div className="pl-4 border-l-2 border-gray-300 py-1">
-            <div className="flex items-center gap-2 mb-1.5">
-              <p className="text-sm font-display font-semibold text-gray-800">Direct distribution costs: tariff-walled</p>
-              <SourceCitation sourceKey="villageoffaq" />
-            </div>
-            <p className="text-base text-gray-600 leading-relaxed">
+          <EvidenceBlock type="stated" title="Direct distribution costs: tariff-walled" sourceKey="villageoffaq">
+            <p className="text-sm text-gray-600 leading-relaxed">
               Illinois maintains a separate utility rate class for large industrial users including data centers.
               The ICC-approved ComEd tariff requires data centers to fund their own transmission and
               distribution upgrade costs — those costs do not flow through to residential rate classes as a direct line item.
             </p>
-          </div>
+          </EvidenceBlock>
 
-          <div className="pl-4 border-l-2 border-amber-400 bg-amber-50/60 rounded-r py-3 pr-3">
-            <div className="flex items-center gap-2 mb-1.5">
-              <p className="text-sm font-display font-semibold text-amber-800">Regional capacity prices: an open question</p>
-            </div>
-            <p className="text-base text-gray-600 leading-relaxed">
+          <EvidenceBlock type="unknown" title="Regional capacity prices: an open question">
+            <p className="text-sm text-gray-600 leading-relaxed">
               The ICC tariff wall contains distribution and transmission upgrade costs within the large
               industrial rate class. However, PJM capacity auction clearing prices are set by aggregate
               regional demand across all load — a wholesale market effect that the distribution tariff
@@ -78,7 +72,7 @@ export default function Energy() {
               capacity prices in the ComEd zone is not yet established by any verified public study.
               No confirmed figure is available.
             </p>
-          </div>
+          </EvidenceBlock>
 
         </div>
       </FadeIn>

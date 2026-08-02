@@ -4,6 +4,7 @@ import PageTitle from '../components/ui/PageTitle'
 import SourceCitation from '../components/ui/SourceCitation'
 import FadeIn from '../components/ui/FadeIn'
 import { FootnoteProvider, FootnoteList } from '../components/ui/FootnoteContext'
+import { EVIDENCE } from '../components/ui/EvidenceBlock'
 import { questions } from '../data/questions'
 
 // Pre-collect all sourceKeys in order of first appearance across all questions
@@ -28,36 +29,9 @@ const CAT_META = {
 }
 
 const BLOCKS = [
-  {
-    key: 'stated',
-    label: 'Stated',
-    desc: 'Publicly stated by officials or the developer',
-    labelCls: 'text-gray-700',
-    borderCls: 'border-gray-300',
-    bgCls: '',
-    dotCls: 'text-gray-400',
-    textCls: 'text-gray-700',
-  },
-  {
-    key: 'disputed',
-    label: 'Disputed',
-    desc: 'Contested by critics, advocates, or independent research',
-    labelCls: 'text-amber-700',
-    borderCls: 'border-amber-400',
-    bgCls: 'bg-amber-50/60',
-    dotCls: 'text-amber-500',
-    textCls: 'text-gray-700',
-  },
-  {
-    key: 'unknown',
-    label: 'Not Yet Public',
-    desc: 'Genuinely unanswered — no public document covers this',
-    labelCls: 'text-gray-400',
-    borderCls: 'border-gray-200',
-    bgCls: 'bg-gray-50',
-    dotCls: 'text-gray-300',
-    textCls: 'text-gray-500',
-  },
+  { key: 'stated',   textCls: 'text-gray-700', dotCls: 'text-emerald-400' },
+  { key: 'disputed', textCls: 'text-gray-700', dotCls: 'text-amber-400'   },
+  { key: 'unknown',  textCls: 'text-gray-500', dotCls: 'text-gray-300'    },
 ]
 
 function QuestionCard({ q, isExpanded, onToggle }) {
@@ -96,18 +70,20 @@ function QuestionCard({ q, isExpanded, onToggle }) {
             className="overflow-hidden"
           >
             <div className="px-6 pb-6 pt-1 space-y-2 border-t border-gray-100">
-              {BLOCKS.map(({ key, label, desc, labelCls, borderCls, bgCls, dotCls, textCls }) => {
+              {BLOCKS.map(({ key, textCls, dotCls }) => {
+                const ev = EVIDENCE[key]
                 const items = q[key]
                 if (!items?.length) return null
                 return (
                   <div
                     key={key}
-                    className={`mt-3 pl-4 border-l-2 ${borderCls} ${bgCls} rounded-r py-3 pr-3`}
+                    className={`mt-3 pl-4 border-l-2 ${ev.border} ${ev.bg} rounded-r py-3 pr-3`}
                   >
-                    <div className="flex items-center gap-2 mb-2.5">
-                      <p className={`text-2xs font-mono uppercase tracking-widest font-semibold ${labelCls}`}>{label}</p>
+                    <div className="flex items-center gap-1.5 mb-2.5">
+                      <span className={ev.labelCls}>{ev.icon}</span>
+                      <p className={`text-2xs font-mono uppercase tracking-widest font-semibold ${ev.labelCls}`}>{ev.tag}</p>
                       <span className="text-2xs text-gray-300">·</span>
-                      <p className="text-2xs text-gray-400">{desc}</p>
+                      <p className="text-2xs text-gray-400">{ev.desc}</p>
                     </div>
                     <ul className="space-y-2.5">
                       {items.map((item, i) => (
@@ -196,7 +172,7 @@ export default function OpenQuestions() {
               <p className="text-sm text-gray-600 leading-relaxed">
                 This page organizes publicly sourced statements around genuinely unresolved questions.
                 It does not characterize, evaluate, or endorse any position.
-                <span className="text-gray-800"> "Stated"</span> reflects what officials or the developer have said on record.
+                <span className="text-emerald-700"> "Stated"</span> reflects what officials or the developer have said on record.
                 <span className="text-amber-700"> "Disputed"</span> reflects what critics, advocates, or independent researchers have said on record.
                 <span className="text-gray-400"> "Not Yet Public"</span> identifies what has no public answer yet.
                 Every claim links to its source.

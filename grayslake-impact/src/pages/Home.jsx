@@ -13,41 +13,6 @@ import { projections } from '../data/projections'
 
 const { project, jobs } = projections
 
-const STATS = [
-  {
-    label: 'IT Capacity',
-    display: `${project.totalCapacityMW.toLocaleString()} MW`,
-    value: project.totalCapacityMW,
-    animated: true,
-    suffix: ' MW',
-    sub: 'Leasable at full buildout',
-    sourceKey: 'dcdGW2026',
-  },
-  {
-    label: 'Permanent Jobs',
-    display: jobs.permanent.toLocaleString(),
-    value: jobs.permanent,
-    animated: true,
-    suffix: '',
-    sub: 'Projected by 2029',
-    sourceKey: 'villageoffaq',
-  },
-  {
-    label: 'Phase 1 Online',
-    display: project.firstBuildingOnline,
-    animated: false,
-    sub: 'Under construction now',
-    sourceKey: 'dcd2026',
-  },
-  {
-    label: 'Total Investment',
-    display: `$${project.costLow}–${project.costHigh}B`,
-    animated: false,
-    sub: 'Mayor Davies: $8.5B · CEO Marin: up to $18B',
-    sourceKey: 'govtech2025',
-  },
-]
-
 const FACETS = [
   {
     to: '/tax-impact',
@@ -117,22 +82,49 @@ export default function Home() {
             </p>
           </FadeIn>
 
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
-            {STATS.map(({ label, display, value, animated, suffix, sub, sourceKey }, i) => (
-              <FadeIn key={label} delay={i * 0.08} className="bg-white border border-gray-200 rounded-xl p-7 shadow-sm">
-                <p className="text-xl font-display font-bold text-gray-700 leading-tight mb-3">{label}</p>
-                {animated ? (
-                  <AnimatedNumber
-                    value={value}
-                    suffix={suffix}
-                    duration={1.6}
-                    delay={i * 0.08 + 0.15}
-                    className="text-3xl font-display font-black text-gray-900 leading-none block"
-                  />
-                ) : (
-                  <span className="text-3xl font-display font-black text-gray-900 leading-none block">{display}</span>
-                )}
-                <p className="text-base text-gray-500 mt-3 leading-snug">{sub}{sourceKey && <SourceCitation sourceKey={sourceKey} />}</p>
+          {/* Headline stats — typographically dominant */}
+          <div className="grid md:grid-cols-2 gap-10 md:gap-0 border-t border-gray-200 pt-10">
+
+            <FadeIn className="md:pr-12 md:border-r border-gray-200">
+              <p className="text-2xs font-mono text-gray-400 uppercase tracking-[0.2em] mb-3">Permanent Jobs at Full Buildout</p>
+              <AnimatedNumber
+                value={jobs.permanent}
+                suffix=""
+                duration={1.6}
+                delay={0.1}
+                className="text-7xl sm:text-8xl font-display font-black text-gray-900 leading-none tracking-tighter block"
+              />
+              <p className="text-sm text-gray-500 mt-4 leading-snug">
+                Projected by 2029 — Village FAQ estimate<SourceCitation sourceKey="villageoffaq" />
+              </p>
+            </FadeIn>
+
+            <FadeIn delay={0.08} className="md:pl-12 border-t border-gray-200 pt-10 md:pt-0 md:border-t-0">
+              <p className="text-2xs font-mono text-gray-400 uppercase tracking-[0.2em] mb-3">Total Estimated Investment</p>
+              <p className="text-6xl sm:text-7xl font-display font-black text-gray-900 leading-none tracking-tighter">
+                $8.5<span className="text-gray-300">–</span>18<span className="text-4xl sm:text-5xl">B</span>
+              </p>
+              <p className="text-sm text-gray-500 mt-4 leading-snug">
+                Mayor Davies: $8.5B · CEO Marin: up to $18B<SourceCitation sourceKey="govtech2025" />
+              </p>
+            </FadeIn>
+
+          </div>
+
+          {/* Secondary stats */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 mt-10 pt-8 border-t border-gray-100">
+            {[
+              { label: 'IT Capacity',    value: `${project.totalCapacityMW.toLocaleString()} MW`, note: 'Leasable at full buildout',   src: 'dcdGW2026' },
+              { label: 'Secured Power',  value: `${project.securedPowerMW.toLocaleString()} MW`,  note: 'Utility-contracted capacity',   src: 'dcdGW2026' },
+              { label: 'Phase 1 Online', value: project.firstBuildingOnline,                       note: 'Under construction now',        src: 'dcd2026'   },
+              { label: 'Campus Area',    value: `${project.totalAcres.toLocaleString()} ac`,       note: 'Peterson Rd & Route 83',        src: 'villageoffaq' },
+            ].map(({ label, value, note, src }) => (
+              <FadeIn key={label}>
+                <p className="text-2xs font-mono text-gray-400 uppercase tracking-[0.16em] mb-1">{label}</p>
+                <p className="text-xl font-display font-bold text-gray-800 leading-tight">
+                  {value}<SourceCitation sourceKey={src} />
+                </p>
+                <p className="text-xs text-gray-400 mt-1">{note}</p>
               </FadeIn>
             ))}
           </div>

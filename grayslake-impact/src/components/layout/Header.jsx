@@ -67,16 +67,14 @@ export default function Header() {
     }`}>
 
       {/* Main bar */}
-      <div className="max-w-7xl mx-auto px-6 flex items-center h-12 gap-8">
+      <div className="max-w-7xl mx-auto px-6 flex items-center py-3 gap-8">
 
-        <Link to="/" className="shrink-0 flex items-center gap-1.5 group">
-          <svg viewBox="0 0 12 12" className="w-3 h-3 shrink-0 opacity-60" fill="none">
-            <rect x="1"   y="6.5" width="2.2" height="4.5" rx="0.4" fill="#0284c7"/>
-            <rect x="4.4" y="3.5" width="2.2" height="7.5" rx="0.4" fill="#0284c7"/>
-            <rect x="7.8" y="5"   width="2.2" height="6"   rx="0.4" fill="#0284c7"/>
-          </svg>
-          <span className="text-sm font-semibold text-gray-800 group-hover:text-gray-500 transition-colors whitespace-nowrap leading-none">
+        <Link to="/" className="shrink-0 flex flex-col group">
+          <span className="text-sm font-semibold text-gray-900 group-hover:text-gray-600 transition-colors leading-tight whitespace-nowrap">
             Grayslake Data Center Tracker
+          </span>
+          <span className="hidden sm:block text-2xs font-mono text-gray-400 leading-tight mt-0.5">
+            An independent public-records project · Not affiliated with T5 or the Village of Grayslake
           </span>
         </Link>
 
