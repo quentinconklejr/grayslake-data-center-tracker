@@ -6,6 +6,7 @@ import { FootnoteProvider, FootnoteList } from '../components/ui/FootnoteContext
 import { questions } from '../data/questions'
 import { projections } from '../data/projections'
 import { LAST_VERIFIED } from '../data/siteConfig'
+import AudienceBreadcrumb from '../components/ui/AudienceBreadcrumb'
 
 const { project, jobs, fees, residentialRateImpact } = projections
 
@@ -55,6 +56,7 @@ export default function Residents() {
   return (
     <FootnoteProvider preload={PRELOAD_KEYS}>
     <div className="max-w-3xl mx-auto px-4 sm:px-6 py-12">
+      <AudienceBreadcrumb current="Residents" />
       <PageTitle title="For Residents" />
 
       <FadeIn className="mb-10 pb-8 border-b border-gray-200">

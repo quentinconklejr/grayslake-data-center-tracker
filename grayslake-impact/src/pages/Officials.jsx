@@ -5,6 +5,7 @@ import FadeIn from '../components/ui/FadeIn'
 import { FootnoteProvider, FootnoteList } from '../components/ui/FootnoteContext'
 import { timelineEvents } from '../data/timeline'
 import { LAST_VERIFIED } from '../data/siteConfig'
+import AudienceBreadcrumb from '../components/ui/AudienceBreadcrumb'
 
 const POLICY_CATS = new Set(['approval', 'legal', 'policy'])
 
@@ -29,6 +30,7 @@ export default function Officials() {
   return (
     <FootnoteProvider preload={PRELOAD_KEYS}>
     <div className="max-w-3xl mx-auto px-4 sm:px-6 py-12">
+      <AudienceBreadcrumb current="Officials" />
       <PageTitle title="For Officials" />
 
       <FadeIn className="mb-10 pb-8 border-b border-gray-200">
