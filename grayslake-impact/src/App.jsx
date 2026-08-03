@@ -13,6 +13,9 @@ import MapPage from './pages/Map'
 import OpenQuestions from './pages/OpenQuestions'
 import NotFound from './pages/NotFound'
 import About from './pages/About'
+import Residents from './pages/Residents'
+import Reporters from './pages/Reporters'
+import Officials from './pages/Officials'
 
 export default function App() {
   return (
@@ -33,6 +36,9 @@ export default function App() {
             <Route path="/map" element={<MapPage />} />
             <Route path="/sources" element={<Sources />} />
             <Route path="/about" element={<About />} />
+            <Route path="/residents" element={<Residents />} />
+            <Route path="/reporters" element={<Reporters />} />
+            <Route path="/officials" element={<Officials />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </main>

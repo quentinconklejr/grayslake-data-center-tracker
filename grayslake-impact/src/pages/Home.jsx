@@ -133,6 +133,52 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── Start here ───────────────────────────────────────────────────────── */}
+      <section className="bg-white border-b border-gray-200">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 py-10">
+          <FadeIn>
+            <p className="text-2xs font-mono text-gray-400 uppercase tracking-[0.2em] mb-5 flex items-center gap-2">
+              <span className="inline-block w-4 h-px bg-gray-300" />
+              Start here
+            </p>
+            <div className="grid sm:grid-cols-3 gap-4">
+              {[
+                {
+                  to: '/residents',
+                  label: 'Residents',
+                  color: 'text-blue-600',
+                  border: 'border-blue-100 hover:border-blue-300',
+                  desc: 'Plain-language summary: water, energy, jobs, taxes, and the approval process.',
+                },
+                {
+                  to: '/reporters',
+                  label: 'Reporters',
+                  color: 'text-violet-600',
+                  border: 'border-violet-100 hover:border-violet-300',
+                  desc: 'Key figures with citations and a contacts reference for press inquiries.',
+                },
+                {
+                  to: '/officials',
+                  label: 'Officials',
+                  color: 'text-amber-600',
+                  border: 'border-amber-100 hover:border-amber-300',
+                  desc: 'Approval decisions, legal challenges, and policy events — sourced and dated.',
+                },
+              ].map(({ to, label, color, border, desc }) => (
+                <Link
+                  key={to}
+                  to={to}
+                  className={`block border rounded-xl px-5 py-4 bg-white transition-colors duration-150 group ${border}`}
+                >
+                  <p className={`text-2xs font-mono uppercase tracking-[0.2em] font-semibold mb-1.5 ${color}`}>{label}</p>
+                  <p className="text-xs text-gray-600 leading-relaxed group-hover:text-gray-800 transition-colors">{desc}</p>
+                </Link>
+              ))}
+            </div>
+          </FadeIn>
+        </div>
+      </section>
+
       {/* ── Site map ─────────────────────────────────────────────────────────── */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 pt-12 pb-14">
         <FadeIn>
