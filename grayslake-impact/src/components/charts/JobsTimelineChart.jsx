@@ -54,7 +54,7 @@ export default function JobsTimelineChart() {
             </span>
           </div>
 
-          <div className="h-4 w-full rounded-full overflow-hidden bg-gray-100">
+          <div className="h-4 w-full rounded-full overflow-hidden bg-gray-200">
             <motion.div
               className="h-full rounded-full"
               style={{

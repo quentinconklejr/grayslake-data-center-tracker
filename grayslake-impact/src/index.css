@@ -4,26 +4,26 @@
 
 /* ─── Design tokens ─────────────────────────────────────────────────────────── */
 :root {
-  --bg-base:        #f2f2f8;
+  --bg-base:        #f8fafc;
   --bg-surface:     #ffffff;
-  --bg-raised:      #e3e3ef;
-  --accent:         #0284c7;   /* blue-600 — single confident accent */
-  --accent-muted:   rgba(2, 132, 199, 0.08);
-  --border-subtle:  rgba(0, 0, 0, 0.05);
-  --border-default: rgba(0, 0, 0, 0.08);
-  --border-strong:  rgba(0, 0, 0, 0.13);
+  --bg-raised:      #f1f5f9;
+  --accent:         #2563eb;   /* blue-600 — single confident accent */
+  --accent-muted:   rgba(37, 99, 235, 0.08);
+  --border-subtle:  rgba(15, 23, 42, 0.04);
+  --border-default: rgba(15, 23, 42, 0.08);
+  --border-strong:  rgba(15, 23, 42, 0.13);
 }
 
 /* ─── Base ──────────────────────────────────────────────────────────────────── */
 html {
   scroll-behavior: smooth;
-  background-color: #f2f2f8;
+  background-color: #f8fafc;
 }
 
 body {
-  background-color: #f2f2f8;
-  color: #111111;
-  font-family: 'Open Sans', system-ui, -apple-system, sans-serif;
+  background-color: #f8fafc;
+  color: #0f172a;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -34,29 +34,43 @@ body {
   font-feature-settings: 'tnum';
 }
 
-/* ─── Grid background (hero) ────────────────────────────────────────────────── */
+/* ─── Glass card utilities ──────────────────────────────────────────────────── */
+@layer components {
+  .glass-card {
+    @apply bg-white border border-gray-200 rounded-xl shadow-glass;
+  }
+  .glass-card-hover {
+    @apply bg-white border border-gray-200 rounded-xl shadow-glass
+           transition-all duration-200
+           hover:border-gray-300 hover:shadow-glass-hover;
+  }
+  .glass-panel {
+    @apply bg-white/80 backdrop-blur-sm border border-gray-200 rounded-xl shadow-glass;
+  }
+}
+
+/* ─── Grid background (hero) ─────────────────────────────────────────────── */
 .bg-grid {
   background-image:
-    linear-gradient(rgba(14, 165, 233, 0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(14, 165, 233, 0.04) 1px, transparent 1px);
-  background-size: 36px 36px;
+    radial-gradient(circle, rgba(37, 99, 235, 0.07) 1px, transparent 1px);
+  background-size: 24px 24px;
 }
 
 /* ─── Custom scrollbar ──────────────────────────────────────────────────────── */
 ::-webkit-scrollbar              { width: 5px; height: 5px; }
-::-webkit-scrollbar-track        { background: #f2f2f8; }
-::-webkit-scrollbar-thumb        { background: #c5c5df; border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover  { background: #9898c4; }
+::-webkit-scrollbar-track        { background: #f1f5f9; }
+::-webkit-scrollbar-thumb        { background: #cbd5e1; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover  { background: #94a3b8; }
 
 /* ─── Selection ─────────────────────────────────────────────────────────────── */
 ::selection {
-  background: rgba(2, 132, 199, 0.15);
-  color: #11111f;
+  background: rgba(37, 99, 235, 0.12);
+  color: #0f172a;
 }
 
 /* ─── Focus ─────────────────────────────────────────────────────────────────── */
 :focus-visible {
-  outline: 2px solid rgba(2, 132, 199, 0.7);
+  outline: 2px solid rgba(37, 99, 235, 0.6);
   outline-offset: 3px;
   border-radius: 3px;
 }
@@ -67,32 +81,33 @@ body {
 
 /* ─── Mapbox control theming ────────────────────────────────────────────────── */
 .mapboxgl-ctrl-group {
-  background: rgba(255, 255, 255, 0.95) !important;
-  border: 1px solid rgba(0,0,0,0.10) !important;
-  border-radius: 6px !important;
+  background: rgba(255, 255, 255, 0.97) !important;
+  border: 1px solid rgba(15,23,42,0.10) !important;
+  border-radius: 8px !important;
   backdrop-filter: blur(12px);
+  box-shadow: 0 2px 8px rgba(15,23,42,0.08) !important;
 }
 .mapboxgl-ctrl-group button {
   background: transparent !important;
-  color: #6b6ba0 !important;
-  border-bottom: 1px solid rgba(0,0,0,0.07) !important;
+  color: #64748b !important;
+  border-bottom: 1px solid rgba(15,23,42,0.06) !important;
 }
-.mapboxgl-ctrl-group button:hover { background: rgba(0,0,0,0.04) !important; }
+.mapboxgl-ctrl-group button:hover { background: rgba(15,23,42,0.04) !important; }
 .mapboxgl-ctrl-group button:last-child { border-bottom: none !important; }
 .mapboxgl-ctrl-scale {
-  background: rgba(255, 255, 255, 0.92) !important;
-  border-color: rgba(0,0,0,0.10) !important;
-  color: #6b6ba0 !important;
-  font-family: 'Roboto Mono', monospace !important;
-  font-size: 12px !important;
+  background: rgba(255, 255, 255, 0.95) !important;
+  border-color: rgba(15,23,42,0.10) !important;
+  color: #64748b !important;
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 11px !important;
   padding: 2px 6px !important;
 }
 .mapboxgl-ctrl-attrib {
-  background: rgba(255, 255, 255, 0.80) !important;
-  color: #9898c4 !important;
-  font-size: 12px !important;
+  background: rgba(255, 255, 255, 0.85) !important;
+  color: #94a3b8 !important;
+  font-size: 11px !important;
 }
-.mapboxgl-ctrl-attrib a { color: #6b6ba0 !important; }
+.mapboxgl-ctrl-attrib a { color: #64748b !important; }
 
 /* ─── Reduced motion ─────────────────────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {

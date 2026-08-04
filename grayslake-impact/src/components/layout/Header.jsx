@@ -8,8 +8,10 @@ function NavLink_({ to, label, end }) {
       to={to}
       end={end}
       className={({ isActive }) =>
-        `text-xs whitespace-nowrap transition-colors duration-100 ${
-          isActive ? 'text-gray-900 font-medium' : 'text-gray-400 hover:text-gray-700 font-normal'
+        `text-xs font-medium whitespace-nowrap transition-colors duration-150 ${
+          isActive
+            ? 'text-gray-900'
+            : 'text-gray-500 hover:text-gray-800'
         }`
       }
     >
@@ -24,8 +26,8 @@ function MobileNavLink({ to, label, end }) {
       to={to}
       end={end}
       className={({ isActive }) =>
-        `block py-2.5 text-sm border-b border-gray-50 last:border-0 transition-colors duration-100 ${
-          isActive ? 'text-gray-900 font-medium' : 'text-gray-400 hover:text-gray-700 font-normal'
+        `block py-3 text-sm border-b border-gray-100 last:border-0 transition-colors duration-150 ${
+          isActive ? 'text-gray-900 font-semibold' : 'text-gray-500 hover:text-gray-800 font-medium'
         }`
       }
     >
@@ -50,24 +52,24 @@ export default function Header() {
   }, [])
 
   return (
-    <header className={`sticky top-0 z-50 bg-white border-b transition-shadow duration-200 ${
-      scrolled ? 'border-gray-200 shadow-sm' : 'border-gray-100'
+    <header className={`sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b transition-all duration-200 ${
+      scrolled ? 'border-gray-200 shadow-glass' : 'border-gray-100'
     }`}>
 
       {/* Main bar */}
-      <div className="max-w-7xl mx-auto px-6 flex items-center py-3 gap-8">
+      <div className="max-w-7xl mx-auto px-6 flex items-center py-3.5 gap-8">
 
         <Link to="/" className="shrink-0 flex flex-col group">
-          <span className="text-sm font-semibold text-gray-900 group-hover:text-gray-600 transition-colors leading-tight whitespace-nowrap">
+          <span className="text-sm font-semibold text-gray-900 group-hover:text-gray-600 transition-colors leading-tight whitespace-nowrap tracking-tight">
             Grayslake Data Center Tracker
           </span>
           <span className="hidden sm:block text-2xs font-mono text-gray-400 leading-tight mt-0.5">
-            An independent public-records project · Not affiliated with T5 or the Village of Grayslake
+            An independent public-records project · Not affiliated with T5 or the Village
           </span>
         </Link>
 
         {/* Desktop nav */}
-        <nav className="hidden md:flex items-center gap-5 flex-1 justify-end">
+        <nav className="hidden md:flex items-center gap-6 flex-1 justify-end">
           {NAV_LINKS.map(l => <NavLink_ key={l.to} {...l} />)}
         </nav>
 
@@ -92,7 +94,7 @@ export default function Header() {
 
       {/* Mobile menu */}
       {mobileOpen && (
-        <div className="md:hidden border-t border-gray-100 bg-white">
+        <div className="md:hidden border-t border-gray-100 bg-white/98">
           <nav className="max-w-7xl mx-auto px-6 py-1">
             {NAV_LINKS.map(l => <MobileNavLink key={l.to} {...l} />)}
           </nav>

@@ -30,7 +30,7 @@ export default function SchoolFundingChart() {
 
       {/* Proportion bar */}
       <div className="space-y-2">
-        <div className="h-6 w-full rounded overflow-hidden flex bg-gray-100">
+        <div className="h-6 w-full rounded overflow-hidden flex bg-gray-200">
           <motion.div
             className="h-full bg-emerald-600"
             initial={{ width: 0 }}

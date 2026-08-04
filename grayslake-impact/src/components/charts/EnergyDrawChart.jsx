@@ -30,7 +30,7 @@ export default function EnergyDrawChart() {
       {/* Stacked bar showing composition */}
       <div className="space-y-2">
         <p className="text-2xs font-mono text-gray-400 uppercase tracking-widest">Power allocation (% of secured)</p>
-        <div className="h-5 w-full rounded overflow-hidden flex bg-gray-100">
+        <div className="h-5 w-full rounded overflow-hidden flex bg-gray-200">
           <motion.div
             className="h-full bg-blue-600"
             initial={{ width: 0 }}

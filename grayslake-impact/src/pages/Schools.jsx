@@ -47,7 +47,7 @@ export default function Schools() {
       <FadeIn className="mb-10">
         <p className="text-2xs font-mono text-gray-400 uppercase tracking-widest mb-4">Official Projections — Not Confirmed Outcomes</p>
         <div className="grid md:grid-cols-2 gap-4">
-          <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
+          <div className="glass-card p-6">
             <p className="text-2xs font-mono text-blue-500 uppercase tracking-widest mb-2">Mayor of Grayslake</p>
             <p className="text-4xl font-display font-bold text-gray-900 tracking-tight mb-1">~$300M</p>
             <p className="text-sm text-gray-500 mb-4">projected property tax revenue over the coming decades</p>
@@ -61,7 +61,7 @@ export default function Schools() {
               <SourceCitation sourceKey="chitrib_june2026" />
             </div>
           </div>
-          <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
+          <div className="glass-card p-6">
             <p className="text-2xs font-mono text-blue-500 uppercase tracking-widest mb-2">Deputy Village Manager</p>
             <p className="text-4xl font-display font-bold text-gray-900 tracking-tight mb-1">$1B+</p>
             <p className="text-sm text-gray-500 mb-4">projected across all taxing districts over 20 years</p>
@@ -107,7 +107,7 @@ export default function Schools() {
       </FadeIn>
 
       <div className="grid lg:grid-cols-5 gap-4 mb-8">
-        <FadeIn className="lg:col-span-2 bg-white border border-gray-200 rounded-xl p-8 shadow-sm">
+        <FadeIn className="lg:col-span-2 glass-card p-8">
           <div className="flex items-start justify-between mb-1">
             <div>
               <p className="text-2xs font-mono text-gray-400 uppercase tracking-widest mb-1">Tax Allocation</p>
@@ -119,7 +119,7 @@ export default function Schools() {
           <SchoolFundingChart />
         </FadeIn>
 
-        <FadeIn delay={0.08} className="lg:col-span-3 bg-white border border-gray-200 rounded-xl p-8 shadow-sm">
+        <FadeIn delay={0.08} className="lg:col-span-3 glass-card p-8">
           <div className="flex items-start justify-between mb-1">
             <div>
               <p className="text-2xs font-mono text-gray-400 uppercase tracking-widest mb-1">Case Study</p>
@@ -196,7 +196,7 @@ export default function Schools() {
         </div>
         <div className="grid md:grid-cols-2 gap-3">
           {GRAYSLAKE_DISTRICTS.map(({ name, desc, sub }) => (
-            <div key={name} className="bg-white border border-gray-200 rounded-xl p-5 hover:border-gray-300 hover:shadow-sm transition-all duration-150">
+            <div key={name} className="glass-card-hover p-5">
               <p className="text-base font-display font-semibold text-gray-900 mb-0.5">{name}</p>
               <p className="text-sm text-gray-400 mb-3">{sub}</p>
               <p className="text-sm text-gray-500 leading-relaxed">{desc}</p>

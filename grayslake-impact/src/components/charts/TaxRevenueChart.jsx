@@ -16,7 +16,7 @@ function ProportionBar({ item, index, inView }) {
           {item.label}
         </span>
       </div>
-      <div className="h-3 w-full rounded-full bg-gray-100 overflow-hidden">
+      <div className="h-3 w-full rounded-full bg-gray-200 overflow-hidden">
         <motion.div
           className="h-full rounded-full"
           style={{ background: item.color }}

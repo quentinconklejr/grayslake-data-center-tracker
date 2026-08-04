@@ -12,21 +12,21 @@ const FOOTER_LINKS = [
 
 export default function Footer() {
   return (
-    <footer className="border-t border-gray-200 mt-24 bg-white">
+    <footer className="border-t border-gray-200 mt-24 bg-gray-50/60">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
 
         <div className="grid md:grid-cols-3 gap-10 mb-10">
           {/* Brand */}
           <div>
             <div className="flex items-center gap-2 mb-3">
-              <div className="w-5 h-5 rounded bg-blue-600/10 border border-blue-600/20 flex items-center justify-center">
+              <div className="w-5 h-5 rounded-md bg-blue-600/10 border border-blue-600/20 flex items-center justify-center">
                 <svg viewBox="0 0 12 12" className="w-3 h-3" fill="none">
-                  <rect x="1" y="6.5" width="2.2" height="4.5" rx="0.4" fill="#0284c7"/>
-                  <rect x="4.4" y="3.5" width="2.2" height="7.5" rx="0.4" fill="#0369a1"/>
-                  <rect x="7.8" y="5" width="2.2" height="6" rx="0.4" fill="#0369a1"/>
+                  <rect x="1" y="6.5" width="2.2" height="4.5" rx="0.4" fill="#2563eb"/>
+                  <rect x="4.4" y="3.5" width="2.2" height="7.5" rx="0.4" fill="#1d4ed8"/>
+                  <rect x="7.8" y="5" width="2.2" height="6" rx="0.4" fill="#1d4ed8"/>
                 </svg>
               </div>
-              <span className="text-sm font-display font-semibold text-gray-800">Grayslake Data Center Tracker</span>
+              <span className="text-sm font-semibold text-gray-800 tracking-tight">Grayslake Data Center Tracker</span>
             </div>
             <p className="text-xs text-gray-500 leading-relaxed">
               A civic data tool tracking the fiscal, employment, energy, and environmental
@@ -43,7 +43,7 @@ export default function Footer() {
                 <Link
                   key={to}
                   to={to}
-                  className="text-xs text-gray-500 hover:text-gray-800 transition-colors"
+                  className="text-xs text-gray-500 hover:text-gray-800 transition-colors duration-150"
                 >
                   {label}
                 </Link>
@@ -72,7 +72,7 @@ export default function Footer() {
                 <a
                   key={to}
                   href={to}
-                  className="text-2xs font-mono text-gray-400 hover:text-gray-700 transition-colors"
+                  className="text-2xs font-mono text-gray-400 hover:text-gray-700 transition-colors duration-150"
                 >
                   {label}
                 </a>
@@ -80,7 +80,7 @@ export default function Footer() {
                 <Link
                   key={to}
                   to={to}
-                  className="text-2xs font-mono text-gray-400 hover:text-gray-700 transition-colors"
+                  className="text-2xs font-mono text-gray-400 hover:text-gray-700 transition-colors duration-150"
                 >
                   {label}
                 </Link>

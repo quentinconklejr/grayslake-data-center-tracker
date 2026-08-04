@@ -39,7 +39,7 @@ export default function Energy() {
         <StatCard label="PJM Zone"          value="COMED"                                             sub="ComEd transmission zone, PJM"  accent="blue"  sourceKey="villageoffaq" />
       </FadeIn>
 
-      <FadeIn className="bg-white border border-gray-200 rounded-xl p-8 mb-6 shadow-sm">
+      <FadeIn className="glass-card p-8 mb-6">
         <div className="flex items-start justify-between mb-1">
           <div>
             <p className="text-2xs font-mono text-gray-400 uppercase tracking-widest mb-1">Power Profile</p>
@@ -56,7 +56,7 @@ export default function Energy() {
         <EnergyDrawChart />
       </FadeIn>
 
-      <FadeIn className="bg-white border border-gray-200 rounded-xl px-6 py-6 mb-6 shadow-sm">
+      <FadeIn className="glass-card px-6 py-6 mb-6">
         <p className="text-2xs font-mono text-gray-400 uppercase tracking-widest mb-5">Residential Rate Impact</p>
         <div className="space-y-3">
 
@@ -83,7 +83,7 @@ export default function Energy() {
       </FadeIn>
 
       <div className="grid md:grid-cols-2 gap-4">
-        <FadeIn className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
+        <FadeIn className="glass-card p-6">
           <p className="text-2xs font-mono text-gray-400 uppercase tracking-widest mb-5">Grid &amp; Interconnection Context</p>
           <div className="space-y-4 text-base text-gray-600 leading-relaxed">
             <p>
@@ -103,7 +103,7 @@ export default function Energy() {
           </div>
         </FadeIn>
 
-        <FadeIn delay={0.08} className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
+        <FadeIn delay={0.08} className="glass-card p-6">
           <p className="text-2xs font-mono text-gray-400 uppercase tracking-widest mb-5">Technical Key Metrics</p>
           <div className="space-y-0">
             {[

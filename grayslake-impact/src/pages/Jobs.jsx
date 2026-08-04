@@ -81,7 +81,7 @@ export default function Jobs() {
         <StatCard label="Full Buildout"        value={project.fullBuildOut}             sub={`${project.approvedBuildings} approved · CEO est. up to ${project.maxBuildings}`} accent="blue" sourceKey="govtech2025" />
       </FadeIn>
 
-      <FadeIn className="bg-white border border-gray-200 rounded-xl p-6 sm:p-8 mb-3 shadow-sm">
+      <FadeIn className="glass-card p-6 sm:p-8 mb-3">
         <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-1 mb-1">
           <div>
             <p className="text-2xs font-mono text-gray-400 uppercase tracking-widest mb-1">Workforce Comparison</p>
@@ -128,7 +128,7 @@ export default function Jobs() {
       </FadeIn>
 
       <div className="grid md:grid-cols-2 gap-4">
-        <FadeIn className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
+        <FadeIn className="glass-card p-6">
           <div className="flex items-center justify-between mb-5">
             <p className="text-2xs font-mono text-gray-400 uppercase tracking-widest">Typical Permanent Roles</p>
             <span className="text-2xs text-gray-400">Industry standard</span>
@@ -143,7 +143,7 @@ export default function Jobs() {
           </div>
         </FadeIn>
 
-        <FadeIn delay={0.08} className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
+        <FadeIn delay={0.08} className="glass-card p-6">
           <div className="flex items-center justify-between mb-5">
             <p className="text-2xs font-mono text-gray-400 uppercase tracking-widest">Construction Workforce</p>
             <SourceCitation sourceKey="dailyherald2026" />

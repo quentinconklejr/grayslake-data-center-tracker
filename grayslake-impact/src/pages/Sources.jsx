@@ -33,7 +33,7 @@ export default function Sources() {
         {SOURCE_ENTRIES.map(([key, source], i) => (
           <div
             key={key}
-            className="group bg-white border border-gray-200 hover:border-gray-300 hover:shadow-sm rounded-xl px-5 py-4 flex gap-5 transition-all duration-150"
+            className="group glass-card-hover px-5 py-4 flex gap-5"
           >
             <span className="text-2xs font-mono text-gray-300 mt-0.5 w-6 shrink-0 group-hover:text-gray-400 transition-colors">
               {String(i + 1).padStart(2, '0')}
