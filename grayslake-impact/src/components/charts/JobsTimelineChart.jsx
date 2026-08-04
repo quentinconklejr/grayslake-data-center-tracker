@@ -3,6 +3,7 @@ import { motion, useInView } from 'framer-motion'
 import { projections } from '../../data/projections'
 
 const { permanent, constructionMidpoint } = projections.jobs
+
 const ITEMS = [
   {
     label:    'Permanent Positions',
@@ -10,6 +11,8 @@ const ITEMS = [
     value:    permanent,
     max:      permanent,
     color:    '#059669',
+    gradient: 'linear-gradient(180deg, #34d399 0%, #059669 100%)',
+    glow:     '0 2px 8px rgba(5,150,105,0.40)',
     bg:       'rgba(5,150,105,0.08)',
     display:  permanent.toLocaleString(),
     sourced:  true,
@@ -20,11 +23,22 @@ const ITEMS = [
     value:    constructionMidpoint,
     max:      permanent,
     color:    '#d97706',
+    gradient: 'linear-gradient(180deg, #fbbf24 0%, #d97706 100%)',
+    glow:     '0 2px 6px rgba(217,119,6,0.28)',
     bg:       'rgba(217,119,6,0.08)',
     display:  `~${constructionMidpoint}`,
     sourced:  false,
   },
 ]
+
+const SHINE = {
+  position:      'absolute',
+  inset:         0,
+  background:    'linear-gradient(180deg, rgba(255,255,255,0.22) 0%, transparent 55%)',
+  pointerEvents: 'none',
+}
+
+const TRACK_SHADOW = { boxShadow: 'inset 0 1px 3px rgba(15,23,42,0.10)' }
 
 export default function JobsTimelineChart() {
   const ref = useRef(null)
@@ -54,17 +68,22 @@ export default function JobsTimelineChart() {
             </span>
           </div>
 
-          <div className="h-4 w-full rounded-full overflow-hidden bg-gray-200">
+          <div className="h-4 w-full rounded-full overflow-hidden bg-gray-200" style={TRACK_SHADOW}>
             <motion.div
               className="h-full rounded-full"
               style={{
-                background: item.color,
-                opacity: item.sourced ? 1 : 0.5,
+                background: item.gradient,
+                boxShadow:  item.glow,
+                opacity:    item.sourced ? 1 : 0.5,
+                position:   'relative',
+                overflow:   'hidden',
               }}
               initial={{ width: 0 }}
               animate={inView ? { width: `${(item.value / item.max) * 100}%` } : { width: 0 }}
               transition={{ delay: 0.15 + i * 0.15, duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
-            />
+            >
+              <div aria-hidden="true" style={SHINE} />
+            </motion.div>
           </div>
         </div>
       ))}

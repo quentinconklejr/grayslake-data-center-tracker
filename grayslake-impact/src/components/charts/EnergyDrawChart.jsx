@@ -6,6 +6,22 @@ const SECURED  = projections.project.securedPowerMW
 const CAPACITY = projections.project.totalCapacityMW
 const BUFFER   = SECURED - CAPACITY
 
+// Stacked bar — segments sit edge-to-edge inside the rounded container
+// so individual rounded-full on segments is skipped; container handles rounding.
+// Glow is applied to the track container instead of per-segment.
+
+const BLUE_GRADIENT   = 'linear-gradient(180deg, #60a5fa 0%, #2563eb 100%)'
+const AMBER_GRADIENT  = 'linear-gradient(180deg, rgba(251,191,36,0.58) 0%, rgba(217,119,6,0.50) 100%)'
+const TRACK_STYLE     = {
+  boxShadow: 'inset 0 1px 3px rgba(15,23,42,0.10), 0 2px 10px rgba(37,99,235,0.10)',
+}
+const SHINE = {
+  position:      'absolute',
+  inset:         0,
+  background:    'linear-gradient(180deg, rgba(255,255,255,0.20) 0%, transparent 55%)',
+  pointerEvents: 'none',
+}
+
 export default function EnergyDrawChart() {
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, margin: '-40px' })
@@ -27,32 +43,50 @@ export default function EnergyDrawChart() {
         </div>
       </div>
 
-      {/* Stacked bar showing composition */}
+      {/* Stacked bar */}
       <div className="space-y-2">
         <p className="text-2xs font-mono text-gray-400 uppercase tracking-widest">Power allocation (% of secured)</p>
-        <div className="h-5 w-full rounded overflow-hidden flex bg-gray-200">
+        <div
+          className="h-5 w-full rounded overflow-hidden flex bg-gray-200"
+          style={TRACK_STYLE}
+        >
+          {/* IT capacity segment */}
           <motion.div
-            className="h-full bg-blue-600"
+            style={{ background: BLUE_GRADIENT, position: 'relative', overflow: 'hidden' }}
+            className="h-full"
             initial={{ width: 0 }}
             animate={inView ? { width: `${capPct}%` } : { width: 0 }}
             transition={{ delay: 0.1, duration: 0.9, ease: [0.25, 0.46, 0.45, 0.94] }}
-          />
+          >
+            <div aria-hidden="true" style={SHINE} />
+          </motion.div>
+
+          {/* Buffer segment — intentionally dimmed */}
           <motion.div
-            className="h-full bg-amber-400/50 border-l border-amber-500/40"
+            style={{ background: AMBER_GRADIENT, position: 'relative', overflow: 'hidden' }}
+            className="h-full border-l border-amber-500/30"
             initial={{ width: 0 }}
             animate={inView ? { width: `${bufPct}%` } : { width: 0 }}
             transition={{ delay: 0.55, duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
-          />
+          >
+            <div aria-hidden="true" style={SHINE} />
+          </motion.div>
         </div>
 
-        {/* Labels below bar — never inside a width-constrained animated segment */}
+        {/* Legend */}
         <div className="flex gap-4 pt-0.5">
           <span className="flex items-center gap-1.5 text-2xs font-mono text-blue-700">
-            <span className="w-2.5 h-2.5 rounded-sm bg-blue-600 shrink-0" />
+            <span
+              className="w-2.5 h-2.5 rounded-sm shrink-0"
+              style={{ background: BLUE_GRADIENT }}
+            />
             {capPct.toFixed(0)}% IT capacity
           </span>
           <span className="flex items-center gap-1.5 text-2xs font-mono text-amber-700">
-            <span className="w-2.5 h-2.5 rounded-sm bg-amber-400/70 shrink-0" />
+            <span
+              className="w-2.5 h-2.5 rounded-sm shrink-0"
+              style={{ background: AMBER_GRADIENT }}
+            />
             {bufPct.toFixed(0)}% buffer
           </span>
         </div>

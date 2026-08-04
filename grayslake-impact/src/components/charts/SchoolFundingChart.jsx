@@ -7,6 +7,19 @@ const TOTAL_M    = schoolFundingComparable.totalPropertyTaxBilled2025
 const SCHOOL_PCT = schoolFundingComparable.percentToSchoolDistrict
 const OTHER_PCT  = +(100 - SCHOOL_PCT).toFixed(1)
 
+// Stacked bar — container handles rounding; segments are edge-to-edge.
+const EMERALD_GRADIENT = 'linear-gradient(180deg, #34d399 0%, #059669 100%)'
+const GRAY_GRADIENT    = 'linear-gradient(180deg, #e2e8f0 0%, #94a3b8 100%)'
+const TRACK_STYLE = {
+  boxShadow: 'inset 0 1px 3px rgba(15,23,42,0.10), 0 2px 10px rgba(5,150,105,0.08)',
+}
+const SHINE = {
+  position:      'absolute',
+  inset:         0,
+  background:    'linear-gradient(180deg, rgba(255,255,255,0.22) 0%, transparent 55%)',
+  pointerEvents: 'none',
+}
+
 export default function SchoolFundingChart() {
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, margin: '-40px' })
@@ -30,28 +43,41 @@ export default function SchoolFundingChart() {
 
       {/* Proportion bar */}
       <div className="space-y-2">
-        <div className="h-6 w-full rounded overflow-hidden flex bg-gray-200">
+        <div
+          className="h-6 w-full rounded overflow-hidden flex bg-gray-200"
+          style={TRACK_STYLE}
+        >
+          {/* School district segment */}
           <motion.div
-            className="h-full bg-emerald-600"
+            style={{ background: EMERALD_GRADIENT, position: 'relative', overflow: 'hidden' }}
+            className="h-full"
             initial={{ width: 0 }}
             animate={inView ? { width: `${SCHOOL_PCT}%` } : { width: 0 }}
             transition={{ delay: 0.1, duration: 0.9, ease: [0.25, 0.46, 0.45, 0.94] }}
-          />
+          >
+            <div aria-hidden="true" style={SHINE} />
+          </motion.div>
+
+          {/* Other taxing bodies segment */}
           <motion.div
-            className="h-full bg-gray-300"
+            style={{ background: GRAY_GRADIENT, position: 'relative', overflow: 'hidden' }}
+            className="h-full border-l border-gray-300/60"
             initial={{ width: 0 }}
             animate={inView ? { width: `${OTHER_PCT}%` } : { width: 0 }}
             transition={{ delay: 0.65, duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
-          />
+          >
+            <div aria-hidden="true" style={SHINE} />
+          </motion.div>
         </div>
 
+        {/* Legend */}
         <div className="flex gap-4 pt-0.5">
           <span className="flex items-center gap-1.5 text-2xs font-mono text-emerald-700">
-            <span className="w-2.5 h-2.5 rounded-sm bg-emerald-600 shrink-0" />
+            <span className="w-2.5 h-2.5 rounded-sm shrink-0" style={{ background: EMERALD_GRADIENT }} />
             {SCHOOL_PCT}% Schools
           </span>
           <span className="flex items-center gap-1.5 text-2xs font-mono text-gray-500">
-            <span className="w-2.5 h-2.5 rounded-sm bg-gray-300 shrink-0" />
+            <span className="w-2.5 h-2.5 rounded-sm shrink-0" style={{ background: GRAY_GRADIENT }} />
             {OTHER_PCT}% Other
           </span>
         </div>
