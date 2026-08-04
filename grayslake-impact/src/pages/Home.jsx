@@ -292,7 +292,7 @@ export default function Home() {
 
         <div className="space-y-0">
           {FACETS.map(({ to, cat, catColor, catBorder, headline, body, chart, chartLabel, sourceKey, textCls, chartCls, flip }, i) => (
-            <FadeIn key={to} delay={i * 0.08}>
+            <FadeIn key={to} delay={Math.min(i * 0.05, 0.15)}>
               <div data-section={cat} className={`border-t ${catBorder} pt-10 pb-14 grid lg:grid-cols-12 gap-8 lg:gap-12`}>
 
                 <div className={`${textCls}${flip ? ' lg:order-last' : ''}`}>

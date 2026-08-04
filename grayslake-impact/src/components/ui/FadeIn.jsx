@@ -1,50 +1,44 @@
-import { motion, useReducedMotion } from 'framer-motion'
-import { useRef, useState, useLayoutEffect } from 'react'
+import { useRef, useLayoutEffect } from 'react'
 
-export default function FadeIn({ children, delay = 0, y = 12, className = '', as = 'div' }) {
-  const shouldReduce = useReducedMotion()
+export default function FadeIn({ children, delay = 0, y = 8, className = '', as: Tag = 'div' }) {
   const ref = useRef(null)
-  const [visible, setVisible] = useState(false)
-  const MotionEl = motion[as] ?? motion.div
 
   useLayoutEffect(() => {
     const el = ref.current
-    if (!el || shouldReduce) { setVisible(true); return }
+    if (!el) return
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
 
-    // Synchronous BoundingClientRect check runs before browser paint — no flash of invisible
-    // content for elements already in the viewport on load.
+    // Elements already in the viewport on load: appear immediately, no animation.
     const rect = el.getBoundingClientRect()
-    if (rect.top < window.innerHeight && rect.bottom >= 0) {
-      setVisible(true)
-      return
-    }
+    if (rect.top < window.innerHeight && rect.bottom >= 0) return
+
+    // Hide below-fold elements before first browser paint.
+    el.style.opacity = '0'
+    el.style.transform = `translateY(${y}px)`
+    el.style.willChange = 'opacity, transform'
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true)
-          observer.disconnect()
-        }
+        if (!entry.isIntersecting) return
+        observer.disconnect()
+        // By the time IO fires the browser has committed opacity:0.
+        // One rAF schedules the transition in the next paint cycle.
+        requestAnimationFrame(() => {
+          el.style.transition = `opacity 0.35s ease-out ${delay}s, transform 0.35s ease-out ${delay}s`
+          el.style.opacity = '1'
+          el.style.transform = 'translateY(0)'
+          el.addEventListener('transitionend', () => {
+            el.style.willChange = ''
+            el.style.transition = ''
+          }, { once: true })
+        })
       },
       { rootMargin: '0px', threshold: 0.01 }
     )
     observer.observe(el)
-    return () => observer.disconnect()
-  }, [shouldReduce])
 
-  return (
-    <MotionEl
-      ref={ref}
-      initial={{ opacity: 0, y: shouldReduce ? 0 : y }}
-      animate={visible ? { opacity: 1, y: 0 } : { opacity: 0, y: shouldReduce ? 0 : y }}
-      transition={{
-        delay: visible ? delay : 0,
-        duration: shouldReduce ? 0 : 0.45,
-        ease: [0.25, 0.46, 0.45, 0.94],
-      }}
-      className={className}
-    >
-      {children}
-    </MotionEl>
-  )
+    return () => observer.disconnect()
+  }, [delay, y])
+
+  return <Tag ref={ref} className={className}>{children}</Tag>
 }

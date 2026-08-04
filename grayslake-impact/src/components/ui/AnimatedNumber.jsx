@@ -56,7 +56,8 @@ export default function AnimatedNumber({
 
   return (
     <span ref={ref} className={className}>
-      {prefix}{format(display)}{suffix}
+      <span aria-hidden="true">{prefix}{format(display)}{suffix}</span>
+      <span className="sr-only">{prefix}{format(value)}{suffix}</span>
     </span>
   )
 }
