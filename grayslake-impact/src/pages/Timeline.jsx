@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import PageTitle from '../components/ui/PageTitle'
 import TimelineUI from '../components/ui/Timeline'
 import FadeIn from '../components/ui/FadeIn'
@@ -6,17 +7,28 @@ import { timelineEvents } from '../data/timeline'
 import { LAST_VERIFIED } from '../data/siteConfig'
 
 const LEGEND = [
-  { label: 'Approval',     cls: 'text-blue-700 bg-blue-50 border-blue-200' },
-  { label: 'Construction', cls: 'text-emerald-700 bg-emerald-50 border-emerald-200' },
-  { label: 'Opposition',   cls: 'text-orange-700 bg-orange-50 border-orange-200' },
-  { label: 'Legal',        cls: 'text-red-700 bg-red-50 border-red-200' },
-  { label: 'Development',  cls: 'text-cyan-700 bg-cyan-50 border-cyan-200' },
-  { label: 'Policy',       cls: 'text-amber-700 bg-amber-50 border-amber-200' },
+  { key: 'approval',     label: 'Approval',     active: 'text-blue-700 bg-blue-50 border-blue-300',          inactive: 'text-blue-700 bg-blue-50/50 border-blue-200 opacity-60 hover:opacity-100' },
+  { key: 'construction', label: 'Construction', active: 'text-emerald-700 bg-emerald-50 border-emerald-300', inactive: 'text-emerald-700 bg-emerald-50/50 border-emerald-200 opacity-60 hover:opacity-100' },
+  { key: 'opposition',   label: 'Opposition',   active: 'text-orange-700 bg-orange-50 border-orange-300',    inactive: 'text-orange-700 bg-orange-50/50 border-orange-200 opacity-60 hover:opacity-100' },
+  { key: 'legal',        label: 'Legal',        active: 'text-red-700 bg-red-50 border-red-300',             inactive: 'text-red-700 bg-red-50/50 border-red-200 opacity-60 hover:opacity-100' },
+  { key: 'development',  label: 'Development',  active: 'text-cyan-700 bg-cyan-50 border-cyan-300',          inactive: 'text-cyan-700 bg-cyan-50/50 border-cyan-200 opacity-60 hover:opacity-100' },
+  { key: 'policy',       label: 'Policy',       active: 'text-amber-700 bg-amber-50 border-amber-300',       inactive: 'text-amber-700 bg-amber-50/50 border-amber-200 opacity-60 hover:opacity-100' },
 ]
 
 const dateRange = `${timelineEvents[0]?.date?.slice(0,4) ?? '—'} – ${timelineEvents[timelineEvents.length - 1]?.date?.slice(0,4) ?? '—'}`
 
 export default function TimelinePage() {
+  const [activeCategory, setActiveCategory] = useState('all')
+  const [proportional, setProportional] = useState(false)
+
+  const visible = activeCategory === 'all'
+    ? timelineEvents
+    : timelineEvents.filter(e => e.category === activeCategory)
+
+  function handleCategory(key) {
+    setActiveCategory(prev => prev === key ? 'all' : key)
+  }
+
   return (
     <FootnoteProvider>
     <div className="max-w-3xl mx-auto px-4 sm:px-6 py-12">
@@ -35,7 +47,7 @@ export default function TimelinePage() {
           All events are sourced and cited.
         </p>
         <div className="flex items-center gap-4 mt-4">
-          <span className="text-2xs font-mono text-gray-400">{timelineEvents.length} events</span>
+          <span className="text-2xs font-mono text-gray-400">{visible.length} of {timelineEvents.length} events</span>
           <span className="text-gray-300">·</span>
           <span className="text-2xs font-mono text-gray-400">{dateRange}</span>
           <span className="text-gray-300">·</span>
@@ -45,22 +57,51 @@ export default function TimelinePage() {
         </div>
       </FadeIn>
 
-      <FadeIn className="flex flex-wrap gap-2 mb-12">
-        {LEGEND.map(({ label, cls }) => (
-          <span key={label}
-            className={`inline-flex items-center px-2.5 py-1 rounded-sm border text-2xs font-mono font-semibold uppercase tracking-widest ${cls}`}
+      <FadeIn className="flex flex-wrap items-center justify-between gap-3 mb-10">
+        <div className="flex flex-wrap gap-2">
+          <button
+            onClick={() => setActiveCategory('all')}
+            className={`inline-flex items-center px-2.5 py-1 rounded-sm border text-2xs font-mono font-semibold uppercase tracking-widest transition-all duration-150 ${
+              activeCategory === 'all'
+                ? 'text-gray-900 bg-gray-100 border-gray-300'
+                : 'text-gray-500 border-gray-200 hover:text-gray-800 hover:border-gray-300'
+            }`}
           >
-            {label}
-          </span>
-        ))}
+            All ({timelineEvents.length})
+          </button>
+          {LEGEND.map(({ key, label, active, inactive }) => {
+            const count = timelineEvents.filter(e => e.category === key).length
+            const isActive = activeCategory === key
+            return (
+              <button
+                key={key}
+                onClick={() => handleCategory(key)}
+                className={`inline-flex items-center px-2.5 py-1 rounded-sm border text-2xs font-mono font-semibold uppercase tracking-widest transition-all duration-150 ${isActive ? active : inactive}`}
+              >
+                {label} ({count})
+              </button>
+            )
+          })}
+        </div>
+        <button
+          onClick={() => setProportional(v => !v)}
+          className="text-2xs font-mono text-gray-500 hover:text-gray-800 transition-colors duration-150 flex items-center gap-1.5 shrink-0"
+          title={proportional ? 'Switch to even spacing' : 'Switch to time-proportional spacing'}
+        >
+          {proportional ? 'Even spacing' : 'Time scale'}
+          <svg className="w-3 h-3" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5">
+            <path d="M2 2v8M10 2v8M2 4.5h8M2 7.5h5" strokeLinecap="round" />
+          </svg>
+        </button>
       </FadeIn>
 
-      <TimelineUI events={timelineEvents} />
+      <TimelineUI events={visible} proportional={proportional} />
 
       <div className="mt-12 pt-6 border-t border-gray-200">
         <p className="text-xs text-gray-500 leading-relaxed">
-          Events marked <span className="text-emerald-600">construction</span> beyond Nov 2025
-          are projected milestones per developer filings, not confirmed completions.
+          Events marked <span className="text-emerald-600">construction</span> beyond Nov 2025 are
+          projected milestones per developer filings, not confirmed completions.
+          Hollow markers indicate projected events; solid markers indicate documented events.
         </p>
       </div>
       <FootnoteList />

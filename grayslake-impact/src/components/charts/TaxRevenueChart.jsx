@@ -1,5 +1,5 @@
-import { useRef } from 'react'
-import { motion, useInView } from 'framer-motion'
+import { useRef, useState, useLayoutEffect } from 'react'
+import { motion } from 'framer-motion'
 
 const DEFAULT_DATA = [
   { name: 'Major infrastructure projects', pct: 50, color: '#d97706', bg: 'rgba(217,119,6,0.09)', label: '50%' },
@@ -84,9 +84,26 @@ function ProportionBar({ item, index, inView }) {
   )
 }
 
+function useInViewOnce(ref) {
+  const [inView, setInView] = useState(false)
+  useLayoutEffect(() => {
+    const el = ref.current
+    if (!el) return
+    const rect = el.getBoundingClientRect()
+    if (rect.top < window.innerHeight && rect.bottom >= 0) { setInView(true); return }
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setInView(true); observer.disconnect() } },
+      { rootMargin: '-40px', threshold: 0.01 }
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [ref])
+  return inView
+}
+
 export default function TaxRevenueChart({ data = DEFAULT_DATA }) {
   const ref = useRef(null)
-  const inView = useInView(ref, { once: true, margin: '-40px' })
+  const inView = useInViewOnce(ref)
 
   return (
     <div ref={ref} className="space-y-4 py-2">

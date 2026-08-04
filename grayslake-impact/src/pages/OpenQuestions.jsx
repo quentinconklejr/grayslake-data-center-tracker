@@ -226,7 +226,7 @@ export default function OpenQuestions() {
 
       <div className="space-y-2">
         {visible.map((q, i) => (
-          <FadeIn key={q.id} delay={i * 0.05}>
+          <FadeIn key={q.id} delay={Math.min(i * 0.03, 0.09)}>
             <QuestionCard
               q={q}
               isExpanded={expandedIds.has(q.id)}

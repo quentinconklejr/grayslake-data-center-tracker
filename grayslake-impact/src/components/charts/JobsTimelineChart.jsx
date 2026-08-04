@@ -1,5 +1,5 @@
-import { useRef } from 'react'
-import { motion, useInView } from 'framer-motion'
+import { useRef, useState, useLayoutEffect } from 'react'
+import { motion } from 'framer-motion'
 import { projections } from '../../data/projections'
 
 const { permanent, constructionMidpoint } = projections.jobs
@@ -57,9 +57,26 @@ const TRACK_SHADOW = {
   boxShadow:      'inset 0 1.5px 4px rgba(15,23,42,0.14), inset 0 0 0 1px rgba(255,255,255,0.20)',
 }
 
+function useInViewOnce(ref) {
+  const [inView, setInView] = useState(false)
+  useLayoutEffect(() => {
+    const el = ref.current
+    if (!el) return
+    const rect = el.getBoundingClientRect()
+    if (rect.top < window.innerHeight && rect.bottom >= 0) { setInView(true); return }
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setInView(true); observer.disconnect() } },
+      { rootMargin: '-40px', threshold: 0.01 }
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [ref])
+  return inView
+}
+
 export default function JobsTimelineChart() {
   const ref = useRef(null)
-  const inView = useInView(ref, { once: true, margin: '-40px' })
+  const inView = useInViewOnce(ref)
 
   return (
     <div ref={ref} className="space-y-6">
