@@ -10,15 +10,19 @@ const BUFFER   = SECURED - CAPACITY
 // so individual rounded-full on segments is skipped; container handles rounding.
 // Glow is applied to the track container instead of per-segment.
 
-const BLUE_GRADIENT   = 'linear-gradient(180deg, #60a5fa 0%, #2563eb 100%)'
-const AMBER_GRADIENT  = 'linear-gradient(180deg, rgba(251,191,36,0.58) 0%, rgba(217,119,6,0.50) 100%)'
+const BLUE_GRADIENT   = 'linear-gradient(180deg, rgba(96,165,250,0.95) 0%, rgba(37,99,235,0.90) 100%)'
+// Amber kept at lower alpha so the buffer segment reads visually dimmer than the solid blue
+const AMBER_GRADIENT  = 'linear-gradient(180deg, rgba(251,191,36,0.70) 0%, rgba(217,119,6,0.62) 100%)'
 const TRACK_STYLE     = {
-  boxShadow: 'inset 0 1px 3px rgba(15,23,42,0.10), 0 2px 10px rgba(37,99,235,0.10)',
+  background:     'rgba(229,231,235,0.45)',
+  backdropFilter: 'blur(4px)',
+  boxShadow:      'inset 0 1.5px 4px rgba(15,23,42,0.14), inset 0 0 0 1px rgba(255,255,255,0.20), 0 4px 14px rgba(37,99,235,0.18)',
 }
+// Diagonal streak in top third — simulates angled glass reflection
 const SHINE = {
   position:      'absolute',
   inset:         0,
-  background:    'linear-gradient(180deg, rgba(255,255,255,0.20) 0%, transparent 55%)',
+  background:    'linear-gradient(160deg, rgba(255,255,255,0.0) 10%, rgba(255,255,255,0.52) 30%, rgba(255,255,255,0.18) 50%, transparent 68%)',
   pointerEvents: 'none',
 }
 
@@ -47,7 +51,7 @@ export default function EnergyDrawChart() {
       <div className="space-y-2">
         <p className="text-2xs font-mono text-gray-400 uppercase tracking-widest">Power allocation (% of secured)</p>
         <div
-          className="h-5 w-full rounded overflow-hidden flex bg-gray-200"
+          className="h-5 w-full rounded overflow-hidden flex relative"
           style={TRACK_STYLE}
         >
           {/* IT capacity segment */}
@@ -61,7 +65,7 @@ export default function EnergyDrawChart() {
             <div aria-hidden="true" style={SHINE} />
           </motion.div>
 
-          {/* Buffer segment — intentionally dimmed */}
+          {/* Buffer segment — intentionally dimmed (lower alpha gradient) */}
           <motion.div
             style={{ background: AMBER_GRADIENT, position: 'relative', overflow: 'hidden' }}
             className="h-full border-l border-amber-500/30"
@@ -71,6 +75,13 @@ export default function EnergyDrawChart() {
           >
             <div aria-hidden="true" style={SHINE} />
           </motion.div>
+
+          {/* Right-edge rim highlight — glass-tip effect on the rounded container */}
+          <div aria-hidden="true" style={{
+            position: 'absolute', right: 0, top: 0, bottom: 0, width: '16px',
+            background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.22))',
+            pointerEvents: 'none', zIndex: 10,
+          }} />
         </div>
 
         {/* Legend */}

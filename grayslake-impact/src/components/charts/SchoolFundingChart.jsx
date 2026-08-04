@@ -8,15 +8,19 @@ const SCHOOL_PCT = schoolFundingComparable.percentToSchoolDistrict
 const OTHER_PCT  = +(100 - SCHOOL_PCT).toFixed(1)
 
 // Stacked bar — container handles rounding; segments are edge-to-edge.
-const EMERALD_GRADIENT = 'linear-gradient(180deg, #34d399 0%, #059669 100%)'
-const GRAY_GRADIENT    = 'linear-gradient(180deg, #e2e8f0 0%, #94a3b8 100%)'
+const EMERALD_GRADIENT = 'linear-gradient(180deg, rgba(52,211,153,0.95) 0%, rgba(5,150,105,0.90) 100%)'
+// Gray kept slightly lower alpha so "other" segment reads quieter than the school share
+const GRAY_GRADIENT    = 'linear-gradient(180deg, rgba(226,232,240,0.82) 0%, rgba(148,163,184,0.76) 100%)'
 const TRACK_STYLE = {
-  boxShadow: 'inset 0 1px 3px rgba(15,23,42,0.10), 0 2px 10px rgba(5,150,105,0.08)',
+  background:     'rgba(229,231,235,0.45)',
+  backdropFilter: 'blur(4px)',
+  boxShadow:      'inset 0 1.5px 4px rgba(15,23,42,0.14), inset 0 0 0 1px rgba(255,255,255,0.20), 0 4px 14px rgba(5,150,105,0.16)',
 }
+// Diagonal streak in top third — simulates angled glass reflection
 const SHINE = {
   position:      'absolute',
   inset:         0,
-  background:    'linear-gradient(180deg, rgba(255,255,255,0.22) 0%, transparent 55%)',
+  background:    'linear-gradient(160deg, rgba(255,255,255,0.0) 10%, rgba(255,255,255,0.52) 30%, rgba(255,255,255,0.18) 50%, transparent 68%)',
   pointerEvents: 'none',
 }
 
@@ -44,7 +48,7 @@ export default function SchoolFundingChart() {
       {/* Proportion bar */}
       <div className="space-y-2">
         <div
-          className="h-6 w-full rounded overflow-hidden flex bg-gray-200"
+          className="h-6 w-full rounded overflow-hidden flex relative"
           style={TRACK_STYLE}
         >
           {/* School district segment */}
@@ -58,7 +62,7 @@ export default function SchoolFundingChart() {
             <div aria-hidden="true" style={SHINE} />
           </motion.div>
 
-          {/* Other taxing bodies segment */}
+          {/* Other taxing bodies segment (quieter alpha) */}
           <motion.div
             style={{ background: GRAY_GRADIENT, position: 'relative', overflow: 'hidden' }}
             className="h-full border-l border-gray-300/60"
@@ -68,6 +72,13 @@ export default function SchoolFundingChart() {
           >
             <div aria-hidden="true" style={SHINE} />
           </motion.div>
+
+          {/* Right-edge rim highlight — glass-tip effect on the rounded container */}
+          <div aria-hidden="true" style={{
+            position: 'absolute', right: 0, top: 0, bottom: 0, width: '16px',
+            background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.22))',
+            pointerEvents: 'none', zIndex: 10,
+          }} />
         </div>
 
         {/* Legend */}

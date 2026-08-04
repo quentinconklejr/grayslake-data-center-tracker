@@ -11,8 +11,8 @@ const ITEMS = [
     value:    permanent,
     max:      permanent,
     color:    '#059669',
-    gradient: 'linear-gradient(180deg, #34d399 0%, #059669 100%)',
-    glow:     '0 2px 8px rgba(5,150,105,0.40)',
+    gradient: 'linear-gradient(180deg, rgba(52,211,153,0.95) 0%, rgba(5,150,105,0.88) 100%)',
+    glow:     '0 4px 14px rgba(5,150,105,0.55), 0 1px 5px rgba(5,150,105,0.30)',
     bg:       'rgba(5,150,105,0.08)',
     display:  permanent.toLocaleString(),
     sourced:  true,
@@ -23,22 +23,39 @@ const ITEMS = [
     value:    constructionMidpoint,
     max:      permanent,
     color:    '#d97706',
-    gradient: 'linear-gradient(180deg, #fbbf24 0%, #d97706 100%)',
-    glow:     '0 2px 6px rgba(217,119,6,0.28)',
+    gradient: 'linear-gradient(180deg, rgba(251,191,36,0.95) 0%, rgba(217,119,6,0.88) 100%)',
+    glow:     '0 3px 10px rgba(217,119,6,0.38), 0 1px 4px rgba(217,119,6,0.22)',
     bg:       'rgba(217,119,6,0.08)',
     display:  `~${constructionMidpoint}`,
     sourced:  false,
   },
 ]
 
+// Diagonal streak in top third — simulates angled glass reflection
 const SHINE = {
   position:      'absolute',
   inset:         0,
-  background:    'linear-gradient(180deg, rgba(255,255,255,0.22) 0%, transparent 55%)',
+  background:    'linear-gradient(160deg, rgba(255,255,255,0.0) 10%, rgba(255,255,255,0.52) 30%, rgba(255,255,255,0.18) 50%, transparent 68%)',
   pointerEvents: 'none',
 }
 
-const TRACK_SHADOW = { boxShadow: 'inset 0 1px 3px rgba(15,23,42,0.10)' }
+// Lighter rim at the rounded tip — gives the 3-D glass-capsule feel
+const TIP_HIGHLIGHT = {
+  position:      'absolute',
+  right:         0,
+  top:           0,
+  bottom:        0,
+  width:         '20px',
+  background:    'linear-gradient(90deg, transparent, rgba(255,255,255,0.26))',
+  borderRadius:  '0 9999px 9999px 0',
+  pointerEvents: 'none',
+}
+
+const TRACK_SHADOW = {
+  background:     'rgba(229,231,235,0.50)',
+  backdropFilter: 'blur(4px)',
+  boxShadow:      'inset 0 1.5px 4px rgba(15,23,42,0.14), inset 0 0 0 1px rgba(255,255,255,0.20)',
+}
 
 export default function JobsTimelineChart() {
   const ref = useRef(null)
@@ -68,7 +85,7 @@ export default function JobsTimelineChart() {
             </span>
           </div>
 
-          <div className="h-4 w-full rounded-full overflow-hidden bg-gray-200" style={TRACK_SHADOW}>
+          <div className="h-4 w-full rounded-full overflow-hidden" style={TRACK_SHADOW}>
             <motion.div
               className="h-full rounded-full"
               style={{
@@ -83,6 +100,7 @@ export default function JobsTimelineChart() {
               transition={{ delay: 0.15 + i * 0.15, duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
             >
               <div aria-hidden="true" style={SHINE} />
+              <div aria-hidden="true" style={TIP_HIGHLIGHT} />
             </motion.div>
           </div>
         </div>
