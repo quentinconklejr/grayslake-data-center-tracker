@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import PageTitle from '../components/ui/PageTitle'
 import TimelineUI from '../components/ui/Timeline'
 import FadeIn from '../components/ui/FadeIn'
@@ -18,7 +19,11 @@ const LEGEND = [
 const dateRange = `${timelineEvents[0]?.date?.slice(0,4) ?? '—'} – ${timelineEvents[timelineEvents.length - 1]?.date?.slice(0,4) ?? '—'}`
 
 export default function TimelinePage() {
-  const [activeCategory, setActiveCategory] = useState('all')
+  const [searchParams] = useSearchParams()
+  const [activeCategory, setActiveCategory] = useState(() => {
+    const cat = searchParams.get('cat')
+    return LEGEND.some(l => l.key === cat) ? cat : 'all'
+  })
   const [proportional, setProportional] = useState(false)
 
   const visible = activeCategory === 'all'

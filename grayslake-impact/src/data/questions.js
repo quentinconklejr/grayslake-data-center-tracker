@@ -27,7 +27,7 @@ export const questions = [
         sourceKey: 'alliancegreatlakes',
       },
       {
-        text: 'The Citizens Utility Board projected that the Meta data center in DeKalb would contribute to a local water deficit by 2030 under current draw rates — the closest Illinois precedent for this scale of data center water demand.',
+        text: 'The Citizens Utility Board projected that the Meta data center in DeKalb would contribute to a local water deficit by 2030 under current draw rates. The DeKalb/Meta campus is the closest Illinois precedent at this scale.',
         sourceKey: 'cub2026',
       },
     ],
@@ -56,7 +56,7 @@ export const questions = [
     disputed: [],
     unknown: [
       {
-        text: "Whether the regional surge in data center load is contributing to higher PJM capacity auction clearing prices — and by how much — is not yet established by any verified, publicly available study specific to this project or to Illinois. No confirmed figure is available.",
+        text: "No verified study has established what share of the regional data center load growth, if any, is driving higher PJM capacity auction prices in the ComEd zone. No project-specific figure is public.",
         sourceKey: null,
       },
       {
@@ -83,7 +83,7 @@ export const questions = [
     disputed: [],
     unknown: [
       {
-        text: 'T5 CEO Pete Marin stated a total ComEd capacity request of 1.55 GW. The Village FAQ records only leasable IT capacity at 1.2 GW — no gigawatt ceiling appears in Village documents. The gap between those two figures has not been publicly explained, and no official ceiling has been published.',
+        text: 'T5 CEO Pete Marin stated a total ComEd capacity request of 1.55 GW. The Village FAQ records leasable IT capacity at 1.2 GW; no ceiling figure appears in Village documents. The difference has not been publicly explained.',
         sourceKey: 'govtech2025',
       },
       {
@@ -103,11 +103,11 @@ export const questions = [
         sourceKey: 'govtech2025',
       },
       {
-        text: 'The Mayor of Grayslake has publicly cited approximately $300 million in property tax revenue over the coming decades, across all taxing districts. This is an official projection — not an independently verified figure or a confirmed outcome.',
+        text: 'The Mayor of Grayslake has publicly cited approximately $300 million in property tax revenue over the coming decades, across all taxing districts.',
         sourceKey: 'chitrib_june2026',
       },
       {
-        text: 'The Deputy Village Manager has publicly cited over $1 billion across all taxing districts over 20 years. This is an official projection — not an independently verified figure or a confirmed outcome.',
+        text: 'The Deputy Village Manager has publicly cited over $1 billion across all taxing districts over 20 years.',
         sourceKey: 'chronicle2026',
       },
     ],

@@ -8,21 +8,38 @@ const SIBLINGS = [
 
 export default function AudienceBreadcrumb({ current }) {
   return (
-    <div className="flex items-center gap-0 text-xs font-mono text-gray-400 mb-8 flex-wrap">
-      <Link to="/" className="hover:text-gray-600 transition-colors flex items-center gap-1">
-        <span>←</span>
-        <span>Home</span>
+    <nav
+      aria-label="Audience guides"
+      className="flex items-center justify-between gap-4 mb-10 pb-3 border-b border-gray-200"
+    >
+      <Link
+        to="/"
+        className="flex items-center gap-1.5 text-sm text-gray-400 hover:text-gray-700 transition-colors shrink-0"
+      >
+        <svg className="w-3.5 h-3.5" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5">
+          <path d="M9 2L4 7l5 5" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+        Home
       </Link>
-      <span className="mx-2.5 text-gray-200">|</span>
-      {SIBLINGS.map(({ to, label }, i) => (
-        <span key={to} className="flex items-center">
-          {i > 0 && <span className="mx-1.5 text-gray-200">·</span>}
-          {label === current
-            ? <span className="text-gray-600">{label}</span>
-            : <Link to={to} className="hover:text-gray-600 transition-colors">{label}</Link>
-          }
-        </span>
-      ))}
-    </div>
+
+      <div className="flex items-center gap-1" role="list">
+        {SIBLINGS.map(({ to, label }) => (
+          <span key={to} role="listitem">
+            {label === current ? (
+              <span className="inline-block text-sm font-semibold text-gray-900 px-3 py-1 rounded-md bg-gray-100">
+                {label}
+              </span>
+            ) : (
+              <Link
+                to={to}
+                className="inline-block text-sm text-gray-500 px-3 py-1 rounded-md hover:bg-gray-100 hover:text-gray-800 transition-colors"
+              >
+                {label}
+              </Link>
+            )}
+          </span>
+        ))}
+      </div>
+    </nav>
   )
 }

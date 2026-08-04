@@ -115,6 +115,8 @@ export default function Header() {
   const [scrolled, setScrolled]     = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
   const location = useLocation()
+  const isOnGuidePage = GUIDE_LINKS.some(l => location.pathname === l.to)
+  const [guidesOpen, setGuidesOpen] = useState(isOnGuidePage)
 
   useEffect(() => {
     setMobileOpen(false)
@@ -171,11 +173,30 @@ export default function Header() {
       {/* Mobile menu */}
       {mobileOpen && (
         <div className="md:hidden border-t border-gray-100 bg-white/98">
-          <nav className="max-w-7xl mx-auto px-6 py-1">
+          <nav
+            className="max-w-7xl mx-auto px-6 py-1 overflow-y-auto"
+            style={{ maxHeight: 'calc(100svh - 4rem)' }}
+          >
             {NAV_LINKS.map(l => <MobileNavLink key={l.to} {...l} />)}
-            <div className="border-t border-gray-100 mt-1 pt-2 pb-1">
-              <p className="text-2xs font-mono text-gray-400 uppercase tracking-widest py-1.5">Guides</p>
-              {GUIDE_LINKS.map(l => <MobileNavLink key={l.to} {...l} />)}
+            <div className="border-t border-gray-100 mt-1">
+              <button
+                onClick={() => setGuidesOpen(v => !v)}
+                aria-expanded={guidesOpen}
+                className="w-full flex items-center justify-between py-3 text-sm font-medium text-gray-500 hover:text-gray-800 transition-colors"
+              >
+                <span>Guides</span>
+                <svg
+                  className={`w-3.5 h-3.5 transition-transform duration-150 ${guidesOpen ? 'rotate-180' : ''}`}
+                  viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5"
+                >
+                  <path d="M3 5l4 4 4-4" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </button>
+              {guidesOpen && (
+                <div className="pl-3 pb-2 border-l border-gray-100 ml-1">
+                  {GUIDE_LINKS.map(l => <MobileNavLink key={l.to} {...l} />)}
+                </div>
+              )}
             </div>
           </nav>
         </div>
