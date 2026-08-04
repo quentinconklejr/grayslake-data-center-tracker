@@ -8,10 +8,10 @@ export default function SourceCitation({ sourceKey }) {
   if (!source) return null
 
   return (
-    <sup>
+    <sup style={{ fontSize: '0.6em', verticalAlign: 'super', lineHeight: 0 }}>
       <a
         href={`#fn-${num}`}
-        className="font-mono text-blue-600 hover:text-blue-800 transition-colors"
+        className="text-blue-400/70 hover:text-blue-600 transition-colors"
         title={source.title}
       >
         [{num}]

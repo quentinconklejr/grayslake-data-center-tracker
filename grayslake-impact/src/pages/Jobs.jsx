@@ -92,7 +92,7 @@ export default function Jobs() {
             <SourceCitation sourceKey="villageoffaq" />
           </div>
         </div>
-        <p className="text-sm text-gray-500 mb-8">
+        <p className="text-sm text-gray-500 mb-8 max-w-prose">
           Construction count at ~400 represents "hundreds" per Village documents and is treated as an estimate.
           The permanent count (1,680) is the current Village FAQ figure. An earlier figure of 1,500
           was cited at the October 2025 public meeting.

@@ -135,6 +135,20 @@ export default function Home() {
               </FadeIn>
             ))}
           </div>
+
+          {/* Water use — surfaced from /energy technical table */}
+          <FadeIn>
+            <div className="mt-6 pt-5 border-t border-gray-100 flex flex-wrap gap-x-8 gap-y-3">
+              <div>
+                <p className="text-2xs font-mono text-gray-400 uppercase tracking-[0.16em] mb-0.5">Water (full buildout)</p>
+                <p className="text-sm font-display font-bold text-gray-800">≤ 50,000 gal/day<SourceCitation sourceKey="villageoffaq" /></p>
+              </div>
+              <div>
+                <p className="text-2xs font-mono text-gray-400 uppercase tracking-[0.16em] mb-0.5">Commissioning flush (one-time)</p>
+                <p className="text-sm font-display font-bold text-gray-800">~3.2M gal<SourceCitation sourceKey="hoodline2026" /></p>
+              </div>
+            </div>
+          </FadeIn>
         </div>
       </section>
 
@@ -204,7 +218,7 @@ export default function Home() {
       </section>
 
       {/* ── Impact facets ─────────────────────────────────────────────────────── */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 pb-20">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 pb-12">
 
         <FadeIn className="mb-12">
           <p className="text-2xs font-mono text-gray-400 uppercase tracking-[0.2em] mb-3 flex items-center gap-2">

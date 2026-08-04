@@ -69,7 +69,7 @@ export default function Header() {
         </Link>
 
         {/* Desktop nav */}
-        <nav className="hidden md:flex items-center gap-6 flex-1 justify-end">
+        <nav className="hidden md:flex items-center gap-3 flex-1 justify-end flex-wrap">
           {NAV_LINKS.map(l => <NavLink_ key={l.to} {...l} />)}
         </nav>
 

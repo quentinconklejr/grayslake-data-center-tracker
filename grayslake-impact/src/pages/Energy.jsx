@@ -49,7 +49,7 @@ export default function Energy() {
             <SourceCitation sourceKey="dcdGW2026" />
           </div>
         </div>
-        <p className="text-sm text-gray-500 mb-8">
+        <p className="text-sm text-gray-500 mb-8 max-w-prose">
           Both figures are from public developer disclosures. No estimation is involved.
           T5 originally announced the campus at 480 MW (2024). Developer plans later expanded the leasable IT capacity target to 1,200 MW.
         </p>

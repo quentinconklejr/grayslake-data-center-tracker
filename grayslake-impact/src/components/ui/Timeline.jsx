@@ -38,8 +38,8 @@ export default function Timeline({ events = [] }) {
               {fmtDate(event.date)}
             </time>
 
-            {/* Category badge */}
-            <span className={`self-start shrink-0 inline-flex px-1.5 py-0.5 rounded-sm border text-2xs font-mono font-semibold uppercase tracking-widest ${cat.badge}`}>
+            {/* Category badge — fixed width so headline text aligns regardless of category length */}
+            <span className={`self-start shrink-0 inline-flex w-24 justify-center px-1.5 py-0.5 rounded-sm border text-2xs font-mono font-semibold uppercase tracking-widest ${cat.badge}`}>
               {event.category}
             </span>
 

@@ -45,7 +45,7 @@ function QuestionCard({ q, isExpanded, onToggle }) {
         aria-expanded={isExpanded}
       >
         <div className="flex items-start gap-3 min-w-0">
-          <span className={`shrink-0 mt-0.5 inline-flex items-center px-2 py-0.5 rounded-sm border text-2xs font-mono font-semibold uppercase tracking-widest ${cat.active}`}>
+          <span className={`shrink-0 mt-0.5 inline-flex w-16 justify-center items-center px-2 py-0.5 rounded-sm border text-2xs font-mono font-semibold uppercase tracking-widest ${cat.active}`}>
             {cat.label}
           </span>
           <h3 className="text-sm font-display font-semibold text-gray-900 leading-snug group-hover:text-gray-700 transition-colors">
