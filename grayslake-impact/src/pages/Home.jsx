@@ -2,6 +2,8 @@ import { Link } from 'react-router-dom'
 import PageTitle from '../components/ui/PageTitle'
 import AnimatedNumber from '../components/ui/AnimatedNumber'
 import FadeIn from '../components/ui/FadeIn'
+import CopyKPIButton from '../components/ui/CopyKPIButton'
+import SectionBar from '../components/ui/SectionBar'
 import TaxRevenueChart from '../components/charts/TaxRevenueChart'
 import JobsTimelineChart from '../components/charts/JobsTimelineChart'
 import EnergyDrawChart from '../components/charts/EnergyDrawChart'
@@ -10,9 +12,13 @@ import SiteMap from '../components/map/SiteMap'
 import SourceCitation from '../components/ui/SourceCitation'
 import { FootnoteProvider, FootnoteList } from '../components/ui/FootnoteContext'
 import { projections } from '../data/projections'
+import { sources } from '../data/sources'
 import { LAST_VERIFIED } from '../data/siteConfig'
 
 const { project, jobs } = projections
+
+// "once per session" key — shared so all hero numbers skip together on revisit
+const HERO_SESSION_KEY = 'gdct-hero-animated'
 
 const FACETS = [
   {
@@ -65,6 +71,44 @@ const FACETS = [
   },
 ]
 
+// Secondary stats — numeric ones get count-up animation and copy button
+const SECONDARY_STATS = [
+  {
+    label: 'IT Capacity',
+    numValue: project.totalCapacityMW,
+    suffix: ' MW',
+    note: 'Leasable at full buildout',
+    src: 'dcdGW2026',
+  },
+  {
+    label: 'Secured Power',
+    numValue: project.securedPowerMW,
+    suffix: ' MW',
+    note: 'Utility-contracted capacity',
+    src: 'dcdGW2026',
+  },
+  {
+    label: 'Phase 1 Online',
+    value: project.firstBuildingOnline,
+    note: 'Under construction now',
+    src: 'dcd2026',
+  },
+  {
+    label: 'Campus Area',
+    numValue: project.totalAcres,
+    suffix: ' ac',
+    note: 'Peterson Rd & Route 83',
+    src: 'villageoffaq',
+  },
+]
+
+function buildCopyText(displayValue, note, src) {
+  const s = sources[src]
+  if (!s) return displayValue
+  const citation = [s.publisher, s.date].filter(Boolean).join(', ')
+  return `${displayValue} ${note.toLowerCase()}${citation ? ` (${citation})` : ''}`
+}
+
 export default function Home() {
   return (
     <FootnoteProvider>
@@ -74,8 +118,11 @@ export default function Home() {
         ogImage="/og/home.png"
       />
 
+      {/* Section context bar — appears on scroll, stays below header */}
+      <SectionBar />
+
       {/* ── Intro + key stats ──────────────────────────────────────────────── */}
-      <section className="bg-white border-b border-gray-200">
+      <section data-section="Key Facts" className="bg-white border-b border-gray-200">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 pt-14 pb-14">
 
           <FadeIn>
@@ -97,8 +144,9 @@ export default function Home() {
               <AnimatedNumber
                 value={jobs.permanent}
                 suffix=""
-                duration={1.6}
+                duration={0.6}
                 delay={0.1}
+                sessionKey={HERO_SESSION_KEY}
                 className="text-7xl sm:text-8xl font-display font-black text-gray-900 leading-none tracking-tighter block"
               />
               <p className="text-sm text-gray-500 mt-4 leading-snug">
@@ -118,22 +166,33 @@ export default function Home() {
 
           </div>
 
-          {/* Secondary stats */}
+          {/* Secondary stats with count-up and copy buttons */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 mt-10 pt-8 border-t border-gray-100">
-            {[
-              { label: 'IT Capacity',    value: `${project.totalCapacityMW.toLocaleString()} MW`, note: 'Leasable at full buildout',   src: 'dcdGW2026' },
-              { label: 'Secured Power',  value: `${project.securedPowerMW.toLocaleString()} MW`,  note: 'Utility-contracted capacity',   src: 'dcdGW2026' },
-              { label: 'Phase 1 Online', value: project.firstBuildingOnline,                       note: 'Under construction now',        src: 'dcd2026'   },
-              { label: 'Campus Area',    value: `${project.totalAcres.toLocaleString()} ac`,       note: 'Peterson Rd & Route 83',        src: 'villageoffaq' },
-            ].map(({ label, value, note, src }) => (
-              <FadeIn key={label}>
-                <p className="text-2xs font-mono text-gray-400 uppercase tracking-[0.16em] mb-1">{label}</p>
-                <p className="text-xl font-display font-bold text-gray-800 leading-tight">
-                  {value}<SourceCitation sourceKey={src} />
-                </p>
-                <p className="text-xs text-gray-400 mt-1">{note}</p>
-              </FadeIn>
-            ))}
+            {SECONDARY_STATS.map(({ label, numValue, suffix = '', value, note, src }) => {
+              const displayValue = numValue != null
+                ? `${numValue.toLocaleString()}${suffix}`
+                : value
+              return (
+                <FadeIn key={label}>
+                  <p className="text-2xs font-mono text-gray-400 uppercase tracking-[0.16em] mb-1">{label}</p>
+                  <p className="text-xl font-display font-bold text-gray-800 leading-tight">
+                    {numValue != null ? (
+                      <AnimatedNumber
+                        value={numValue}
+                        suffix={suffix}
+                        duration={0.6}
+                        sessionKey={HERO_SESSION_KEY}
+                      />
+                    ) : (
+                      value
+                    )}
+                    <SourceCitation sourceKey={src} />
+                  </p>
+                  <p className="text-xs text-gray-400 mt-1">{note}</p>
+                  <CopyKPIButton copyText={buildCopyText(displayValue, note, src)} />
+                </FadeIn>
+              )
+            })}
           </div>
 
           {/* Water use — surfaced from /energy technical table */}
@@ -153,7 +212,7 @@ export default function Home() {
       </section>
 
       {/* ── Start here ───────────────────────────────────────────────────────── */}
-      <section className="bg-white border-b border-gray-200">
+      <section data-section="Audience Guides" className="bg-white border-b border-gray-200">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 py-10">
           <FadeIn>
             <p className="text-2xs font-mono text-gray-400 uppercase tracking-[0.2em] mb-5 flex items-center gap-2">
@@ -199,7 +258,7 @@ export default function Home() {
       </section>
 
       {/* ── Site map ─────────────────────────────────────────────────────────── */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 pt-12 pb-14">
+      <section data-section="Site Location" className="max-w-7xl mx-auto px-4 sm:px-6 pt-12 pb-14">
         <FadeIn>
           <div className="flex items-end justify-between mb-5">
             <div>
@@ -218,7 +277,7 @@ export default function Home() {
       </section>
 
       {/* ── Impact facets ─────────────────────────────────────────────────────── */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 pb-12">
+      <section data-section="Impact Overview" className="max-w-7xl mx-auto px-4 sm:px-6 pb-12">
 
         <FadeIn className="mb-12">
           <p className="text-2xs font-mono text-gray-400 uppercase tracking-[0.2em] mb-3 flex items-center gap-2">
@@ -234,7 +293,7 @@ export default function Home() {
         <div className="space-y-0">
           {FACETS.map(({ to, cat, catColor, catBorder, headline, body, chart, chartLabel, sourceKey, textCls, chartCls, flip }, i) => (
             <FadeIn key={to} delay={i * 0.08}>
-              <div className={`border-t ${catBorder} pt-10 pb-14 grid lg:grid-cols-12 gap-8 lg:gap-12`}>
+              <div data-section={cat} className={`border-t ${catBorder} pt-10 pb-14 grid lg:grid-cols-12 gap-8 lg:gap-12`}>
 
                 <div className={`${textCls}${flip ? ' lg:order-last' : ''}`}>
                   <p className={`text-2xs font-mono uppercase tracking-[0.2em] mb-3 ${catColor}`}>{cat}</p>

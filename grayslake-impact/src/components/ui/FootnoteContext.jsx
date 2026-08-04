@@ -1,16 +1,12 @@
-import { createContext, useContext, useRef } from 'react'
+import { createContext, useContext, useRef, useState } from 'react'
 import { sources } from '../../data/sources'
 
-const FootnoteCtx = createContext(null)
+export const FootnoteCtx = createContext(null)
 
-/**
- * Wrap a page with this to enable the footnote system.
- * preload: array of sourceKeys in desired display order (needed for
- * pages where citations are inside conditionally-rendered sections,
- * e.g. accordion items, so they register even when collapsed).
- */
 export function FootnoteProvider({ children, preload = [] }) {
   const stateRef = useRef(null)
+  const [hoveredKey, setHoveredKey] = useState(null)
+
   if (stateRef.current === null) {
     const registry = {}
     const order = []
@@ -34,7 +30,7 @@ export function FootnoteProvider({ children, preload = [] }) {
   }
 
   return (
-    <FootnoteCtx.Provider value={{ register, stateRef }}>
+    <FootnoteCtx.Provider value={{ register, stateRef, hoveredKey, setHoveredKey }}>
       {children}
     </FootnoteCtx.Provider>
   )
@@ -50,6 +46,7 @@ export function FootnoteList() {
   const ctx = useContext(FootnoteCtx)
   if (!ctx) return null
   const { order } = ctx.stateRef.current
+  const { hoveredKey } = ctx
   if (!order.length) return null
 
   return (
@@ -60,13 +57,27 @@ export function FootnoteList() {
           const source = sources[key]
           if (!source) return null
           const num = i + 1
+          const isHighlighted = hoveredKey === key
+          const isDimmed = hoveredKey && hoveredKey !== key
           return (
-            <li key={key} id={`fn-${num}`} className="flex gap-3 scroll-mt-20">
+            <li
+              key={key}
+              id={`fn-${num}`}
+              className={`flex gap-3 scroll-mt-20 rounded-r transition-all duration-150 ${
+                isHighlighted
+                  ? 'bg-blue-50/70 -mx-2 px-2 py-0.5'
+                  : isDimmed
+                  ? 'opacity-35'
+                  : ''
+              }`}
+            >
               <span className="text-xs font-mono text-gray-400 shrink-0 tabular-nums w-5 text-right pt-px">
                 {num}.
               </span>
               <div className="text-xs text-gray-600 leading-relaxed min-w-0">
-                <span className="text-gray-800 font-medium">{source.title}</span>
+                <span className={`font-medium ${isHighlighted ? 'text-gray-900 underline underline-offset-2 decoration-blue-300' : 'text-gray-800'}`}>
+                  {source.title}
+                </span>
                 {source.publisher && (
                   <span className="text-gray-500"> — {source.publisher}</span>
                 )}
