@@ -69,7 +69,10 @@ export default function Home() {
   return (
     <FootnoteProvider>
     <div>
-      <PageTitle />
+      <PageTitle
+        description="A civic data dashboard tracking the T5 @ Chicago IV hyperscale AI data center development in Grayslake, Illinois — jobs, taxes, energy, water, and legal challenges, all sourced."
+        ogImage="/og/home.png"
+      />
 
       {/* ── Intro + key stats ──────────────────────────────────────────────── */}
       <section className="bg-white border-b border-gray-200">

@@ -20,7 +20,11 @@ export default function TimelinePage() {
   return (
     <FootnoteProvider>
     <div className="max-w-3xl mx-auto px-4 sm:px-6 py-12">
-      <PageTitle title="Timeline" />
+      <PageTitle
+        title="Timeline"
+        description="Sourced chronological record of T5 @ Chicago IV — village approvals, construction milestones, community opposition, legal challenges, and state policy changes."
+        ogImage="/og/timeline.png"
+      />
 
       <FadeIn className="mb-10 pb-8 border-b border-gray-200">
         <p className="text-2xs font-mono text-blue-600/60 uppercase tracking-[0.2em] mb-3">Project History</p>

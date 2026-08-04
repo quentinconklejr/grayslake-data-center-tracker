@@ -150,7 +150,11 @@ export default function OpenQuestions() {
   return (
     <FootnoteProvider preload={PRELOAD_KEYS}>
     <div className="max-w-4xl mx-auto px-4 sm:px-6 py-12">
-      <PageTitle title="Open Questions" />
+      <PageTitle
+        title="Open Questions"
+        description="Unresolved disputes and data gaps around T5 @ Chicago IV: water sourcing, energy rate impacts, campus scale, tax projections, and approval process adequacy."
+        ogImage="/og/questions.png"
+      />
 
       <FadeIn className="mb-10 pb-8 border-b border-gray-200">
         <p className="text-2xs font-mono text-blue-600/60 uppercase tracking-[0.2em] mb-3">Unresolved Issues</p>

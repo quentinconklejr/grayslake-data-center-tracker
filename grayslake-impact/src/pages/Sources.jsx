@@ -13,7 +13,11 @@ const SOURCE_ENTRIES = Object.entries(sources)
 export default function Sources() {
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 py-12">
-      <PageTitle title="Sources" />
+      <PageTitle
+        title="Sources"
+        description="Full citation list for the T5 @ Chicago IV tracker — primary sources, press coverage, and official documents behind every claim on this site."
+        ogImage="/og/sources.png"
+      />
 
       <FadeIn className="mb-10 pb-8 border-b border-gray-200">
         <p className="text-2xs font-mono text-blue-600/60 uppercase tracking-[0.2em] mb-3">Transparency</p>

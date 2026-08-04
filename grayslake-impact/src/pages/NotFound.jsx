@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom'
+import PageTitle from '../components/ui/PageTitle'
 
 export default function NotFound() {
   return (
     <div className="min-h-[60vh] flex flex-col items-center justify-center px-4 text-center">
+      <PageTitle title="Page Not Found" />
       <div className="mb-6 w-12 h-12 rounded-xl bg-blue-50 border border-blue-200 flex items-center justify-center">
         <svg viewBox="0 0 24 24" className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" strokeWidth="1.5">
           <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
