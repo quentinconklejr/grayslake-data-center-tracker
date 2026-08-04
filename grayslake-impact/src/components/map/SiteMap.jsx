@@ -70,12 +70,13 @@ export default function SiteMap({ className = 'h-[480px]' }) {
 
       mgl.accessToken = TOKEN
       const map = new mgl.Map({
-        container:          containerRef.current,
-        style:              'mapbox://styles/mapbox/satellite-streets-v12',
-        center:             CENTER,
-        zoom:               ZOOM,
-        attributionControl: false,
-        antialias:          true,
+        container:           containerRef.current,
+        style:               'mapbox://styles/mapbox/satellite-streets-v12',
+        center:              CENTER,
+        zoom:                ZOOM,
+        attributionControl:  false,
+        antialias:           true,
+        cooperativeGestures: true,
       })
       mapRef.current = map
 
