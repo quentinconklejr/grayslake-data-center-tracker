@@ -16,6 +16,7 @@ import About from './pages/About'
 import Residents from './pages/Residents'
 import Reporters from './pages/Reporters'
 import Officials from './pages/Officials'
+import Actions from './pages/Actions'
 
 export default function App() {
   return (
@@ -39,6 +40,7 @@ export default function App() {
             <Route path="/residents" element={<Residents />} />
             <Route path="/reporters" element={<Reporters />} />
             <Route path="/officials" element={<Officials />} />
+            <Route path="/actions" element={<Actions />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </main>

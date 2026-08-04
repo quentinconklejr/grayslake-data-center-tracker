@@ -64,6 +64,9 @@ export default function Officials() {
 
       <FadeIn className="mt-12 border-t border-gray-200 pt-8">
         <div className="flex flex-wrap gap-4 text-sm mb-6">
+          <Link to="/actions" className="text-blue-600 hover:text-blue-700 transition-colors">
+            Jurisdictional actions →
+          </Link>
           <Link to="/timeline" className="text-blue-600 hover:text-blue-700 transition-colors">
             Full project timeline →
           </Link>
