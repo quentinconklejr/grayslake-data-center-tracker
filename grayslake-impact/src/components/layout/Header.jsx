@@ -63,7 +63,7 @@ export default function Header() {
           <span className="text-sm font-semibold text-gray-900 group-hover:text-gray-600 transition-colors leading-tight whitespace-nowrap tracking-tight">
             Grayslake Data Center Tracker
           </span>
-          <span className="hidden sm:block text-2xs font-mono text-gray-400 leading-tight mt-0.5">
+          <span className="text-2xs font-mono text-gray-400 leading-tight mt-0.5">
             An independent public-records project · Not affiliated with T5 or the Village
           </span>
         </Link>

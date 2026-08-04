@@ -79,10 +79,12 @@ export default function Home() {
         <div className="max-w-5xl mx-auto px-4 sm:px-6 pt-14 pb-14">
 
           <FadeIn>
+            <h1 className="text-3xl sm:text-4xl font-display font-bold text-gray-900 leading-tight tracking-tight mb-4 max-w-[52ch]">
+              T5 @ Chicago IV is a proposed $8.5–18B hyperscale AI data center in Grayslake, Illinois.
+            </h1>
             <p className="text-xl text-gray-600 leading-relaxed max-w-[65ch] mb-4">
-              T5 @ Chicago IV is a proposed hyperscale AI data center campus on Peterson Road
-              and Route 83 in Grayslake, Illinois. This tracker collects public records and press
-              coverage on the project and links every claim to its source.
+              This tracker collects public records and press coverage on the project and links every
+              claim to its source.
             </p>
             <p className="text-2xs font-mono text-gray-400 mb-12">Last verified {LAST_VERIFIED}</p>
           </FadeIn>
@@ -107,7 +109,7 @@ export default function Home() {
             <FadeIn delay={0.08} className="md:pl-12 border-t border-gray-200 pt-10 md:pt-0 md:border-t-0">
               <p className="text-2xs font-mono text-gray-400 uppercase tracking-[0.2em] mb-3">Total Estimated Investment</p>
               <p className="text-6xl sm:text-7xl font-display font-black text-gray-900 leading-none tracking-tighter">
-                $8.5<span className="text-gray-300">–</span>18<span className="text-4xl sm:text-5xl">B</span>
+                $8.5–18<span className="text-4xl sm:text-5xl">B</span>
               </p>
               <p className="text-sm text-gray-500 mt-4 leading-snug">
                 Mayor Davies: $8.5B · CEO Marin: up to $18B<SourceCitation sourceKey="govtech2025" />
@@ -209,7 +211,7 @@ export default function Home() {
             <span className="inline-block w-4 h-px bg-gray-300" />
             Impact by category
           </p>
-          <h2 className="text-3xl font-display font-bold text-gray-900">Four areas of impact.</h2>
+          <h2 className="text-2xl font-display font-bold text-gray-900">Four areas of impact.</h2>
           <p className="text-base text-gray-500 mt-2 max-w-xl leading-relaxed">
             Each section links to a full page with sourced data and methodology.
           </p>
@@ -222,7 +224,7 @@ export default function Home() {
 
                 <div className={`${textCls}${flip ? ' lg:order-last' : ''}`}>
                   <p className={`text-2xs font-mono uppercase tracking-[0.2em] mb-3 ${catColor}`}>{cat}</p>
-                  <h3 className="text-2xl font-display font-bold text-gray-900 leading-tight mb-5">
+                  <h3 className="text-xl font-display font-bold text-gray-900 leading-tight mb-5">
                     {headline}
                   </h3>
                   <p className="text-base text-gray-600 leading-relaxed mb-5">{body}</p>
