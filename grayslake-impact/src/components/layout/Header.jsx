@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
-import { NAV_LINKS } from '../../data/navLinks'
+import { NAV_LINKS, GUIDE_LINKS } from '../../data/navLinks'
 
 function NavLink_({ to, label, end }) {
   return (
@@ -17,6 +17,81 @@ function NavLink_({ to, label, end }) {
     >
       {label}
     </NavLink>
+  )
+}
+
+function GuidesDropdown() {
+  const [open, setOpen] = useState(false)
+  const ref = useRef(null)
+  const location = useLocation()
+  const isAnyActive = GUIDE_LINKS.some(l => location.pathname === l.to)
+
+  useEffect(() => { setOpen(false) }, [location.pathname])
+
+  useEffect(() => {
+    if (!open) return
+    function onKey(e) {
+      if (e.key === 'Escape') {
+        setOpen(false)
+        ref.current?.querySelector('button')?.focus()
+      }
+    }
+    function onMouse(e) {
+      if (!ref.current?.contains(e.target)) setOpen(false)
+    }
+    document.addEventListener('keydown', onKey)
+    document.addEventListener('mousedown', onMouse)
+    return () => {
+      document.removeEventListener('keydown', onKey)
+      document.removeEventListener('mousedown', onMouse)
+    }
+  }, [open])
+
+  return (
+    <div ref={ref} className="relative">
+      <button
+        onClick={() => setOpen(v => !v)}
+        aria-haspopup="true"
+        aria-expanded={open}
+        aria-controls="guides-menu"
+        className={`text-xs font-medium whitespace-nowrap transition-colors duration-150 flex items-center gap-1 ${
+          isAnyActive || open ? 'text-gray-900' : 'text-gray-500 hover:text-gray-800'
+        }`}
+      >
+        Guides
+        <svg
+          className={`w-2.5 h-2.5 transition-transform duration-150 ${open ? 'rotate-180' : ''}`}
+          viewBox="0 0 10 10" fill="none" stroke="currentColor" strokeWidth="1.5"
+        >
+          <path d="M2 3.5l3 3 3-3" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </button>
+
+      {open && (
+        <div
+          id="guides-menu"
+          role="menu"
+          className="absolute right-0 top-full mt-2 w-40 bg-white/98 backdrop-blur-sm border border-gray-200 rounded-lg shadow-glass-md py-1.5 z-50"
+        >
+          {GUIDE_LINKS.map(({ to, label }) => (
+            <NavLink
+              key={to}
+              to={to}
+              role="menuitem"
+              className={({ isActive }) =>
+                `block px-4 py-2 text-xs font-medium transition-colors duration-100 ${
+                  isActive
+                    ? 'text-gray-900 bg-gray-50'
+                    : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                }`
+              }
+            >
+              {label}
+            </NavLink>
+          ))}
+        </div>
+      )}
+    </div>
   )
 }
 
@@ -71,6 +146,7 @@ export default function Header() {
         {/* Desktop nav */}
         <nav className="hidden md:flex items-center gap-3 flex-1 justify-end flex-wrap">
           {NAV_LINKS.map(l => <NavLink_ key={l.to} {...l} />)}
+          <GuidesDropdown />
         </nav>
 
         {/* Mobile hamburger */}
@@ -97,6 +173,10 @@ export default function Header() {
         <div className="md:hidden border-t border-gray-100 bg-white/98">
           <nav className="max-w-7xl mx-auto px-6 py-1">
             {NAV_LINKS.map(l => <MobileNavLink key={l.to} {...l} />)}
+            <div className="border-t border-gray-100 mt-1 pt-2 pb-1">
+              <p className="text-2xs font-mono text-gray-400 uppercase tracking-widest py-1.5">Guides</p>
+              {GUIDE_LINKS.map(l => <MobileNavLink key={l.to} {...l} />)}
+            </div>
           </nav>
         </div>
       )}

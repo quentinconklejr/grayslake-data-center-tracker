@@ -9,7 +9,10 @@ export const NAV_LINKS = [
   { to: '/map',        label: 'Map',       end: false },
   { to: '/sources',    label: 'Sources',   end: false },
   { to: '/about',      label: 'About',     end: false },
-  { to: '/residents',  label: 'Residents', end: false },
-  { to: '/reporters',  label: 'Reporters', end: false },
-  { to: '/officials',  label: 'Officials', end: false },
+]
+
+export const GUIDE_LINKS = [
+  { to: '/residents', label: 'Residents' },
+  { to: '/reporters', label: 'Reporters' },
+  { to: '/officials', label: 'Officials' },
 ]
