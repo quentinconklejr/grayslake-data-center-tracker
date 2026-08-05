@@ -47,13 +47,14 @@ export default function SourceCitation({ sourceKey }) {
       <a
         href={`#fn-${num}`}
         aria-describedby={show ? tooltipId : undefined}
-        className={`transition-colors duration-150 ${
+        className={`inline-flex items-center justify-center transition-colors duration-150 ${
           isDimmed
             ? 'text-blue-300/35'
             : isHighlighted || show
-            ? 'text-blue-600'
-            : 'text-blue-400/70 hover:text-blue-600'
+            ? 'text-blue-700'
+            : 'text-blue-600 hover:text-blue-700'
         }`}
+        style={{ minHeight: '24px', minWidth: '24px' }}
         title={source.title}
         onClick={(e) => {
           // On coarse-pointer devices (touch), first tap shows popover; second tap navigates

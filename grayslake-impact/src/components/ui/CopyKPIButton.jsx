@@ -7,7 +7,7 @@ export default function CopyKPIButton({ copyText }) {
     try {
       await navigator.clipboard.writeText(copyText)
       setCopied(true)
-      setTimeout(() => setCopied(false), 2000)
+      setTimeout(() => setCopied(false), 1500)
     } catch { /* clipboard unavailable */ }
   }
 
@@ -15,8 +15,8 @@ export default function CopyKPIButton({ copyText }) {
     <button
       onClick={handleCopy}
       title={copied ? 'Copied!' : `Copy: ${copyText}`}
-      className={`mt-2 inline-flex items-center gap-1 text-2xs font-mono transition-colors duration-150 ${
-        copied ? 'text-emerald-500' : 'text-gray-300 hover:text-gray-500'
+      className={`mt-2 inline-flex items-center gap-1 text-2xs font-mono transition-colors duration-150 min-h-6 px-1 -ml-1 ${
+        copied ? 'text-emerald-700' : 'text-gray-500 hover:text-gray-700'
       }`}
     >
       {copied ? (

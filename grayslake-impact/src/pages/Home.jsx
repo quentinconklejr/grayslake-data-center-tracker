@@ -152,6 +152,7 @@ export default function Home() {
               <p className="text-sm text-gray-500 mt-4 leading-snug">
                 Projected by 2029. Village FAQ estimate.<SourceCitation sourceKey="villageoffaq" />
               </p>
+              <CopyKPIButton copyText={buildCopyText(`${jobs.permanent.toLocaleString()} permanent jobs`, 'Projected by 2029. Village FAQ estimate.', 'villageoffaq')} />
             </FadeIn>
 
             <FadeIn delay={0.08} className="md:pl-12 border-t border-gray-200 pt-10 md:pt-0 md:border-t-0">
@@ -162,6 +163,7 @@ export default function Home() {
               <p className="text-sm text-gray-500 mt-4 leading-snug">
                 Mayor Davies: $8.5B · CEO Marin: up to $18B<SourceCitation sourceKey="govtech2025" />
               </p>
+              <CopyKPIButton copyText={buildCopyText('$8.5–18B total estimated investment', 'Mayor Davies: $8.5B · CEO Marin: up to $18B', 'govtech2025')} />
             </FadeIn>
 
           </div>
@@ -201,10 +203,12 @@ export default function Home() {
               <div>
                 <p className="text-2xs font-mono text-gray-400 uppercase tracking-[0.16em] mb-0.5">Water (full buildout)</p>
                 <p className="text-sm font-display font-bold text-gray-800">≤ 50,000 gal/day<SourceCitation sourceKey="villageoffaq" /></p>
+                <CopyKPIButton copyText={buildCopyText('≤ 50,000 gal/day water use (full buildout)', 'Village FAQ estimate', 'villageoffaq')} />
               </div>
               <div>
                 <p className="text-2xs font-mono text-gray-400 uppercase tracking-[0.16em] mb-0.5">Commissioning flush (one-time)</p>
                 <p className="text-sm font-display font-bold text-gray-800">~3.2M gal<SourceCitation sourceKey="hoodline2026" /></p>
+                <CopyKPIButton copyText={buildCopyText('~3.2M gal commissioning flush (one-time)', 'One-time event at system startup', 'hoodline2026')} />
               </div>
             </div>
           </FadeIn>
