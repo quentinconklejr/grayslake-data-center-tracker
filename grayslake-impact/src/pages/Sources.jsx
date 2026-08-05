@@ -32,7 +32,7 @@ export default function Sources() {
             key={key}
             className="group glass-card-hover px-5 py-4 flex gap-5"
           >
-            <span className="text-2xs font-mono text-gray-300 mt-0.5 w-6 shrink-0 group-hover:text-gray-400 transition-colors">
+            <span className="text-2xs font-mono text-gray-500 mt-0.5 w-6 shrink-0 group-hover:text-gray-700 transition-colors">
               {String(i + 1).padStart(2, '0')}
             </span>
             <div className="min-w-0 flex-1">
@@ -88,7 +88,7 @@ export default function Sources() {
               {source.status === 'background' && (
                 <span className="text-2xs font-mono text-gray-400 uppercase tracking-widest">background</span>
               )}
-              <span className="text-2xs font-mono text-gray-300 uppercase tracking-widest">{key}</span>
+              <span className="text-2xs font-mono text-gray-500 uppercase tracking-widest">{key}</span>
             </div>
           </div>
         ))}

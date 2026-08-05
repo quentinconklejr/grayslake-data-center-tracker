@@ -54,11 +54,11 @@ export default function TimelinePage() {
         </p>
         <div className="flex items-center gap-4 mt-4">
           <span className="text-2xs font-mono text-gray-400">{visible.length} of {timelineEvents.length} events</span>
-          <span className="text-gray-300">·</span>
+          <span aria-hidden="true" className="text-gray-300">·</span>
           <span className="text-2xs font-mono text-gray-400">{dateRange}</span>
-          <span className="text-gray-300">·</span>
+          <span aria-hidden="true" className="text-gray-300">·</span>
           <span className="text-2xs font-mono text-gray-400">Oldest → newest</span>
-          <span className="text-gray-300">·</span>
+          <span aria-hidden="true" className="text-gray-300">·</span>
           <span className="text-2xs font-mono text-gray-400">Last verified {LAST_VERIFIED}</span>
         </div>
       </FadeIn>

@@ -52,7 +52,7 @@ export default function EvidenceBlock({ type = 'stated', title, desc, sourceKey,
         <p className={`text-2xs font-mono uppercase tracking-widest font-semibold ${s.labelCls}`}>{s.tag}</p>
         {desc && (
           <>
-            <span className="text-2xs text-gray-300">·</span>
+            <span aria-hidden="true" className="text-2xs text-gray-300">·</span>
             <p className="text-2xs text-gray-400">{desc}</p>
           </>
         )}

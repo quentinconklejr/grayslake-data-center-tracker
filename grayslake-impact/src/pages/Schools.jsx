@@ -198,7 +198,7 @@ export default function Schools({ asSection = false }) {
               <p className="text-sm text-gray-400 mb-3">{sub}</p>
               <p className="text-sm text-gray-500 leading-relaxed">{desc}</p>
               <div className="mt-4 pt-3 border-t border-gray-100 flex justify-between">
-                <span className="text-2xs font-mono text-gray-300 uppercase tracking-widest">Est. annual share</span>
+                <span className="text-2xs font-mono text-gray-500 uppercase tracking-widest">Est. annual share</span>
                 <span className="text-xs text-gray-400">— no public projection yet</span>
               </div>
             </div>

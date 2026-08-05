@@ -12,7 +12,8 @@
     "preview": "vite preview",
     "build:og": "python3 scripts/generate-og.py",
     "fetch-parcels": "node scripts/fetch-parcels.js",
-    "verify-parcels": "node scripts/verify-parcels.js"
+    "verify-parcels": "node scripts/verify-parcels.js",
+    "check-contrast": "node scripts/check-contrast.js"
   },
   "dependencies": {
     "framer-motion": "^12.40.0",

@@ -73,11 +73,11 @@ function ActionCard({ action }) {
       {/* Header row */}
       <div className="flex flex-wrap items-center gap-2 px-5 pt-4 pb-3 border-b border-gray-100">
         <time className="text-2xs font-mono text-gray-400 shrink-0">{fmtDate(action.date)}</time>
-        <span className="text-gray-200 text-2xs">·</span>
+        <span aria-hidden="true" className="text-gray-200 text-2xs">·</span>
         <span className={`inline-flex items-center px-1.5 py-0.5 rounded-sm border text-2xs font-mono font-semibold uppercase tracking-widest ${juriBadge}`}>
           {action.jurisdiction}
         </span>
-        <span className="text-gray-200 text-2xs">·</span>
+        <span aria-hidden="true" className="text-gray-200 text-2xs">·</span>
         <span className="text-2xs font-mono text-gray-500 uppercase tracking-widest">{action.actionType}</span>
         <span className="ml-auto shrink-0">
           {isPending
@@ -131,7 +131,7 @@ export default function Actions() {
         </p>
         <div className="flex items-center gap-4 mt-4">
           <span className="text-2xs font-mono text-gray-400">{actions.length} actions on file</span>
-          <span className="text-gray-300">·</span>
+          <span aria-hidden="true" className="text-gray-300">·</span>
           <span className="text-2xs font-mono text-gray-400">Last verified {LAST_VERIFIED}</span>
         </div>
       </FadeIn>

@@ -167,7 +167,7 @@ export default function Jobs({ asSection = false }) {
                 'Laborers Local 149',
               ].map(u => (
                 <li key={u} className="text-sm text-gray-500 flex gap-2">
-                  <span className="text-gray-300 shrink-0 mt-0.5">·</span>
+                  <span aria-hidden="true" className="text-gray-300 shrink-0 mt-0.5">·</span>
                   {u}
                 </li>
               ))}

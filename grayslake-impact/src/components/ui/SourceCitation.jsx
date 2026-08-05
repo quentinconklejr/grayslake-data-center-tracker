@@ -49,7 +49,7 @@ export default function SourceCitation({ sourceKey }) {
         aria-describedby={show ? tooltipId : undefined}
         className={`inline-flex items-center justify-center transition-colors duration-150 ${
           isDimmed
-            ? 'text-blue-300/35'
+            ? 'text-gray-400'
             : isHighlighted || show
             ? 'text-blue-700'
             : 'text-blue-600 hover:text-blue-700'

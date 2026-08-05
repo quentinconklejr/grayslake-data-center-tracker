@@ -32,10 +32,13 @@ const CAT_META = {
   process: { label: 'Process', active: 'text-red-700 bg-red-50 border-red-300',          inactive: 'text-gray-500 border-gray-200 hover:text-red-700 hover:border-red-300' },
 }
 
+// dotCls values are rendered on an aria-hidden bullet that repeats the
+// adjacent text label, so they are decoration and exempt from contrast. The
+// label carries the meaning, which also keeps this clear of 1.4.1 Use of Colour.
 const BLOCKS = [
-  { key: 'stated',   textCls: 'text-gray-700', dotCls: 'text-emerald-400' },
-  { key: 'disputed', textCls: 'text-gray-700', dotCls: 'text-amber-400'   },
-  { key: 'unknown',  textCls: 'text-gray-500', dotCls: 'text-gray-300'    },
+  { key: 'stated',   textCls: 'text-gray-700', dotCls: 'text-emerald-400' }, // decorative (aria-hidden)
+  { key: 'disputed', textCls: 'text-gray-700', dotCls: 'text-amber-400'   }, // decorative (aria-hidden)
+  { key: 'unknown',  textCls: 'text-gray-500', dotCls: 'text-gray-300'    }, // decorative (aria-hidden)
 ]
 
 function QuestionCard({ q, isExpanded, onToggle }) {
@@ -86,13 +89,13 @@ function QuestionCard({ q, isExpanded, onToggle }) {
                     <div className="flex items-center gap-1.5 mb-2.5">
                       <span className={ev.labelCls}>{ev.icon}</span>
                       <p className={`text-2xs font-mono uppercase tracking-widest font-semibold ${ev.labelCls}`}>{ev.tag}</p>
-                      <span className="text-2xs text-gray-300">·</span>
+                      <span aria-hidden="true" className="text-2xs text-gray-300">·</span>
                       <p className="text-2xs text-gray-400">{ev.desc}</p>
                     </div>
                     <ul className="space-y-2.5">
                       {items.map((item, i) => (
                         <li key={i} className="flex gap-2.5 items-start">
-                          <span className={`shrink-0 mt-1 ${dotCls}`}>·</span>
+                          <span aria-hidden="true" className={`shrink-0 mt-1 ${dotCls}`}>·</span>
                           <p className={`flex-1 min-w-0 text-xs leading-relaxed ${textCls}`}>
                             {item.text}
                             <ItemCitations item={item} />
