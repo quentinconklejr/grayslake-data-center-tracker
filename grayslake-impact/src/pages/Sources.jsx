@@ -47,7 +47,7 @@ export default function Sources() {
                 <p className="text-xs text-amber-700/80 italic mb-1">{source.note}</p>
               )}
               {source.status === 'unverified' ? (
-                <span className="text-2xs font-mono text-amber-600 italic">link pending verification</span>
+                <span className="text-2xs font-mono text-amber-700 italic">link pending verification</span>
               ) : source.url && (
                 <a
                   href={source.url}
@@ -64,7 +64,7 @@ export default function Sources() {
                 <span className="text-2xs font-mono text-gray-400">verified {source.verified}</span>
               )}
               {source.status === 'unverified' && (
-                <span className="text-2xs font-mono text-amber-600 uppercase tracking-widest">unverified</span>
+                <span className="text-2xs font-mono text-amber-700 uppercase tracking-widest">unverified</span>
               )}
               {source.status === 'background' && (
                 <span className="text-2xs font-mono text-gray-400 uppercase tracking-widest">background</span>

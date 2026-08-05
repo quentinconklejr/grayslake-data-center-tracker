@@ -105,7 +105,7 @@ export default function TimelinePage() {
 
       <div className="mt-12 pt-6 border-t border-gray-200">
         <p className="text-xs text-gray-500 leading-relaxed">
-          Events marked <span className="text-emerald-600">construction</span> beyond Nov 2025 are
+          Events marked <span className="text-emerald-700">construction</span> beyond Nov 2025 are
           projected milestones per developer filings, not confirmed completions.
           Hollow markers indicate projected events; solid markers indicate documented events.
         </p>

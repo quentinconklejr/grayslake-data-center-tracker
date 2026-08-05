@@ -43,7 +43,7 @@ export default function Footer() {
                 <Link
                   key={to}
                   to={to}
-                  className="text-xs text-gray-500 hover:text-gray-800 transition-colors duration-150"
+                  className="inline-flex items-center text-xs text-gray-500 hover:text-gray-800 transition-colors duration-150 py-1.5"
                 >
                   {label}
                 </Link>

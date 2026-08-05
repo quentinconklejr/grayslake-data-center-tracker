@@ -48,7 +48,7 @@ export default function Schools() {
         <p className="text-2xs font-mono text-gray-400 uppercase tracking-widest mb-4">Official Projections — Not Confirmed Outcomes</p>
         <div className="grid md:grid-cols-2 gap-4">
           <div className="glass-card p-6">
-            <p className="text-2xs font-mono text-blue-500 uppercase tracking-widest mb-2">Mayor of Grayslake</p>
+            <p className="text-2xs font-mono text-blue-600 uppercase tracking-widest mb-2">Mayor of Grayslake</p>
             <p className="text-4xl font-display font-bold text-gray-900 tracking-tight mb-1">~$300M</p>
             <p className="text-sm text-gray-500 mb-4">projected property tax revenue over the coming decades</p>
             <p className="text-xs text-gray-400 leading-relaxed">
@@ -57,12 +57,12 @@ export default function Schools() {
               has not been publicly released.
             </p>
             <div className="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between">
-              <span className="text-2xs font-mono text-amber-600 uppercase tracking-widest">Official projection</span>
+              <span className="text-2xs font-mono text-amber-700 uppercase tracking-widest">Official projection</span>
               <SourceCitation sourceKey="chitrib_june2026" />
             </div>
           </div>
           <div className="glass-card p-6">
-            <p className="text-2xs font-mono text-blue-500 uppercase tracking-widest mb-2">Deputy Village Manager</p>
+            <p className="text-2xs font-mono text-blue-600 uppercase tracking-widest mb-2">Deputy Village Manager</p>
             <p className="text-4xl font-display font-bold text-gray-900 tracking-tight mb-1">$1B+</p>
             <p className="text-sm text-gray-500 mb-4">projected across all taxing districts over 20 years</p>
             <p className="text-xs text-gray-400 leading-relaxed">
@@ -71,7 +71,7 @@ export default function Schools() {
               has not been publicly released.
             </p>
             <div className="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between">
-              <span className="text-2xs font-mono text-amber-600 uppercase tracking-widest">Official projection</span>
+              <span className="text-2xs font-mono text-amber-700 uppercase tracking-widest">Official projection</span>
               <SourceCitation sourceKey="chronicle2026" />
             </div>
           </div>

@@ -8,7 +8,7 @@ function NavLink_({ to, label, end }) {
       to={to}
       end={end}
       className={({ isActive }) =>
-        `text-xs font-medium whitespace-nowrap transition-colors duration-150 ${
+        `inline-flex items-center text-xs font-medium whitespace-nowrap transition-colors duration-150 py-1.5 ${
           isActive
             ? 'text-gray-900'
             : 'text-gray-500 hover:text-gray-800'

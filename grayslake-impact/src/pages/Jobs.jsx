@@ -88,7 +88,7 @@ export default function Jobs() {
             <h2 className="text-xl sm:text-2xl font-display font-bold text-gray-900">Permanent vs. Construction</h2>
           </div>
           <div className="flex items-center gap-3">
-            <span className="text-2xs font-mono text-amber-600">Est. included</span>
+            <span className="text-2xs font-mono text-amber-700">Est. included</span>
             <SourceCitation sourceKey="villageoffaq" />
           </div>
         </div>

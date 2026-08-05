@@ -36,7 +36,7 @@ const FACETS = [
   {
     to: '/jobs',
     cat: 'Employment',
-    catColor: 'text-emerald-600',
+    catColor: 'text-emerald-700',
     catBorder: 'border-emerald-200',
     headline: '1,680 permanent positions at full buildout.',
     body: 'The Village FAQ\'s current estimate is 1,680 permanent jobs at full buildout. An earlier figure of 1,500 was cited at the October 2025 public meeting. Construction through 2027–2029 will employ "hundreds" of trade workers, per Village documents.',
@@ -48,7 +48,7 @@ const FACETS = [
   {
     to: '/energy',
     cat: 'Energy Draw',
-    catColor: 'text-amber-600',
+    catColor: 'text-amber-700',
     catBorder: 'border-amber-200',
     headline: '1,600 MW secured. 1,200 MW leasable.',
     body: 'T5 has secured 1,600 MW of utility power against a planned 1,200 MW of leasable IT capacity. The 400 MW difference serves as a buffer for redundancy and phased buildout. Residential electric rates are not directly affected under Illinois\'s separate utility rate class structure for data centers.',
@@ -242,7 +242,7 @@ export default function Home() {
                 {
                   to: '/officials',
                   label: 'Officials',
-                  color: 'text-amber-600',
+                  color: 'text-amber-700',
                   border: 'border-amber-100 hover:border-amber-300',
                   desc: 'Approval decisions, legal challenges, and policy events — sourced and dated.',
                 },

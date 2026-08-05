@@ -247,7 +247,7 @@ export default function SiteMap({ className = 'h-[480px]' }) {
 
             <div className="flex items-start justify-between p-4 border-b border-gray-100 shrink-0">
               <div className="min-w-0">
-                <p className="text-xs font-mono text-blue-500 uppercase tracking-widest mb-0.5">T5 Data Centers</p>
+                <p className="text-xs font-mono text-blue-600 uppercase tracking-widest mb-0.5">T5 Data Centers</p>
                 <h3 className="text-sm font-display font-bold text-gray-900 leading-snug">T5 @ Chicago IV</h3>
                 <p className="text-xs font-mono text-gray-400 mt-0.5">Grayslake · Lake County, IL</p>
               </div>
@@ -281,7 +281,7 @@ export default function SiteMap({ className = 'h-[480px]' }) {
             </div>
 
             <div className="p-4 border-t border-gray-100 shrink-0 space-y-2">
-              <p className="text-xs text-amber-600/70 leading-relaxed">
+              <p className="text-xs text-amber-700 leading-relaxed">
                 Boundaries approximate — not from survey, parcel, or GIS data.
               </p>
               <SourceCitation sourceKey="dcdGW2026" />
@@ -307,7 +307,7 @@ export default function SiteMap({ className = 'h-[480px]' }) {
             <path d="M6 1L11 10H1L6 1z" />
             <path d="M6 4v3M6 8.5v.5" stroke="currentColor" strokeWidth="1" fill="none" strokeLinecap="round" />
           </svg>
-          <span className="text-xs font-mono text-amber-600/80">Approx. boundary — not surveyed</span>
+          <span className="text-xs font-mono text-amber-700">Approx. boundary — not surveyed</span>
         </div>
       </div>
     </div>

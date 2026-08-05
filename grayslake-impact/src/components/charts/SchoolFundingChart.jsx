@@ -41,7 +41,7 @@ export default function SchoolFundingChart() {
       </div>
 
       {/* Separator note */}
-      <p className="text-2xs font-mono text-amber-600 uppercase tracking-widest border-t border-amber-100 pt-3">
+      <p className="text-2xs font-mono text-amber-700 uppercase tracking-widest border-t border-amber-100 pt-3">
         School share below — three-property average, 2021–2024
       </p>
 
@@ -109,7 +109,7 @@ export default function SchoolFundingChart() {
       </div>
 
       <div className="border-t border-gray-200 pt-4">
-        <p className="text-2xs font-mono text-emerald-600 uppercase tracking-widest mb-1">Documented outcome</p>
+        <p className="text-2xs font-mono text-emerald-700 uppercase tracking-widest mb-1">Documented outcome</p>
         <p className="text-xs text-gray-600 leading-relaxed">
           Funded construction of Mitchell Elementary School — opened 2025.
         </p>

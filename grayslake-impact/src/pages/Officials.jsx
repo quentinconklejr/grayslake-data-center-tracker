@@ -30,7 +30,7 @@ const CATEGORIES = [
     label: 'Policy',
     desc: 'State and township resolutions, regulatory directives, and official statements.',
     cls: 'text-amber-700 bg-amber-50 border-amber-200 hover:border-amber-400',
-    labelCls: 'text-amber-600',
+    labelCls: 'text-amber-700',
   },
 ]
 
