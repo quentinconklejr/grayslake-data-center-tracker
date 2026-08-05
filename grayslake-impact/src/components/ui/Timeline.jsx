@@ -31,6 +31,15 @@ function isProjected(raw) {
   return ms !== null && ms > Date.now()
 }
 
+function gapLabel(ms1, ms2) {
+  const months = Math.round((ms2 - ms1) / (1000 * 60 * 60 * 24 * 30.5))
+  if (months < 12) return `${months} month${months !== 1 ? 's' : ''}`
+  const years = Math.floor(months / 12)
+  const rem = months % 12
+  if (rem === 0) return `${years} year${years !== 1 ? 's' : ''}`
+  return `${years}y ${rem}mo`
+}
+
 const CAT = {
   approval:     { badge: 'text-blue-700 bg-blue-50 border-blue-200',          dot: 'bg-blue-500'    },
   opposition:   { badge: 'text-orange-700 bg-orange-50 border-orange-200',    dot: 'bg-orange-500'  },
@@ -42,6 +51,7 @@ const CAT = {
 }
 
 const PROP_HEIGHT = 700
+const GAP_THRESHOLD_PX = 80
 
 export default function Timeline({ events = [], proportional = false }) {
   if (!events.length) return <p className="text-gray-400 text-sm py-12 text-center">No events loaded.</p>
@@ -66,16 +76,35 @@ export default function Timeline({ events = [], proportional = false }) {
           const projected = isProjected(event.date)
 
           let spacerPx = 0
+          let prevTs = null
+          let currTs = null
           if (proportional && i > 0) {
-            const prev = timestamps[i - 1] ?? firstTs
-            const curr = timestamps[i] ?? firstTs
-            spacerPx = Math.max(8, ((curr - prev) / totalMs) * PROP_HEIGHT)
+            prevTs = timestamps[i - 1] ?? firstTs
+            currTs = timestamps[i] ?? firstTs
+            spacerPx = Math.max(8, ((currTs - prevTs) / totalMs) * PROP_HEIGHT)
           }
+
+          const showGapMarker = proportional && i > 0 && spacerPx > GAP_THRESHOLD_PX
 
           return (
             <div key={i}>
               {proportional && i > 0 && (
-                <div style={{ height: spacerPx }} aria-hidden="true" />
+                <div className="relative" style={{ height: spacerPx }} aria-hidden="true">
+                  {showGapMarker && (
+                    <>
+                      {/* Dashed override covers the solid spine for this gap */}
+                      <div
+                        className="absolute"
+                        style={{ left: 10, top: 0, bottom: 0, width: 1, background: 'white', borderLeft: '1.5px dashed #d1d5db' }}
+                      />
+                      <div className="absolute inset-0 flex items-center pl-9">
+                        <span className="text-2xs font-mono text-gray-400 italic bg-white border border-gray-100 px-2 py-0.5 rounded">
+                          {gapLabel(prevTs, currTs)} — no recorded events
+                        </span>
+                      </div>
+                    </>
+                  )}
+                </div>
               )}
               <div
                 className={`relative flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-4 group py-4 pl-9 ${

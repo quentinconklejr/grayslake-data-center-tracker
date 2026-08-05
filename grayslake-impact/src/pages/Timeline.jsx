@@ -89,11 +89,12 @@ export default function TimelinePage() {
           })}
         </div>
         <button
+          role="switch"
+          aria-checked={proportional}
           onClick={() => setProportional(v => !v)}
           className="text-2xs font-mono text-gray-500 hover:text-gray-800 transition-colors duration-150 flex items-center gap-1.5 shrink-0"
-          title={proportional ? 'Switch to even spacing' : 'Switch to time-proportional spacing'}
         >
-          {proportional ? 'Even spacing' : 'Time scale'}
+          {proportional ? 'Proportional spacing: ON' : 'Proportional spacing: OFF'}
           <svg className="w-3 h-3" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5">
             <path d="M2 2v8M10 2v8M2 4.5h8M2 7.5h5" strokeLinecap="round" />
           </svg>

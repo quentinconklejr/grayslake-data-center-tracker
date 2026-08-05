@@ -1,6 +1,6 @@
 export const timelineEvents = [
   {
-    date: "2024",
+    date: "2024-09",
     title: "Initial village paperwork filed",
     description: "T5 files for village approvals; the formal approval process begins September 2024.",
     category: "approval",
