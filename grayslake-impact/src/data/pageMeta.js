@@ -25,7 +25,7 @@ export const pageMeta = {
   '/jobs': {
     title: 'Job Creation',
     description:
-      'Employment projections for the T5 @ Chicago IV campus in Grayslake — 1,500 to over 1,600 permanent positions at full buildout, and construction-phase workforce estimates.',
+      'Employment projections for the T5 @ Chicago IV campus in Grayslake — 1,500 to 1,680 permanent positions, the upper figure conditional on full 10.1M sq ft build-out, plus construction-phase workforce estimates.',
     ogImage: '/og/jobs.png',
   },
   '/energy': {

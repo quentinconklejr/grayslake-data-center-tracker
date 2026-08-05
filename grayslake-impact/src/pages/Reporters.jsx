@@ -50,9 +50,9 @@ const KEY_FIGURES = [
   },
   {
     label: 'Permanent jobs projected',
-    value: `${jobs.permanent.toLocaleString()} (unverified)`,
-    detail: 'Village FAQ figure; that document is no longer reachable and nothing else confirms 1,680. Attributable alternatives: Mayor Davies cited 1,500 (Oct. 2025); CEO Marin cited "over 1,600" (Jul. 2026).',
-    sourceKey: 'govtech2025',
+    value: `1,500 – ${jobs.permanent.toLocaleString()}`,
+    detail: 'Upper figure is the Village FAQ\'s, derived by applying 50 jobs per 300,000 sq. ft. to the full 10.1M sq ft build-out — conditional on complete build-out, not a flat estimate. Mayor Davies cited 1,500 (Oct. 2025); CEO Marin cited "over 1,600" (Jul. 2026). Live FAQ URL is dead; cite the archived snapshot.',
+    sourceKey: 'villagefaq_archived',
   },
   {
     label: 'Developer investment range',

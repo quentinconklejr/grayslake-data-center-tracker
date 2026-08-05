@@ -39,9 +39,9 @@ const PHASES = [
     accent: 'border-emerald-300 bg-emerald-50',
     dot: 'bg-emerald-500',
     label: 'text-emerald-700',
-    jobs: '1,500 – "over 1,600" permanent positions',
-    note: 'Mayor Davies cited 1,500 to the Chicago Tribune (Oct. 2025); T5 CEO Pete Marin cited "over 1,600" (Daily Herald, Jul. 2026). A Village FAQ figure of 1,680 also circulated, but that document is no longer reachable and nothing else confirms it.',
-    sourceKey: 'govtech2025',
+    jobs: '1,500 – 1,680 permanent positions',
+    note: 'Mayor Davies cited 1,500 (Chicago Tribune, Oct. 2025); T5 CEO Pete Marin cited "over 1,600" (Daily Herald, Jul. 2026). The Village FAQ reaches 1,680 by applying 50 jobs per 300,000 sq. ft. to the full 10.1M sq ft build-out — a maximum conditional on the campus being built out entirely, not a flat projection.',
+    sourceKeys: ['govtech2025', 'villagefaq_archived'],
   },
 ]
 
@@ -64,18 +64,19 @@ export default function Jobs() {
         <p className="text-2xs font-mono text-blue-600/60 uppercase tracking-[0.2em] mb-3">Employment</p>
         <h1 className="text-4xl font-display font-bold text-gray-900 tracking-tight mb-3">Job Creation</h1>
         <p className="text-base text-gray-600 max-w-2xl leading-relaxed">
-          Permanent headcount at full buildout has been stated three ways: Mayor Davies cited{' '}
-          {jobs.permanentDavies.toLocaleString()} to the Chicago Tribune in October 2025, T5 CEO Pete Marin cited
-          &ldquo;over {jobs.permanentMarin.toLocaleString()}&rdquo; in July 2026, and the Village FAQ put it at{' '}
-          {jobs.permanent.toLocaleString()} &mdash; a figure now unverifiable, since that document is unreachable and
-          no other source confirms it. Construction phase employment is described as &ldquo;{jobs.constructionPhase}&rdquo;
-          with no precise headcount publicly sourced.
+          Permanent headcount has been stated three ways. Mayor Davies cited{' '}
+          {jobs.permanentDavies.toLocaleString()} to the Chicago Tribune in October 2025. T5 CEO Pete Marin cited
+          &ldquo;over {jobs.permanentMarin.toLocaleString()}&rdquo; in July 2026. The Village FAQ reaches{' '}
+          {jobs.permanent.toLocaleString()} by applying a density ratio &mdash; {jobs.permanentBasis} &mdash; so that
+          figure holds only {jobs.permanentCondition}, which the approvals permit but T5 has not committed to.
+          Construction phase employment is described as &ldquo;{jobs.constructionPhase}&rdquo; with no precise headcount
+          publicly sourced.
         </p>
         <p className="text-2xs font-mono text-gray-400 mt-3">Last verified {LAST_VERIFIED}</p>
       </FadeIn>
 
       <FadeIn className="grid grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
-        <StatCard label="Permanent Jobs"       value={`${jobs.permanentDavies.toLocaleString()}–${jobs.permanentMarin.toLocaleString()}+`} sub="Davies 1,500 · Marin over 1,600" accent="green" sourceKey="govtech2025" />
+        <StatCard label="Permanent Jobs"       value={`${jobs.permanentDavies.toLocaleString()}–${jobs.permanent.toLocaleString()}`} sub={`Upper figure ${jobs.permanentCondition}`} accent="green" sourceKey="villagefaq_archived" />
         <StatCard label="Construction"         value="Hundreds"                         sub="Active 2025–2029 (est.)"  badge="Est." accent="amber" sourceKey="govtech2025" />
         <StatCard label="Phase 1 Online"       value={project.firstBuildingOnline}      sub="First building operational" accent="blue" sourceKey="dcd2026" />
         <StatCard label="Full Buildout"        value={project.fullBuildOut}             sub={`${project.approvedBuildings} approved · CEO est. up to ${project.maxBuildings}`} accent="blue" sourceKey="govtech2025" />

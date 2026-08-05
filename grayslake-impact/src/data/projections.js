@@ -17,14 +17,18 @@ export const projections = {
     fullBuildOut: "2029",
   },
   jobs: {
-    // 1,680 came from the Village FAQ, whose URL went dead on Aug 5, 2026.
-    // No other source corroborates it. Deliberately NOT swapped for 1,500 or
-    // 1,600 — those are different claims by different people at different
-    // times. Shown with an Unverified marker until the FAQ is recovered.
+    // 1,680 is re-confirmed from the archived Village FAQ (Wayback snapshot
+    // 2026-07-24, page 2). It is NOT a flat headcount estimate: the FAQ derives
+    // it from a density ratio applied to the maximum approved footprint —
+    // "50 permanent jobs are created for every 300,000 sq. ft. or 1,680
+    // permanent jobs". It therefore only holds at the full 10.1M sq ft
+    // build-out, which is a ceiling rather than a commitment. Always render it
+    // with that condition attached.
     permanent: 1680,
-    permanentUnverified: true,
+    permanentBasis: "50 permanent jobs per 300,000 sq. ft., applied to the full build-out",
+    permanentCondition: "at full 10.1M sq ft build-out",
     permanentNote:
-      "Village FAQ figure. That document is no longer reachable and no other source confirms 1,680.",
+      "Village FAQ ratio figure, conditional on the campus reaching its maximum approved footprint.",
     // Attributable alternatives, each with a named speaker and a live source:
     permanentDavies: 1500,   // Mayor Elizabeth Davies, Chicago Tribune, Oct. 2025
     permanentMarin: 1600,    // Pete Marin, T5 CEO, "over 1,600", Daily Herald, Jul. 2026

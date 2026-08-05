@@ -61,7 +61,7 @@ export const sources = {
     url: "https://villageofgrayslake.com/DocumentCenter/View/15282",
     status: "dead",
     deadCheckedAt: "Aug 5, 2026",
-    note: "LINK DEAD as of Aug 5, 2026. The document was updated June 5, 2026 to state the Village could no longer respond to questions due to pending litigation, and is now unreachable at the URL above. Claims that previously rested on it have been re-sourced to the Chicago Tribune / Government Technology reporting and the CLCJAWA utility briefing where those corroborate; claims that nothing else corroborates are marked Unverified on the page rather than dropped.",
+    note: "LINK DEAD as of Aug 5, 2026. The document was updated June 5, 2026 to state the Village could no longer respond to questions due to pending litigation, and is now unreachable at the URL above. An archived snapshot is available and is cited as villagefaq_archived; claims resting on the FAQ point there. Other claims were re-sourced to the Chicago Tribune / Government Technology reporting and the CLCJAWA utility briefing, which are independent of the FAQ.",
   },
   cub2026: {
     title: "How data centers are raising our bills in Illinois — and what we should do about it",
@@ -122,6 +122,14 @@ export const sources = {
     date: "2026",
     url: "https://www.lakecountyil.gov/DocumentCenter/View/88568/Grayslake-Data-Center-and-CLCJAWA---2026",
     note: "Primary source for the project's water figures, including the one-time commissioning flush volume.",
+    verified: "Aug 5, 2026",
+  },
+  villagefaq_archived: {
+    title: "Approved T5 Data Center Campus FAQs (archived snapshot, updated as of June 5, 2026)",
+    publisher: "Village of Grayslake, via Internet Archive Wayback Machine",
+    date: "Snapshot captured July 24, 2026",
+    url: "https://web.archive.org/web/20260724165553/https://www.villageofgrayslake.com/DocumentCenter/View/15282/T5-FAQ-sheet?bidId=",
+    note: "The Village's live copy of this document is no longer reachable. This archived snapshot is the citable version. Figures below are quoted from page 2, under the document's own \u201cUpdated as of June 5, 2026\u201d heading.",
     verified: "Aug 5, 2026",
   },
 };

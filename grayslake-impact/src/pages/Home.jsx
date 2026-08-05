@@ -4,7 +4,6 @@ import { pageMeta } from '../data/pageMeta'
 import AnimatedNumber from '../components/ui/AnimatedNumber'
 import FadeIn from '../components/ui/FadeIn'
 import CopyKPIButton from '../components/ui/CopyKPIButton'
-import UnverifiedTag from '../components/ui/UnverifiedTag'
 import SectionBar from '../components/ui/SectionBar'
 import TaxRevenueChart from '../components/charts/TaxRevenueChart'
 import JobsTimelineChart from '../components/charts/JobsTimelineChart'
@@ -40,8 +39,8 @@ const FACETS = [
     cat: 'Employment',
     catColor: 'text-emerald-700',
     catBorder: 'border-emerald-200',
-    headline: 'Three job figures, one of them unverified.',
-    body: 'The Village FAQ put permanent jobs at 1,680 at full buildout, but that document is no longer reachable and nothing else confirms the number. Two figures do have living sources: Mayor Davies cited 1,500 permanent positions to the Chicago Tribune in October 2025, and T5 CEO Pete Marin cited "over 1,600" in July 2026. Construction through 2027–2029 will employ "hundreds" of trade workers.',
+    headline: 'Up to 1,680 permanent jobs — if the campus is fully built.',
+    body: 'The Village FAQ does not give a flat headcount. It applies a ratio — "50 permanent jobs are created for every 300,000 sq. ft." — to the maximum approved footprint, reaching 1,680 only at the full 10.1M sq ft build-out. That footprint is a ceiling the approvals allow, not a commitment T5 has made. Two lower figures were stated directly by people: Mayor Davies cited 1,500 permanent positions in October 2025, and T5 CEO Pete Marin cited "over 1,600" in July 2026. Construction through 2027–2029 will employ "hundreds" of trade workers.',
     chart: <JobsTimelineChart />,
     chartLabel: 'Permanent vs. Construction Workforce',
     sourceKey: 'govtech2025',
@@ -145,7 +144,7 @@ export default function Home() {
           <div className="grid md:grid-cols-2 gap-10 md:gap-0 border-t border-gray-200 pt-10">
 
             <FadeIn className="md:pr-12 md:border-r border-gray-200">
-              <p className="text-2xs font-mono text-gray-400 uppercase tracking-[0.2em] mb-3">Permanent Jobs at Full Buildout</p>
+              <p className="text-2xs font-mono text-gray-400 uppercase tracking-[0.2em] mb-3">Permanent Jobs at Full Buildout (max)</p>
               <AnimatedNumber
                 value={jobs.permanent}
                 suffix=""
@@ -155,11 +154,11 @@ export default function Home() {
                 className="text-7xl sm:text-8xl font-display font-black text-gray-900 leading-none tracking-tighter block"
               />
               <p className="text-sm text-gray-500 mt-4 leading-snug">
-                Projected by 2029. Village FAQ figure; that document is now unreachable and no other
-                source confirms 1,680. Davies cited 1,500 (Oct. 2025); Marin cited &ldquo;over 1,600&rdquo;
-                (Jul. 2026).<UnverifiedTag /><SourceCitation sourceKey="govtech2025" />
+                At full 10.1M sq ft build-out, derived by the Village FAQ from a ratio of 50 jobs per
+                300,000 sq ft. Not a commitment. Davies cited 1,500 (Oct. 2025); Marin cited &ldquo;over
+                1,600&rdquo; (Jul. 2026).<SourceCitation sourceKey="villagefaq_archived" />
               </p>
-              <CopyKPIButton copyText={buildCopyText(`${jobs.permanent.toLocaleString()} permanent jobs (UNVERIFIED — Village FAQ unreachable; Davies cited 1,500, Marin cited over 1,600)`, 'Projected by 2029.', 'govtech2025')} />
+              <CopyKPIButton copyText={buildCopyText(`Up to ${jobs.permanent.toLocaleString()} permanent jobs ${jobs.permanentCondition}, derived from ${jobs.permanentBasis}`, 'Davies cited 1,500; Marin cited over 1,600.', 'villagefaq_archived')} />
             </FadeIn>
 
             <FadeIn delay={0.08} className="md:pl-12 border-t border-gray-200 pt-10 md:pt-0 md:border-t-0">

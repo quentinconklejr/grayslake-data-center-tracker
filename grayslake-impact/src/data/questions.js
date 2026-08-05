@@ -119,9 +119,8 @@ export const questions = [
     ],
     unknown: [
       {
-        text: 'The Village FAQ stated that the development agreements provide no financial incentives to T5. UNVERIFIED: that document is no longer reachable and no other public source confirms the claim. The Lake County Assessor has not yet publicly valued the campus.',
-        sourceKey: null,
-        unverified: true,
+        text: 'The Village FAQ states that "the approved development agreements do not provide for any financial incentives." The Village\'s live copy is no longer reachable; this is quoted from the archived July 24, 2026 snapshot. The Lake County Assessor has not yet publicly valued the campus.',
+        sourceKey: 'villagefaq_archived',
       },
       {
         text: 'Whether T5 secured Illinois Data Center Investment Tax Exemption status before the suspension of new applications (effective July 1, 2026, per the Governor\'s June 5, 2026 directive) is not publicly confirmed. No stated duration for the suspension appears on the DCEO page.',

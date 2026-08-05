@@ -10,7 +10,6 @@ import { questions } from '../data/questions'
 import { projections } from '../data/projections'
 import { LAST_VERIFIED } from '../data/siteConfig'
 import AudienceBreadcrumb from '../components/ui/AudienceBreadcrumb'
-import UnverifiedTag from '../components/ui/UnverifiedTag'
 
 const { project, jobs, fees, residentialRateImpact } = projections
 
@@ -180,8 +179,10 @@ export default function Residents() {
           <SourceCitation sourceKey="govtech2025" />
           {' '}T5&rsquo;s CEO cited &ldquo;over {jobs.permanentMarin.toLocaleString()}&rdquo; in July 2026.
           <SourceCitation sourceKey="dailyherald_jul2026" />
-          {' '}A Village FAQ figure of {jobs.permanent.toLocaleString()} also circulated, but that document is no longer
-          reachable and nothing else confirms it.<UnverifiedTag />
+          {' '}The Village FAQ gives a higher number, {jobs.permanent.toLocaleString()}, but reaches it by assuming
+          50 jobs for every 300,000 square feet and applying that to the largest campus the approvals allow. It holds
+          only if the full 10.1 million square feet is actually built.
+          <SourceCitation sourceKey="villagefaq_archived" />
         </p>
         <p>
           Construction through 2027–2029 will employ {jobs.constructionPhase}.
