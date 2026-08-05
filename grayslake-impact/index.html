@@ -22,6 +22,29 @@
     <meta name="twitter:image" content="https://grayslakedatacentertracker.org/og/home.png" />
     <title>Grayslake Data Center Tracker</title>
 
+    <!--
+      Plausible analytics. Cookieless and GDPR/CCPA-compliant, so no consent
+      banner is required — chosen over GA4 to keep the site's privacy posture
+      consistent with its civic-transparency purpose.
+
+      Setup required before this reports anything:
+        1. Add "grayslakedatacentertracker.org" as a site in the Plausible
+           dashboard (the data-domain below must match exactly).
+        2. Verify receipt in Plausible after the next deploy.
+
+      script.js patches history.pushState, so client-side route changes in this
+      React Router SPA are counted without extra wiring. Plausible ignores
+      localhost by default, so local development will not pollute stats.
+
+      To self-host, swap the src for your own instance. To use GA4 instead,
+      replace this whole block — do not run both.
+    -->
+    <script
+      defer
+      data-domain="grayslakedatacentertracker.org"
+      src="https://plausible.io/js/script.js"
+    ></script>
+
     <!-- Inter (headings + body) · JetBrains Mono (data) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
