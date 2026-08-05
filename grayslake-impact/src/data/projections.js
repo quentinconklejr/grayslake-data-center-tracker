@@ -71,17 +71,17 @@ export const projections = {
     {
       key: "comed",
       value: "1.55 GW",
-      metric: "Total ComEd capacity",
+      metric: "Total ComEd capacity secured",
       definition:
-        "Total interconnection capacity attributed to the campus. Stated by counsel for the parties challenging the village approvals, not by the Village, ComEd, or PJM.",
+        "Total utility capacity secured from ComEd for the campus, of which 1.2 GW is leasable. The campus includes a ComEd-built substation.",
       attribution:
-        "Chloe Russell, lead attorney, Law Office of Ronald D. Cummings \u2014 counsel to the Lake County opposition coalition, quoted in the Daily Herald",
-      sourceKey: "dailyherald2026",
-      contested: true,
+        "Pete Marin, T5 CEO, to the Chicago Tribune (Oct. 2025). The same figure was later cited by Chloe Russell, counsel to the coalition challenging the approvals, in the Daily Herald (June 2026).",
+      sourceKey: "govtech2025",
+      alsoSourceKey: "dailyherald2026",
     },
   ],
   capacityNote:
-    "These are three different measurements, not three competing estimates of the same quantity. Leasable IT capacity is the computing load; secured utility power and total ComEd capacity describe grid interconnection, which is normally larger. 1,600 MW and 1.55 GW are within roughly three percent of each other and may describe the same underlying quantity from two sources.",
+    "These are different measurements, not competing estimates of the same quantity. Leasable IT capacity is the computing load the campus can rent out; total ComEd capacity is the utility connection feeding it, which is necessarily larger. All three figures trace back to T5: CEO Pete Marin described 1.55 GW secured from ComEd with 1.2 GW of it leasable, and CLCJAWA's utility briefing independently records 1.6 GW available to Phase I.",
 
   residentialRateImpact: {
     directImpact: "tariff-walled",

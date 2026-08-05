@@ -51,10 +51,10 @@ const FACETS = [
     catColor: 'text-amber-700',
     catBorder: 'border-amber-200',
     headline: 'Three capacity figures, three different measurements.',
-    body: 'T5 states 1,200 MW of leasable IT capacity and 1,600 MW of secured utility power, the 400 MW difference serving as a buffer for redundancy and phased buildout. A third figure — 1.55 GW of total ComEd capacity — was stated by counsel for the parties challenging the village approvals. These measure different things and are not competing estimates of one quantity. Residential electric rates are not directly affected under Illinois\'s separate utility rate class structure for data centers.',
+    body: 'T5 CEO Pete Marin described 1.55 GW of capacity secured from ComEd, of which 1.2 GW is leasable IT capacity; the campus includes a ComEd-built substation. CLCJAWA\'s utility briefing separately records 1.6 GW available to Phase I. These describe the utility connection and the computing load, not competing estimates of one number. Residential electric rates are not directly affected under Illinois\'s separate utility rate class structure for data centers.',
     chart: <EnergyDrawChart />,
     chartLabel: 'Secured Power vs. IT Capacity',
-    sourceKey: 'dcdGW2026',
+    sourceKey: 'govtech2025',
     textCls: 'lg:col-span-5', chartCls: 'lg:col-span-7', flip: true,
   },
   {
@@ -90,8 +90,8 @@ const SECONDARY_STATS = [
   {
     label: 'ComEd Capacity',
     value: `${project.comEdCapacityGW} GW`,
-    note: "Per challengers' counsel",
-    src: 'dailyherald2026',
+    note: 'Secured from ComEd, per T5 CEO',
+    src: 'govtech2025',
   },
   {
     label: 'Phase 1 Online',

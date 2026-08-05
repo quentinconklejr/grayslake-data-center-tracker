@@ -27,9 +27,9 @@ export default function Energy() {
         <p className="text-base text-gray-600 max-w-2xl leading-relaxed">
           Three capacity figures for this campus appear in public sources. They measure different
           things and are not competing estimates of the same quantity: {project.totalCapacityMW.toLocaleString()} MW
-          of leasable IT capacity and {project.securedPowerMW.toLocaleString()} MW of secured utility power, both
-          stated by T5, and {project.comEdCapacityGW} GW of total ComEd capacity, stated by counsel for the parties
-          challenging the village approvals. Each is attributed below.
+          of leasable IT capacity, {project.securedPowerMW.toLocaleString()} MW of secured utility power, and{' '}
+          {project.comEdCapacityGW} GW of total ComEd capacity. All three trace back to T5 and describe different
+          parts of the same system rather than disagreeing about one number. Each is attributed below.
         </p>
         <p className="text-2xs font-mono text-gray-400 mt-3">Last verified {LAST_VERIFIED}</p>
       </FadeIn>
@@ -37,7 +37,7 @@ export default function Energy() {
       <FadeIn className="grid grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
         <StatCard label="Secured Power"     value={`${project.securedPowerMW.toLocaleString()} MW`}  sub="Utility-contracted capacity"   accent="amber" sourceKey="dcdGW2026" />
         <StatCard label="IT Capacity"       value={`${project.totalCapacityMW.toLocaleString()} MW`} sub="Leasable at full buildout"      accent="blue"  sourceKey="dcdGW2026" />
-        <StatCard label="Total ComEd Capacity" value={`${project.comEdCapacityGW} GW`}                sub="Stated by challengers' counsel" accent="amber" sourceKey="dailyherald2026" />
+        <StatCard label="Total ComEd Capacity" value={`${project.comEdCapacityGW} GW`}                sub="Secured from ComEd, per T5 CEO"  accent="amber" sourceKey="govtech2025" />
         <StatCard label="Power Buffer"      value={`${buffer} MW`}                                    sub="Calculated: 1,600 − 1,200 MW"  accent="amber" badge="Derived" />
       </FadeIn>
 
@@ -54,8 +54,8 @@ export default function Energy() {
         <p className="text-sm text-gray-500 mb-8 max-w-prose">
           The two figures charted below are T5&rsquo;s own disclosures. No estimation is involved.
           T5 originally announced the campus at 480 MW (2024) and later raised the leasable IT capacity target to 1,200 MW.
-          A third figure &mdash; {project.comEdCapacityGW} GW of total ComEd capacity &mdash; comes from a different party and describes a
-          different measurement; see the comparison directly below this chart.
+          A third figure &mdash; {project.comEdCapacityGW} GW of total ComEd capacity &mdash; describes the utility connection rather
+          than the computing load; see the comparison directly below this chart.
         </p>
         <EnergyDrawChart />
       </FadeIn>
@@ -67,22 +67,18 @@ export default function Energy() {
           {capacityFigures.map(f => (
             <div
               key={f.key}
-              className={`border rounded-lg px-4 py-3.5 ${f.contested ? 'border-amber-200 bg-amber-50/40' : 'border-gray-200 bg-white'}`}
+              className="border border-gray-200 bg-white rounded-lg px-4 py-3.5"
             >
               <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1 mb-1.5">
                 <span className="text-lg font-display font-bold text-gray-900">{f.value}</span>
                 <span className="text-2xs font-mono uppercase tracking-widest text-gray-500">{f.metric}</span>
-                {f.contested && (
-                  <span className="text-2xs font-mono uppercase tracking-widest text-amber-700 border border-amber-300 rounded-sm px-1.5 py-0.5">
-                    Asserted by a party to the dispute
-                  </span>
-                )}
               </div>
               <p className="text-sm text-gray-600 leading-relaxed">{f.definition}</p>
               <p className="text-xs text-gray-500 mt-2 leading-relaxed">
                 <span className="font-medium text-gray-600">Stated by: </span>
                 {f.attribution}
                 <SourceCitation sourceKey={f.sourceKey} />
+                {f.alsoSourceKey && <SourceCitation sourceKey={f.alsoSourceKey} />}
               </p>
             </div>
           ))}
@@ -142,7 +138,7 @@ export default function Energy() {
             {[
               ['Secured Power',         `${project.securedPowerMW.toLocaleString()} MW`, 'dcdGW2026'],
               ['Leasable IT Capacity',  `${project.totalCapacityMW.toLocaleString()} MW`, 'dcdGW2026'],
-              ['Total ComEd Capacity',  `${project.comEdCapacityGW} GW`, 'dailyherald2026'],
+              ['Total ComEd Capacity',  `${project.comEdCapacityGW} GW`, 'govtech2025'],
               ['Power Buffer',          `${buffer} MW`, null, '1,600 − 1,200'],
               ['PJM Queue ID',          '— not yet public', null],
               ['Interconnect Voltage',  '— pending', null],

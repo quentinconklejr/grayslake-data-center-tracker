@@ -38,8 +38,8 @@ const KEY_FIGURES = [
   {
     label: 'Total ComEd capacity',
     value: `${project.comEdCapacityGW} GW`,
-    detail: "Stated by Chloe Russell, counsel to the coalition challenging the approvals. A different measurement than leasable IT capacity, not a competing estimate of it.",
-    sourceKey: 'dailyherald2026',
+    detail: 'Secured from ComEd per T5 CEO Pete Marin (Oct. 2025), 1.2 GW of it leasable. Later cited by opposition counsel. The utility connection, not the computing load.',
+    sourceKey: 'govtech2025',
   },
   {
     label: 'Approved buildings',

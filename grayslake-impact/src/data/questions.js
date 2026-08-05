@@ -83,8 +83,8 @@ export const questions = [
     disputed: [],
     unknown: [
       {
-        text: 'T5 CEO Pete Marin stated a total ComEd capacity request of 1.55 GW. The Village FAQ records leasable IT capacity at 1.2 GW; no ceiling figure appears in Village documents. The difference has not been publicly explained.',
-        sourceKey: 'govtech2025',
+        text: 'T5 CEO Pete Marin stated 1.55 GW of capacity secured from ComEd, of which 1.2 GW is leasable IT capacity, plus a ComEd-built substation. CLCJAWA separately records 1.6 GW available to Phase I. What governs the ceiling on total campus draw, and how phasing maps to it, has not been publicly explained.',
+        sourceKeys: ['govtech2025', 'clcjawa2026'],
       },
       {
         text: 'Final building count, phasing schedule beyond Phase 1, and whether the option parcel will be exercised are not determined.',
