@@ -1,6 +1,8 @@
 import PageTitle from '../components/ui/PageTitle'
 import { pageMeta } from '../data/pageMeta'
 import SiteMap from '../components/map/SiteMap'
+import parcels from '../data/parcels.geojson'
+import outline from '../data/parcelsOutline.geojson'
 import FadeIn from '../components/ui/FadeIn'
 import { FootnoteProvider, FootnoteList } from '../components/ui/FootnoteContext'
 import { LAST_VERIFIED } from '../data/siteConfig'
@@ -12,14 +14,19 @@ export default function MapPage() {
       <PageTitle {...pageMeta['/map']} />
 
       <FadeIn className="mb-8 pb-8 border-b border-gray-200">
-        <p className="text-2xs font-mono text-blue-600/60 uppercase tracking-[0.2em] mb-3">T5 @ Chicago IV · Peterson Rd &amp; Route 83</p>
-        <h1 className="text-4xl font-display font-bold text-gray-900 tracking-tight mb-4">Campus Site Map</h1>
+        <p className="text-2xs font-mono text-blue-700 uppercase tracking-[0.2em] mb-3">T5 @ Chicago IV · Cornerstone business park, Grayslake</p>
+        <h1 className="text-4xl font-display font-bold text-gray-900 tracking-tight mb-4">Land Ownership Map</h1>
         <p className="text-base text-gray-600 max-w-2xl leading-relaxed">
-          The Village of Grayslake FAQ records the campus site as 472 acres and 10,100,000 sq ft
-          of total buildable area. The blue boundary marks the main campus footprint; the amber
-          dashed line marks the option parcel to the south. Boundaries are approximate — not
-          derived from survey or GIS data.
-          <span className="block mt-2 text-sm text-gray-400">Click either boundary or the orange marker to view project statistics.</span>
+          This map shows the {parcels.metadata.parcelCount} parcels recorded to T5 in Grayslake &mdash;{' '}
+          {parcels.metadata.countyAcresSum} acres across {outline.features.length} non-contiguous groups &mdash; drawn from
+          Lake County&rsquo;s tax parcel layer. Zoom in for individual lot lines; select a parcel for its
+          PIN, acreage and recorded sale.
+        </p>
+        <p className="text-base text-gray-600 max-w-2xl leading-relaxed mt-3">
+          Ownership is not the same as approval. The Village approved development on{' '}
+          <strong className="font-semibold text-gray-800">up to 472 acres</strong>, which is a larger area than
+          T5 currently owns and is not published anywhere as a mappable boundary. Nothing on this page should be
+          read as the approved campus perimeter.
         </p>
         <p className="text-2xs font-mono text-gray-400 mt-3">Last verified {LAST_VERIFIED}</p>
       </FadeIn>

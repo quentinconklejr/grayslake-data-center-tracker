@@ -1,64 +1,46 @@
 import { useEffect, useRef, useState } from 'react'
 import 'mapbox-gl/dist/mapbox-gl.css'
-import { projections } from '../../data/projections'
 import SourceCitation from '../ui/SourceCitation'
+import parcels from '../../data/parcels.geojson'
+import outline from '../../data/parcelsOutline.geojson'
 
-const CENTER = [-88.001, 42.337]
-const ZOOM   = 12.8
-const TOKEN  = import.meta.env.VITE_MAPBOX_TOKEN
+const TOKEN = import.meta.env.VITE_MAPBOX_TOKEN
 
-const MAIN_RING = [
-  [-88.002, 42.339], [-87.992, 42.339],
-  [-87.992, 42.332], [-88.002, 42.332],
-  [-88.002, 42.339],
-]
-const OPT_RING = [
-  [-87.999, 42.332], [-87.994, 42.332],
-  [-87.994, 42.328], [-87.999, 42.328],
-  [-87.999, 42.332],
-]
-const MARKER_LNG = -87.997
-const MARKER_LAT =  42.3355
+// Bounds and centre are derived from the parcel data itself rather than typed
+// in by hand. The previous hard-coded centre sat 4.36 km from the actual site.
+const BBOX = parcels.features
+  .flatMap(f => f.geometry.coordinates[0])
+  .reduce(
+    (b, [x, y]) => [Math.min(b[0], x), Math.min(b[1], y), Math.max(b[2], x), Math.max(b[3], y)],
+    [180, 90, -180, -90],
+  )
+const CENTER = [(BBOX[0] + BBOX[2]) / 2, (BBOX[1] + BBOX[3]) / 2]
 
-function geojson(ring) {
-  return {
-    type: 'FeatureCollection',
-    features: [{ type: 'Feature', properties: {}, geometry: { type: 'Polygon', coordinates: [ring] } }],
-  }
-}
+const META = parcels.metadata
+const PARCEL_ZOOM = 14 // individual lot lines appear at or above this zoom
 
-const { project, jobs } = projections
-const PANEL_ROWS = [
-  ['Developer',      project.developer],
-  ['Location',       'Peterson Rd & Route 83'],
-  ['Status',         'Under Construction'],
-  ['Campus area',    `${project.totalAcres.toLocaleString()} ac · ${(project.totalSqFt / 1_000_000).toFixed(1)}M sq ft`],
-  ['Buildings',      `${project.approvedBuildings} approved (${project.maxBuildings} max)`],
-  ['IT capacity',    `${project.totalCapacityMW.toLocaleString()} MW`],
-  ['Secured power',  `${project.securedPowerMW.toLocaleString()} MW`],
-  ['Investment',     `$${project.costLow}–${project.costHigh}B est.`],
-  ['Perm. jobs',     jobs.permanent],
-  ['Phase 1',        project.firstBuildingOnline],
-  ['Full buildout',  project.fullBuildOut],
-]
+const usd = n =>
+  n == null ? null : `$${n.toLocaleString('en-US', { maximumFractionDigits: 0 })}`
+const prettyDate = d =>
+  d ? new Date(`${d}T00:00:00`).toLocaleDateString('en-US', { month: 'short', year: 'numeric' }) : null
+
+const SORTED = [...parcels.features].sort((a, b) => b.properties.acres - a.properties.acres)
 
 const HIDE_LAYERS = [
   'poi-label', 'transit-label', 'airport-label',
   'settlement-subdivision-label', 'state-label',
   'road-label-simple', 'road-intersection',
 ]
-
 const MUTE_LABELS = [
-  { id: 'settlement-major-label', color: '#6b7280', halo: '#ffffff' },
-  { id: 'settlement-minor-label', color: '#9ca3af', halo: '#ffffff' },
-  { id: 'road-label',             color: '#9ca3af', halo: '#ffffff' },
+  { id: 'settlement-major-label', color: '#4b5563', halo: '#ffffff' },
+  { id: 'settlement-minor-label', color: '#6b7280', halo: '#ffffff' },
+  { id: 'road-label',             color: '#6b7280', halo: '#ffffff' },
 ]
 
 export default function SiteMap({ className = 'h-[480px]' }) {
   const containerRef = useRef(null)
-  const mapRef       = useRef(null)
-  const animRef      = useRef(null)
-  const [panelOpen, setPanelOpen] = useState(false)
+  const mapRef = useRef(null)
+  const [selected, setSelected] = useState(null)
   const [mapLoaded, setMapLoaded] = useState(false)
 
   useEffect(() => {
@@ -67,15 +49,15 @@ export default function SiteMap({ className = 'h-[480px]' }) {
 
     import('mapbox-gl').then(({ default: mgl }) => {
       if (cancelled || !containerRef.current) return
-
       mgl.accessToken = TOKEN
+
       const map = new mgl.Map({
-        container:           containerRef.current,
-        style:               'mapbox://styles/mapbox/satellite-streets-v12',
-        center:              CENTER,
-        zoom:                ZOOM,
-        attributionControl:  false,
-        antialias:           true,
+        container: containerRef.current,
+        style: 'mapbox://styles/mapbox/satellite-streets-v12',
+        center: CENTER,
+        zoom: 12.5,
+        attributionControl: false,
+        antialias: true,
         cooperativeGestures: true,
       })
       mapRef.current = map
@@ -83,13 +65,14 @@ export default function SiteMap({ className = 'h-[480px]' }) {
       map.addControl(new mgl.AttributionControl({ compact: true }), 'bottom-left')
       map.addControl(new mgl.ScaleControl({ maxWidth: 100, unit: 'imperial' }), 'bottom-left')
       map.addControl(new mgl.NavigationControl({ showCompass: false }), 'bottom-right')
+      map.addControl(new mgl.FullscreenControl(), 'top-right')
 
       map.on('style.load', () => {
         if (cancelled) return
         setMapLoaded(true)
 
         for (const id of HIDE_LAYERS) {
-          try { if (map.getLayer(id)) map.setLayoutProperty(id, 'visibility', 'none') } catch (_) {}
+          try { if (map.getLayer(id)) map.setLayoutProperty(id, 'visibility', 'none') } catch { /* layer absent in style */ }
         }
         for (const { id, color, halo } of MUTE_LABELS) {
           try {
@@ -98,111 +81,83 @@ export default function SiteMap({ className = 'h-[480px]' }) {
               map.setPaintProperty(id, 'text-halo-color', halo)
               map.setPaintProperty(id, 'text-halo-width', 1.5)
             }
-          } catch (_) {}
+          } catch { /* layer absent in style */ }
         }
 
-        map.addSource('main-parcel', { type: 'geojson', data: geojson(MAIN_RING) })
-        map.addSource('opt-parcel',  { type: 'geojson', data: geojson(OPT_RING)  })
+        map.addSource('t5-outline', { type: 'geojson', data: outline })
+        map.addSource('t5-parcels', { type: 'geojson', data: parcels })
 
-        map.addLayer({ id: 'main-fill', type: 'fill', source: 'main-parcel',
-          paint: { 'fill-color': '#3b82f6', 'fill-opacity': 0.2 } })
-        map.addLayer({ id: 'opt-fill', type: 'fill', source: 'opt-parcel',
-          paint: { 'fill-color': '#f59e0b', 'fill-opacity': 0.15 } })
-
-        map.addLayer({ id: 'main-outline', type: 'line', source: 'main-parcel',
-          paint: { 'line-color': '#60a5fa', 'line-width': 2.5, 'line-opacity': 1 } })
-        map.addLayer({ id: 'opt-outline', type: 'line', source: 'opt-parcel',
-          paint: { 'line-color': '#fbbf24', 'line-width': 2, 'line-opacity': 0.9,
-                   'line-dasharray': [3, 2] } })
-
-        map.addSource('site-label-pt', {
-          type: 'geojson',
-          data: {
-            type: 'FeatureCollection',
-            features: [{ type: 'Feature',
-              properties: { label: 'T5 @ Chicago IV' },
-              geometry: { type: 'Point', coordinates: [MARKER_LNG, MARKER_LAT] },
-            }],
-          },
+        // Ownership fill — the whole holding, always visible
+        map.addLayer({
+          id: 't5-fill', type: 'fill', source: 't5-outline',
+          paint: { 'fill-color': '#2563eb', 'fill-opacity': 0.22 },
         })
         map.addLayer({
-          id: 'site-label', type: 'symbol', source: 'site-label-pt',
-          layout: {
-            'text-field': ['get', 'label'],
-            'text-size': 12,
-            'text-font': ['DIN Offc Pro Bold', 'Arial Unicode MS Bold'],
-            'text-anchor': 'top',
-            'text-offset': [0, 1.2],
-            'text-letter-spacing': 0.08,
-          },
-          paint: {
-            'text-color': '#ffffff',
-            'text-halo-color': '#000000',
-            'text-halo-width': 2,
-          },
+          id: 't5-edge', type: 'line', source: 't5-outline',
+          paint: { 'line-color': '#93c5fd', 'line-width': 2.5 },
         })
 
-        let t = 0
-        function animateGlow() {
-          if (cancelled) return
-          t = Date.now() / 1000
-          const glow = 0.15 + 0.08 * Math.sin(t * 0.7)
-          try { map.setPaintProperty('main-fill', 'fill-opacity', glow) } catch (_) {}
-          animRef.current = requestAnimationFrame(animateGlow)
-        }
-        animateGlow()
+        // Individual lot lines, revealed on zoom
+        map.addLayer({
+          id: 't5-parcel-lines', type: 'line', source: 't5-parcels',
+          minzoom: PARCEL_ZOOM,
+          paint: { 'line-color': '#bfdbfe', 'line-width': 0.8, 'line-opacity': 0.85 },
+        })
+        map.addLayer({
+          id: 't5-parcel-hit', type: 'fill', source: 't5-parcels',
+          paint: { 'fill-color': '#2563eb', 'fill-opacity': 0.01 },
+        })
 
-        const open = () => setPanelOpen(true)
-        map.on('click', 'main-fill', open)
-        map.on('click', 'opt-fill',  open)
-        map.on('mouseenter', 'main-fill', () => { map.getCanvas().style.cursor = 'pointer' })
-        map.on('mouseleave', 'main-fill', () => { map.getCanvas().style.cursor = '' })
-        map.on('mouseenter', 'opt-fill',  () => { map.getCanvas().style.cursor = 'pointer' })
-        map.on('mouseleave', 'opt-fill',  () => { map.getCanvas().style.cursor = '' })
+        map.on('click', 't5-parcel-hit', e => {
+          if (e.features?.[0]) setSelected(e.features[0].properties)
+        })
+        map.on('mouseenter', 't5-parcel-hit', () => { map.getCanvas().style.cursor = 'pointer' })
+        map.on('mouseleave', 't5-parcel-hit', () => { map.getCanvas().style.cursor = '' })
 
-        map.flyTo({ center: CENTER, zoom: ZOOM, speed: 0.6, curve: 1.2 })
+        map.fitBounds(BBOX, { padding: 56, duration: 900 })
       })
-
-      const el = document.createElement('div')
-      Object.assign(el.style, {
-        width: '14px', height: '14px', borderRadius: '50%',
-        background: '#f97316', border: '2.5px solid rgba(255,255,255,0.98)',
-        cursor: 'pointer',
-        boxShadow: '0 0 0 5px rgba(249,115,22,0.22), 0 0 0 10px rgba(249,115,22,0.09)',
-      })
-      el.title = 'T5 @ Chicago IV'
-      el.addEventListener('click', (e) => { e.stopPropagation(); setPanelOpen(true) })
-
-      new mgl.Marker({ element: el })
-        .setLngLat([MARKER_LNG, MARKER_LAT])
-        .addTo(map)
     })
 
     return () => {
       cancelled = true
-      if (animRef.current) cancelAnimationFrame(animRef.current)
       mapRef.current?.remove()
       mapRef.current = null
     }
   }, [])
 
+  const provenance = (
+    <p className="text-xs text-gray-600 leading-relaxed">
+      Parcel geometry from the{' '}
+      <a
+        href={META.sourceUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-blue-700 hover:text-blue-800 underline underline-offset-2"
+      >
+        Lake County GIS tax parcel layer
+      </a>
+      , retrieved {META.retrieved}. {META.parcelCount} parcels recorded to T5, {META.countyAcresSum} acres
+      by the county&rsquo;s own acreage field.{' '}
+      <strong className="font-semibold text-gray-800">
+        This shows land T5 owns, not the approved campus boundary
+      </strong>{' '}
+      &mdash; the Village approved development on up to 472 acres, a larger area that is not published
+      as a mappable boundary.
+    </p>
+  )
+
   if (!TOKEN) {
     return (
       <div className={`${className} bg-gray-50 border border-gray-200 rounded-xl flex items-center justify-center`}>
         <div className="text-center px-6 max-w-sm">
-          <div className="w-10 h-10 rounded-full bg-blue-50 border border-blue-200 flex items-center justify-center mx-auto mb-4">
-            <svg className="w-5 h-5 text-blue-600" viewBox="0 0 20 20" fill="currentColor">
-              <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
-            </svg>
-          </div>
           <p className="text-sm font-display font-semibold text-gray-800 mb-2">Map requires a Mapbox token</p>
-          <code className="text-2xs font-mono text-blue-600 bg-blue-50 px-2 py-1 rounded block mb-4">
+          <code className="text-2xs font-mono text-blue-700 bg-blue-50 px-2 py-1 rounded block mb-4">
             VITE_MAPBOX_TOKEN=pk.ey… in .env
           </code>
-          <div className="text-2xs font-mono text-gray-400 space-y-1">
-            <p>Peterson Rd &amp; Route 83 · Grayslake, IL 60030</p>
-            <p>42.337°N, 88.001°W · Lake County</p>
-            <p>472 ac · 10,100,000 sq ft (Village FAQ)</p>
+          <div className="text-2xs font-mono text-gray-600 space-y-1">
+            <p>Cornerstone business park, Grayslake, IL</p>
+            <p>{CENTER[1].toFixed(4)}°N, {Math.abs(CENTER[0]).toFixed(4)}°W</p>
+            <p>{META.parcelCount} parcels · {META.countyAcresSum} ac in T5 ownership</p>
           </div>
         </div>
       </div>
@@ -211,104 +166,113 @@ export default function SiteMap({ className = 'h-[480px]' }) {
 
   return (
     <div>
-      {/* Map container — capped at 60vh on mobile so parcels don't sit below fold */}
       <div className={`relative ${className} max-h-[60vh] sm:max-h-none rounded-xl overflow-hidden border border-gray-200 shadow-sm`}>
-
-        <div ref={containerRef} className="w-full h-full" />
+        <div
+          ref={containerRef}
+          className="w-full h-full"
+          role="application"
+          aria-label={`Map of ${META.parcelCount} parcels recorded to T5 in Grayslake, totalling ${META.countyAcresSum} acres. A text listing of the same parcels follows below the map.`}
+        />
 
         {!mapLoaded && (
           <div className="absolute inset-0 z-30 bg-gray-50 flex flex-col items-center justify-center gap-3 pointer-events-none">
-            <div className="w-8 h-8 rounded-full border-2 border-blue-200 border-t-blue-500 animate-spin" />
-            <p className="text-xs font-mono text-gray-400 uppercase tracking-widest">Loading map</p>
+            <div className="w-8 h-8 rounded-full border-2 border-blue-200 border-t-blue-600 animate-spin motion-reduce:animate-none" />
+            <p className="text-xs font-mono text-gray-600 uppercase tracking-widest">Loading map</p>
           </div>
         )}
 
-        {/* North indicator */}
-        <div className="absolute bottom-20 right-4 pointer-events-none z-10 flex flex-col items-center gap-0.5">
-          <svg width="18" height="22" viewBox="0 0 18 22" fill="none">
-            <polygon points="9,1 4,14 9,11 14,14" fill="#9ca3af" />
-            <polygon points="9,21 4,14 9,11 14,14" fill="#d1d5db" />
-          </svg>
-          <span className="text-xs font-mono text-gray-400 leading-none">N</span>
-        </div>
-
-        {/* Click hint */}
-        {!panelOpen && (
-          <div className="absolute bottom-10 right-14 pointer-events-none z-10">
-            <div className="bg-white/90 backdrop-blur-md px-3 py-1.5 rounded-lg border border-gray-200 shadow-sm text-xs text-gray-500">
-              Click site to view details
-            </div>
-          </div>
-        )}
-
-        {/* Side panel */}
-        {panelOpen && (
-          <div className="absolute inset-y-0 right-0 w-64 bg-white/96 backdrop-blur-xl border-l border-gray-200 flex flex-col z-20 shadow-lg">
-
+        {selected && (
+          <div className="absolute inset-y-0 right-0 w-64 bg-white/97 backdrop-blur-xl border-l border-gray-200 flex flex-col z-20 shadow-lg">
             <div className="flex items-start justify-between p-4 border-b border-gray-100 shrink-0">
               <div className="min-w-0">
-                <p className="text-xs font-mono text-blue-600 uppercase tracking-widest mb-0.5">T5 Data Centers</p>
-                <h3 className="text-sm font-display font-bold text-gray-900 leading-snug">T5 @ Chicago IV</h3>
-                <p className="text-xs font-mono text-gray-400 mt-0.5">Grayslake · Lake County, IL</p>
+                <p className="text-xs font-mono text-blue-700 uppercase tracking-widest mb-0.5">Parcel</p>
+                <h3 className="text-sm font-display font-bold text-gray-900 leading-snug">PIN {selected.pin}</h3>
               </div>
               <button
-                onClick={() => setPanelOpen(false)}
-                className="shrink-0 ml-2 mt-0.5 text-gray-400 hover:text-gray-700 transition-colors"
-                aria-label="Close panel"
+                onClick={() => setSelected(null)}
+                className="shrink-0 ml-2 mt-0.5 p-1 -m-1 text-gray-600 hover:text-gray-900 transition-colors"
+                aria-label="Close parcel details"
               >
-                <svg className="w-4 h-4" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <svg className="w-4 h-4" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
                   <path d="M3 3l10 10M13 3L3 13" strokeLinecap="round" />
                 </svg>
               </button>
             </div>
-
-            <div className="px-4 py-2.5 border-b border-gray-100 shrink-0">
-              <span className="inline-flex items-center gap-1.5 text-xs font-mono font-semibold uppercase tracking-widest text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-1 rounded-md">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shrink-0" />
-                Under Construction
-              </span>
-            </div>
-
             <div className="flex-1 overflow-y-auto p-4">
               <dl className="space-y-0">
-                {PANEL_ROWS.map(([k, v]) => (
+                {[
+                  ['Acreage', `${selected.acres} ac`],
+                  ['Owner of record', selected.owner],
+                  ['Recorded sale', usd(selected.saleAmount) ?? 'No sale recorded'],
+                  ['Sale date', prettyDate(selected.saleDate) ?? '—'],
+                ].map(([k, v]) => (
                   <div key={k} className="py-2.5 border-b border-gray-100 last:border-0">
-                    <dt className="text-xs font-mono text-gray-400 uppercase tracking-widest leading-none mb-0.5">{k}</dt>
-                    <dd className="text-xs text-gray-800 font-medium">{v}</dd>
+                    <dt className="text-xs font-mono text-gray-600 uppercase tracking-widest leading-none mb-0.5">{k}</dt>
+                    <dd className="text-xs text-gray-900 font-medium">{v}</dd>
                   </div>
                 ))}
               </dl>
-            </div>
-
-            <div className="p-4 border-t border-gray-100 shrink-0 space-y-2">
-              <p className="text-xs text-amber-700 leading-relaxed">
-                Boundaries approximate — not from survey, parcel, or GIS data.
+              <p className="text-2xs text-gray-600 mt-3 leading-relaxed">
+                Sale figures are the consideration recorded against the deed and may cover several parcels.
               </p>
-              <SourceCitation sourceKey="dcdGW2026" />
             </div>
           </div>
         )}
       </div>
 
-      {/* Legend — below the map so it never overlaps on any screen size */}
+      {/* Legend */}
       <div className="flex flex-wrap gap-2 mt-3">
         <div className="flex items-center gap-2 bg-white px-3 py-1.5 rounded-lg border border-gray-200">
-          <div className="w-4 h-0.5 bg-blue-500 rounded-full shrink-0" />
-          <span className="text-xs font-mono text-gray-500">Main campus boundary</span>
+          <span className="w-4 h-2.5 rounded-sm bg-blue-600/25 border border-blue-300 shrink-0" aria-hidden="true" />
+          <span className="text-xs text-gray-700">Land recorded to T5 ({META.countyAcresSum} ac)</span>
         </div>
         <div className="flex items-center gap-2 bg-white px-3 py-1.5 rounded-lg border border-gray-200">
-          <svg width="16" height="4" className="shrink-0">
-            <line x1="0" y1="2" x2="16" y2="2" stroke="#d97706" strokeWidth="1.5" strokeDasharray="3 2" />
-          </svg>
-          <span className="text-xs font-mono text-gray-500">Option parcel</span>
+          <span className="w-4 h-px bg-blue-200 shrink-0" aria-hidden="true" />
+          <span className="text-xs text-gray-700">Individual lot lines (zoom in)</span>
         </div>
-        <div className="flex items-center gap-1.5 bg-amber-50 px-3 py-1.5 rounded-lg border border-amber-200">
-          <svg className="w-3 h-3 text-amber-500 shrink-0" viewBox="0 0 12 12" fill="currentColor">
-            <path d="M6 1L11 10H1L6 1z" />
-            <path d="M6 4v3M6 8.5v.5" stroke="currentColor" strokeWidth="1" fill="none" strokeLinecap="round" />
-          </svg>
-          <span className="text-xs font-mono text-amber-700">Approx. boundary — not surveyed</span>
+        <div className="flex items-center gap-2 bg-amber-50 px-3 py-1.5 rounded-lg border border-amber-200">
+          <span className="text-xs text-amber-900">Approved 472-acre boundary: not published as a map</span>
         </div>
+      </div>
+
+      <div className="mt-3 flex items-start gap-2">
+        {provenance}
+      </div>
+
+      {/* Text equivalent — the same data the map carries, for anyone not using it visually */}
+      <details className="mt-4 border border-gray-200 rounded-xl bg-white">
+        <summary className="px-4 py-3 text-sm font-medium text-gray-800 cursor-pointer select-none">
+          Parcel list ({META.parcelCount} parcels, {META.countyAcresSum} acres)
+        </summary>
+        <div className="px-4 pb-4 overflow-x-auto">
+          <table className="w-full text-left border-collapse">
+            <caption className="sr-only">
+              Parcels recorded to T5 in Grayslake, from the Lake County GIS tax parcel layer, retrieved {META.retrieved}
+            </caption>
+            <thead>
+              <tr className="border-b border-gray-200">
+                <th scope="col" className="py-2 pr-4 text-2xs font-mono uppercase tracking-widest text-gray-600">PIN</th>
+                <th scope="col" className="py-2 pr-4 text-2xs font-mono uppercase tracking-widest text-gray-600">Acres</th>
+                <th scope="col" className="py-2 pr-4 text-2xs font-mono uppercase tracking-widest text-gray-600">Recorded sale</th>
+                <th scope="col" className="py-2 text-2xs font-mono uppercase tracking-widest text-gray-600">Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              {SORTED.map(f => (
+                <tr key={f.properties.pin} className="border-b border-gray-100 last:border-0">
+                  <th scope="row" className="py-1.5 pr-4 text-xs font-mono font-normal text-gray-700">{f.properties.pin}</th>
+                  <td className="py-1.5 pr-4 text-xs text-gray-700 tabular-nums">{f.properties.acres}</td>
+                  <td className="py-1.5 pr-4 text-xs text-gray-700 tabular-nums">{usd(f.properties.saleAmount) ?? '—'}</td>
+                  <td className="py-1.5 text-xs text-gray-700">{prettyDate(f.properties.saleDate) ?? '—'}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </details>
+
+      <div className="mt-3">
+        <SourceCitation sourceKey="lakecountygis" />
       </div>
     </div>
   )

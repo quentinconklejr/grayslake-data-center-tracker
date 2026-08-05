@@ -134,4 +134,12 @@ export const sources = {
     note: "The Village's live copy of this document is no longer reachable. This tracker hosts a mirror so the record survives independently of both the Village site and the Internet Archive. Every page of the document carries the heading \u201cUpdated as of June 5, 2026\u201d.",
     verified: "Aug 5, 2026",
   },
+  lakecountygis: {
+    title: "Tax Parcel Information layer (GIS parcel boundaries and ownership)",
+    publisher: "Lake County, Illinois GIS Division",
+    date: "Retrieved Aug 5, 2026",
+    url: "https://maps.lakecountyil.gov/arcgis/rest/services/GISMapping/WABParcels/MapServer/12",
+    note: "Authoritative county parcel geometry, ownership, acreage and recorded sale data. Used for the site map. A snapshot is committed to this repository so the map does not depend on the county service staying available.",
+    verified: "Aug 5, 2026",
+  },
 };
