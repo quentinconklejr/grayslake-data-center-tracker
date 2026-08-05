@@ -3,10 +3,7 @@ import Header from './components/layout/Header'
 import Footer from './components/layout/Footer'
 import ScrollToTop from './components/layout/ScrollToTop'
 import Home from './pages/Home'
-import TaxImpact from './pages/TaxImpact'
-import Jobs from './pages/Jobs'
-import Energy from './pages/Energy'
-import Schools from './pages/Schools'
+import Project from './pages/Project'
 import TimelinePage from './pages/Timeline'
 import Sources from './pages/Sources'
 import MapPage from './pages/Map'
@@ -15,7 +12,6 @@ import NotFound from './pages/NotFound'
 import About from './pages/About'
 import Residents from './pages/Residents'
 import Reporters from './pages/Reporters'
-import Officials from './pages/Officials'
 import Actions from './pages/Actions'
 
 export default function App() {
@@ -33,19 +29,24 @@ export default function App() {
         <main id="main-content" className="flex-1">
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/tax" element={<Navigate to="/tax-impact" replace />} />
-            <Route path="/tax-impact" element={<TaxImpact />} />
-            <Route path="/jobs" element={<Jobs />} />
-            <Route path="/energy" element={<Energy />} />
-            <Route path="/schools" element={<Schools />} />
+            {/* Four topic pages merged into /project; old URLs keep working */}
+            <Route path="/project" element={<Project />} />
+            <Route path="/tax" element={<Navigate to="/project#tax" replace />} />
+            <Route path="/tax-impact" element={<Navigate to="/project#tax" replace />} />
+            <Route path="/jobs" element={<Navigate to="/project#jobs" replace />} />
+            <Route path="/energy" element={<Navigate to="/project#energy" replace />} />
+            <Route path="/schools" element={<Navigate to="/project#schools" replace />} />
             <Route path="/timeline" element={<TimelinePage />} />
             <Route path="/questions" element={<OpenQuestions />} />
             <Route path="/map" element={<MapPage />} />
-            <Route path="/sources" element={<Sources />} />
+            <Route path="/documents" element={<Sources />} />
+            <Route path="/sources" element={<Navigate to="/documents" replace />} />
             <Route path="/about" element={<About />} />
             <Route path="/residents" element={<Residents />} />
             <Route path="/reporters" element={<Reporters />} />
-            <Route path="/officials" element={<Officials />} />
+            {/* /officials deleted — it rendered timelineEvents filtered to three
+                categories and nothing else. Redirected rather than 404'd. */}
+            <Route path="/officials" element={<Navigate to="/timeline" replace />} />
             <Route path="/actions" element={<Actions />} />
             <Route path="*" element={<NotFound />} />
           </Routes>

@@ -14,11 +14,11 @@ const SOURCE_ENTRIES = Object.entries(sources)
 export default function Sources() {
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 py-12">
-      <PageTitle {...pageMeta['/sources']} />
+      <PageTitle {...pageMeta['/documents']} />
 
       <FadeIn className="mb-10 pb-8 border-b border-gray-200">
         <p className="text-2xs font-mono text-blue-600/60 uppercase tracking-[0.2em] mb-3">Transparency</p>
-        <h1 className="text-4xl font-display font-bold text-gray-900 tracking-tight mb-3">Primary Sources</h1>
+        <h1 className="text-4xl font-display font-bold text-gray-900 tracking-tight mb-3">Documents &amp; Sources</h1>
         <p className="text-base text-gray-600 max-w-2xl leading-relaxed">
           All figures in this tracker come from publicly available documents and verified journalism.
           Estimated figures are labeled.

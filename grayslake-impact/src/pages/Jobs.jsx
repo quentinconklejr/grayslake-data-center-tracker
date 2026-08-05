@@ -54,11 +54,11 @@ const PERM_ROLES = [
   ['Administrative / Support',  'HR, finance, administration'],
 ]
 
-export default function Jobs() {
+export default function Jobs({ asSection = false }) {
   return (
     <FootnoteProvider>
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
-      <PageTitle {...pageMeta['/jobs']} />
+    <div className={`max-w-7xl mx-auto px-4 sm:px-6 ${asSection ? "pt-2 pb-10" : "py-12"}`}>
+      {!asSection && <PageTitle {...pageMeta['/jobs']} />}
 
       <FadeIn className="mb-10 pb-8 border-b border-gray-200">
         <p className="text-2xs font-mono text-blue-600/60 uppercase tracking-[0.2em] mb-3">Employment</p>

@@ -19,11 +19,11 @@ const FEE_DATA = [
   { name: 'Resident cost-control',         pct: 25, color: '#059669', bg: 'rgba(5,150,105,0.09)', label: '25%' },
 ]
 
-export default function TaxImpact() {
+export default function TaxImpact({ asSection = false }) {
   return (
     <FootnoteProvider>
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
-      <PageTitle {...pageMeta['/tax-impact']} />
+    <div className={`max-w-7xl mx-auto px-4 sm:px-6 ${asSection ? "pt-2 pb-10" : "py-12"}`}>
+      {!asSection && <PageTitle {...pageMeta['/tax-impact']} />}
 
       <FadeIn className="mb-10 pb-8 border-b border-gray-200">
         <p className="text-2xs font-mono text-blue-600/60 uppercase tracking-[0.2em] mb-3">Fiscal Impact</p>

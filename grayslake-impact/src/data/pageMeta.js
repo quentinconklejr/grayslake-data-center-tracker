@@ -16,6 +16,12 @@ export const pageMeta = {
       'A civic data dashboard tracking the T5 @ Chicago IV hyperscale AI data center development in Grayslake, Illinois — jobs, taxes, energy, water, and legal challenges, all sourced.',
     ogImage: '/og/home.png',
   },
+  '/project': {
+    title: 'The Project',
+    description:
+      'Energy, employment, tax and school-funding figures for the T5 @ Chicago IV data center campus in Grayslake, Illinois — each with its source and the condition attached to it.',
+    ogImage: '/og/project.png',
+  },
   '/tax-impact': {
     title: 'Tax Impact',
     description:
@@ -58,7 +64,7 @@ export const pageMeta = {
       'Interactive site map showing the 472-acre T5 @ Chicago IV campus location at Peterson Road and Route 83 in Grayslake, Illinois.',
     ogImage: '/og/map.png',
   },
-  '/sources': {
+  '/documents': {
     title: 'Sources',
     description:
       'Full citation list for the T5 @ Chicago IV tracker — primary sources, press coverage, and official documents behind every claim on this site.',

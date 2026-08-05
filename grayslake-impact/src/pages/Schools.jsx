@@ -23,11 +23,11 @@ const GRAYSLAKE_DISTRICTS = [
   { name: 'Village of Grayslake',                        desc: 'The Village itself receives a share as a taxing body. Named in Village FAQ.', sub: 'Village FAQ p. 2' },
 ]
 
-export default function Schools() {
+export default function Schools({ asSection = false }) {
   return (
     <FootnoteProvider>
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
-      <PageTitle {...pageMeta['/schools']} />
+    <div className={`max-w-7xl mx-auto px-4 sm:px-6 ${asSection ? "pt-2 pb-10" : "py-12"}`}>
+      {!asSection && <PageTitle {...pageMeta['/schools']} />}
 
       <FadeIn className="mb-10 pb-8 border-b border-gray-200">
         <p className="text-2xs font-mono text-blue-600/60 uppercase tracking-[0.2em] mb-3">Education</p>

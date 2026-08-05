@@ -90,6 +90,14 @@ export default function Footer() {
         </div>
 
       </div>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 pb-8">
+        <p className="text-xs text-gray-600 leading-relaxed border-t border-gray-200 pt-6">
+          This site is not affiliated with T5 Data Centers, LLC or the Village of Grayslake. It is an
+          independent, resident-built resource. Every claim links to a public source; figures that are
+          conditional or contested are labelled as such. If a figure is wrong or a document is missing,
+          please get in touch via the About page.
+        </p>
+      </div>
     </footer>
   )
 }

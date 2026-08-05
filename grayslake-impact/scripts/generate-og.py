@@ -30,6 +30,8 @@ OUT = os.path.join(os.path.dirname(__file__), "..", "public", "og")
 PAGES = {
     "home": ("Grayslake Data Center Tracker",
              "T5 @ Chicago IV — sourced public record"),
+    "project": ("The Project",
+                "Energy, jobs, tax and schools — with sources"),
     "energy": ("Energy Draw",
                "Capacity figures, grid interconnection, and rate structure"),
     "jobs": ("Employment",

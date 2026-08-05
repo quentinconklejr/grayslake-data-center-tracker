@@ -262,10 +262,6 @@ export default function Residents() {
             All sources →
           </Link>
         </div>
-        <p className="text-xs text-gray-400 mt-6 leading-relaxed">
-          This page is not affiliated with T5 Data Centers, LLC or the Village of Grayslake.
-          Every claim links to a public source. If a figure or fact is wrong, please reach out via the About page.
-        </p>
       </FadeIn>
 
       <FootnoteList />

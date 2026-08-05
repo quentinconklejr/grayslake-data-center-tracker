@@ -94,11 +94,6 @@ export default function Reporters() {
             <path d="M2 7h10M7 2l5 5-5 5" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </Link>
-        <p className="text-xs text-gray-400 mt-8 leading-relaxed">
-          This site is not affiliated with T5 Data Centers, LLC or the Village of Grayslake.
-          It is an independent, resident-built resource. If a figure is wrong or a document is missing,
-          please reach out via the About page.
-        </p>
       </FadeIn>
 
       <FootnoteList />

@@ -226,12 +226,6 @@ export default function Actions() {
             All sources →
           </Link>
         </div>
-        <p className="text-xs text-gray-500 leading-relaxed">
-          Actions are added as new filings, decisions, or official statements appear in public records
-          or verified journalism. Verification dates reflect when each record was last confirmed
-          against the cited source, not a real-time status. This site is not affiliated with T5 Data
-          Centers, LLC or the Village of Grayslake.
-        </p>
       </FadeIn>
 
       <FootnoteList />
