@@ -2,107 +2,14 @@ import { Link } from 'react-router-dom'
 import PageTitle from '../components/ui/PageTitle'
 import { pageMeta } from '../data/pageMeta'
 import FadeIn from '../components/ui/FadeIn'
-import SourceCitation from '../components/ui/SourceCitation'
 import { FootnoteProvider, FootnoteList } from '../components/ui/FootnoteContext'
-import { projections } from '../data/projections'
+import { keyFigures } from '../data/keyFigures'
+import KeyFigureList from '../components/ui/KeyFigureList'
 import { contacts } from '../data/contacts'
 import { LAST_VERIFIED } from '../data/siteConfig'
 import AudienceBreadcrumb from '../components/ui/AudienceBreadcrumb'
 
-const { project, jobs, stateIncentiveContext } = projections
 
-const KEY_FIGURES = [
-  {
-    label: 'Campus area approved',
-    value: `up to ${project.totalAcres.toLocaleString()} acres`,
-    detail: 'Cornerstone business park, between Alleghany Road and Route 83 north of Peterson Road. CLCJAWA records 470 acres.',
-    sourceKey: 'dailyherald2026',
-  },
-  {
-    label: 'Total buildable area',
-    value: `${Number(project.totalSqFt).toLocaleString()} sq ft`,
-    detail: 'Not more than 10.1M sq ft at full buildout, per village approvals',
-    sourceKey: 'dailyherald2026',
-  },
-  {
-    label: 'IT capacity',
-    value: `${project.totalCapacityMW.toLocaleString()} MW`,
-    detail: 'Leasable at full buildout, per T5',
-    sourceKey: 'dcdGW2026',
-  },
-  {
-    label: 'Secured utility power',
-    value: `${project.securedPowerMW.toLocaleString()} MW`,
-    detail: 'Utility capacity T5 states it has contracted',
-    sourceKey: 'dcdGW2026',
-  },
-  {
-    label: 'Total ComEd capacity',
-    value: `${project.comEdCapacityGW} GW`,
-    detail: 'Secured from ComEd per T5 CEO Pete Marin (Oct. 2025), 1.2 GW of it leasable. Later cited by opposition counsel. The utility connection, not the computing load.',
-    sourceKey: 'govtech2025',
-  },
-  {
-    label: 'Approved buildings',
-    value: `${project.approvedBuildings} (up to ${project.maxBuildings})`,
-    detail: 'Per Village approvals; CEO cited 20 as upper estimate',
-    sourceKey: 'govtech2025',
-  },
-  {
-    label: 'Permanent jobs projected',
-    value: `1,500 – ${jobs.permanent.toLocaleString()}`,
-    detail: 'Upper figure is the Village FAQ\'s, derived by applying 50 jobs per 300,000 sq. ft. to the full 10.1M sq ft build-out — conditional on complete build-out, not a flat estimate. Mayor Davies cited 1,500 (Oct. 2025); CEO Marin cited "over 1,600" (Jul. 2026). Live FAQ URL is dead; cite the archived snapshot.',
-    sourceKey: 'villagefaq_archived',
-  },
-  {
-    label: 'Developer investment range',
-    value: `$${project.costLow}B – $${project.costHigh}B`,
-    detail: "Mayor Davies: $8.5B · CEO Marin: up to $18B",
-    sourceKey: 'govtech2025',
-  },
-  {
-    label: 'Phase 1 online',
-    value: project.firstBuildingOnline,
-    detail: 'First 60 MW building, currently under construction',
-    sourceKey: 'dcd2026',
-  },
-  {
-    label: 'Land recorded to T5',
-    value: '287.8 acres',
-    detail: '57 parcels in four non-contiguous groups, $62,968,250 total recorded consideration through May 2025. Not the same as the up-to-472 acres approved, nor the "more than 490" T5 says it controls.',
-    sourceKey: 'lakecountygis',
-  },
-  {
-    label: 'State incentive status',
-    value: 'Applications suspended',
-    detail: `${stateIncentiveContext.statusChange}`,
-    sourceKey: 'dceo2026',
-  },
-  {
-    label: 'Village FAQ litigation notice',
-    value: 'June 5, 2026',
-    detail: 'Village states it can no longer respond to questions due to pending litigation. The FAQ itself became unreachable by Aug 5, 2026.',
-    sourceKey: 'dailyherald2026',
-  },
-  {
-    label: 'Wetlands fill permit',
-    value: 'Suspended indefinitely',
-    detail: 'T5 voluntarily suspended its ~15.75-acre Section 404 application on July 31, 2026. Project not on hold.',
-    sourceKey: 'dailyherald_jul2026',
-  },
-  {
-    label: 'First building permit',
-    value: 'Foundation permit issued',
-    detail: 'Technical building permit review ongoing for first building and electrical facility',
-    sourceKey: 'dailyherald_jul2026',
-  },
-  {
-    label: 'Lake County moratorium',
-    value: '8 months, unincorporated only',
-    detail: 'Adopted June 2026. Does not apply to the T5 site, which is within Grayslake village limits.',
-    sourceKey: 'lakecounty_tad2026',
-  },
-]
 
 export default function Reporters() {
   return (
@@ -123,25 +30,14 @@ export default function Reporters() {
         <p className="text-2xs font-mono text-gray-400 mt-3">Last verified {LAST_VERIFIED}</p>
       </FadeIn>
 
-      {/* Key figures table */}
+      {/* Key figures — rendered from the canonical source, never retyped */}
       <FadeIn className="mb-14">
-        <p className="text-2xs font-mono text-gray-400 uppercase tracking-widest mb-5">Key Figures</p>
-        <div className="divide-y divide-gray-100 border border-gray-200 rounded-xl overflow-hidden bg-white">
-          {KEY_FIGURES.map(({ label, value, detail, sourceKey }) => (
-            <div key={label} className="grid sm:grid-cols-5 gap-2 sm:gap-4 px-5 py-4">
-              <div className="sm:col-span-2">
-                <p className="text-2xs font-mono text-gray-400 uppercase tracking-widest leading-tight">{label}</p>
-              </div>
-              <div className="sm:col-span-3">
-                <p className="text-sm font-display font-semibold text-gray-900 leading-snug">
-                  {value}
-                  {sourceKey && <SourceCitation sourceKey={sourceKey} />}
-                </p>
-                {detail && <p className="text-xs text-gray-500 mt-0.5 leading-snug">{detail}</p>}
-              </div>
-            </div>
-          ))}
-        </div>
+        <p className="text-2xs font-mono text-gray-600 uppercase tracking-widest mb-5">Key Figures</p>
+        <KeyFigureList figures={keyFigures} />
+        <p className="text-xs text-gray-600 mt-3 leading-relaxed">
+          Each figure is shown with the condition attached to it. Several are conditional or
+          contested, and quoting the number without its qualifier will misstate the record.
+        </p>
       </FadeIn>
 
       {/* Contacts */}
