@@ -61,6 +61,78 @@ export default function Officials() {
         </div>
       </FadeIn>
 
+      {/* Pending vs. decided status board */}
+      <FadeIn className="mb-10">
+        <h2 className="text-sm font-semibold text-gray-700 uppercase tracking-wide mb-3">Decisions &amp; Pending Actions</h2>
+        <div className="divide-y divide-gray-100 border border-gray-200 rounded-xl overflow-hidden text-sm">
+          {[
+            {
+              date: 'Sep 23, 2024 – May 6, 2025',
+              event: 'Village approval process — 7+ months of board meetings, zoning, and special-use permits',
+              status: 'decided',
+              label: 'Decided',
+            },
+            {
+              date: 'Oct 2025',
+              event: 'Public meeting — jobs estimate (1,500 permanent) and developer fee framework presented to board',
+              status: 'decided',
+              label: 'On Record',
+            },
+            {
+              date: 'Jun 5, 2026',
+              event: 'US Army Corps of Engineers wetlands fill permit application filed (~15.75 acres)',
+              status: 'pending',
+              label: 'Pending',
+            },
+            {
+              date: 'Jun 5, 2026',
+              event: 'Village FAQ updated — Village states it can no longer respond to project questions due to pending litigation',
+              status: 'pending',
+              label: 'Litigation Active',
+            },
+            {
+              date: 'Jun 2026',
+              event: 'Lake County coalition retains counsel to challenge village approvals as invalid',
+              status: 'pending',
+              label: 'Pending',
+            },
+            {
+              date: 'Jun 26, 2026',
+              event: 'Opposition coalition signals intent to file civil actions; no filings confirmed at publication',
+              status: 'pending',
+              label: 'Signaled',
+            },
+            {
+              date: 'Jul 1, 2026',
+              event: 'Governor directs DCEO to suspend new data center tax incentive applications (no stated end date)',
+              status: 'decided',
+              label: 'In Effect',
+            },
+            {
+              date: 'Jun 2026',
+              event: 'Avon Township board adopts transparency resolution calling for greater community engagement',
+              status: 'decided',
+              label: 'Adopted',
+            },
+          ].map(({ date, event, status, label }) => (
+            <div key={date + label} className="flex items-start gap-4 px-5 py-3.5 bg-white hover:bg-gray-50/60 transition-colors">
+              <span className="text-2xs font-mono text-gray-400 w-36 shrink-0 pt-0.5">{date}</span>
+              <span className="text-gray-700 flex-1 leading-snug text-xs">{event}</span>
+              <span className={`text-2xs font-mono font-semibold px-2 py-0.5 rounded-full whitespace-nowrap shrink-0 ${
+                status === 'pending'
+                  ? 'text-amber-700 bg-amber-50'
+                  : 'text-emerald-700 bg-emerald-50'
+              }`}>{label}</span>
+            </div>
+          ))}
+        </div>
+        <p className="text-2xs font-mono text-gray-400 mt-2">
+          Status reflects public records as of {LAST_VERIFIED}. No docket numbers are publicly available for the pending civil actions.
+          See the full timeline for sourced citations on each entry.
+        </p>
+      </FadeIn>
+
+      {/* Category browse cards */}
       <FadeIn className="grid sm:grid-cols-3 gap-4 mb-12">
         {CATEGORIES.map(({ key, label, desc, cls, labelCls }) => {
           const count = timelineEvents.filter(e => e.category === key).length

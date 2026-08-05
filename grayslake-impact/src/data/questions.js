@@ -23,7 +23,7 @@ export const questions = [
     ],
     disputed: [
       {
-        text: 'The Alliance for the Great Lakes has noted that air-cooling configurations shift water demand upstream to power plants rather than eliminating it — grid-level thermal generation still consumes significant water per megawatt-hour of output. This applies to the confirmed air-cooled design.',
+        text: 'The Alliance for the Great Lakes has noted that air-cooling configurations shift water demand upstream to power plants rather than eliminating it. Grid-level thermal generation still consumes significant water per megawatt-hour of output. This applies to the confirmed air-cooled design.',
         sourceKey: 'alliancegreatlakes',
       },
       {
@@ -113,7 +113,7 @@ export const questions = [
     ],
     disputed: [
       {
-        text: 'Neither official projection has been independently verified. The only comparable publicly documented Illinois data is the DeKalb/Meta precedent — a different county with different levy rates. Capitol News Illinois reported School District 428 received approximately 60.9% of Meta\'s property taxes across three DeKalb County properties (multi-year data). The 2025 tax bill for one Meta facility was $31.1M. These figures come from different datasets and cannot be combined into a single per-district ratio. Neither is directly applicable without a Lake County Assessor valuation of the T5 campus.',
+        text: 'Neither official projection has been independently verified. The only comparable publicly documented Illinois data is the DeKalb/Meta precedent, from a different county with different levy rates. Capitol News Illinois reported School District 428 received approximately 60.9% of Meta\'s property taxes across three DeKalb County properties (multi-year data). The 2025 tax bill for one Meta facility was $31.1M. These figures come from different datasets and cannot be combined into a single per-district ratio. Neither is directly applicable without a Lake County Assessor valuation of the T5 campus.',
         sourceKey: 'capitolnews2026',
       },
     ],
