@@ -13,6 +13,7 @@ import SiteMap from '../components/map/SiteMap'
 import SourceCitation from '../components/ui/SourceCitation'
 import { FootnoteProvider, FootnoteList } from '../components/ui/FootnoteContext'
 import { projections } from '../data/projections'
+import { figureById } from '../data/keyFigures'
 import { sources } from '../data/sources'
 import { LAST_VERIFIED } from '../data/siteConfig'
 
@@ -39,7 +40,7 @@ const FACETS = [
     cat: 'Employment',
     catColor: 'text-emerald-700',
     catBorder: 'border-emerald-200',
-    headline: 'Up to 1,680 permanent jobs — if the campus is fully built.',
+    headline: `${figureById['jobs-permanent'].value} permanent jobs — ${figureById['jobs-permanent'].qualifier}.`,
     body: 'The Village FAQ gives no flat headcount. It states that "if all 10 million sq ft of approved data center space is built," an estimated "50 permanent jobs are created for every 300,000 sq ft, or 1,680 permanent jobs" — and hedges that estimate, noting job creation "may change" as operations and technologies do. That footprint is a ceiling the approvals allow, not a commitment. Two lower figures were stated directly by people: Mayor Davies cited 1,500 permanent positions in October 2025, and CEO Pete Marin cited "over 1,600" in July 2026. Construction employment is counted separately: the FAQ excludes it, and it runs to "hundreds" of trade workers through 2027–2029.',
     chart: <JobsTimelineChart />,
     chartLabel: 'Permanent vs. Construction Workforce',
@@ -109,6 +110,17 @@ const SECONDARY_STATS = [
   },
 ]
 
+// Copy text for a canonical figure. This string is the one that travels
+// furthest from its context — pasted into a story, an email, a slide — so it
+// must carry the qualifier and the citation, never just the number.
+function copyFigure(id) {
+  const f = figureById[id]
+  const key = f.sourceKey ?? f.sourceKeys?.[0]
+  const s = sources[key]
+  const citation = s ? ` (${[s.publisher, s.date].filter(Boolean).join(', ')})` : ''
+  return `${f.label}: ${f.value} — ${f.qualifier}${citation}`
+}
+
 function buildCopyText(displayValue, note, src) {
   const s = sources[src]
   if (!s) return displayValue
@@ -158,18 +170,18 @@ export default function Home() {
                 to change. Excludes construction jobs. Davies cited 1,500 (Oct. 2025); Marin cited &ldquo;over
                 1,600&rdquo; (Jul. 2026).<SourceCitation sourceKey="villagefaq_archived" />
               </p>
-              <CopyKPIButton copyText={buildCopyText(`Up to ${jobs.permanent.toLocaleString()} permanent jobs ${jobs.permanentCondition} — Village FAQ estimate of ${jobs.permanentBasis}, excluding construction jobs`, 'Davies cited 1,500; Marin cited over 1,600.', 'villagefaq_archived')} />
+              <CopyKPIButton copyText={copyFigure('jobs-permanent')} />
             </FadeIn>
 
             <FadeIn delay={0.08} className="md:pl-12 border-t border-gray-200 pt-10 md:pt-0 md:border-t-0">
               <p className="text-2xs font-mono text-gray-400 uppercase tracking-[0.2em] mb-3">Total Estimated Investment</p>
               <p className="text-6xl sm:text-7xl font-display font-black text-gray-900 leading-none tracking-tighter">
-                $8.5–18<span className="text-4xl sm:text-5xl">B</span>
+                {figureById['investment'].value}
               </p>
               <p className="text-sm text-gray-500 mt-4 leading-snug">
-                Mayor Davies: $8.5B · CEO Marin: up to $18B<SourceCitation sourceKey="govtech2025" />
+                {figureById['investment'].qualifier}<SourceCitation sourceKey="govtech2025" />
               </p>
-              <CopyKPIButton copyText={buildCopyText('$8.5–18B total estimated investment', 'Mayor Davies: $8.5B · CEO Marin: up to $18B', 'govtech2025')} />
+              <CopyKPIButton copyText={copyFigure('investment')} />
             </FadeIn>
 
           </div>
@@ -208,13 +220,15 @@ export default function Home() {
             <div className="mt-6 pt-5 border-t border-gray-100 flex flex-wrap gap-x-8 gap-y-3">
               <div>
                 <p className="text-2xs font-mono text-gray-400 uppercase tracking-[0.16em] mb-0.5">Water (full buildout)</p>
-                <p className="text-sm font-display font-bold text-gray-800">&lt; 50,000 gal/day<SourceCitation sourceKey="clcjawa2026" /><SourceCitation sourceKey="villagefaq_archived" /></p>
-                <CopyKPIButton copyText={buildCopyText('< 50,000 gal/day water use (full buildout)', 'CLCJAWA estimate', 'clcjawa2026')} />
+                <p className="text-sm font-display font-bold text-gray-800">{figureById['water'].value}<SourceCitation sourceKey="clcjawa2026" /><SourceCitation sourceKey="villagefaq_archived" /></p>
+                <p className="text-2xs text-gray-600 mt-0.5">{figureById['water'].qualifier}</p>
+                <CopyKPIButton copyText={copyFigure('water')} />
               </div>
               <div>
                 <p className="text-2xs font-mono text-gray-400 uppercase tracking-[0.16em] mb-0.5">Commissioning flush (one 200 MW bldg)</p>
-                <p className="text-sm font-display font-bold text-gray-800">~3.2M gal<SourceCitation sourceKey="clcjawa2026" /></p>
-                <CopyKPIButton copyText={buildCopyText('~3.2M gal commissioning flush for one 200 MW building (one-time, staged over days)', 'CLCJAWA estimate', 'clcjawa2026')} />
+                <p className="text-sm font-display font-bold text-gray-800">{figureById['water-flush'].value}<SourceCitation sourceKey="clcjawa2026" /></p>
+                <p className="text-2xs text-gray-600 mt-0.5">{figureById['water-flush'].qualifier}</p>
+                <CopyKPIButton copyText={copyFigure('water-flush')} />
               </div>
             </div>
           </FadeIn>

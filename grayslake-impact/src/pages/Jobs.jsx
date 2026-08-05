@@ -7,6 +7,8 @@ import FadeIn from '../components/ui/FadeIn'
 import AnimatedNumber from '../components/ui/AnimatedNumber'
 import { FootnoteProvider, FootnoteList } from '../components/ui/FootnoteContext'
 import { projections } from '../data/projections'
+import Figure from '../components/ui/Figure'
+import { figureById } from '../data/keyFigures'
 import { LAST_VERIFIED } from '../data/siteConfig'
 
 const { project, jobs } = projections
@@ -39,8 +41,8 @@ const PHASES = [
     accent: 'border-emerald-300 bg-emerald-50',
     dot: 'bg-emerald-500',
     label: 'text-emerald-700',
-    jobs: '1,500 – 1,680 permanent positions',
-    note: 'Mayor Davies cited 1,500 (Chicago Tribune, Oct. 2025); T5 CEO Pete Marin cited "over 1,600" (Daily Herald, Jul. 2026). The Village FAQ reaches 1,680 at 50 jobs per 300,000 sq ft, conditional on all 10 million sq ft being built, hedged as subject to change, and excluding construction jobs.',
+    jobs: figureById['jobs-permanent'].value + ' permanent positions',
+    note: figureById['jobs-permanent'].detail,
     sourceKeys: ['govtech2025', 'villagefaq_archived'],
   },
 ]
@@ -77,10 +79,10 @@ export default function Jobs({ asSection = false }) {
       </FadeIn>
 
       <FadeIn className="grid grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
-        <StatCard label="Permanent Jobs"       value={`${jobs.permanentDavies.toLocaleString()}–${jobs.permanent.toLocaleString()}`} sub={`Upper figure ${jobs.permanentCondition}`} accent="green" sourceKey="villagefaq_archived" />
+        <StatCard label="Permanent Jobs"       value={figureById['jobs-permanent'].value} sub={figureById['jobs-permanent'].qualifier} accent="green" sourceKey="villagefaq_archived" />
         <StatCard label="Construction"         value="Hundreds"                         sub="Active 2025–2029 (est.)"  badge="Est." accent="amber" sourceKey="govtech2025" />
         <StatCard label="Phase 1 Online"       value={project.firstBuildingOnline}      sub="First building operational" accent="blue" sourceKey="dcd2026" />
-        <StatCard label="Full Buildout"        value="2029 at the earliest"             sub="Daily Herald reported 7–10 yrs from Oct 2025" badge="Disputed" accent="blue" sourceKey="govtech2025" />
+        <StatCard label="Full Buildout"        value={figureById['buildout'].value} sub={figureById['buildout'].qualifier} badge="Disputed" accent="blue" sourceKey="govtech2025" />
       </FadeIn>
 
       <FadeIn className="glass-card p-6 sm:p-8 mb-3">
@@ -96,8 +98,7 @@ export default function Jobs({ asSection = false }) {
         </div>
         <p className="text-sm text-gray-500 mb-8 max-w-prose">
           Construction count at ~400 represents "hundreds" per Village documents and is treated as an estimate.
-          The permanent count (1,680) is the current Village FAQ figure. An earlier figure of 1,500
-          was cited at the October 2025 public meeting.
+          Permanent headcount is <Figure id="jobs-permanent" />.
         </p>
         <JobsTimelineChart />
       </FadeIn>

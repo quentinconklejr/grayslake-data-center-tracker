@@ -7,6 +7,7 @@ import FadeIn from '../components/ui/FadeIn'
 import { FootnoteProvider, FootnoteList } from '../components/ui/FootnoteContext'
 import EvidenceBlock from '../components/ui/EvidenceBlock'
 import { projections } from '../data/projections'
+import { figureById } from '../data/keyFigures'
 import { LAST_VERIFIED } from '../data/siteConfig'
 
 const { project, capacityFigures, capacityNote } = projections
@@ -168,7 +169,7 @@ export default function Energy({ asSection = false }) {
               ['Power Purchase (PPA)',  '— not disclosed', null],
               ['Renewable Commitment',  '— not disclosed', null],
               ['Cooling Approach',         'Closed-loop, air-cooled', 'clcjawa2026'],
-              ['Water Use (full buildout)', '< 50,000 gal / day',      'clcjawa2026'],
+              ['Water Use (full buildout)', figureById['water'].value, 'clcjawa2026'],
               ['Substation',               'Developer-funded, on campus', 'villagefaq_archived'],
               ['ComEd Supply Agreement',   'Stated as already in place',  'villagefaq_archived'],
               ['PUE Target',            '— not disclosed', null],

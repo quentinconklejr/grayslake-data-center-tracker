@@ -8,6 +8,7 @@ import { FootnoteProvider, FootnoteList } from '../components/ui/FootnoteContext
 import { LAST_VERIFIED } from '../data/siteConfig'
 import SourceCitation from '../components/ui/SourceCitation'
 import { projections } from '../data/projections'
+import { figureById } from '../data/keyFigures'
 
 const { acreageFigures, acreageNote } = projections
 
@@ -28,7 +29,7 @@ export default function MapPage() {
         </p>
         <p className="text-base text-gray-600 max-w-2xl leading-relaxed mt-3">
           Ownership is not the same as approval. The Village approved development on{' '}
-          <strong className="font-semibold text-gray-800">up to 472 acres</strong>, which is a larger area than
+          <strong className="font-semibold text-gray-800">{figureById['acres-approved'].value}</strong>, which is a larger area than
           T5 currently owns and is not published anywhere as a mappable boundary. Nothing on this page should be
           read as the approved campus perimeter.
         </p>
