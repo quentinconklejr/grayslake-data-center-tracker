@@ -91,6 +91,27 @@ export const timelineEvents = [
     sourceKey: "chronicle2026",
   },
   {
+    date: "2026-06-09",
+    title: "Lake County adopts data center moratorium for unincorporated areas",
+    description: "The Lake County Board approved a resolution directing the Zoning Board of Appeals to hold a public hearing on an eight-month temporary moratorium on data centers, with a Temporary Administrative Deferral effective immediately; the Board voted to adopt the temporary ban on June 20, 2026. The measure covers unincorporated Lake County only and does not apply to the T5 site, which is inside the Village of Grayslake and was approved before the moratorium.",
+    category: "policy",
+    sourceKeys: ["lakecounty_tad2026", "lakemchenry_jun2026"],
+  },
+  {
+    date: "2026-07-31",
+    title: "T5 indefinitely suspends wetland permit application",
+    description: "T5 withdrew its Section 404 application to fill approximately 15.75 acres of wetlands, describing the suspension as voluntary and indefinite in response to community questions. The Village said it had strongly advocated for withdrawal and that the mitigation was not necessary for the project to proceed. The project itself is not on hold.",
+    category: "legal",
+    sourceKey: "dailyherald_jul2026",
+  },
+  {
+    date: "2026-07-31",
+    title: "Foundation permit issued for first building",
+    description: "The Village confirmed a foundation permit has been issued for the first building, with T5 in the administrative technical building permit process for that building and its associated electrical facility near the Cornerstone water tower. General site work is being performed by the original Cornerstone developer, the Alter Group.",
+    category: "construction",
+    sourceKey: "dailyherald_jul2026",
+  },
+  {
     date: "2027-Q4",
     title: "First building projected online",
     description: "First phase expected to deliver 60MW of initial IT capacity.",

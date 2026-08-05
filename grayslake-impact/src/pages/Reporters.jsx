@@ -79,9 +79,21 @@ const KEY_FIGURES = [
   },
   {
     label: 'Wetlands fill permit',
-    value: '~15.75 acres applied',
-    detail: 'US Army Corps of Engineers Section 404 permit application filed',
-    sourceKey: 'chitrib_june2026',
+    value: 'Suspended indefinitely',
+    detail: 'T5 voluntarily suspended its ~15.75-acre Section 404 application on July 31, 2026. Project not on hold.',
+    sourceKey: 'dailyherald_jul2026',
+  },
+  {
+    label: 'First building permit',
+    value: 'Foundation permit issued',
+    detail: 'Technical building permit review ongoing for first building and electrical facility',
+    sourceKey: 'dailyherald_jul2026',
+  },
+  {
+    label: 'Lake County moratorium',
+    value: '8 months, unincorporated only',
+    detail: 'Adopted June 2026. Does not apply to the T5 site, which is within Grayslake village limits.',
+    sourceKey: 'lakecounty_tad2026',
   },
 ]
 
