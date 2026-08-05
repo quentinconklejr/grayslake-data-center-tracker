@@ -221,6 +221,8 @@ export default function OpenQuestions() {
       <FadeIn className="flex flex-wrap items-center justify-between gap-3 mb-8">
         <div className="flex flex-wrap gap-2">
           <button
+            type="button"
+            aria-pressed={activeCategory === 'all'}
             onClick={() => handleCategoryChange('all')}
             className={`inline-flex items-center px-2.5 py-1 rounded-sm border text-2xs font-mono font-semibold uppercase tracking-widest transition-colors duration-150 ${
               activeCategory === 'all'
@@ -235,6 +237,8 @@ export default function OpenQuestions() {
             return (
               <button
                 key={cat}
+                type="button"
+                aria-pressed={activeCategory === cat}
                 onClick={() => handleCategoryChange(cat)}
                 className={`inline-flex items-center px-2.5 py-1 rounded-sm border text-2xs font-mono font-semibold uppercase tracking-widest transition-colors duration-150 ${
                   activeCategory === cat ? meta.active : meta.inactive
@@ -256,6 +260,9 @@ export default function OpenQuestions() {
         </button>
       </FadeIn>
 
+      <p aria-live="polite" className="sr-only">
+        {visible.length} of {questions.length} questions shown, {detailed ? 'full detail' : 'plain language'} view
+      </p>
       <div className={detailed ? 'space-y-2' : 'space-y-8'}>
         {visible.map((q, i) => (
           <FadeIn key={q.id} delay={Math.min(i * 0.03, 0.09)}>

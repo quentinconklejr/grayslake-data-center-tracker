@@ -138,9 +138,11 @@ export default function Actions() {
 
       {/* Jurisdiction filter */}
       <FadeIn className="mb-5">
-        <p className="text-2xs font-mono text-gray-400 uppercase tracking-widest mb-2.5">Filter by jurisdiction</p>
-        <div className="flex flex-wrap gap-2">
+        <p id="juri-filter-label" className="text-2xs font-mono text-gray-600 uppercase tracking-widest mb-2.5">Filter by jurisdiction</p>
+        <div role="group" aria-labelledby="juri-filter-label" className="flex flex-wrap gap-2">
           <button
+            type="button"
+            aria-pressed={juriFilter === 'all'}
             onClick={() => setJuriFilter('all')}
             className={`inline-flex items-center px-2.5 py-1 rounded-sm border text-2xs font-mono font-semibold uppercase tracking-widest transition-colors duration-150 ${
               juriFilter === 'all'
@@ -156,6 +158,8 @@ export default function Actions() {
             return (
               <button
                 key={j}
+                type="button"
+                aria-pressed={juriFilter === j}
                 onClick={() => setJuriFilter(j)}
                 className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-sm border text-2xs font-mono font-semibold uppercase tracking-widest transition-colors duration-150 ${
                   juriFilter === j ? colors.active : colors.inactive
@@ -171,9 +175,11 @@ export default function Actions() {
 
       {/* Action type filter */}
       <FadeIn className="mb-10">
-        <p className="text-2xs font-mono text-gray-400 uppercase tracking-widest mb-2.5">Filter by action type</p>
-        <div className="flex flex-wrap gap-2">
+        <p id="type-filter-label" className="text-2xs font-mono text-gray-600 uppercase tracking-widest mb-2.5">Filter by action type</p>
+        <div role="group" aria-labelledby="type-filter-label" className="flex flex-wrap gap-2">
           <button
+            type="button"
+            aria-pressed={typeFilter === 'all'}
             onClick={() => setTypeFilter('all')}
             className={`inline-flex items-center px-2.5 py-1 rounded-sm border text-2xs font-mono font-semibold uppercase tracking-widest transition-colors duration-150 ${
               typeFilter === 'all'
@@ -186,6 +192,8 @@ export default function Actions() {
           {ACTION_TYPES.map(t => (
             <button
               key={t}
+              type="button"
+              aria-pressed={typeFilter === t}
               onClick={() => setTypeFilter(t)}
               className={`inline-flex items-center px-2.5 py-1 rounded-sm border text-2xs font-mono font-semibold uppercase tracking-widest transition-colors duration-150 ${
                 typeFilter === t
@@ -200,6 +208,9 @@ export default function Actions() {
       </FadeIn>
 
       {/* Entries */}
+      <p aria-live="polite" className="sr-only">
+        {visible.length} of {actions.length} actions shown
+      </p>
       <div className="space-y-4">
         {visible.length === 0 ? (
           <FadeIn>
