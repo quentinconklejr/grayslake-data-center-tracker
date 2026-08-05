@@ -1,3 +1,4 @@
+import ChartFigure from '../ui/ChartFigure'
 import { useRef, useState, useLayoutEffect } from 'react'
 import { motion } from 'framer-motion'
 
@@ -106,10 +107,16 @@ export default function TaxRevenueChart({ data = DEFAULT_DATA }) {
   const inView = useInViewOnce(ref)
 
   return (
-    <div ref={ref} className="space-y-4 py-2">
-      {data.map((item, i) => (
-        <ProportionBar key={item.name} item={item} index={i} inView={inView} />
-      ))}
-    </div>
+    <ChartFigure
+      caption="Developer fee allocation"
+      description="Bar chart of how the Village says developer fees would be split."
+      rows={data.map(d => [d.name, d.label ?? `${d.pct}%`])}
+    >
+      <div ref={ref} className="space-y-4 py-2">
+        {data.map((item, i) => (
+          <ProportionBar key={item.name} item={item} index={i} inView={inView} />
+        ))}
+      </div>
+    </ChartFigure>
   )
 }

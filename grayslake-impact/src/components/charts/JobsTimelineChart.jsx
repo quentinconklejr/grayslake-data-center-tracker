@@ -1,3 +1,4 @@
+import ChartFigure from '../ui/ChartFigure'
 import { useRef, useState, useLayoutEffect } from 'react'
 import { motion } from 'framer-motion'
 import { projections } from '../../data/projections'
@@ -79,53 +80,59 @@ export default function JobsTimelineChart() {
   const inView = useInViewOnce(ref)
 
   return (
-    <div ref={ref} className="space-y-6">
-      {ITEMS.map((item, i) => (
-        <div key={item.label} className="space-y-2">
-          <div className="flex items-start justify-between gap-4">
-            <div className="min-w-0">
-              <div className="flex items-center gap-2">
-                <span className="text-sm font-display font-semibold text-gray-900">{item.label}</span>
-                {!item.sourced && (
-                  <span className="text-2xs font-mono text-amber-700 border border-amber-300 px-1.5 py-0.5 rounded-sm bg-amber-50">
-                    Est.
-                  </span>
-                )}
+    <ChartFigure
+      caption="Permanent versus construction workforce"
+      description="Bar chart comparing projected permanent positions with the estimated construction workforce."
+      rows={ITEMS.map(i => [i.label, `${i.display ?? i.value} — ${i.sublabel}`])}
+    >
+      <div ref={ref} className="space-y-6">
+        {ITEMS.map((item, i) => (
+          <div key={item.label} className="space-y-2">
+            <div className="flex items-start justify-between gap-4">
+              <div className="min-w-0">
+                <div className="flex items-center gap-2">
+                  <span className="text-sm font-display font-semibold text-gray-900">{item.label}</span>
+                  {!item.sourced && (
+                    <span className="text-2xs font-mono text-amber-700 border border-amber-300 px-1.5 py-0.5 rounded-sm bg-amber-50">
+                      Est.
+                    </span>
+                  )}
+                </div>
+                <span className="text-xs text-gray-500 mt-0.5 block">{item.sublabel}</span>
               </div>
-              <span className="text-xs text-gray-500 mt-0.5 block">{item.sublabel}</span>
+              <span
+                className="font-mono text-xl font-bold shrink-0 tabular-nums"
+                style={{ color: item.color }}
+              >
+                {item.display}
+              </span>
             </div>
-            <span
-              className="font-mono text-xl font-bold shrink-0 tabular-nums"
-              style={{ color: item.color }}
-            >
-              {item.display}
-            </span>
-          </div>
 
-          <div className="h-4 w-full rounded-full overflow-hidden" style={TRACK_SHADOW}>
-            <motion.div
-              className="h-full rounded-full"
-              style={{
-                background: item.gradient,
-                boxShadow:  item.glow,
-                opacity:    item.sourced ? 1 : 0.5,
-                position:   'relative',
-                overflow:   'hidden',
-              }}
-              initial={{ width: 0 }}
-              animate={inView ? { width: `${(item.value / item.max) * 100}%` } : { width: 0 }}
-              transition={{ delay: 0.15 + i * 0.15, duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
-            >
-              <div aria-hidden="true" style={SHINE} />
-              <div aria-hidden="true" style={TIP_HIGHLIGHT} />
-            </motion.div>
+            <div className="h-4 w-full rounded-full overflow-hidden" style={TRACK_SHADOW}>
+              <motion.div
+                className="h-full rounded-full"
+                style={{
+                  background: item.gradient,
+                  boxShadow:  item.glow,
+                  opacity:    item.sourced ? 1 : 0.5,
+                  position:   'relative',
+                  overflow:   'hidden',
+                }}
+                initial={{ width: 0 }}
+                animate={inView ? { width: `${(item.value / item.max) * 100}%` } : { width: 0 }}
+                transition={{ delay: 0.15 + i * 0.15, duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
+              >
+                <div aria-hidden="true" style={SHINE} />
+                <div aria-hidden="true" style={TIP_HIGHLIGHT} />
+              </motion.div>
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
 
-      <p className="text-xs text-gray-400 pt-2 border-t border-gray-200">
-        Dimmed bar = estimated figure. Solid bar = sourced Village projection.
-      </p>
-    </div>
+        <p className="text-xs text-gray-400 pt-2 border-t border-gray-200">
+          Dimmed bar = estimated figure. Solid bar = sourced Village projection.
+        </p>
+      </div>
+    </ChartFigure>
   )
 }
