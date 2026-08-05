@@ -4,6 +4,21 @@ const BASE_TITLE = 'Grayslake Data Center Tracker'
 const SUFFIX = ' | T5@Chicago Tracker'
 const OG_SITE_NAME = 'T5@Chicago Impact Tracker'
 
+// Social crawlers require absolute URLs for og:image. Fall back to the canonical
+// production origin when rendering somewhere without a matching window.origin
+// (preview deploys, prerender, SSR).
+const CANONICAL_ORIGIN = 'https://grayslakedatacentertracker.org'
+
+function absolute(path) {
+  if (!path) return null
+  if (/^https?:\/\//i.test(path)) return path
+  const origin =
+    typeof window !== 'undefined' && window.location.origin.startsWith('http')
+      ? window.location.origin
+      : CANONICAL_ORIGIN
+  return `${origin}${path.startsWith('/') ? '' : '/'}${path}`
+}
+
 function upsertMeta(attrName, attrVal, content) {
   let el = document.querySelector(`meta[${attrName}="${attrVal}"]`)
   if (!el) {
@@ -44,11 +59,18 @@ export default function PageTitle({ title, description, ogImage }) {
       upsertMeta('property', 'og:url', url)
       upsertMeta('property', 'og:type', 'website')
       upsertMeta('property', 'og:site_name', OG_SITE_NAME)
-      if (ogImage) upsertMeta('property', 'og:image', ogImage)
+      const ogImageUrl = absolute(ogImage)
+      if (ogImageUrl) {
+        upsertMeta('property', 'og:image', ogImageUrl)
+        upsertMeta('property', 'og:image:width', '1200')
+        upsertMeta('property', 'og:image:height', '630')
+        upsertMeta('property', 'og:image:alt', fullTitle)
+      }
       upsertMeta('name', 'twitter:card', 'summary_large_image')
       upsertMeta('name', 'twitter:title', fullTitle)
       upsertMeta('name', 'twitter:description', description)
-      if (ogImage) upsertMeta('name', 'twitter:image', ogImage)
+      upsertMeta('name', 'twitter:url', url)
+      if (ogImageUrl) upsertMeta('name', 'twitter:image', ogImageUrl)
     }
 
     return () => { document.title = prev }
