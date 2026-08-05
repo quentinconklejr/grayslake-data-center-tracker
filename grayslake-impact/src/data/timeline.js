@@ -9,9 +9,9 @@ export const timelineEvents = [
   {
     date: "2025-05-06",
     title: "Village approval process complete",
-    description: "Daily Herald reporting places the approval process between September 2024 and May 2025. The precise endpoints of September 23 and May 6 came from the Village FAQ, which is no longer reachable and could not be re-confirmed. Mayor Davies cited 1,500 permanent jobs and major tax revenue during this period.",
+    description: "The Village FAQ records the approval as completed \u201cover an almost eight-month period between 9/23/2024 and 5/6/2025\u201d after a number of public hearings and Village Board meetings. Mayor Davies cited 1,500 permanent jobs and major tax revenue during this period.",
     category: "approval",
-    sourceKeys: ["dailyherald2026", "govtech2025"],
+    sourceKeys: ["villagefaq_archived", "dailyherald2026", "govtech2025"],
   },
   {
     date: "2025-09",

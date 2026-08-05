@@ -40,7 +40,7 @@ const FACETS = [
     catColor: 'text-emerald-700',
     catBorder: 'border-emerald-200',
     headline: 'Up to 1,680 permanent jobs — if the campus is fully built.',
-    body: 'The Village FAQ does not give a flat headcount. It applies a ratio — "50 permanent jobs are created for every 300,000 sq. ft." — to the maximum approved footprint, reaching 1,680 only at the full 10.1M sq ft build-out. That footprint is a ceiling the approvals allow, not a commitment T5 has made. Two lower figures were stated directly by people: Mayor Davies cited 1,500 permanent positions in October 2025, and T5 CEO Pete Marin cited "over 1,600" in July 2026. Construction through 2027–2029 will employ "hundreds" of trade workers.',
+    body: 'The Village FAQ gives no flat headcount. It states that "if all 10 million sq ft of approved data center space is built," an estimated "50 permanent jobs are created for every 300,000 sq ft, or 1,680 permanent jobs" — and hedges that estimate, noting job creation "may change" as operations and technologies do. That footprint is a ceiling the approvals allow, not a commitment. Two lower figures were stated directly by people: Mayor Davies cited 1,500 permanent positions in October 2025, and CEO Pete Marin cited "over 1,600" in July 2026. Construction employment is counted separately: the FAQ excludes it, and it runs to "hundreds" of trade workers through 2027–2029.',
     chart: <JobsTimelineChart />,
     chartLabel: 'Permanent vs. Construction Workforce',
     sourceKey: 'govtech2025',
@@ -154,11 +154,11 @@ export default function Home() {
                 className="text-7xl sm:text-8xl font-display font-black text-gray-900 leading-none tracking-tighter block"
               />
               <p className="text-sm text-gray-500 mt-4 leading-snug">
-                At full 10.1M sq ft build-out, derived by the Village FAQ from a ratio of 50 jobs per
-                300,000 sq ft. Not a commitment. Davies cited 1,500 (Oct. 2025); Marin cited &ldquo;over
+                Village FAQ estimate, conditional on all 10 million sq ft being built and hedged as subject
+                to change. Excludes construction jobs. Davies cited 1,500 (Oct. 2025); Marin cited &ldquo;over
                 1,600&rdquo; (Jul. 2026).<SourceCitation sourceKey="villagefaq_archived" />
               </p>
-              <CopyKPIButton copyText={buildCopyText(`Up to ${jobs.permanent.toLocaleString()} permanent jobs ${jobs.permanentCondition}, derived from ${jobs.permanentBasis}`, 'Davies cited 1,500; Marin cited over 1,600.', 'villagefaq_archived')} />
+              <CopyKPIButton copyText={buildCopyText(`Up to ${jobs.permanent.toLocaleString()} permanent jobs ${jobs.permanentCondition} — Village FAQ estimate of ${jobs.permanentBasis}, excluding construction jobs`, 'Davies cited 1,500; Marin cited over 1,600.', 'villagefaq_archived')} />
             </FadeIn>
 
             <FadeIn delay={0.08} className="md:pl-12 border-t border-gray-200 pt-10 md:pt-0 md:border-t-0">
@@ -208,7 +208,7 @@ export default function Home() {
             <div className="mt-6 pt-5 border-t border-gray-100 flex flex-wrap gap-x-8 gap-y-3">
               <div>
                 <p className="text-2xs font-mono text-gray-400 uppercase tracking-[0.16em] mb-0.5">Water (full buildout)</p>
-                <p className="text-sm font-display font-bold text-gray-800">&lt; 50,000 gal/day<SourceCitation sourceKey="clcjawa2026" /></p>
+                <p className="text-sm font-display font-bold text-gray-800">&lt; 50,000 gal/day<SourceCitation sourceKey="clcjawa2026" /><SourceCitation sourceKey="villagefaq_archived" /></p>
                 <CopyKPIButton copyText={buildCopyText('< 50,000 gal/day water use (full buildout)', 'CLCJAWA estimate', 'clcjawa2026')} />
               </div>
               <div>

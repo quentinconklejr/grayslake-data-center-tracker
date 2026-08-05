@@ -129,7 +129,9 @@ export const sources = {
     publisher: "Village of Grayslake, via Internet Archive Wayback Machine",
     date: "Snapshot captured July 24, 2026",
     url: "https://web.archive.org/web/20260724165553/https://www.villageofgrayslake.com/DocumentCenter/View/15282/T5-FAQ-sheet?bidId=",
-    note: "The Village's live copy of this document is no longer reachable. This archived snapshot is the citable version. Figures below are quoted from page 2, under the document's own \u201cUpdated as of June 5, 2026\u201d heading.",
+    localCopy: "/docs/village-grayslake-t5-faq-2026-06-05.pdf",
+    localCopySha256: "a9c0802951492d14989848fdd64b910a42390c0c18810046b7b7aaebb2d5bcea",
+    note: "The Village's live copy of this document is no longer reachable. This tracker hosts a mirror so the record survives independently of both the Village site and the Internet Archive. Every page of the document carries the heading \u201cUpdated as of June 5, 2026\u201d.",
     verified: "Aug 5, 2026",
   },
 };

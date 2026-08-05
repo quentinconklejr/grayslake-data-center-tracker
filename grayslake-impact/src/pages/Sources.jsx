@@ -43,6 +43,19 @@ export default function Sources() {
               {source.note && (
                 <p className="text-xs text-amber-700/80 italic mb-1">{source.note}</p>
               )}
+              {source.localCopy && (
+                <a
+                  href={source.localCopy}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-2xs font-mono text-blue-600 hover:text-blue-700 inline-flex items-center gap-1 mb-1 transition-colors"
+                >
+                  <svg className="w-3 h-3" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.4" aria-hidden="true">
+                    <path d="M6 1.5v6M3.5 5.5L6 8l2.5-2.5M2 9.5h8" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                  mirrored copy hosted here (PDF)
+                </a>
+              )}
               {source.status === 'dead' ? (
                 <span className="text-2xs font-mono text-amber-800 line-through decoration-amber-400 break-all">
                   {source.url}

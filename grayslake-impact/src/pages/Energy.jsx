@@ -87,14 +87,30 @@ export default function Energy() {
         <p className="text-2xs font-mono text-gray-400 uppercase tracking-widest mb-5">Residential Rate Impact</p>
         <div className="space-y-3">
 
-          <EvidenceBlock type="stated" title="Power costs: developer responsible, per officials and industry" sourceKey="govtech2025">
+          <EvidenceBlock type="stated" title="Power costs: T5 responsible under Illinois rate standards" sourceKey="villagefaq_archived">
             <p className="text-sm text-gray-600 leading-relaxed">
-              Mayor Elizabeth Davies said Grayslake residents will not see impacts to water or power
-              from the development. Dan Diorio of the Data Center Coalition said the industry is
-              &ldquo;fully committed to paying their full cost of service.&rdquo; The Village FAQ
-              previously stated T5 would pay for its own power under State of Illinois electric rate
-              standards; that document is no longer reachable, so the claim appears here only in the
-              form attributable to named speakers on the record.
+              The Village FAQ states T5 will pay for all electricity used on the campus &ldquo;as per State
+              of Illinois electric rate standards and as provided for in electric supply agreements that are
+              already in place between T5 and ComEd.&rdquo; Power is bought through a private competitive
+              process and distributed by ComEd. Mayor Davies separately said residents will not see impacts
+              to water or power.<SourceCitation sourceKey="govtech2025" />
+            </p>
+          </EvidenceBlock>
+
+          <EvidenceBlock type="stated" title="Grid infrastructure: developer-funded, including the substation" sourceKey="villagefaq_archived">
+            <p className="text-sm text-gray-600 leading-relaxed">
+              Under agreements with ComEd, the developer funds the electricity supply infrastructure serving
+              the campus, including its own electrical substation on site. The FAQ states the Village of
+              Grayslake will pay nothing for this infrastructure.
+            </p>
+          </EvidenceBlock>
+
+          <EvidenceBlock type="stated" title="Separate rate class for large users" sourceKey="villagefaq_archived">
+            <p className="text-sm text-gray-600 leading-relaxed">
+              The FAQ states Illinois regulations place high-electricity users like data centers in a separate
+              rate class, so their demand does not directly affect residential rates, and that per ComEd the
+              cost of utility infrastructure upgrades for large projects is largely contained to the business
+              customer rate class. All ComEd rates are regulated by the ICC.
             </p>
           </EvidenceBlock>
 
@@ -147,6 +163,8 @@ export default function Energy() {
               ['Renewable Commitment',  '— not disclosed', null],
               ['Cooling Approach',         'Closed-loop, air-cooled', 'clcjawa2026'],
               ['Water Use (full buildout)', '< 50,000 gal / day',      'clcjawa2026'],
+              ['Substation',               'Developer-funded, on campus', 'villagefaq_archived'],
+              ['ComEd Supply Agreement',   'Stated as already in place',  'villagefaq_archived'],
               ['PUE Target',            '— not disclosed', null],
             ].map(([k, v, src, note]) => (
               <div key={k} className="flex justify-between items-center py-2.5 border-b border-gray-100 last:border-0">

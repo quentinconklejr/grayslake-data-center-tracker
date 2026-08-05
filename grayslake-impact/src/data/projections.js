@@ -25,10 +25,11 @@ export const projections = {
     // build-out, which is a ceiling rather than a commitment. Always render it
     // with that condition attached.
     permanent: 1680,
-    permanentBasis: "50 permanent jobs per 300,000 sq. ft., applied to the full build-out",
-    permanentCondition: "at full 10.1M sq ft build-out",
+    permanentBasis: "50 permanent jobs for every 300,000 sq. ft.",
+    permanentCondition: "if all 10 million sq ft of approved space is built",
     permanentNote:
-      "Village FAQ ratio figure, conditional on the campus reaching its maximum approved footprint.",
+      "Village FAQ ratio figure. The FAQ frames it conditionally and hedges it: \u201cBecause operations and technologies will change over time, current estimations of job creation from the data center campus may change.\u201d It also excludes construction employment, which is counted separately.",
+    permanentExcludesConstruction: true,
     // Attributable alternatives, each with a named speaker and a live source:
     permanentDavies: 1500,   // Mayor Elizabeth Davies, Chicago Tribune, Oct. 2025
     permanentMarin: 1600,    // Pete Marin, T5 CEO, "over 1,600", Daily Herald, Jul. 2026

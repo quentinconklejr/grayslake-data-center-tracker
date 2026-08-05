@@ -179,9 +179,10 @@ export default function Residents() {
           <SourceCitation sourceKey="govtech2025" />
           {' '}T5&rsquo;s CEO cited &ldquo;over {jobs.permanentMarin.toLocaleString()}&rdquo; in July 2026.
           <SourceCitation sourceKey="dailyherald_jul2026" />
-          {' '}The Village FAQ gives a higher number, {jobs.permanent.toLocaleString()}, but reaches it by assuming
-          50 jobs for every 300,000 square feet and applying that to the largest campus the approvals allow. It holds
-          only if the full 10.1 million square feet is actually built.
+          {' '}The Village FAQ gives a higher number, {jobs.permanent.toLocaleString()}, but reaches it by estimating
+          50 jobs for every 300,000 square feet and assuming the largest campus the approvals allow actually gets built.
+          The FAQ says so itself &mdash; the figure applies only &ldquo;if all 10 million sq ft of approved data center
+          space is built&rdquo; &mdash; and cautions the estimate may change. It also leaves construction jobs out.
           <SourceCitation sourceKey="villagefaq_archived" />
         </p>
         <p>

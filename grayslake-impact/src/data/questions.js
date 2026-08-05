@@ -9,12 +9,12 @@ export const questions = [
         sourceKey: 'govtech2025',
       },
       {
-        text: 'CLCJAWA describes the campus cooling as a closed-loop system in which heated water is cooled with air and recycled, rather than consumed. T5 CEO Pete Marin described it as air-cooled chillers that do not need refilling once charged.',
-        sourceKeys: ['clcjawa2026', 'govtech2025'],
+        text: 'The Village FAQ states the campus will use "primarily air cooling technology with minimal water usage," unlike earlier data center designs that relied on heavy water use. CLCJAWA describes it as a closed-loop system in which heated water is cooled with air and recycled rather than consumed, and T5 CEO Pete Marin described air-cooled chillers that do not need refilling once charged.',
+        sourceKeys: ['villagefaq_archived', 'clcjawa2026', 'govtech2025'],
       },
       {
-        text: 'CLCJAWA, the wholesale water agency serving Grayslake, states the campus at full buildout is expected to use less than 50,000 gallons per day on average — about 0.25% of the agency\'s daily flow, and within its existing IDNR Lake Michigan allocation.',
-        sourceKey: 'clcjawa2026',
+        text: 'Two sources put campus water use at no more than 50,000 gallons per day, but scale it against different denominators. The Village FAQ calls this "just 4.0% additional water use over what the Village supplies each day." CLCJAWA, the wholesale agency serving Grayslake and 13 other members, puts the same volume at about 0.25% of its system-wide daily flow, within its existing IDNR Lake Michigan allocation. Both can be accurate: one compares against Grayslake\'s supply, the other against a 100-square-mile regional system.',
+        sourceKeys: ['villagefaq_archived', 'clcjawa2026'],
       },
       {
         text: 'CLCJAWA estimates the initial flush and fill for one 200 MW building at 3.2 million gallons — roughly 15% of the agency\'s daily demand if drawn at once, but planned and staged over several days.',
@@ -49,8 +49,8 @@ export const questions = [
     category: 'energy',
     stated: [
       {
-        text: 'Mayor Davies said residents will not see power impacts from the development. Dan Diorio of the Data Center Coalition said the industry is "fully committed to paying their full cost of service." The Village FAQ previously stated T5 would pay for its own power under State of Illinois electric rate standards; that document is no longer reachable, so only the on-the-record statements are carried here.',
-        sourceKey: 'govtech2025',
+        text: 'The Village FAQ states T5 will pay for all electricity used on the campus "as per State of Illinois electric rate standards and as provided for in electric supply agreements that are already in place between T5 and ComEd," that Illinois places large users in a separate rate class so their demand does not directly affect residential rates, and that the developer funds the supply infrastructure including its own substation with the Village paying nothing. Mayor Davies separately said residents will not see power impacts, and Dan Diorio of the Data Center Coalition said the industry is "fully committed to paying their full cost of service."',
+        sourceKeys: ['villagefaq_archived', 'govtech2025'],
       },
     ],
     disputed: [],
@@ -72,8 +72,8 @@ export const questions = [
     category: 'scale',
     stated: [
       {
-        text: 'Village approvals cover up to 472 acres and not more than 10.1 million square feet of buildable area at full buildout. CLCJAWA\'s briefing records the development as occupying 470 acres with up to 10 million square feet in fewer than 20 buildings.',
-        sourceKeys: ['dailyherald2026', 'clcjawa2026'],
+        text: 'The Village FAQ states the approved campus "covers up to 472 acres and can include no more than 10,100,000 square feet of data center space in several individual buildings" — it gives no building count. Daily Herald reporting puts the count at 18. CLCJAWA records 470 acres, up to 10 million square feet, in fewer than 20 buildings.',
+        sourceKeys: ['villagefaq_archived', 'dailyherald2026', 'clcjawa2026'],
       },
       {
         text: '18 buildings were approved per Daily Herald and Government Technology reporting. Developer CEO Pete Marin cited up to 20 buildings as an upper estimate. Leasable IT capacity is 1,200 MW at full buildout.',

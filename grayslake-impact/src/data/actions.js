@@ -7,9 +7,9 @@ export const actions = [
     jurisdiction: "Village of Grayslake",
     actionType: "Application Filed",
     description:
-      "T5 files for village approvals. Daily Herald reporting places the start of the approval process in September 2024. The precise date of September 23 came from the Village FAQ, which is no longer reachable and could not be re-confirmed.",
+      "T5 files for village approvals. The Village FAQ dates the start of the approval process to September 23, 2024; Daily Herald reporting independently places it in September 2024.",
     outcome: "Application accepted; review process initiated.",
-    sourceIds: ["hoodline2026", "dailyherald2026"],
+    sourceIds: ["villagefaq_archived", "dailyherald2026"],
     status: "complete",
     lastVerified: "June 5, 2026",
   },
@@ -19,9 +19,9 @@ export const actions = [
     jurisdiction: "Village of Grayslake",
     actionType: "Land-Use Approval",
     description:
-      "Village approval process concludes. Daily Herald reporting places it between September 2024 and May 2025, covering up to 472 acres, 18 buildings and not more than 10.1 million square feet. The precise endpoints of September 23 and May 6 came from the Village FAQ and could not be re-confirmed after that document became unreachable. Mayor Davies cited 1,500 permanent jobs and major tax revenue during this period.",
+      "Village approval process concludes. The Village FAQ records it as completed \u201cover an almost eight-month period between 9/23/2024 and 5/6/2025\u201d following a number of public hearings and Village Board meetings. Approvals cover up to 472 acres and no more than 10,100,000 square feet; the FAQ describes this as \u201cseveral individual buildings\u201d without giving a count. Daily Herald reporting puts the count at 18. Mayor Davies cited 1,500 permanent jobs and major tax revenue during this period.",
     outcome: "Approved.",
-    sourceIds: ["dailyherald2026", "govtech2025"],
+    sourceIds: ["villagefaq_archived", "dailyherald2026", "govtech2025"],
     status: "complete",
     lastVerified: "June 5, 2026",
   },

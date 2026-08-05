@@ -40,7 +40,7 @@ const PHASES = [
     dot: 'bg-emerald-500',
     label: 'text-emerald-700',
     jobs: '1,500 – 1,680 permanent positions',
-    note: 'Mayor Davies cited 1,500 (Chicago Tribune, Oct. 2025); T5 CEO Pete Marin cited "over 1,600" (Daily Herald, Jul. 2026). The Village FAQ reaches 1,680 by applying 50 jobs per 300,000 sq. ft. to the full 10.1M sq ft build-out — a maximum conditional on the campus being built out entirely, not a flat projection.',
+    note: 'Mayor Davies cited 1,500 (Chicago Tribune, Oct. 2025); T5 CEO Pete Marin cited "over 1,600" (Daily Herald, Jul. 2026). The Village FAQ reaches 1,680 at 50 jobs per 300,000 sq ft, conditional on all 10 million sq ft being built, hedged as subject to change, and excluding construction jobs.',
     sourceKeys: ['govtech2025', 'villagefaq_archived'],
   },
 ]
@@ -67,10 +67,11 @@ export default function Jobs() {
           Permanent headcount has been stated three ways. Mayor Davies cited{' '}
           {jobs.permanentDavies.toLocaleString()} to the Chicago Tribune in October 2025. T5 CEO Pete Marin cited
           &ldquo;over {jobs.permanentMarin.toLocaleString()}&rdquo; in July 2026. The Village FAQ reaches{' '}
-          {jobs.permanent.toLocaleString()} by applying a density ratio &mdash; {jobs.permanentBasis} &mdash; so that
-          figure holds only {jobs.permanentCondition}, which the approvals permit but T5 has not committed to.
-          Construction phase employment is described as &ldquo;{jobs.constructionPhase}&rdquo; with no precise headcount
-          publicly sourced.
+          {jobs.permanent.toLocaleString()} by estimating {jobs.permanentBasis}, and states that figure holds{' '}
+          {jobs.permanentCondition} &mdash; a footprint the approvals permit but T5 has not committed to. The FAQ
+          hedges its own number, noting that job estimates &ldquo;may change&rdquo; as operations and technologies do,
+          and excludes site development and construction employment from it. That construction workforce is described
+          separately as &ldquo;{jobs.constructionPhase}&rdquo; with no precise headcount publicly sourced.
         </p>
         <p className="text-2xs font-mono text-gray-400 mt-3">Last verified {LAST_VERIFIED}</p>
       </FadeIn>
