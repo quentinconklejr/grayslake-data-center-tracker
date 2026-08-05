@@ -67,7 +67,7 @@ export default function Residents() {
         <p className="text-2xs font-mono text-blue-600/60 uppercase tracking-[0.2em] mb-3">Plain-Language Summary</p>
         <h1 className="text-4xl font-display font-bold text-gray-900 tracking-tight mb-3">What this project means for Grayslake residents</h1>
         <p className="text-base text-gray-600 max-w-2xl leading-relaxed">
-          T5 @ Chicago IV is the largest development ever proposed in Lake County. This page summarizes
+          T5 @ Chicago IV is the largest development ever approved in Lake County, and site work is underway. This page summarizes
           what is confirmed, what is disputed, and what has no public answer yet, in plain language,
           with every claim linked to its source.
         </p>

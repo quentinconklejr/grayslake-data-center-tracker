@@ -133,7 +133,7 @@ export default function Home() {
 
           <FadeIn>
             <h1 className="text-3xl sm:text-4xl font-display font-bold text-gray-900 leading-tight tracking-tight mb-4 max-w-[52ch]">
-              T5 @ Chicago IV is a proposed $8.5–18B hyperscale AI data center in Grayslake, Illinois.
+              T5 @ Chicago IV is an approved $8.5–18B hyperscale AI data center under construction in Grayslake, Illinois.
             </h1>
             <p className="text-xl text-gray-600 leading-relaxed max-w-[65ch] mb-4">
               This tracker collects public records and press coverage on the project and links every

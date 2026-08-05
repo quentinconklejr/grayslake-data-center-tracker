@@ -110,7 +110,7 @@ export default function Reporters() {
       <AudienceBreadcrumb current="Reporters" />
       <PageTitle
         title="For Reporters"
-        description="Key figures, citations, and press contact reference for T5 @ Chicago IV — the largest proposed development in Lake County, Illinois."
+        description="Key figures, citations, and press contact reference for T5 @ Chicago IV — the largest approved development in Lake County, Illinois."
         ogImage="/og/reporters.png"
       />
 
