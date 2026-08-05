@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import PageTitle from '../components/ui/PageTitle'
+import { pageMeta } from '../data/pageMeta'
 import FadeIn from '../components/ui/FadeIn'
 import SourceCitation from '../components/ui/SourceCitation'
 import { FootnoteProvider, FootnoteList } from '../components/ui/FootnoteContext'
@@ -118,11 +119,7 @@ export default function Actions() {
   return (
     <FootnoteProvider preload={PRELOAD_KEYS}>
     <div className="max-w-3xl mx-auto px-4 sm:px-6 py-12">
-      <PageTitle
-        title="Jurisdictional Actions"
-        description="Cross-jurisdictional action tracker for T5 @ Chicago IV — filterable record of permit applications, legal challenges, resolutions, and policy changes across Village, County, State, and Federal bodies."
-        ogImage="/og/actions.png"
-      />
+      <PageTitle {...pageMeta['/actions']} />
 
       <FadeIn className="mb-10 pb-8 border-b border-gray-200">
         <p className="text-2xs font-mono text-blue-600/60 uppercase tracking-[0.2em] mb-3">Cross-Jurisdictional Record</p>

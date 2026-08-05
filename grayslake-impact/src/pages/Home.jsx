@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import PageTitle from '../components/ui/PageTitle'
+import { pageMeta } from '../data/pageMeta'
 import AnimatedNumber from '../components/ui/AnimatedNumber'
 import FadeIn from '../components/ui/FadeIn'
 import CopyKPIButton from '../components/ui/CopyKPIButton'
@@ -120,10 +121,7 @@ export default function Home() {
   return (
     <FootnoteProvider>
     <div>
-      <PageTitle
-        description="A civic data dashboard tracking the T5 @ Chicago IV hyperscale AI data center development in Grayslake, Illinois — jobs, taxes, energy, water, and legal challenges, all sourced."
-        ogImage="/og/home.png"
-      />
+      <PageTitle {...pageMeta['/']} />
 
       {/* Section context bar — appears on scroll, stays below header */}
       <SectionBar />

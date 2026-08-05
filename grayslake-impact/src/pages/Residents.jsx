@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import PageTitle from '../components/ui/PageTitle'
+import { pageMeta } from '../data/pageMeta'
 import FadeIn from '../components/ui/FadeIn'
 import SourceCitation from '../components/ui/SourceCitation'
 import ItemCitations from '../components/ui/ItemCitations'
@@ -60,11 +61,7 @@ export default function Residents() {
     <FootnoteProvider preload={PRELOAD_KEYS}>
     <div className="max-w-3xl mx-auto px-4 sm:px-6 py-12">
       <AudienceBreadcrumb current="Residents" />
-      <PageTitle
-        title="For Residents"
-        description="Plain-language summary of what T5 @ Chicago IV means for Grayslake residents — water, electric bills, campus scale, jobs, taxes, and the approval process."
-        ogImage="/og/residents.png"
-      />
+      <PageTitle {...pageMeta['/residents']} />
 
       <FadeIn className="mb-10 pb-8 border-b border-gray-200">
         <p className="text-2xs font-mono text-blue-600/60 uppercase tracking-[0.2em] mb-3">Plain-Language Summary</p>

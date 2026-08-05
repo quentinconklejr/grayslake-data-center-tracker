@@ -1,4 +1,5 @@
 import PageTitle from '../components/ui/PageTitle'
+import { pageMeta } from '../data/pageMeta'
 import StatCard from '../components/ui/StatCard'
 import JobsTimelineChart from '../components/charts/JobsTimelineChart'
 import SourceCitation from '../components/ui/SourceCitation'
@@ -57,11 +58,7 @@ export default function Jobs() {
   return (
     <FootnoteProvider>
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
-      <PageTitle
-        title="Job Creation"
-        description="Employment projections for the T5 @ Chicago IV campus in Grayslake — 1,680 permanent positions at full buildout and construction-phase workforce estimates."
-        ogImage="/og/jobs.png"
-      />
+      <PageTitle {...pageMeta['/jobs']} />
 
       <FadeIn className="mb-10 pb-8 border-b border-gray-200">
         <p className="text-2xs font-mono text-blue-600/60 uppercase tracking-[0.2em] mb-3">Employment</p>

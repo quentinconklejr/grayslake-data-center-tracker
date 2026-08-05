@@ -1,4 +1,5 @@
 import PageTitle from '../components/ui/PageTitle'
+import { pageMeta } from '../data/pageMeta'
 import StatCard from '../components/ui/StatCard'
 import EnergyDrawChart from '../components/charts/EnergyDrawChart'
 import SourceCitation from '../components/ui/SourceCitation'
@@ -15,11 +16,7 @@ export default function Energy() {
   return (
     <FootnoteProvider>
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
-      <PageTitle
-        title="Energy Draw"
-        description="Energy capacity and utility rate analysis for T5 @ Chicago IV: 1,200 MW leasable IT capacity, 1,600 MW utility-contracted power, and Illinois rate structure context."
-        ogImage="/og/energy.png"
-      />
+      <PageTitle {...pageMeta['/energy']} />
 
       <FadeIn className="mb-10 pb-8 border-b border-gray-200">
         <p className="text-2xs font-mono text-blue-600/60 uppercase tracking-[0.2em] mb-3">Grid Impact</p>

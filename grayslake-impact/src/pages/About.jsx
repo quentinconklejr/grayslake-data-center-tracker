@@ -1,15 +1,12 @@
 import PageTitle from '../components/ui/PageTitle'
+import { pageMeta } from '../data/pageMeta'
 import FadeIn from '../components/ui/FadeIn'
 import { LAST_VERIFIED, SITE_CONTACT } from '../data/siteConfig'
 
 export default function About() {
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 py-12">
-      <PageTitle
-        title="About"
-        description="About the Grayslake Data Center Tracker — an independent, resident-built resource collecting public records on T5 @ Chicago IV."
-        ogImage="/og/about.png"
-      />
+      <PageTitle {...pageMeta['/about']} />
 
       <FadeIn className="mb-10 pb-8 border-b border-gray-200">
         <p className="text-2xs font-mono text-blue-600/60 uppercase tracking-[0.2em] mb-3">About This Site</p>

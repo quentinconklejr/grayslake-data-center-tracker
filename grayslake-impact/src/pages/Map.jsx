@@ -1,4 +1,5 @@
 import PageTitle from '../components/ui/PageTitle'
+import { pageMeta } from '../data/pageMeta'
 import SiteMap from '../components/map/SiteMap'
 import FadeIn from '../components/ui/FadeIn'
 import { FootnoteProvider, FootnoteList } from '../components/ui/FootnoteContext'
@@ -8,11 +9,7 @@ export default function MapPage() {
   return (
     <FootnoteProvider>
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
-      <PageTitle
-        title="Site Map"
-        description="Interactive site map showing the 472-acre T5 @ Chicago IV campus location at Peterson Road and Route 83 in Grayslake, Illinois."
-        ogImage="/og/map.png"
-      />
+      <PageTitle {...pageMeta['/map']} />
 
       <FadeIn className="mb-8 pb-8 border-b border-gray-200">
         <p className="text-2xs font-mono text-blue-600/60 uppercase tracking-[0.2em] mb-3">T5 @ Chicago IV · Peterson Rd &amp; Route 83</p>
