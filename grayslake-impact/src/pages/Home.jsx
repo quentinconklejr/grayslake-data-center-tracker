@@ -13,7 +13,7 @@ import SiteMap from '../components/map/SiteMap'
 import SourceCitation from '../components/ui/SourceCitation'
 import { FootnoteProvider, FootnoteList } from '../components/ui/FootnoteContext'
 import { projections } from '../data/projections'
-import { figureById } from '../data/keyFigures'
+import { figureById, figureCopyText } from '../data/keyFigures'
 import { sources } from '../data/sources'
 import { LAST_VERIFIED } from '../data/siteConfig'
 
@@ -102,30 +102,28 @@ const SECONDARY_STATS = [
     src: 'dcd2026',
   },
   {
-    label: 'Campus Area',
+    label: 'Approved Max',
     numValue: project.totalAcres,
     suffix: ' ac',
-    note: 'Peterson Rd & Route 83',
-    src: 'dailyherald2026',
+    note: 'Approved maximum, not the area shown on the map below',
+    src: 'villagefaq_archived',
   },
 ]
 
 // Copy text for a canonical figure. This string is the one that travels
 // furthest from its context — pasted into a story, an email, a slide — so it
 // must carry the qualifier and the citation, never just the number.
-function copyFigure(id) {
-  const f = figureById[id]
-  const key = f.sourceKey ?? f.sourceKeys?.[0]
-  const s = sources[key]
-  const citation = s ? ` (${[s.publisher, s.date].filter(Boolean).join(', ')})` : ''
-  return `${f.label}: ${f.value} — ${f.qualifier}${citation}`
-}
-
 function buildCopyText(displayValue, note, src) {
   const s = sources[src]
   if (!s) return displayValue
   const citation = [s.publisher, s.date].filter(Boolean).join(', ')
-  return `${displayValue} ${note.toLowerCase()}${citation ? ` (${citation})` : ''}`
+  // Casing is preserved exactly as authored. This previously called
+  // note.toLowerCase() to make the caption read as a sentence continuation,
+  // which mangled every proper noun in it — "ComEd" became "comed", "T5 CEO"
+  // became "t5 ceo", "Peterson Rd & Route 83" became "peterson rd & route 83".
+  // An em dash separates value from caption instead, so the caption stands on
+  // its own and case never needs adjusting.
+  return `${displayValue} — ${note}${citation ? ` (${citation})` : ''}`
 }
 
 export default function Home() {
@@ -170,7 +168,7 @@ export default function Home() {
                 to change. Excludes construction jobs. Davies cited 1,500 (Oct. 2025); Marin cited &ldquo;over
                 1,600&rdquo; (Jul. 2026).<SourceCitation sourceKey="villagefaq_archived" />
               </p>
-              <CopyKPIButton copyText={copyFigure('jobs-permanent')} />
+              <CopyKPIButton copyText={figureCopyText('jobs-permanent')} />
             </FadeIn>
 
             <FadeIn delay={0.08} className="md:pl-12 border-t border-gray-200 pt-10 md:pt-0 md:border-t-0">
@@ -181,7 +179,7 @@ export default function Home() {
               <p className="text-sm text-gray-500 mt-4 leading-snug">
                 {figureById['investment'].qualifier}<SourceCitation sourceKey="govtech2025" />
               </p>
-              <CopyKPIButton copyText={copyFigure('investment')} />
+              <CopyKPIButton copyText={figureCopyText('investment')} />
             </FadeIn>
 
           </div>
@@ -222,13 +220,13 @@ export default function Home() {
                 <p className="text-2xs font-mono text-gray-400 uppercase tracking-[0.16em] mb-0.5">Water (full buildout)</p>
                 <p className="text-sm font-display font-bold text-gray-800">{figureById['water'].value}<SourceCitation sourceKey="clcjawa2026" /><SourceCitation sourceKey="villagefaq_archived" /></p>
                 <p className="text-2xs text-gray-600 mt-0.5">{figureById['water'].qualifier}</p>
-                <CopyKPIButton copyText={copyFigure('water')} />
+                <CopyKPIButton copyText={figureCopyText('water')} />
               </div>
               <div>
                 <p className="text-2xs font-mono text-gray-400 uppercase tracking-[0.16em] mb-0.5">Commissioning flush (one 200 MW bldg)</p>
                 <p className="text-sm font-display font-bold text-gray-800">{figureById['water-flush'].value}<SourceCitation sourceKey="clcjawa2026" /></p>
                 <p className="text-2xs text-gray-600 mt-0.5">{figureById['water-flush'].qualifier}</p>
-                <CopyKPIButton copyText={copyFigure('water-flush')} />
+                <CopyKPIButton copyText={figureCopyText('water-flush')} />
               </div>
             </div>
           </FadeIn>
@@ -275,12 +273,16 @@ export default function Home() {
       </section>
 
       {/* ── Site map ─────────────────────────────────────────────────────────── */}
-      <section data-section="Site Location" className="max-w-7xl mx-auto px-4 sm:px-6 pt-12 pb-14">
+      <section data-section="Land Ownership" className="max-w-7xl mx-auto px-4 sm:px-6 pt-12 pb-14">
         <FadeIn>
           <div className="flex items-end justify-between mb-5">
             <div>
-              <p className="text-2xs font-mono text-blue-600/60 uppercase tracking-[0.2em] mb-1">Site Location</p>
-              <h2 className="text-2xl font-display font-bold text-gray-900">Peterson Rd &amp; Route 83</h2>
+              <p className="text-2xs font-mono text-blue-700 uppercase tracking-[0.2em] mb-1">Land Ownership</p>
+              <h2 className="text-2xl font-display font-bold text-gray-900">Land recorded to T5</h2>
+              <p className="text-sm text-gray-600 mt-1 max-w-md leading-snug">
+                {figureById['acres-owned'].value} across {figureById['acres-owned'].qualifier}. The approved
+                campus is larger and is not mapped.
+              </p>
             </div>
             <Link to="/map" className="text-sm text-gray-500 hover:text-gray-900 transition-colors flex items-center gap-1">
               Full map

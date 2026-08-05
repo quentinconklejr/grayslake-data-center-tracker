@@ -33,10 +33,12 @@ export default function Reporters() {
       {/* Key figures — rendered from the canonical source, never retyped */}
       <FadeIn className="mb-14">
         <p className="text-2xs font-mono text-gray-600 uppercase tracking-widest mb-5">Key Figures</p>
-        <KeyFigureList figures={keyFigures} />
+        <KeyFigureList figures={keyFigures} copyable />
         <p className="text-xs text-gray-600 mt-3 leading-relaxed">
           Each figure is shown with the condition attached to it. Several are conditional or
           contested, and quoting the number without its qualifier will misstate the record.
+          The copy button on each row puts the value, its condition and its citation on your
+          clipboard together.
         </p>
       </FadeIn>
 

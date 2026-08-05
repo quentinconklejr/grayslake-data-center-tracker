@@ -1,4 +1,5 @@
 import { projections } from './projections'
+import { sources } from './sources'
 
 const { project, jobs } = projections
 
@@ -132,3 +133,21 @@ export const figureById = Object.fromEntries(keyFigures.map(f => [f.id, f]))
 
 /** Look up figures by id, in the order requested. */
 export const pick = (...ids) => ids.map(id => figureById[id]).filter(Boolean)
+
+/**
+ * The exact string a copy-to-clipboard button puts on the clipboard.
+ *
+ * Defined here rather than per page because this text travels further from its
+ * context than anything else on the site — pasted into a story, an email, a
+ * slide. It must carry the value, the qualifier and the citation together, and
+ * it must preserve authored casing: proper nouns like ComEd, T5 and Peterson Rd
+ * are not stylistic, and lowercasing them makes the paste look wrong.
+ */
+export function figureCopyText(id) {
+  const f = figureById[id]
+  if (!f) return ''
+  const key = f.sourceKey ?? f.sourceKeys?.[0]
+  const s = sources[key]
+  const citation = s ? ` (${[s.publisher, s.date].filter(Boolean).join(', ')})` : ''
+  return `${f.label}: ${f.value} — ${f.qualifier}${citation}`
+}

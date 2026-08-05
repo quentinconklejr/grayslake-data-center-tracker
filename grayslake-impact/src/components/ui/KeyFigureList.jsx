@@ -1,4 +1,6 @@
 import SourceCitation from './SourceCitation'
+import CopyKPIButton from './CopyKPIButton'
+import { figureCopyText } from '../../data/keyFigures'
 
 /**
  * Renders canonical figures from keyFigures.js.
@@ -9,7 +11,7 @@ import SourceCitation from './SourceCitation'
  * than a ceiling, 1.55 GW read as an opposition claim, 472 acres read as
  * ownership. Keeping the two together in one component is the structural fix.
  */
-export default function KeyFigureList({ figures, variant = 'table' }) {
+export default function KeyFigureList({ figures, variant = 'table', copyable = false }) {
   if (variant === 'cards') {
     return (
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
@@ -24,6 +26,7 @@ export default function KeyFigureList({ figures, variant = 'table' }) {
                 <SourceCitation key={k} sourceKey={k} />
               ))}
             </p>
+            {copyable && <CopyKPIButton copyText={figureCopyText(f.id)} />}
           </div>
         ))}
       </div>
@@ -46,6 +49,7 @@ export default function KeyFigureList({ figures, variant = 'table' }) {
               ))}
             </p>
             {f.detail && <p className="text-xs text-gray-600 mt-1 leading-snug">{f.detail}</p>}
+            {copyable && <CopyKPIButton copyText={figureCopyText(f.id)} />}
           </div>
         </div>
       ))}
