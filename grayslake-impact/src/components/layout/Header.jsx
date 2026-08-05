@@ -170,10 +170,7 @@ export default function Header() {
 
       {/* Mobile menu */}
       {mobileOpen && (
-        <div
-          className="md:hidden border-t border-gray-100 bg-white/98 overflow-y-auto"
-          style={{ maxHeight: 'calc(100svh - 4rem)' }}
-        >
+        <div className="md:hidden border-t border-gray-100 bg-white/98 overflow-y-auto max-h-[calc(100dvh-4rem)]">
           {/* Primary topic links */}
           <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-1 pb-2">
             {NAV_LINKS.map(l => <MobileNavLink key={l.to} {...l} />)}
