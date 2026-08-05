@@ -7,7 +7,7 @@ const { permanent, constructionMidpoint } = projections.jobs
 const ITEMS = [
   {
     label:    'Permanent Positions',
-    sublabel: 'Current Village FAQ estimate — full buildout (2029)',
+    sublabel: 'Village FAQ estimate, if all 10M sq ft is built',
     value:    permanent,
     max:      permanent,
     color:    '#059669',

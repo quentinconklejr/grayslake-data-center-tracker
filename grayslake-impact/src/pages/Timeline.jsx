@@ -4,9 +4,11 @@ import PageTitle from '../components/ui/PageTitle'
 import { pageMeta } from '../data/pageMeta'
 import TimelineUI from '../components/ui/Timeline'
 import FadeIn from '../components/ui/FadeIn'
+import SourceCitation from '../components/ui/SourceCitation'
 import { FootnoteProvider, FootnoteList } from '../components/ui/FootnoteContext'
 import { timelineEvents } from '../data/timeline'
 import { LAST_VERIFIED } from '../data/siteConfig'
+import { projections } from '../data/projections'
 
 const LEGEND = [
   { key: 'approval',     label: 'Approval',     active: 'text-blue-700 bg-blue-50 border-blue-300',          inactive: 'text-blue-700 bg-blue-50/50 border-blue-200 opacity-60 hover:opacity-100' },
@@ -18,6 +20,8 @@ const LEGEND = [
 ]
 
 const dateRange = `${timelineEvents[0]?.date?.slice(0,4) ?? '—'} – ${timelineEvents[timelineEvents.length - 1]?.date?.slice(0,4) ?? '—'}`
+
+const { buildoutHorizon } = projections
 
 export default function TimelinePage() {
   const [searchParams] = useSearchParams()
@@ -107,6 +111,36 @@ export default function TimelinePage() {
           Hollow markers indicate projected events; solid markers indicate documented events.
         </p>
       </div>
+      <FadeIn className="mt-10 pt-8 border-t border-gray-200">
+        <p className="text-2xs font-mono text-gray-600 uppercase tracking-widest mb-2">When Is &ldquo;Full Buildout&rdquo;?</p>
+        <p className="text-sm text-gray-600 mb-5 max-w-prose">{buildoutHorizon.note}</p>
+        <div className="grid sm:grid-cols-2 gap-3 mb-4">
+          {buildoutHorizon.claims.map(c => (
+            <div key={c.key} className="border border-gray-200 rounded-lg bg-white px-4 py-3.5">
+              <div className="flex items-baseline gap-2 mb-1">
+                <p className="text-lg font-display font-bold text-gray-900 leading-tight">{c.value}</p>
+                <span className="text-2xs font-mono uppercase tracking-widest text-gray-600">{c.framing}</span>
+              </div>
+              <p className="text-xs text-gray-700 italic leading-relaxed mb-2">&ldquo;{c.quote}&rdquo;</p>
+              <p className="text-xs text-gray-500 leading-relaxed">
+                {c.attribution}
+                <SourceCitation sourceKey={c.sourceKey} />
+              </p>
+            </div>
+          ))}
+        </div>
+        <p className="text-xs text-gray-600 leading-relaxed">
+          First power is also given two ways:{' '}
+          {buildoutHorizon.firstPower.map((f, i) => (
+            <span key={f.value}>
+              {i > 0 && ' and '}
+              <strong className="font-semibold text-gray-800">{f.value}</strong> ({f.attribution})
+              <SourceCitation sourceKey={f.sourceKey} />
+            </span>
+          ))}.
+        </p>
+      </FadeIn>
+
       <FootnoteList />
     </div>
     </FootnoteProvider>

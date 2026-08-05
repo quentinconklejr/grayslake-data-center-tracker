@@ -80,7 +80,7 @@ export default function Jobs() {
         <StatCard label="Permanent Jobs"       value={`${jobs.permanentDavies.toLocaleString()}–${jobs.permanent.toLocaleString()}`} sub={`Upper figure ${jobs.permanentCondition}`} accent="green" sourceKey="villagefaq_archived" />
         <StatCard label="Construction"         value="Hundreds"                         sub="Active 2025–2029 (est.)"  badge="Est." accent="amber" sourceKey="govtech2025" />
         <StatCard label="Phase 1 Online"       value={project.firstBuildingOnline}      sub="First building operational" accent="blue" sourceKey="dcd2026" />
-        <StatCard label="Full Buildout"        value={project.fullBuildOut}             sub={`${project.approvedBuildings} approved · CEO est. up to ${project.maxBuildings}`} accent="blue" sourceKey="govtech2025" />
+        <StatCard label="Full Buildout"        value="2029 at the earliest"             sub="Daily Herald reported 7–10 yrs from Oct 2025" badge="Disputed" accent="blue" sourceKey="govtech2025" />
       </FadeIn>
 
       <FadeIn className="glass-card p-6 sm:p-8 mb-3">

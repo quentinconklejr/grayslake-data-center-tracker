@@ -15,13 +15,6 @@ export const projections = {
     costHigh: 18, // billions
     firstBuildingOnline: "Q4 2027",
     fullBuildOut: "2029",
-    // Buildout horizon is disputed between sources. Data Center Dynamics
-    // reporting implied 2029; the Daily Herald (Oct. 2025) quotes the project
-    // as "full build out expected over the next seven to 10 years", i.e.
-    // 2032-2035, with the first power delivered June 2027. Rendered as a range.
-    fullBuildOutRange: "2029 \u2013 2035",
-    fullBuildOutNote:
-      "Data Center Dynamics reporting pointed to 2029. The Daily Herald reported in October 2025 that full buildout was expected over the following seven to ten years, with the first power delivered in June 2027.",
   },
   jobs: {
     // 1,680 is re-confirmed from the archived Village FAQ (Wayback snapshot
@@ -87,6 +80,39 @@ export const projections = {
     constructionWageTaxCredit: 20, // percent, for underserved areas
     statusChange: "Suspension of new data center tax incentive applications, effective July 1, 2026 (Governor's directive, June 5, 2026). No stated duration appears on the DCEO page",
   },
+  // Two published buildout horizons, from two outlets three days apart in
+  // October 2025. Do NOT collapse these into a range: they are different kinds
+  // of claim. "As early as 2029" is a floor. "Seven to 10 years" is a central
+  // expectation. A range spanning them would imply a single estimate nobody
+  // actually made. The Village FAQ is silent on timing entirely, so any
+  // attribution of a buildout date to the Village is unsupported.
+  buildoutHorizon: {
+    claims: [
+      {
+        key: "earliest",
+        value: "2029",
+        framing: "Earliest possible",
+        quote: "full build-out could come as early as 2029",
+        attribution: "Chicago Tribune, via Government Technology, Oct. 14, 2025",
+        sourceKey: "govtech2025",
+      },
+      {
+        key: "expected",
+        value: "2032 \u2013 2035",
+        framing: "Expected",
+        quote: "full build out is expected over the next seven to 10 years",
+        attribution: "Daily Herald, Oct. 11, 2025",
+        sourceKey: "dailyherald_oct2025",
+      },
+    ],
+    note:
+      "Two outlets published different buildout horizons within three days of each other in October 2025, and they are not the same kind of statement. The Tribune reported a best case; the Daily Herald reported an expectation roughly three to six years later. Both were reported while the project was described as demand-driven, with the number of buildings tailored to customer needs. The Village FAQ gives no buildout date at all.",
+    firstPower: [
+      { value: "Q4 2027", attribution: "Data Center Dynamics", sourceKey: "dcd2026" },
+      { value: "June 2027", attribution: "Daily Herald, Oct. 2025", sourceKey: "dailyherald_oct2025" },
+    ],
+  },
+
   // Three acreage figures circulate and they measure different things. Keeping
   // them apart matters: conflating ownership with approval is what the old map
   // did. Ordered smallest to largest.
