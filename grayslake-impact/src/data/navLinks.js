@@ -13,6 +13,6 @@ export const NAV_LINKS = [
 ]
 
 export const GUIDE_LINKS = [
-  { to: '/residents', label: 'Residents' },
+  { to: '/questions', label: 'Residents' },
   { to: '/reporters', label: 'Reporters' },
 ]

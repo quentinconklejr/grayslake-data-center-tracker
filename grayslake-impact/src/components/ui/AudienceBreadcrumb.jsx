@@ -1,9 +1,8 @@
 import { Link } from 'react-router-dom'
 
 const SIBLINGS = [
-  { to: '/residents', label: 'Residents' },
+  { to: '/questions', label: 'Residents' },
   { to: '/reporters', label: 'Reporters' },
-  { to: '/officials', label: 'Officials' },
 ]
 
 export default function AudienceBreadcrumb({ current }) {

@@ -28,6 +28,7 @@ const CAT_META = {
   energy:  { label: 'Energy',  active: 'text-amber-700 bg-amber-50 border-amber-300',    inactive: 'text-gray-500 border-gray-200 hover:text-amber-700 hover:border-amber-300' },
   scale:   { label: 'Scale',   active: 'text-violet-700 bg-violet-50 border-violet-300', inactive: 'text-gray-500 border-gray-200 hover:text-violet-700 hover:border-violet-300' },
   tax:     { label: 'Tax',     active: 'text-emerald-700 bg-emerald-50 border-emerald-300', inactive: 'text-gray-500 border-gray-200 hover:text-emerald-700 hover:border-emerald-300' },
+  jobs:    { label: 'Jobs',    active: 'text-blue-700 bg-blue-50 border-blue-300',       inactive: 'text-gray-500 border-gray-200 hover:text-blue-700 hover:border-blue-300' },
   process: { label: 'Process', active: 'text-red-700 bg-red-50 border-red-300',          inactive: 'text-gray-500 border-gray-200 hover:text-red-700 hover:border-red-300' },
 }
 
@@ -113,6 +114,10 @@ function QuestionCard({ q, isExpanded, onToggle }) {
 export default function OpenQuestions() {
   const [activeCategory, setActiveCategory] = useState('all')
   const [expandedIds, setExpandedIds] = useState(new Set())
+  // Plain-language view is the default. This page absorbed the Residents
+  // guide, whose whole purpose was making the same material readable without
+  // prior context; leading with the detailed evidence blocks would lose that.
+  const [detailed, setDetailed] = useState(false)
 
   const visible = activeCategory === 'all'
     ? questions
@@ -155,14 +160,39 @@ export default function OpenQuestions() {
       <PageTitle {...pageMeta['/questions']} />
 
       <FadeIn className="mb-10 pb-8 border-b border-gray-200">
-        <p className="text-2xs font-mono text-blue-600/60 uppercase tracking-[0.2em] mb-3">Unresolved Issues</p>
+        <p className="text-2xs font-mono text-blue-700 uppercase tracking-[0.2em] mb-3">Unresolved Issues</p>
         <h1 className="text-4xl font-display font-bold text-gray-900 tracking-tight mb-3">Open Questions</h1>
         <p className="text-base text-gray-600 max-w-2xl leading-relaxed">
-          Disputes and data gaps around T5 @ Chicago IV, organized by topic and sourced to the public record.
+          What is settled, what is disputed and what has no public answer yet &mdash; on water, electricity,
+          scale, jobs, taxes and the approval process. Start with the plain-language answer; switch to
+          full detail for the sourced evidence behind it.
         </p>
-        <p className="text-2xs font-mono text-gray-400 mt-3">Last verified {LAST_VERIFIED}</p>
+
+        <div className="mt-5 inline-flex rounded-lg border border-gray-300 p-0.5 bg-gray-50" role="group" aria-label="Level of detail">
+          {[
+            { key: false, label: 'Plain language' },
+            { key: true, label: 'Full detail' },
+          ].map(({ key, label }) => (
+            <button
+              key={label}
+              type="button"
+              onClick={() => setDetailed(key)}
+              aria-pressed={detailed === key}
+              className={`px-3.5 py-1.5 text-sm rounded-md transition-colors ${
+                detailed === key
+                  ? 'bg-white text-gray-900 font-medium shadow-sm border border-gray-200'
+                  : 'text-gray-600 hover:text-gray-900'
+              }`}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+
+        <p className="text-2xs font-mono text-gray-600 mt-4">Last verified {LAST_VERIFIED}</p>
       </FadeIn>
 
+      {detailed && (
       <FadeIn>
         <div className="bg-blue-50 border border-blue-200 rounded-xl px-6 py-5 mb-10">
           <div className="flex items-start gap-3">
@@ -183,6 +213,7 @@ export default function OpenQuestions() {
           </div>
         </div>
       </FadeIn>
+      )}
 
       <FadeIn className="flex flex-wrap items-center justify-between gap-3 mb-8">
         <div className="flex flex-wrap gap-2">
@@ -222,14 +253,33 @@ export default function OpenQuestions() {
         </button>
       </FadeIn>
 
-      <div className="space-y-2">
+      <div className={detailed ? 'space-y-2' : 'space-y-8'}>
         {visible.map((q, i) => (
           <FadeIn key={q.id} delay={Math.min(i * 0.03, 0.09)}>
-            <QuestionCard
-              q={q}
-              isExpanded={expandedIds.has(q.id)}
-              onToggle={() => toggle(q.id)}
-            />
+            {detailed ? (
+              <QuestionCard
+                q={q}
+                isExpanded={expandedIds.has(q.id)}
+                onToggle={() => toggle(q.id)}
+              />
+            ) : (
+              <section aria-labelledby={`q-${q.id}`}>
+                <h2 id={`q-${q.id}`} className="text-xl font-display font-bold text-gray-900 mb-3">
+                  {q.question}
+                </h2>
+                <p className="text-base text-gray-700 leading-relaxed">{q.plain}</p>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setDetailed(true)
+                    setExpandedIds(prev => new Set(prev).add(q.id))
+                  }}
+                  className="mt-3 text-sm font-medium text-blue-700 hover:text-blue-800 transition-colors"
+                >
+                  See the sources behind this &rarr;
+                </button>
+              </section>
+            )}
           </FadeIn>
         ))}
       </div>
@@ -238,9 +288,7 @@ export default function OpenQuestions() {
         <div className="mt-10 pt-6 border-t border-gray-200">
           <p className="text-xs text-gray-500 leading-relaxed">
             Questions are added as new disputes emerge in public documents, journalism, or legal filings.
-            This site is not affiliated with T5 Data Centers, LLC or the Village of Grayslake.
             Source citations link to the outlet or organization that made the statement.
-            Specific article URLs for newer sources will be added as records are made available.
           </p>
         </div>
       </FadeIn>

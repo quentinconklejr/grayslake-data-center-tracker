@@ -229,14 +229,14 @@ export default function Home() {
               <span className="inline-block w-4 h-px bg-gray-300" />
               Start here
             </p>
-            <div className="grid sm:grid-cols-3 gap-4">
+            <div className="grid sm:grid-cols-2 gap-4">
               {[
                 {
-                  to: '/residents',
+                  to: '/questions',
                   label: 'Residents',
                   color: 'text-blue-600',
                   border: 'border-blue-100 hover:border-blue-300',
-                  desc: 'Plain-language summary: water, energy, jobs, taxes, and the approval process.',
+                  desc: 'Plain-language answers on water, energy, jobs, taxes and the approval process.',
                 },
                 {
                   to: '/reporters',
@@ -244,13 +244,6 @@ export default function Home() {
                   color: 'text-violet-600',
                   border: 'border-violet-100 hover:border-violet-300',
                   desc: 'Key figures with citations and a contacts reference for press inquiries.',
-                },
-                {
-                  to: '/officials',
-                  label: 'Officials',
-                  color: 'text-amber-700',
-                  border: 'border-amber-100 hover:border-amber-300',
-                  desc: 'Approval decisions, legal challenges, and policy events — sourced and dated.',
                 },
               ].map(({ to, label, color, border, desc }) => (
                 <Link

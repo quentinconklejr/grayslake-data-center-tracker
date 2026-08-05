@@ -76,23 +76,11 @@ export const pageMeta = {
       'About the Grayslake Data Center Tracker — an independent, resident-built resource collecting public records on T5 @ Chicago IV.',
     ogImage: '/og/about.png',
   },
-  '/residents': {
-    title: 'For Residents',
-    description:
-      'Plain-language summary of what T5 @ Chicago IV means for Grayslake residents — water, electric bills, campus scale, jobs, taxes, and the approval process.',
-    ogImage: '/og/residents.png',
-  },
   '/reporters': {
     title: 'For Reporters',
     description:
       'Key figures, citations, and press contact reference for T5 @ Chicago IV — among the largest developments in Lake County history.',
     ogImage: '/og/reporters.png',
-  },
-  '/officials': {
-    title: 'For Officials',
-    description:
-      'Approvals, legal challenges, and policy actions related to T5 @ Chicago IV — a sourced record for municipal, county, and state officials.',
-    ogImage: '/og/officials.png',
   },
   '/actions': {
     title: 'Jurisdictional Actions',

@@ -1,6 +1,7 @@
 export const questions = [
   {
     id: 'water-usage',
+    plain: "The campus is expected to use less than 50,000 gallons a day once fully built \u2014 the Village calls that 4.0% more than it currently supplies, and the regional water agency puts the same volume at 0.25% of its system. Cooling is closed-loop, so water circulates rather than being consumed. The one large draw is a one-time flush of about 3.2 million gallons per 200 MW building, staged over several days. What is not settled is how much water the electricity generation behind the campus consumes, which happens at the power plant rather than here.",
     question: 'How much water will the campus use, and from where?',
     category: 'water',
     stated: [
@@ -45,6 +46,7 @@ export const questions = [
 
   {
     id: 'energy-rates',
+    plain: "Illinois puts very large electricity users in a separate rate class, so the demand from this campus does not directly land on residential bills, and T5 says supply agreements are already in place with ComEd. T5 also funds its own substation and grid connection; the Village says it pays nothing toward that. The open question is indirect: regional capacity prices are set by total demand across the whole grid, and no public study has established how much data center growth is moving them.",
     question: "Will this raise residents' electric bills?",
     category: 'energy',
     stated: [
@@ -68,6 +70,7 @@ export const questions = [
 
   {
     id: 'campus-scale',
+    plain: "Three acreage numbers circulate and they mean different things. T5 owns 287.8 acres today. The Village approved development on up to 472. T5 says it controls more than 490, which can include land it has not bought yet. The approvals cap building at 10.1 million square feet across what the Village calls \u201cseveral individual buildings\u201d without naming a number; reporting puts it at 18, and the T5 chief executive has said up to 20.",
     question: 'How big will it actually get?',
     category: 'scale',
     stated: [
@@ -95,6 +98,7 @@ export const questions = [
 
   {
     id: 'tax-revenue',
+    plain: "Nobody has published a number for what Grayslake specifically will receive. Officials have cited figures ranging from about $300 million over decades to over $1 billion over 20 years, neither independently verified. Eight taxing districts cover the campus and four of them are not Grayslake districts, so part of the tax base goes to Round Lake, Fremont and Mundelein. The actual amount depends on a Lake County Assessor valuation that has not happened yet.",
     question: 'How much will the village and schools actually receive?',
     category: 'tax',
     stated: [
@@ -131,6 +135,7 @@ export const questions = [
 
   {
     id: 'approval-process',
+    plain: "The Village approved the project over roughly eight months between September 2024 and May 2025, after public hearings and board meetings, and says T5 received every land-use and zoning approval required. Residents challenging it argue the hearings were inadequate, that objectors could not meaningfully cross-examine, and that the Village commissioned no independent studies. That dispute is headed for court; no complaint had been filed as of the most recent reporting.",
     question: 'Was the approval process adequate?',
     category: 'process',
     stated: [
@@ -156,6 +161,34 @@ export const questions = [
     unknown: [
       {
         text: 'The outcome of the pending Lake County Circuit Court litigation challenging the approval is not yet determined.',
+        sourceKey: null,
+      },
+    ],
+  },
+
+  {
+    id: 'jobs',
+    question: 'How many jobs will it actually create?',
+    category: 'jobs',
+    plain: "Three numbers have been given. Mayor Davies cited 1,500 permanent jobs in October 2025. The T5 chief executive cited \u201cover 1,600\u201d in July 2026. The Village FAQ reaches 1,680, but gets there by assuming 50 jobs for every 300,000 square feet and that the full 10 million square feet actually gets built \u2014 and it cautions the estimate may change. Construction work is counted separately and described only as \u201chundreds\u201d of trade jobs.",
+    stated: [
+      {
+        text: 'Mayor Elizabeth Davies cited 1,500 permanent positions at full buildout, plus hundreds of construction and trade jobs during development.',
+        sourceKey: 'govtech2025',
+      },
+      {
+        text: 'T5 CEO Pete Marin stated the development produces "over 1,600 jobs".',
+        sourceKey: 'dailyherald_jul2026',
+      },
+      {
+        text: 'The Village FAQ estimates "50 permanent jobs are created for every 300,000 sq ft. or 1,680 permanent jobs" if all 10 million sq ft is built, hedges that estimates "may change" as operations and technologies do, and excludes site development and construction jobs from the figure.',
+        sourceKey: 'villagefaq_archived',
+      },
+    ],
+    disputed: [],
+    unknown: [
+      {
+        text: 'No breakdown by role, wage level, or how many positions would be filled locally has been published. No construction headcount has been given beyond "hundreds".',
         sourceKey: null,
       },
     ],
