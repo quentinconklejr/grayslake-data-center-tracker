@@ -44,6 +44,13 @@ export default function SiteMap({ className = 'h-[480px]' }) {
   const [mapLoaded, setMapLoaded] = useState(false)
 
   useEffect(() => {
+    if (!selected) return
+    const onKey = e => { if (e.key === 'Escape') setSelected(null) }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [selected])
+
+  useEffect(() => {
     if (!TOKEN || !containerRef.current || mapRef.current) return
     let cancelled = false
 
@@ -170,9 +177,22 @@ export default function SiteMap({ className = 'h-[480px]' }) {
         <div
           ref={containerRef}
           className="w-full h-full"
-          role="application"
-          aria-label={`Map of ${META.parcelCount} parcels recorded to T5 in Grayslake, totalling ${META.countyAcresSum} acres. A text listing of the same parcels follows below the map.`}
+          role="img"
+          aria-label={
+            `Satellite map showing ${META.parcelCount} parcels recorded to T5 in Grayslake, ` +
+            `totalling ${META.countyAcresSum} acres across ${outline.features.length} separate groups. ` +
+            `The same data is available as a table under "Parcel list" below.`
+          }
         />
+
+        {/* Keyboard users reaching the map get a way past it and a pointer to
+            the equivalent data, since the canvas itself carries none. */}
+        <a
+          href="#parcel-list"
+          className="sr-only focus:not-sr-only focus:absolute focus:z-40 focus:top-3 focus:left-3 focus:px-3 focus:py-2 focus:bg-white focus:text-blue-700 focus:rounded-lg focus:border focus:border-blue-300 focus:shadow-lg text-sm font-medium"
+        >
+          Skip map, go to parcel list
+        </a>
 
         {!mapLoaded && (
           <div className="absolute inset-0 z-30 bg-gray-50 flex flex-col items-center justify-center gap-3 pointer-events-none">
@@ -182,7 +202,11 @@ export default function SiteMap({ className = 'h-[480px]' }) {
         )}
 
         {selected && (
-          <div className="absolute inset-y-0 right-0 w-64 bg-white/97 backdrop-blur-xl border-l border-gray-200 flex flex-col z-20 shadow-lg">
+          <div
+            role="region"
+            aria-label={`Details for parcel ${selected.pin}`}
+            className="absolute inset-y-0 right-0 w-64 bg-white/97 backdrop-blur-xl border-l border-gray-200 flex flex-col z-20 shadow-lg"
+          >
             <div className="flex items-start justify-between p-4 border-b border-gray-100 shrink-0">
               <div className="min-w-0">
                 <p className="text-xs font-mono text-blue-700 uppercase tracking-widest mb-0.5">Parcel</p>
@@ -240,7 +264,7 @@ export default function SiteMap({ className = 'h-[480px]' }) {
       </div>
 
       {/* Text equivalent — the same data the map carries, for anyone not using it visually */}
-      <details className="mt-4 border border-gray-200 rounded-xl bg-white">
+      <details id="parcel-list" open className="mt-4 border border-gray-200 rounded-xl bg-white scroll-mt-24">
         <summary className="px-4 py-3 text-sm font-medium text-gray-800 cursor-pointer select-none">
           Parcel list ({META.parcelCount} parcels, {META.countyAcresSum} acres)
         </summary>
