@@ -47,6 +47,24 @@ export const projections = {
       { category: "Major infrastructure projects", percent: 50 },
     ],
   },
+  // Listed verbatim in the Village FAQ under "What taxing districts are the
+  // approved data center campus buildings in?". Worth surfacing because four of
+  // the eight sit outside Grayslake: the campus straddles district lines, so
+  // some of the tax base it creates accrues to Round Lake, Fremont and
+  // Mundelein districts rather than to Grayslake ones.
+  taxingDistricts: [
+    { name: "Village of Grayslake", grayslake: true },
+    { name: "Grayslake Community High School District 127", grayslake: true, school: true },
+    { name: "Grayslake Fire Protection District", grayslake: true },
+    { name: "Grayslake Park District", grayslake: true },
+    { name: "Round Lake Area Park District", grayslake: false },
+    { name: "Freemont Elementary School District 79", grayslake: false, school: true },
+    { name: "Mundelein High School District 120", grayslake: false, school: true },
+    { name: "Freemont Library District", grayslake: false },
+  ],
+  taxingDistrictsNote:
+    "The FAQ notes that Illinois taxing district boundaries often do not match village boundaries and that villages have no say in setting them. It states that any property tax revenue received represents resources to each district \u201cnot coming from homeowners,\u201d and that each independent district determines the actual impact for its own taxpayers. No per-district projection has been published. District names are reproduced as the FAQ spells them.",
+
   schoolFundingComparable: {
     source: "Meta data center, DeKalb, IL",
     percentToSchoolDistrict: 60.9,

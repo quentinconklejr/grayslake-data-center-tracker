@@ -9,7 +9,7 @@ import { FootnoteProvider, FootnoteList } from '../components/ui/FootnoteContext
 import { projections } from '../data/projections'
 import { LAST_VERIFIED } from '../data/siteConfig'
 
-const { project, fees, schoolFundingComparable: meta, stateIncentiveContext: incentive } = projections
+const { project, fees, schoolFundingComparable: meta, stateIncentiveContext: incentive, taxingDistricts, taxingDistrictsNote } = projections
 
 const metaOtherPct = +(100 - meta.percentToSchoolDistrict).toFixed(1)
 
@@ -41,6 +41,44 @@ export default function TaxImpact() {
         <StatCard label="Developer Fees"      value="Tens of millions"                             sub="Ballpark, per Mayor Davies"          accent="blue"  sourceKey="govtech2025" />
         <StatCard label="Meta / DeKalb Ref."  value={`$${meta.totalPropertyTaxBilled2025}M`}      sub="One facility, 2025 tax year"          accent="green" sourceKey="capitolnews2026" />
         <StatCard label="DeKalb → Schools"    value={`${meta.percentToSchoolDistrict}%`}            sub="Avg. across 3 properties, 2021–2024"              accent="green" sourceKey="capitolnews2026" />
+      </FadeIn>
+
+      <FadeIn className="glass-card px-6 py-6 mb-8">
+        <div className="flex items-start justify-between mb-1">
+          <div>
+            <p className="text-2xs font-mono text-gray-400 uppercase tracking-widest mb-1">Who Receives the Tax Base</p>
+            <h2 className="text-2xl font-display font-bold text-gray-900">Taxing districts covering the campus</h2>
+          </div>
+          <SourceCitation sourceKey="villagefaq_archived" />
+        </div>
+        <p className="text-sm text-gray-500 mb-6 max-w-prose">
+          Four of the eight districts listed by the Village sit outside Grayslake. The campus straddles
+          district lines, so part of the tax base it creates accrues to Round Lake, Fremont and Mundelein
+          districts rather than to Grayslake ones.
+        </p>
+        <ul className="grid sm:grid-cols-2 gap-x-8 gap-y-0 mb-5">
+          {taxingDistricts.map(d => (
+            <li key={d.name} className="flex items-center gap-2.5 py-2.5 border-b border-gray-100">
+              <span
+                className={`shrink-0 w-1.5 h-1.5 rounded-full ${d.grayslake ? 'bg-blue-500' : 'bg-amber-500'}`}
+                aria-hidden="true"
+              />
+              <span className="text-sm text-gray-700 leading-snug">{d.name}</span>
+              {d.school && (
+                <span className="ml-auto shrink-0 text-2xs font-mono uppercase tracking-widest text-gray-400">school</span>
+              )}
+            </li>
+          ))}
+        </ul>
+        <div className="flex flex-wrap gap-x-5 gap-y-1 mb-4">
+          <span className="inline-flex items-center gap-1.5 text-2xs font-mono uppercase tracking-widest text-gray-500">
+            <span className="w-1.5 h-1.5 rounded-full bg-blue-500" aria-hidden="true" /> Grayslake district
+          </span>
+          <span className="inline-flex items-center gap-1.5 text-2xs font-mono uppercase tracking-widest text-gray-500">
+            <span className="w-1.5 h-1.5 rounded-full bg-amber-500" aria-hidden="true" /> Outside Grayslake
+          </span>
+        </div>
+        <p className="text-xs text-gray-500 leading-relaxed border-t border-gray-100 pt-4">{taxingDistrictsNote}</p>
       </FadeIn>
 
       <div className="grid lg:grid-cols-2 gap-px bg-gray-200 rounded-xl overflow-hidden border border-gray-200 mb-8">
