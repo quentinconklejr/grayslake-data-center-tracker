@@ -138,13 +138,19 @@ export default function Energy() {
               upgrades, and system reliability.
             </p>
             <p>
-              At {project.totalCapacityMW.toLocaleString()} MW<SourceCitation sourceKey="dcdGW2026" />, T5 would be one of the largest single-campus
-              loads in the ComEd zone, comparable to a medium-sized city. Interconnection agreements
-              typically require the developer to fund necessary substation upgrades.
+              The Village FAQ states the developer funds the electricity supply infrastructure serving the
+              campus, including its own on-site substation, and that the Village pays nothing for it.
+              <SourceCitation sourceKey="villagefaq_archived" />
+              {' '}ComEd confirmed an on-site primary transmission substation supported by three dedicated T5
+              switchyards, which it said will have the future ability to serve other large projects in the area.
+              <SourceCitation sourceKey="dailyherald_oct2025" />
             </p>
             <p>
-              PJM queue timelines for loads of this scale commonly run 3–5 years from application
-              to energization. T5's queue position is not yet publicly filed.
+              T5&rsquo;s head of leasing said power procurement had been underway for 18 months, ahead of changes
+              ComEd and other utilities have made to allocation and procurement.
+              <SourceCitation sourceKey="dailyherald_oct2025" />
+              {' '}T5&rsquo;s PJM interconnection queue position is not publicly filed, so its queue timeline cannot
+              be verified from public records.
             </p>
           </div>
         </FadeIn>

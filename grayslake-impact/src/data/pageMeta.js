@@ -79,7 +79,7 @@ export const pageMeta = {
   '/reporters': {
     title: 'For Reporters',
     description:
-      'Key figures, citations, and press contact reference for T5 @ Chicago IV — the largest approved development in Lake County, Illinois.',
+      'Key figures, citations, and press contact reference for T5 @ Chicago IV — among the largest developments in Lake County history.',
     ogImage: '/og/reporters.png',
   },
   '/officials': {
