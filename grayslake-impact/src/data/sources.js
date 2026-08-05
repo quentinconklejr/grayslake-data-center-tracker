@@ -142,4 +142,11 @@ export const sources = {
     note: "Authoritative county parcel geometry, ownership, acreage and recorded sale data. Used for the site map. A snapshot is committed to this repository so the map does not depend on the county service staying available.",
     verified: "Aug 5, 2026",
   },
+  dailyherald_oct2025: {
+    title: "\u2018A place of innovation and opportunity\u2019: Work underway for data center campus in Grayslake",
+    publisher: "Daily Herald",
+    date: "Oct. 11, 2025",
+    url: "https://www.dailyherald.com/20251011/business/a-place-of-innovation-and-opportunity-work-underway-for-data-center-campus-in-grayslake/",
+    verified: "Aug 5, 2026",
+  },
 };

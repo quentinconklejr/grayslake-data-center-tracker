@@ -16,9 +16,9 @@ export const timelineEvents = [
   {
     date: "2025-09",
     title: "Land acquisition",
-    description: "T5 paid $29.4 million for 134 acres, with an option on 45 more.",
+    description: "County records show $29,356,282 recorded against three parcels totalling 69.9 acres in May 2024, and $17,000,000 against five parcels totalling 89.3 acres in January 2025. Four further deeds through May 2025 bring recorded consideration to $62,968,250 across 57 parcels and 287.8 acres. A widely repeated figure of \u201c$29.4 million for 134 acres\u201d pairs the first sale amount with a larger acreage the county does not associate with it; 134.9 acres is the size of T5\u2019s largest contiguous block, not that purchase.",
     category: "development",
-    sourceKey: "baxtel2026",
+    sourceKey: "lakecountygis",
   },
   {
     date: "2025-10",

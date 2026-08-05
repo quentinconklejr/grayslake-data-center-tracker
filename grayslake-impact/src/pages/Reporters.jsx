@@ -13,8 +13,8 @@ const { project, jobs, stateIncentiveContext } = projections
 
 const KEY_FIGURES = [
   {
-    label: 'Campus area',
-    value: `${project.totalAcres.toLocaleString()} acres`,
+    label: 'Campus area approved',
+    value: `up to ${project.totalAcres.toLocaleString()} acres`,
     detail: 'Cornerstone business park, between Alleghany Road and Route 83 north of Peterson Road. CLCJAWA records 470 acres.',
     sourceKey: 'dailyherald2026',
   },
@@ -67,10 +67,10 @@ const KEY_FIGURES = [
     sourceKey: 'dcd2026',
   },
   {
-    label: 'Land acquisition price',
-    value: '$29.4M for 134 acres',
-    detail: 'Option on 45 additional acres',
-    sourceKey: 'baxtel2026',
+    label: 'Land recorded to T5',
+    value: '287.8 acres',
+    detail: '57 parcels in four non-contiguous groups, $62,968,250 total recorded consideration through May 2025. Not the same as the up-to-472 acres approved, nor the "more than 490" T5 says it controls.',
+    sourceKey: 'lakecountygis',
   },
   {
     label: 'State incentive status',

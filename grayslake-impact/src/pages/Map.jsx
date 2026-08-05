@@ -6,6 +6,10 @@ import outline from '../data/parcelsOutline.geojson'
 import FadeIn from '../components/ui/FadeIn'
 import { FootnoteProvider, FootnoteList } from '../components/ui/FootnoteContext'
 import { LAST_VERIFIED } from '../data/siteConfig'
+import SourceCitation from '../components/ui/SourceCitation'
+import { projections } from '../data/projections'
+
+const { acreageFigures, acreageNote } = projections
 
 export default function MapPage() {
   return (
@@ -32,6 +36,24 @@ export default function MapPage() {
       </FadeIn>
 
       <SiteMap className="h-[calc(100vh-280px)] min-h-[520px]" />
+
+      <FadeIn className="mt-10 pt-8 border-t border-gray-200">
+        <p className="text-2xs font-mono text-gray-600 uppercase tracking-widest mb-2">Three Acreage Figures</p>
+        <p className="text-sm text-gray-600 mb-5 max-w-prose">{acreageNote}</p>
+        <div className="grid sm:grid-cols-3 gap-3">
+          {acreageFigures.map(f => (
+            <div key={f.key} className="border border-gray-200 rounded-lg bg-white px-4 py-3.5">
+              <p className="text-lg font-display font-bold text-gray-900 leading-tight">{f.value}</p>
+              <p className="text-2xs font-mono uppercase tracking-widest text-gray-600 mt-0.5 mb-2">{f.metric}</p>
+              <p className="text-xs text-gray-600 leading-relaxed mb-2">{f.definition}</p>
+              <p className="text-xs text-gray-500 leading-relaxed">
+                {f.attribution}
+                <SourceCitation sourceKey={f.sourceKey} />
+              </p>
+            </div>
+          ))}
+        </div>
+      </FadeIn>
       <FootnoteList />
     </div>
     </FootnoteProvider>

@@ -15,6 +15,13 @@ export const projections = {
     costHigh: 18, // billions
     firstBuildingOnline: "Q4 2027",
     fullBuildOut: "2029",
+    // Buildout horizon is disputed between sources. Data Center Dynamics
+    // reporting implied 2029; the Daily Herald (Oct. 2025) quotes the project
+    // as "full build out expected over the next seven to 10 years", i.e.
+    // 2032-2035, with the first power delivered June 2027. Rendered as a range.
+    fullBuildOutRange: "2029 \u2013 2035",
+    fullBuildOutNote:
+      "Data Center Dynamics reporting pointed to 2029. The Daily Herald reported in October 2025 that full buildout was expected over the following seven to ten years, with the first power delivered in June 2027.",
   },
   jobs: {
     // 1,680 is re-confirmed from the archived Village FAQ (Wayback snapshot
@@ -80,6 +87,42 @@ export const projections = {
     constructionWageTaxCredit: 20, // percent, for underserved areas
     statusChange: "Suspension of new data center tax incentive applications, effective July 1, 2026 (Governor's directive, June 5, 2026). No stated duration appears on the DCEO page",
   },
+  // Three acreage figures circulate and they measure different things. Keeping
+  // them apart matters: conflating ownership with approval is what the old map
+  // did. Ordered smallest to largest.
+  acreageFigures: [
+    {
+      key: "owned",
+      value: "287.8 acres",
+      metric: "Recorded in T5 ownership",
+      definition:
+        "Land whose deed is in a T5 entity's name, across 57 parcels in four non-contiguous groups.",
+      attribution: "Lake County GIS tax parcel layer, retrieved Aug. 5, 2026",
+      sourceKey: "lakecountygis",
+    },
+    {
+      key: "approved",
+      value: "up to 472 acres",
+      metric: "Approved for development",
+      definition:
+        "The maximum area the Village's approvals permit to be developed, together with no more than 10,100,000 sq ft of building.",
+      attribution: "Village of Grayslake FAQ",
+      sourceKey: "villagefaq_archived",
+    },
+    {
+      key: "controlled",
+      value: "more than 490 acres",
+      metric: "Controlled developable land",
+      definition:
+        "Land T5 says it controls on either side of Peterson Road, which exceeds what it owns and is not the same as what is approved. Control can include options and contracts that are not recorded transfers.",
+      attribution:
+        "David Horowitz, T5 senior vice president and head of leasing, to the Daily Herald (Oct. 2025)",
+      sourceKey: "dailyherald_oct2025",
+    },
+  ],
+  acreageNote:
+    "Ownership, approval and control are three different things. T5 holds title to 287.8 acres today; the Village approved development on up to 472; T5 states it controls more than 490. None of these is a correction of the others.",
+
   // Three published capacity figures. They measure DIFFERENT things and are not
   // in conflict with one another. Each is attributed to whoever stated it.
   capacityFigures: [
