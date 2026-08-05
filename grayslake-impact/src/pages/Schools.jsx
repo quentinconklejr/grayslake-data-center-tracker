@@ -31,7 +31,11 @@ export default function Schools({ asSection = false }) {
 
       <FadeIn className="mb-10 pb-8 border-b border-gray-200">
         <p className="text-2xs font-mono text-blue-600/60 uppercase tracking-[0.2em] mb-3">Education</p>
-        <h1 className="text-4xl font-display font-bold text-gray-900 tracking-tight mb-3">School Funding Impact</h1>
+        {asSection ? (
+          <h2 className="text-4xl font-display font-bold text-gray-900 tracking-tight mb-3">School Funding Impact</h2>
+        ) : (
+          <h1 className="text-4xl font-display font-bold text-gray-900 tracking-tight mb-3">School Funding Impact</h1>
+        )}
         <p className="text-base text-gray-600 max-w-2xl leading-relaxed">
           Village officials have publicly cited projections ranging from approximately $300 million
           to over $1 billion in property tax revenue across all taxing districts over the coming

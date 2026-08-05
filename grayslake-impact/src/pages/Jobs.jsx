@@ -64,7 +64,11 @@ export default function Jobs({ asSection = false }) {
 
       <FadeIn className="mb-10 pb-8 border-b border-gray-200">
         <p className="text-2xs font-mono text-blue-600/60 uppercase tracking-[0.2em] mb-3">Employment</p>
-        <h1 className="text-4xl font-display font-bold text-gray-900 tracking-tight mb-3">Job Creation</h1>
+        {asSection ? (
+          <h2 className="text-4xl font-display font-bold text-gray-900 tracking-tight mb-3">Job Creation</h2>
+        ) : (
+          <h1 className="text-4xl font-display font-bold text-gray-900 tracking-tight mb-3">Job Creation</h1>
+        )}
         <p className="text-base text-gray-600 max-w-2xl leading-relaxed">
           Permanent headcount has been stated three ways. Mayor Davies cited{' '}
           {jobs.permanentDavies.toLocaleString()} to the Chicago Tribune in October 2025. T5 CEO Pete Marin cited

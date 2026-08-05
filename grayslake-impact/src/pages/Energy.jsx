@@ -21,7 +21,11 @@ export default function Energy({ asSection = false }) {
 
       <FadeIn className="mb-10 pb-8 border-b border-gray-200">
         <p className="text-2xs font-mono text-blue-600/60 uppercase tracking-[0.2em] mb-3">Grid Impact</p>
-        <h1 className="text-4xl font-display font-bold text-gray-900 tracking-tight mb-3">Energy Draw</h1>
+        {asSection ? (
+          <h2 className="text-4xl font-display font-bold text-gray-900 tracking-tight mb-3">Energy Draw</h2>
+        ) : (
+          <h1 className="text-4xl font-display font-bold text-gray-900 tracking-tight mb-3">Energy Draw</h1>
+        )}
         <p className="text-base text-gray-600 max-w-2xl leading-relaxed">
           Three capacity figures for this campus appear in public sources. They measure different
           things and are not competing estimates of the same quantity: {project.totalCapacityMW.toLocaleString()} MW
