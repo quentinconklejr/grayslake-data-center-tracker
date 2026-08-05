@@ -17,7 +17,17 @@ export const projections = {
     fullBuildOut: "2029",
   },
   jobs: {
+    // 1,680 came from the Village FAQ, whose URL went dead on Aug 5, 2026.
+    // No other source corroborates it. Deliberately NOT swapped for 1,500 or
+    // 1,600 — those are different claims by different people at different
+    // times. Shown with an Unverified marker until the FAQ is recovered.
     permanent: 1680,
+    permanentUnverified: true,
+    permanentNote:
+      "Village FAQ figure. That document is no longer reachable and no other source confirms 1,680.",
+    // Attributable alternatives, each with a named speaker and a live source:
+    permanentDavies: 1500,   // Mayor Elizabeth Davies, Chicago Tribune, Oct. 2025
+    permanentMarin: 1600,    // Pete Marin, T5 CEO, "over 1,600", Daily Herald, Jul. 2026
     permanentEarlier: 1500,
     constructionPhase: "hundreds of construction and trade jobs during buildout",
     // Editorial midpoint for chart display only — not a cited figure.

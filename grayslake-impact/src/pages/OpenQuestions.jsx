@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import PageTitle from '../components/ui/PageTitle'
-import SourceCitation from '../components/ui/SourceCitation'
+import ItemCitations from '../components/ui/ItemCitations'
+import { keysOf } from '../lib/citationKeys'
 import FadeIn from '../components/ui/FadeIn'
 import { FootnoteProvider, FootnoteList } from '../components/ui/FootnoteContext'
 import { EVIDENCE } from '../components/ui/EvidenceBlock'
@@ -14,8 +15,8 @@ const PRELOAD_KEYS = []
 for (const q of questions) {
   for (const block of ['stated', 'disputed', 'unknown']) {
     for (const item of q[block] ?? []) {
-      if (item.sourceKey && !PRELOAD_KEYS.includes(item.sourceKey)) {
-        PRELOAD_KEYS.push(item.sourceKey)
+      for (const k of keysOf(item)) {
+        if (!PRELOAD_KEYS.includes(k)) PRELOAD_KEYS.push(k)
       }
     }
   }
@@ -92,7 +93,7 @@ function QuestionCard({ q, isExpanded, onToggle }) {
                           <span className={`shrink-0 mt-1 ${dotCls}`}>·</span>
                           <p className={`flex-1 min-w-0 text-xs leading-relaxed ${textCls}`}>
                             {item.text}
-                            {item.sourceKey && <SourceCitation sourceKey={item.sourceKey} />}
+                            <ItemCitations item={item} />
                           </p>
                         </li>
                       ))}

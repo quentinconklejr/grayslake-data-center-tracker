@@ -9,9 +9,9 @@ export const timelineEvents = [
   {
     date: "2025-05-06",
     title: "Village approval process complete",
-    description: "The Village FAQ records the approval process as spanning September 23, 2024 through May 6, 2025. Officials cited up to 1,500 permanent jobs and major tax revenue at public meetings during this period.",
+    description: "Daily Herald reporting places the approval process between September 2024 and May 2025. The precise endpoints of September 23 and May 6 came from the Village FAQ, which is no longer reachable and could not be re-confirmed. Mayor Davies cited 1,500 permanent jobs and major tax revenue during this period.",
     category: "approval",
-    sourceKeys: ["villageoffaq", "govtech2025"],
+    sourceKeys: ["dailyherald2026", "govtech2025"],
   },
   {
     date: "2025-09",
@@ -65,9 +65,9 @@ export const timelineEvents = [
   {
     date: "2026-06-05",
     title: "Village FAQ updated — litigation notice added",
-    description: "The Village of Grayslake FAQ was updated as of June 5, 2026. The revised document states the Village can no longer respond to further questions about the project due to pending litigation.",
+    description: "The Village of Grayslake FAQ was updated as of June 5, 2026, stating the Village can no longer respond to further questions about the project due to pending litigation. The Daily Herald quoted the notice directly. The FAQ document itself became unreachable by August 5, 2026.",
     category: "legal",
-    sourceKey: "villageoffaq",
+    sourceKey: "dailyherald2026",
   },
   {
     date: "2026-06-05",

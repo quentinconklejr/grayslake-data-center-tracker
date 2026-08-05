@@ -59,7 +59,9 @@ export const sources = {
     publisher: "Village of Grayslake",
     date: "June 5, 2026",
     url: "https://villageofgrayslake.com/DocumentCenter/View/15282",
-    note: "Document updated as of June 5, 2026. The revised version includes a notice that the Village can no longer respond to further questions due to pending litigation.",
+    status: "dead",
+    deadCheckedAt: "Aug 5, 2026",
+    note: "LINK DEAD as of Aug 5, 2026. The document was updated June 5, 2026 to state the Village could no longer respond to questions due to pending litigation, and is now unreachable at the URL above. Claims that previously rested on it have been re-sourced to the Chicago Tribune / Government Technology reporting and the CLCJAWA utility briefing where those corroborate; claims that nothing else corroborates are marked Unverified on the page rather than dropped.",
   },
   cub2026: {
     title: "How data centers are raising our bills in Illinois — and what we should do about it",

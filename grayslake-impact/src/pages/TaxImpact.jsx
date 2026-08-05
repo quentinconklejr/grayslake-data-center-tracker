@@ -41,7 +41,7 @@ export default function TaxImpact() {
 
       <FadeIn className="grid grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
         <StatCard label="Total Investment"    value={`$${project.costLow}–${project.costHigh}B`} sub="Mayor Davies: $8.5B · CEO Marin: up to $18B" badge="Range" accent="blue"  sourceKey="govtech2025" />
-        <StatCard label="Developer Fees"      value="Tens of millions"                             sub="If fully built out"                  accent="blue"  sourceKey="villageoffaq" />
+        <StatCard label="Developer Fees"      value="Tens of millions"                             sub="Ballpark, per Mayor Davies"          accent="blue"  sourceKey="govtech2025" />
         <StatCard label="Meta / DeKalb Ref."  value={`$${meta.totalPropertyTaxBilled2025}M`}      sub="One facility, 2025 tax year"          accent="green" sourceKey="capitolnews2026" />
         <StatCard label="DeKalb → Schools"    value={`${meta.percentToSchoolDistrict}%`}            sub="Avg. across 3 properties, 2021–2024"              accent="green" sourceKey="capitolnews2026" />
       </FadeIn>

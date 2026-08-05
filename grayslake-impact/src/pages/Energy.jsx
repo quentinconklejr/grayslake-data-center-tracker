@@ -34,11 +34,12 @@ export default function Energy() {
         <p className="text-2xs font-mono text-gray-400 mt-3">Last verified {LAST_VERIFIED}</p>
       </FadeIn>
 
-      <FadeIn className="grid grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+      <FadeIn className="grid grid-cols-2 lg:grid-cols-5 gap-8 mb-12">
         <StatCard label="Secured Power"     value={`${project.securedPowerMW.toLocaleString()} MW`}  sub="Utility-contracted capacity"   accent="amber" sourceKey="dcdGW2026" />
         <StatCard label="IT Capacity"       value={`${project.totalCapacityMW.toLocaleString()} MW`} sub="Leasable at full buildout"      accent="blue"  sourceKey="dcdGW2026" />
         <StatCard label="Total ComEd Capacity" value={`${project.comEdCapacityGW} GW`}                sub="Secured from ComEd, per T5 CEO"  accent="amber" sourceKey="govtech2025" />
         <StatCard label="Power Buffer"      value={`${buffer} MW`}                                    sub="Calculated: 1,600 − 1,200 MW"  accent="amber" badge="Derived" />
+        <StatCard label="PJM Zone"          value="COMED"                                             sub="ComEd transmission zone, PJM"  accent="blue"  sourceKey="clcjawa2026" />
       </FadeIn>
 
       <FadeIn className="glass-card p-8 mb-6">
@@ -89,11 +90,14 @@ export default function Energy() {
         <p className="text-2xs font-mono text-gray-400 uppercase tracking-widest mb-5">Residential Rate Impact</p>
         <div className="space-y-3">
 
-          <EvidenceBlock type="stated" title="Power costs: T5 responsible under Illinois rate standards" sourceKey="villageoffaq">
+          <EvidenceBlock type="stated" title="Power costs: developer responsible, per officials and industry" sourceKey="govtech2025">
             <p className="text-sm text-gray-600 leading-relaxed">
-              The Village FAQ states that T5 will pay for its own power under State of Illinois
-              electric rate standards. Residential customers would not be directly billed for T5's
-              energy costs.
+              Mayor Elizabeth Davies said Grayslake residents will not see impacts to water or power
+              from the development. Dan Diorio of the Data Center Coalition said the industry is
+              &ldquo;fully committed to paying their full cost of service.&rdquo; The Village FAQ
+              previously stated T5 would pay for its own power under State of Illinois electric rate
+              standards; that document is no longer reachable, so the claim appears here only in the
+              form attributable to named speakers on the record.
             </p>
           </EvidenceBlock>
 
@@ -144,8 +148,8 @@ export default function Energy() {
               ['Interconnect Voltage',  '— pending', null],
               ['Power Purchase (PPA)',  '— not disclosed', null],
               ['Renewable Commitment',  '— not disclosed', null],
-              ['Cooling Approach',         'Primarily air-cooled',  'villageoffaq'],
-              ['Water Use (full buildout)', '≤ 50,000 gal / day',   'villageoffaq'],
+              ['Cooling Approach',         'Closed-loop, air-cooled', 'clcjawa2026'],
+              ['Water Use (full buildout)', '< 50,000 gal / day',      'clcjawa2026'],
               ['PUE Target',            '— not disclosed', null],
             ].map(([k, v, src, note]) => (
               <div key={k} className="flex justify-between items-center py-2.5 border-b border-gray-100 last:border-0">

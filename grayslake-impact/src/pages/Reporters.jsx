@@ -14,14 +14,14 @@ const KEY_FIGURES = [
   {
     label: 'Campus area',
     value: `${project.totalAcres.toLocaleString()} acres`,
-    detail: 'Peterson Road & Route 83, Grayslake',
-    sourceKey: 'villageoffaq',
+    detail: 'Cornerstone business park, between Alleghany Road and Route 83 north of Peterson Road. CLCJAWA records 470 acres.',
+    sourceKey: 'dailyherald2026',
   },
   {
     label: 'Total buildable area',
     value: `${Number(project.totalSqFt).toLocaleString()} sq ft`,
-    detail: 'At full buildout per Village FAQ',
-    sourceKey: 'villageoffaq',
+    detail: 'Not more than 10.1M sq ft at full buildout, per village approvals',
+    sourceKey: 'dailyherald2026',
   },
   {
     label: 'IT capacity',
@@ -49,9 +49,9 @@ const KEY_FIGURES = [
   },
   {
     label: 'Permanent jobs projected',
-    value: jobs.permanent.toLocaleString(),
-    detail: 'Village FAQ current estimate at full buildout',
-    sourceKey: 'villageoffaq',
+    value: `${jobs.permanent.toLocaleString()} (unverified)`,
+    detail: 'Village FAQ figure; that document is no longer reachable and nothing else confirms 1,680. Attributable alternatives: Mayor Davies cited 1,500 (Oct. 2025); CEO Marin cited "over 1,600" (Jul. 2026).',
+    sourceKey: 'govtech2025',
   },
   {
     label: 'Developer investment range',
@@ -80,8 +80,8 @@ const KEY_FIGURES = [
   {
     label: 'Village FAQ litigation notice',
     value: 'June 5, 2026',
-    detail: 'Village states it can no longer respond to questions due to pending litigation',
-    sourceKey: 'villageoffaq',
+    detail: 'Village states it can no longer respond to questions due to pending litigation. The FAQ itself became unreachable by Aug 5, 2026.',
+    sourceKey: 'dailyherald2026',
   },
   {
     label: 'Wetlands fill permit',

@@ -46,7 +46,11 @@ export default function Sources() {
               {source.note && (
                 <p className="text-xs text-amber-700/80 italic mb-1">{source.note}</p>
               )}
-              {source.status === 'unverified' ? (
+              {source.status === 'dead' ? (
+                <span className="text-2xs font-mono text-amber-800 line-through decoration-amber-400 break-all">
+                  {source.url}
+                </span>
+              ) : source.status === 'unverified' ? (
                 <span className="text-2xs font-mono text-amber-700 italic">link pending verification</span>
               ) : source.url && (
                 <a
@@ -65,6 +69,11 @@ export default function Sources() {
               )}
               {source.status === 'unverified' && (
                 <span className="text-2xs font-mono text-amber-700 uppercase tracking-widest">unverified</span>
+              )}
+              {source.status === 'dead' && (
+                <span className="text-2xs font-mono text-amber-800 bg-amber-50 border border-amber-300 rounded-sm px-1.5 py-0.5 uppercase tracking-widest whitespace-nowrap">
+                  link dead {source.deadCheckedAt}
+                </span>
               )}
               {source.status === 'background' && (
                 <span className="text-2xs font-mono text-gray-400 uppercase tracking-widest">background</span>

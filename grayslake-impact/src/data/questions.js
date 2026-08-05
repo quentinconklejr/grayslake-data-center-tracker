@@ -5,20 +5,20 @@ export const questions = [
     category: 'water',
     stated: [
       {
-        text: 'The Village FAQ states that residents will not see a water impact from the T5 campus.',
-        sourceKey: 'villageoffaq',
+        text: 'Mayor Elizabeth Davies said Grayslake residents will not see any impacts regarding water or power from the development: "These data centers will make no difference to us than if they were anywhere in the five-state region."',
+        sourceKey: 'govtech2025',
       },
       {
-        text: 'The Village FAQ identifies the cooling approach as primarily air-cooled.',
-        sourceKey: 'villageoffaq',
+        text: 'CLCJAWA describes the campus cooling as a closed-loop system in which heated water is cooled with air and recycled, rather than consumed. T5 CEO Pete Marin described it as air-cooled chillers that do not need refilling once charged.',
+        sourceKeys: ['clcjawa2026', 'govtech2025'],
       },
       {
-        text: 'The Village FAQ states the campus will use no more than 50,000 gallons of water per day at full buildout.',
-        sourceKey: 'villageoffaq',
+        text: 'CLCJAWA, the wholesale water agency serving Grayslake, states the campus at full buildout is expected to use less than 50,000 gallons per day on average — about 0.25% of the agency\'s daily flow, and within its existing IDNR Lake Michigan allocation.',
+        sourceKey: 'clcjawa2026',
       },
       {
-        text: 'Hoodline reported a one-time commissioning flush of approximately 3.2 million gallons.',
-        sourceKey: 'hoodline2026',
+        text: 'CLCJAWA estimates the initial flush and fill for one 200 MW building at 3.2 million gallons — roughly 15% of the agency\'s daily demand if drawn at once, but planned and staged over several days.',
+        sourceKey: 'clcjawa2026',
       },
     ],
     disputed: [
@@ -49,8 +49,8 @@ export const questions = [
     category: 'energy',
     stated: [
       {
-        text: 'The Village FAQ states that T5 will pay for its own power under State of Illinois electric rate standards. The FAQ does not specify the regulatory mechanism in further detail.',
-        sourceKey: 'villageoffaq',
+        text: 'Mayor Davies said residents will not see power impacts from the development. Dan Diorio of the Data Center Coalition said the industry is "fully committed to paying their full cost of service." The Village FAQ previously stated T5 would pay for its own power under State of Illinois electric rate standards; that document is no longer reachable, so only the on-the-record statements are carried here.',
+        sourceKey: 'govtech2025',
       },
     ],
     disputed: [],
@@ -72,8 +72,8 @@ export const questions = [
     category: 'scale',
     stated: [
       {
-        text: 'The Village of Grayslake FAQ records the campus site as 472 acres and 10,100,000 sq ft of total buildable area at full buildout.',
-        sourceKey: 'villageoffaq',
+        text: 'Village approvals cover up to 472 acres and not more than 10.1 million square feet of buildable area at full buildout. CLCJAWA\'s briefing records the development as occupying 470 acres with up to 10 million square feet in fewer than 20 buildings.',
+        sourceKeys: ['dailyherald2026', 'clcjawa2026'],
       },
       {
         text: '18 buildings were approved per Daily Herald and Government Technology reporting. Developer CEO Pete Marin cited up to 20 buildings as an upper estimate. Leasable IT capacity is 1,200 MW at full buildout.',
@@ -119,8 +119,9 @@ export const questions = [
     ],
     unknown: [
       {
-        text: 'The Village FAQ states that the development agreements provide no financial incentives to T5. The Lake County Assessor has not yet publicly valued the campus.',
-        sourceKey: 'villageoffaq',
+        text: 'The Village FAQ stated that the development agreements provide no financial incentives to T5. UNVERIFIED: that document is no longer reachable and no other public source confirms the claim. The Lake County Assessor has not yet publicly valued the campus.',
+        sourceKey: null,
+        unverified: true,
       },
       {
         text: 'Whether T5 secured Illinois Data Center Investment Tax Exemption status before the suspension of new applications (effective July 1, 2026, per the Governor\'s June 5, 2026 directive) is not publicly confirmed. No stated duration for the suspension appears on the DCEO page.',
@@ -139,8 +140,8 @@ export const questions = [
         sourceKey: 'dailyherald2026',
       },
       {
-        text: 'The Village FAQ, updated June 5, 2026, states the Village can no longer respond to further questions about the project due to pending litigation.',
-        sourceKey: 'villageoffaq',
+        text: 'The Village FAQ, updated June 5, 2026, stated the Village can no longer respond to further questions about the project due to pending litigation: "Unfortunately, due to notice of impending litigation, and upon advice of counsel, the village cannot at this time offer further responses to questions regarding the approved data center development." The FAQ document itself became unreachable by August 5, 2026.',
+        sourceKey: 'dailyherald2026',
       },
     ],
     disputed: [

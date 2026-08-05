@@ -3,6 +3,7 @@ import PageTitle from '../components/ui/PageTitle'
 import AnimatedNumber from '../components/ui/AnimatedNumber'
 import FadeIn from '../components/ui/FadeIn'
 import CopyKPIButton from '../components/ui/CopyKPIButton'
+import UnverifiedTag from '../components/ui/UnverifiedTag'
 import SectionBar from '../components/ui/SectionBar'
 import TaxRevenueChart from '../components/charts/TaxRevenueChart'
 import JobsTimelineChart from '../components/charts/JobsTimelineChart'
@@ -38,11 +39,11 @@ const FACETS = [
     cat: 'Employment',
     catColor: 'text-emerald-700',
     catBorder: 'border-emerald-200',
-    headline: '1,680 permanent positions at full buildout.',
-    body: 'The Village FAQ\'s current estimate is 1,680 permanent jobs at full buildout. An earlier figure of 1,500 was cited at the October 2025 public meeting. Construction through 2027–2029 will employ "hundreds" of trade workers, per Village documents.',
+    headline: 'Three job figures, one of them unverified.',
+    body: 'The Village FAQ put permanent jobs at 1,680 at full buildout, but that document is no longer reachable and nothing else confirms the number. Two figures do have living sources: Mayor Davies cited 1,500 permanent positions to the Chicago Tribune in October 2025, and T5 CEO Pete Marin cited "over 1,600" in July 2026. Construction through 2027–2029 will employ "hundreds" of trade workers.',
     chart: <JobsTimelineChart />,
     chartLabel: 'Permanent vs. Construction Workforce',
-    sourceKey: 'villageoffaq',
+    sourceKey: 'govtech2025',
     textCls: 'lg:col-span-6', chartCls: 'lg:col-span-6', flip: true,
   },
   {
@@ -104,7 +105,7 @@ const SECONDARY_STATS = [
     numValue: project.totalAcres,
     suffix: ' ac',
     note: 'Peterson Rd & Route 83',
-    src: 'villageoffaq',
+    src: 'dailyherald2026',
   },
 ]
 
@@ -156,9 +157,11 @@ export default function Home() {
                 className="text-7xl sm:text-8xl font-display font-black text-gray-900 leading-none tracking-tighter block"
               />
               <p className="text-sm text-gray-500 mt-4 leading-snug">
-                Projected by 2029. Village FAQ estimate.<SourceCitation sourceKey="villageoffaq" />
+                Projected by 2029. Village FAQ figure; that document is now unreachable and no other
+                source confirms 1,680. Davies cited 1,500 (Oct. 2025); Marin cited &ldquo;over 1,600&rdquo;
+                (Jul. 2026).<UnverifiedTag /><SourceCitation sourceKey="govtech2025" />
               </p>
-              <CopyKPIButton copyText={buildCopyText(`${jobs.permanent.toLocaleString()} permanent jobs`, 'Projected by 2029. Village FAQ estimate.', 'villageoffaq')} />
+              <CopyKPIButton copyText={buildCopyText(`${jobs.permanent.toLocaleString()} permanent jobs (UNVERIFIED — Village FAQ unreachable; Davies cited 1,500, Marin cited over 1,600)`, 'Projected by 2029.', 'govtech2025')} />
             </FadeIn>
 
             <FadeIn delay={0.08} className="md:pl-12 border-t border-gray-200 pt-10 md:pt-0 md:border-t-0">
@@ -208,13 +211,13 @@ export default function Home() {
             <div className="mt-6 pt-5 border-t border-gray-100 flex flex-wrap gap-x-8 gap-y-3">
               <div>
                 <p className="text-2xs font-mono text-gray-400 uppercase tracking-[0.16em] mb-0.5">Water (full buildout)</p>
-                <p className="text-sm font-display font-bold text-gray-800">≤ 50,000 gal/day<SourceCitation sourceKey="villageoffaq" /></p>
-                <CopyKPIButton copyText={buildCopyText('≤ 50,000 gal/day water use (full buildout)', 'Village FAQ estimate', 'villageoffaq')} />
+                <p className="text-sm font-display font-bold text-gray-800">&lt; 50,000 gal/day<SourceCitation sourceKey="clcjawa2026" /></p>
+                <CopyKPIButton copyText={buildCopyText('< 50,000 gal/day water use (full buildout)', 'CLCJAWA estimate', 'clcjawa2026')} />
               </div>
               <div>
-                <p className="text-2xs font-mono text-gray-400 uppercase tracking-[0.16em] mb-0.5">Commissioning flush (one-time)</p>
-                <p className="text-sm font-display font-bold text-gray-800">~3.2M gal<SourceCitation sourceKey="hoodline2026" /></p>
-                <CopyKPIButton copyText={buildCopyText('~3.2M gal commissioning flush (one-time)', 'One-time event at system startup', 'hoodline2026')} />
+                <p className="text-2xs font-mono text-gray-400 uppercase tracking-[0.16em] mb-0.5">Commissioning flush (one 200 MW bldg)</p>
+                <p className="text-sm font-display font-bold text-gray-800">~3.2M gal<SourceCitation sourceKey="clcjawa2026" /></p>
+                <CopyKPIButton copyText={buildCopyText('~3.2M gal commissioning flush for one 200 MW building (one-time, staged over days)', 'CLCJAWA estimate', 'clcjawa2026')} />
               </div>
             </div>
           </FadeIn>

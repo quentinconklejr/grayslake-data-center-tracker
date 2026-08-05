@@ -2,11 +2,14 @@ import { Link } from 'react-router-dom'
 import PageTitle from '../components/ui/PageTitle'
 import FadeIn from '../components/ui/FadeIn'
 import SourceCitation from '../components/ui/SourceCitation'
+import ItemCitations from '../components/ui/ItemCitations'
+import { keysOf } from '../lib/citationKeys'
 import { FootnoteProvider, FootnoteList } from '../components/ui/FootnoteContext'
 import { questions } from '../data/questions'
 import { projections } from '../data/projections'
 import { LAST_VERIFIED } from '../data/siteConfig'
 import AudienceBreadcrumb from '../components/ui/AudienceBreadcrumb'
+import UnverifiedTag from '../components/ui/UnverifiedTag'
 
 const { project, jobs, fees, residentialRateImpact } = projections
 
@@ -15,14 +18,14 @@ const PRELOAD_KEYS = []
 for (const q of questions) {
   for (const block of ['stated', 'disputed', 'unknown']) {
     for (const item of q[block] ?? []) {
-      if (item.sourceKey && !PRELOAD_KEYS.includes(item.sourceKey)) {
-        PRELOAD_KEYS.push(item.sourceKey)
+      for (const k of keysOf(item)) {
+        if (!PRELOAD_KEYS.includes(k)) PRELOAD_KEYS.push(k)
       }
     }
   }
 }
 // Add any projections-sourced keys not already present
-;['villageoffaq', 'govtech2025', 'dcdGW2026', 'chitrib_june2026'].forEach(k => {
+;['govtech2025', 'dcdGW2026', 'chitrib_june2026', 'clcjawa2026', 'dailyherald2026'].forEach(k => {
   if (!PRELOAD_KEYS.includes(k)) PRELOAD_KEYS.push(k)
 })
 
@@ -77,8 +80,8 @@ export default function Residents() {
       <Section title="What exactly is being built?">
         <p>
           T5 Data Centers plans to build a hyperscale AI data center campus on {project.totalAcres.toLocaleString()} acres
-          at Peterson Road and Route 83.
-          <SourceCitation sourceKey="villageoffaq" />
+          at Peterson Road and Route 83, in the Cornerstone business park.
+          <SourceCitation sourceKey="dailyherald2026" />
           {' '}At full buildout, the campus would include up to {project.approvedBuildings}–{project.maxBuildings} buildings totaling
           roughly {project.totalSqFt.toLocaleString()} square feet, with {project.totalCapacityMW.toLocaleString()} MW of leasable
           computing capacity.
@@ -98,7 +101,7 @@ export default function Residents() {
           rent out. Both can be accurate at once.
         </p>
         <div className="mt-4 bg-gray-50 border border-gray-200 rounded-xl px-5 py-4 space-y-2">
-          <Fact label="Site size">{project.totalAcres.toLocaleString()} acres<SourceCitation sourceKey="villageoffaq" /></Fact>
+          <Fact label="Site size">{project.totalAcres.toLocaleString()} acres<SourceCitation sourceKey="dailyherald2026" /></Fact>
           <Fact label="Buildings">Up to {project.maxBuildings} approved<SourceCitation sourceKey="govtech2025" /></Fact>
           <Fact label="IT capacity">{project.totalCapacityMW.toLocaleString()} MW at full buildout, per T5<SourceCitation sourceKey="dcdGW2026" /></Fact>
           <Fact label="ComEd capacity">{project.comEdCapacityGW} GW secured, per T5 CEO<SourceCitation sourceKey="govtech2025" /></Fact>
@@ -110,7 +113,7 @@ export default function Residents() {
         {waterQ?.stated.map((item, i) => (
           <p key={i}>
             {item.text}
-            {item.sourceKey && <SourceCitation sourceKey={item.sourceKey} />}
+            <ItemCitations item={item} />
           </p>
         ))}
         {waterQ?.disputed.length > 0 && (
@@ -119,7 +122,7 @@ export default function Residents() {
             {waterQ.disputed.map((item, i) => (
               <p key={i} className="text-gray-600">
                 {item.text}
-                {item.sourceKey && <SourceCitation sourceKey={item.sourceKey} />}
+                <ItemCitations item={item} />
               </p>
             ))}
           </div>
@@ -138,7 +141,7 @@ export default function Residents() {
         {energyQ?.stated.map((item, i) => (
           <p key={i}>
             {item.text}
-            {item.sourceKey && <SourceCitation sourceKey={item.sourceKey} />}
+            <ItemCitations item={item} />
           </p>
         ))}
         <p>
@@ -158,7 +161,7 @@ export default function Residents() {
         {scaleQ?.stated.map((item, i) => (
           <p key={i}>
             {item.text}
-            {item.sourceKey && <SourceCitation sourceKey={item.sourceKey} />}
+            <ItemCitations item={item} />
           </p>
         ))}
         {scaleQ?.unknown.length > 0 && (
@@ -167,7 +170,7 @@ export default function Residents() {
             {scaleQ.unknown.map((item, i) => (
               <p key={i} className="text-gray-500">
                 {item.text}
-                {item.sourceKey && <SourceCitation sourceKey={item.sourceKey} />}
+                <ItemCitations item={item} />
               </p>
             ))}
           </div>
@@ -176,14 +179,16 @@ export default function Residents() {
 
       <Section title="What about jobs?">
         <p>
-          The Village FAQ projects {jobs.permanent.toLocaleString()} permanent jobs at full buildout.
-          <SourceCitation sourceKey="villageoffaq" />
-          {' '}An earlier figure of {jobs.permanentEarlier.toLocaleString()} was cited at the October 2025 public meeting.
+          Mayor Davies cited {jobs.permanentDavies.toLocaleString()} permanent jobs at full buildout in October 2025.
           <SourceCitation sourceKey="govtech2025" />
+          {' '}T5&rsquo;s CEO cited &ldquo;over {jobs.permanentMarin.toLocaleString()}&rdquo; in July 2026.
+          <SourceCitation sourceKey="dailyherald_jul2026" />
+          {' '}A Village FAQ figure of {jobs.permanent.toLocaleString()} also circulated, but that document is no longer
+          reachable and nothing else confirms it.<UnverifiedTag />
         </p>
         <p>
-          Construction through 2027–2029 will employ {jobs.constructionPhase}, per Village documents.
-          <SourceCitation sourceKey="villageoffaq" />
+          Construction through 2027–2029 will employ {jobs.constructionPhase}.
+          <SourceCitation sourceKey="govtech2025" />
         </p>
       </Section>
 
@@ -191,7 +196,7 @@ export default function Residents() {
         {taxQ?.stated.map((item, i) => (
           <p key={i}>
             {item.text}
-            {item.sourceKey && <SourceCitation sourceKey={item.sourceKey} />}
+            <ItemCitations item={item} />
           </p>
         ))}
         {taxQ?.disputed.length > 0 && (
@@ -200,7 +205,7 @@ export default function Residents() {
             {taxQ.disputed.map((item, i) => (
               <p key={i} className="text-gray-600">
                 {item.text}
-                {item.sourceKey && <SourceCitation sourceKey={item.sourceKey} />}
+                <ItemCitations item={item} />
               </p>
             ))}
           </div>
@@ -211,7 +216,7 @@ export default function Residents() {
             {taxQ.unknown.map((item, i) => (
               <p key={i} className="text-gray-500">
                 {item.text}
-                {item.sourceKey && <SourceCitation sourceKey={item.sourceKey} />}
+                <ItemCitations item={item} />
               </p>
             ))}
           </div>
@@ -222,7 +227,7 @@ export default function Residents() {
         {procQ?.stated.map((item, i) => (
           <p key={i}>
             {item.text}
-            {item.sourceKey && <SourceCitation sourceKey={item.sourceKey} />}
+            <ItemCitations item={item} />
           </p>
         ))}
         {procQ?.disputed.length > 0 && (
@@ -231,7 +236,7 @@ export default function Residents() {
             {procQ.disputed.map((item, i) => (
               <p key={i} className="text-gray-600">
                 {item.text}
-                {item.sourceKey && <SourceCitation sourceKey={item.sourceKey} />}
+                <ItemCitations item={item} />
               </p>
             ))}
           </div>
