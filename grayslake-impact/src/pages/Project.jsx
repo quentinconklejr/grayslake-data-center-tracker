@@ -3,6 +3,7 @@ import PageTitle from '../components/ui/PageTitle'
 import { pageMeta } from '../data/pageMeta'
 import FadeIn from '../components/ui/FadeIn'
 import KeyFigureList from '../components/ui/KeyFigureList'
+import { FootnoteProvider, FootnoteList } from '../components/ui/FootnoteContext'
 import { keyFigures } from '../data/keyFigures'
 import { LAST_VERIFIED } from '../data/siteConfig'
 import Energy from './Energy'
@@ -13,6 +14,15 @@ import Schools from './Schools'
 // Four topic pages merged into one. Each keeps its own footnote numbering, so
 // citations stay local to the section they support. The old URLs redirect here
 // and land on the matching anchor, so existing links keep working.
+// Every source the At a Glance grid cites, in the order the cards render, so
+// footnote numbers are stable rather than assigned by whichever card mounts first.
+const GLANCE_KEYS = []
+for (const f of keyFigures) {
+  for (const k of [f.sourceKey, ...(f.sourceKeys ?? [])].filter(Boolean)) {
+    if (!GLANCE_KEYS.includes(k)) GLANCE_KEYS.push(k)
+  }
+}
+
 const SECTIONS = [
   { id: 'energy', label: 'Energy', Component: Energy },
   { id: 'jobs', label: 'Jobs', Component: Jobs },
@@ -54,10 +64,17 @@ export default function Project() {
           <p className="text-2xs font-mono text-gray-600 mt-3">Last verified {LAST_VERIFIED}</p>
         </FadeIn>
 
-        <FadeIn className="py-8 border-b border-gray-200">
-          <p className="text-2xs font-mono text-gray-600 uppercase tracking-widest mb-4">At a glance</p>
-          <KeyFigureList figures={keyFigures} variant="cards" />
-        </FadeIn>
+        {/* Its own footnote scope. The four sections below each carry their own
+            FootnoteProvider, but this grid sat outside all of them, so every
+            SourceCitation in it resolved to a null footnote number and rendered
+            as an empty [] linking to #fn-null. */}
+        <FootnoteProvider preload={GLANCE_KEYS}>
+          <FadeIn className="py-8 border-b border-gray-200">
+            <p className="text-2xs font-mono text-gray-600 uppercase tracking-widest mb-4">At a glance</p>
+            <KeyFigureList figures={keyFigures} variant="cards" />
+            <FootnoteList />
+          </FadeIn>
+        </FootnoteProvider>
       </div>
 
       {/* In-page nav — replaces four separate nav entries */}

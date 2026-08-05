@@ -24,7 +24,7 @@ export default function Reporters() {
         <p className="text-base text-gray-600 max-w-2xl leading-relaxed">
           Sourced figures from public documents and press coverage on T5 @ Chicago IV.
           Every number links to its primary source. See{' '}
-          <Link to="/sources" className="text-blue-600 hover:text-blue-700 transition-colors">the Sources page</Link>
+          <Link to="/documents" className="text-blue-600 hover:text-blue-700 transition-colors">the Documents page</Link>
           {' '}for full citation details.
         </p>
         <p className="text-2xs font-mono text-gray-400 mt-3">Last verified {LAST_VERIFIED}</p>
@@ -86,10 +86,10 @@ export default function Reporters() {
           Citizens Utility Board, Alliance for the Great Lakes, and Illinois DCEO.
         </p>
         <Link
-          to="/sources"
+          to="/documents"
           className="inline-flex items-center gap-1.5 text-sm font-medium text-blue-600 hover:text-blue-700 transition-colors"
         >
-          View all sources
+          View all documents and sources
           <svg className="w-3.5 h-3.5" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5">
             <path d="M2 7h10M7 2l5 5-5 5" strokeLinecap="round" strokeLinejoin="round" />
           </svg>

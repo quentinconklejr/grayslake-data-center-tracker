@@ -233,8 +233,8 @@ export default function Actions() {
           <Link to="/timeline" className="text-blue-600 hover:text-blue-700 transition-colors">
             Full project timeline →
           </Link>
-          <Link to="/sources" className="text-blue-600 hover:text-blue-700 transition-colors">
-            All sources →
+          <Link to="/documents" className="text-blue-600 hover:text-blue-700 transition-colors">
+            All documents and sources →
           </Link>
         </div>
       </FadeIn>
