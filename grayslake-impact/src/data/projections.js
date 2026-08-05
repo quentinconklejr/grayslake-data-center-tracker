@@ -10,6 +10,7 @@ export const projections = {
     maxSqFt: "10,100,000",
     totalCapacityMW: 1200,
     securedPowerMW: 1600,
+    comEdCapacityGW: 1.55,
     costLow: 8.5, // billions
     costHigh: 18, // billions
     firstBuildingOnline: "Q4 2027",
@@ -46,6 +47,42 @@ export const projections = {
     constructionWageTaxCredit: 20, // percent, for underserved areas
     statusChange: "Suspension of new data center tax incentive applications, effective July 1, 2026 (Governor's directive, June 5, 2026). No stated duration appears on the DCEO page",
   },
+  // Three published capacity figures. They measure DIFFERENT things and are not
+  // in conflict with one another. Each is attributed to whoever stated it.
+  capacityFigures: [
+    {
+      key: "it",
+      value: "1,200 MW",
+      metric: "Leasable IT capacity",
+      definition:
+        "The computing load T5 markets the campus as able to support at full buildout.",
+      attribution: "T5 Data Centers (developer), via Data Center Dynamics",
+      sourceKey: "dcdGW2026",
+    },
+    {
+      key: "secured",
+      value: "1,600 MW",
+      metric: "Secured utility power",
+      definition:
+        "Utility capacity T5 states it has contracted, above leasable IT capacity to allow for redundancy and phasing.",
+      attribution: "T5 Data Centers (developer), via Data Center Dynamics",
+      sourceKey: "dcdGW2026",
+    },
+    {
+      key: "comed",
+      value: "1.55 GW",
+      metric: "Total ComEd capacity",
+      definition:
+        "Total interconnection capacity attributed to the campus. Stated by counsel for the parties challenging the village approvals, not by the Village, ComEd, or PJM.",
+      attribution:
+        "Chloe Russell, lead attorney, Law Office of Ronald D. Cummings \u2014 counsel to the Lake County opposition coalition, quoted in the Daily Herald",
+      sourceKey: "dailyherald2026",
+      contested: true,
+    },
+  ],
+  capacityNote:
+    "These are three different measurements, not three competing estimates of the same quantity. Leasable IT capacity is the computing load; secured utility power and total ComEd capacity describe grid interconnection, which is normally larger. 1,600 MW and 1.55 GW are within roughly three percent of each other and may describe the same underlying quantity from two sources.",
+
   residentialRateImpact: {
     directImpact: "tariff-walled",
     tariffNote: "Illinois ICC-approved ComEd tariff requires data centers to fund their own transmission and distribution upgrade costs within the large industrial rate class.",

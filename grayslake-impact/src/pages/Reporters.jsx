@@ -26,14 +26,20 @@ const KEY_FIGURES = [
   {
     label: 'IT capacity',
     value: `${project.totalCapacityMW.toLocaleString()} MW`,
-    detail: 'Leasable at full buildout',
+    detail: 'Leasable at full buildout, per T5',
     sourceKey: 'dcdGW2026',
   },
   {
     label: 'Secured utility power',
     value: `${project.securedPowerMW.toLocaleString()} MW`,
-    detail: 'ComEd capacity contracted',
+    detail: 'Utility capacity T5 states it has contracted',
     sourceKey: 'dcdGW2026',
+  },
+  {
+    label: 'Total ComEd capacity',
+    value: `${project.comEdCapacityGW} GW`,
+    detail: "Stated by Chloe Russell, counsel to the coalition challenging the approvals. A different measurement than leasable IT capacity, not a competing estimate of it.",
+    sourceKey: 'dailyherald2026',
   },
   {
     label: 'Approved buildings',

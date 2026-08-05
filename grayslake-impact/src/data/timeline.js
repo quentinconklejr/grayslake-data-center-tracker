@@ -121,7 +121,7 @@ export const timelineEvents = [
   {
     date: "2029",
     title: "Full build-out projected",
-    description: "Campus could reach full 1.2 GW IT capacity. Village approvals cover 18 buildings; CEO Pete Marin cited up to 20 as an upper estimate.",
+    description: "Campus could reach T5\u2019s stated 1.2 GW of leasable IT capacity. Village approvals cover 18 buildings; CEO Pete Marin cited up to 20 as an upper estimate.",
     category: "construction",
     sourceKeys: ["govtech2025", "dailyherald2026", "patch2026"],
   },

@@ -89,10 +89,21 @@ export default function Residents() {
           around {project.fullBuildOut}.
           <SourceCitation sourceKey="dcdGW2026" />
         </p>
+        <p>
+          You may see different power numbers in different places. The {project.totalCapacityMW.toLocaleString()} MW
+          figure is the computing capacity T5 says the campus can support.
+          <SourceCitation sourceKey="dcdGW2026" />
+          {' '}A larger figure, {project.comEdCapacityGW} GW of total ComEd capacity, was stated by the attorney for
+          the residents challenging the village approvals.
+          <SourceCitation sourceKey="dailyherald2026" />
+          {' '}These describe different things &mdash; computing load versus grid connection &mdash; so both can be
+          accurate at once.
+        </p>
         <div className="mt-4 bg-gray-50 border border-gray-200 rounded-xl px-5 py-4 space-y-2">
           <Fact label="Site size">{project.totalAcres.toLocaleString()} acres<SourceCitation sourceKey="villageoffaq" /></Fact>
           <Fact label="Buildings">Up to {project.maxBuildings} approved<SourceCitation sourceKey="govtech2025" /></Fact>
-          <Fact label="IT capacity">{project.totalCapacityMW.toLocaleString()} MW at full buildout<SourceCitation sourceKey="dcdGW2026" /></Fact>
+          <Fact label="IT capacity">{project.totalCapacityMW.toLocaleString()} MW at full buildout, per T5<SourceCitation sourceKey="dcdGW2026" /></Fact>
+          <Fact label="ComEd capacity">{project.comEdCapacityGW} GW, per challengers&rsquo; counsel<SourceCitation sourceKey="dailyherald2026" /></Fact>
           <Fact label="Phase 1">{project.firstBuildingOnline}<SourceCitation sourceKey="dcdGW2026" /></Fact>
         </div>
       </Section>

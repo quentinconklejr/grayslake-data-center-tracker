@@ -50,8 +50,8 @@ const FACETS = [
     cat: 'Energy Draw',
     catColor: 'text-amber-700',
     catBorder: 'border-amber-200',
-    headline: '1,600 MW secured. 1,200 MW leasable.',
-    body: 'T5 has secured 1,600 MW of utility power against a planned 1,200 MW of leasable IT capacity. The 400 MW difference serves as a buffer for redundancy and phased buildout. Residential electric rates are not directly affected under Illinois\'s separate utility rate class structure for data centers.',
+    headline: 'Three capacity figures, three different measurements.',
+    body: 'T5 states 1,200 MW of leasable IT capacity and 1,600 MW of secured utility power, the 400 MW difference serving as a buffer for redundancy and phased buildout. A third figure — 1.55 GW of total ComEd capacity — was stated by counsel for the parties challenging the village approvals. These measure different things and are not competing estimates of one quantity. Residential electric rates are not directly affected under Illinois\'s separate utility rate class structure for data centers.',
     chart: <EnergyDrawChart />,
     chartLabel: 'Secured Power vs. IT Capacity',
     sourceKey: 'dcdGW2026',
@@ -86,6 +86,12 @@ const SECONDARY_STATS = [
     suffix: ' MW',
     note: 'Utility-contracted capacity',
     src: 'dcdGW2026',
+  },
+  {
+    label: 'ComEd Capacity',
+    value: `${project.comEdCapacityGW} GW`,
+    note: "Per challengers' counsel",
+    src: 'dailyherald2026',
   },
   {
     label: 'Phase 1 Online',

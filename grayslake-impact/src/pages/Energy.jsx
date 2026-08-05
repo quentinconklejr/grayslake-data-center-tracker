@@ -8,7 +8,7 @@ import EvidenceBlock from '../components/ui/EvidenceBlock'
 import { projections } from '../data/projections'
 import { LAST_VERIFIED } from '../data/siteConfig'
 
-const { project } = projections
+const { project, capacityFigures, capacityNote } = projections
 const buffer = project.securedPowerMW - project.totalCapacityMW
 
 export default function Energy() {
@@ -25,9 +25,11 @@ export default function Energy() {
         <p className="text-2xs font-mono text-blue-600/60 uppercase tracking-[0.2em] mb-3">Grid Impact</p>
         <h1 className="text-4xl font-display font-bold text-gray-900 tracking-tight mb-3">Energy Draw</h1>
         <p className="text-base text-gray-600 max-w-2xl leading-relaxed">
-          T5 has secured {project.securedPowerMW.toLocaleString()} MW of utility power against a planned{' '}
-          {project.totalCapacityMW.toLocaleString()} MW of leasable IT capacity. The {buffer} MW difference
-          serves as a buffer for redundancy and future phases. Both figures are from public developer disclosures.
+          Three capacity figures for this campus appear in public sources. They measure different
+          things and are not competing estimates of the same quantity: {project.totalCapacityMW.toLocaleString()} MW
+          of leasable IT capacity and {project.securedPowerMW.toLocaleString()} MW of secured utility power, both
+          stated by T5, and {project.comEdCapacityGW} GW of total ComEd capacity, stated by counsel for the parties
+          challenging the village approvals. Each is attributed below.
         </p>
         <p className="text-2xs font-mono text-gray-400 mt-3">Last verified {LAST_VERIFIED}</p>
       </FadeIn>
@@ -35,8 +37,8 @@ export default function Energy() {
       <FadeIn className="grid grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
         <StatCard label="Secured Power"     value={`${project.securedPowerMW.toLocaleString()} MW`}  sub="Utility-contracted capacity"   accent="amber" sourceKey="dcdGW2026" />
         <StatCard label="IT Capacity"       value={`${project.totalCapacityMW.toLocaleString()} MW`} sub="Leasable at full buildout"      accent="blue"  sourceKey="dcdGW2026" />
+        <StatCard label="Total ComEd Capacity" value={`${project.comEdCapacityGW} GW`}                sub="Stated by challengers' counsel" accent="amber" sourceKey="dailyherald2026" />
         <StatCard label="Power Buffer"      value={`${buffer} MW`}                                    sub="Calculated: 1,600 − 1,200 MW"  accent="amber" badge="Derived" />
-        <StatCard label="PJM Zone"          value="COMED"                                             sub="ComEd transmission zone, PJM"  accent="blue"  sourceKey="villageoffaq" />
       </FadeIn>
 
       <FadeIn className="glass-card p-8 mb-6">
@@ -50,10 +52,41 @@ export default function Energy() {
           </div>
         </div>
         <p className="text-sm text-gray-500 mb-8 max-w-prose">
-          Both figures are from public developer disclosures. No estimation is involved.
-          T5 originally announced the campus at 480 MW (2024). Developer plans later expanded the leasable IT capacity target to 1,200 MW.
+          The two figures charted below are T5&rsquo;s own disclosures. No estimation is involved.
+          T5 originally announced the campus at 480 MW (2024) and later raised the leasable IT capacity target to 1,200 MW.
+          A third figure &mdash; {project.comEdCapacityGW} GW of total ComEd capacity &mdash; comes from a different party and describes a
+          different measurement; see the comparison directly below this chart.
         </p>
         <EnergyDrawChart />
+      </FadeIn>
+
+      <FadeIn className="glass-card px-6 py-6 mb-6">
+        <p className="text-2xs font-mono text-gray-400 uppercase tracking-widest mb-2">Which Capacity Figure Is Which</p>
+        <p className="text-sm text-gray-500 mb-5 max-w-prose">{capacityNote}</p>
+        <div className="space-y-3">
+          {capacityFigures.map(f => (
+            <div
+              key={f.key}
+              className={`border rounded-lg px-4 py-3.5 ${f.contested ? 'border-amber-200 bg-amber-50/40' : 'border-gray-200 bg-white'}`}
+            >
+              <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1 mb-1.5">
+                <span className="text-lg font-display font-bold text-gray-900">{f.value}</span>
+                <span className="text-2xs font-mono uppercase tracking-widest text-gray-500">{f.metric}</span>
+                {f.contested && (
+                  <span className="text-2xs font-mono uppercase tracking-widest text-amber-700 border border-amber-300 rounded-sm px-1.5 py-0.5">
+                    Asserted by a party to the dispute
+                  </span>
+                )}
+              </div>
+              <p className="text-sm text-gray-600 leading-relaxed">{f.definition}</p>
+              <p className="text-xs text-gray-500 mt-2 leading-relaxed">
+                <span className="font-medium text-gray-600">Stated by: </span>
+                {f.attribution}
+                <SourceCitation sourceKey={f.sourceKey} />
+              </p>
+            </div>
+          ))}
+        </div>
       </FadeIn>
 
       <FadeIn className="glass-card px-6 py-6 mb-6">
@@ -109,6 +142,7 @@ export default function Energy() {
             {[
               ['Secured Power',         `${project.securedPowerMW.toLocaleString()} MW`, 'dcdGW2026'],
               ['Leasable IT Capacity',  `${project.totalCapacityMW.toLocaleString()} MW`, 'dcdGW2026'],
+              ['Total ComEd Capacity',  `${project.comEdCapacityGW} GW`, 'dailyherald2026'],
               ['Power Buffer',          `${buffer} MW`, null, '1,600 − 1,200'],
               ['PJM Queue ID',          '— not yet public', null],
               ['Interconnect Voltage',  '— pending', null],
