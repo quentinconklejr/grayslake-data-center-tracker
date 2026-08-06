@@ -13,11 +13,7 @@ export const SITE_ORIGIN = 'https://grayslakedatacentertracker.org'
 export const pageMeta = {
   '/': {
     description:
-<<<<<<< HEAD
-      'Public-records tracker for T5 @ Chicago IV — a hyperscale data center under construction in Grayslake, Illinois. Every claim linked to its source.',
-=======
       'Tracking the T5 @ Chicago IV data center in Grayslake, Illinois. Jobs, taxes, energy, water and the pending litigation, with a source behind every figure.',
->>>>>>> edbb41e84b58ac626434a7840196b4d46519f2d5
     ogImage: '/og/home.png',
   },
   '/project': {
@@ -57,13 +53,9 @@ export const pageMeta = {
     ogImage: '/og/timeline.png',
   },
   '/questions': {
-    title: 'Questions & Answers',
+    title: 'Open Questions',
     description:
-<<<<<<< HEAD
-      'Plain-language answers on water, energy, jobs, taxes and the approval process for T5 @ Chicago IV — with sourced evidence for what is settled, disputed, and not yet public.',
-=======
       'What is settled, what is disputed, and what has no public answer yet. Water, electricity, campus scale, jobs, taxes and the approval process.',
->>>>>>> edbb41e84b58ac626434a7840196b4d46519f2d5
     ogImage: '/og/questions.png',
   },
   '/map': {
@@ -87,21 +79,13 @@ export const pageMeta = {
   '/reporters': {
     title: 'For Reporters',
     description:
-<<<<<<< HEAD
-      'Key figures, citations, and press contacts for T5 @ Chicago IV.',
-=======
       'Key figures with citations, contacts and source documents for reporters covering T5 @ Chicago IV in Grayslake, Illinois.',
->>>>>>> edbb41e84b58ac626434a7840196b4d46519f2d5
     ogImage: '/og/reporters.png',
   },
   '/actions': {
     title: 'Jurisdictional Actions',
     description:
-<<<<<<< HEAD
-      'Permit applications, legal challenges, resolutions, and policy changes for T5 @ Chicago IV, filterable by jurisdiction and action type.',
-=======
       'Permit applications, legal challenges and policy actions on T5 @ Chicago IV, filterable by jurisdiction across village, county, state and federal bodies.',
->>>>>>> edbb41e84b58ac626434a7840196b4d46519f2d5
     ogImage: '/og/actions.png',
   },
 }

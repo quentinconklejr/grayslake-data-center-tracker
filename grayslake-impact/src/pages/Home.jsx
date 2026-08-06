@@ -28,12 +28,6 @@ const IMPACT_CARDS = [
     catColor: 'text-emerald-700',
     topBorder: 'border-t-emerald-400',
     headline: `${figureById['jobs-permanent'].value} permanent jobs — ${figureById['jobs-permanent'].qualifier}.`,
-<<<<<<< HEAD
-=======
-    body: 'The Village FAQ gives no flat headcount. It states that “if all 10 million sq ft of approved data center space is built,” an estimated “50 permanent jobs are created for every 300,000 sq ft, or 1,680 permanent jobs” — and hedges that estimate, noting job creation “may change” as operations and technologies do. That footprint is a ceiling the approvals allow, not a commitment. Two lower figures were stated directly by people: Mayor Davies cited 1,500 permanent positions in October 2025, and CEO Pete Marin cited “over 1,600” in July 2026. Construction employment is counted separately: the FAQ excludes it, and it runs to “hundreds” of trade workers through 2027–2029.',
-    chart: <JobsTimelineChart />,
-    chartLabel: 'Permanent vs. Construction Workforce',
->>>>>>> edbb41e84b58ac626434a7840196b4d46519f2d5
     sourceKey: 'govtech2025',
   },
   {

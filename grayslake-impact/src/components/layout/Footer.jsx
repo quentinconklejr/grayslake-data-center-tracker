@@ -28,16 +28,10 @@ export default function Footer() {
               </div>
               <span className="text-sm font-semibold text-white tracking-tight">Grayslake Data Center Tracker</span>
             </div>
-<<<<<<< HEAD
             <p className="text-xs text-gray-300 leading-relaxed">
               An independent tracker collecting public records and press coverage
               on T5 @ Chicago IV &mdash; a hyperscale data center under construction
               in Grayslake, Illinois.
-=======
-            <p className="text-xs text-gray-500 leading-relaxed">
-              A civic data tool tracking what the T5 @ Chicago IV data center campus costs and
-              produces in Grayslake, Illinois: taxes, jobs, power and water.
->>>>>>> edbb41e84b58ac626434a7840196b4d46519f2d5
             </p>
           </div>
 
