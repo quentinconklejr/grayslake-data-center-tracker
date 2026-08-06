@@ -36,9 +36,32 @@ export default function Sources() {
               {String(i + 1).padStart(2, '0')}
             </span>
             <div className="min-w-0 flex-1">
-              <p className="text-sm font-medium text-gray-900 leading-snug mb-0.5">{source.title}</p>
+              {source.url && source.status !== 'dead' && source.status !== 'unverified' ? (
+                <a
+                  href={source.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm font-medium text-gray-900 hover:text-blue-700 leading-snug mb-0.5 inline-block transition-colors duration-150"
+                >
+                  {source.title}
+                </a>
+              ) : (
+                <p className="text-sm font-medium text-gray-900 leading-snug mb-0.5">{source.title}</p>
+              )}
               {source.publisher && (
-                <p className="text-xs text-gray-500 mb-1">{source.publisher}</p>
+                <p className="text-xs text-gray-500 mb-1 flex items-center gap-1.5">
+                  {source.publisher}
+                  {source.tier === 'primary' && (
+                    <span className="inline-flex items-center px-1.5 py-0.5 rounded text-2xs font-mono font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200 uppercase tracking-widest">
+                      Original reporting
+                    </span>
+                  )}
+                  {source.tier === 'aggregator' && (
+                    <span className="inline-flex items-center px-1.5 py-0.5 rounded text-2xs font-mono font-semibold bg-gray-100 text-gray-500 border border-gray-200 uppercase tracking-widest">
+                      Aggregator
+                    </span>
+                  )}
+                </p>
               )}
               {source.note && (
                 <p className="text-xs text-amber-700/80 italic mb-1">{source.note}</p>
@@ -88,7 +111,7 @@ export default function Sources() {
               {source.status === 'background' && (
                 <span className="text-2xs font-mono text-gray-400 uppercase tracking-widest">background</span>
               )}
-              <span className="text-2xs font-mono text-gray-500 uppercase tracking-widest">{key}</span>
+              <span className="text-2xs font-mono text-gray-300 uppercase tracking-widest">{key}</span>
             </div>
           </div>
         ))}

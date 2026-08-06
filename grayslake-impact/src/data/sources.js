@@ -4,24 +4,28 @@ export const sources = {
     publisher: "Baxtel",
     date: "2026",
     url: "https://baxtel.com/data-center/t5-grayslake-illinois",
+    tier: "aggregator",
   },
   dcd2026: {
     title: "T5 announces 480MW data center campus in Grayslake, Illinois (original announcement; project later expanded to 1.2 GW)",
     publisher: "Data Center Dynamics",
     date: "2024",
     url: "https://www.datacenterdynamics.com/en/news/t5-announces-480mw-data-center-campus-in-grayslake-illinois/",
+    tier: "trade",
   },
   dcdGW2026: {
     title: "T5 plans five gigawatt-scale data center campuses, announces Chicago campus",
     publisher: "Data Center Dynamics",
     date: "Feb. 10, 2025",
     url: "https://www.datacenterdynamics.com/en/news/t5-plans-five-gigawatt-scale-data-center-campuses-announces-chicago-campus/",
+    tier: "trade",
   },
   dailyherald2026: {
     title: "Despite village approvals, legal action expected against Grayslake data center",
     publisher: "Daily Herald",
     date: "June 8, 2026",
     url: "https://www.dailyherald.com/20260608/news/despite-village-approvals-legal-action-expected-against-grayslake-data-center/",
+    tier: "primary",
   },
   hoodline2026: {
     title: "Grayslake T5 Data Center Moves Ahead Amid Local Protests",
@@ -29,6 +33,7 @@ export const sources = {
     date: "May 2026",
     url: "https://hoodline.com/2026/05/grayslake-erupts-as-mega-data-campus-plows-ahead/",
     note: "Hoodline aggregates and republishes local news; this article draws on Chicago Tribune source reporting.",
+    tier: "aggregator",
   },
   govtech2025: {
     title: "Data Center Could Be Largest Lake County, Ill., Development",
@@ -36,18 +41,21 @@ export const sources = {
     date: "Oct. 2025",
     url: "https://www.govtech.com/artificial-intelligence/data-center-could-be-largest-lake-county-ill-development",
     note: "Government Technology article draws on Chicago Tribune source reporting; cited here for the October 2025 public meeting record.",
+    tier: "aggregator",
   },
   patch2026: {
     title: "Plans Move Forward For Massive Data Center Campus In Grayslake",
     publisher: "Patch",
     date: "2026",
     url: "https://new.patch.com/illinois/grayslake/plans-move-forward-massive-data-center-campus-grayslake",
+    tier: "aggregator",
   },
   capitolnews2026: {
     title: "How do data centers benefit the places where they're built? Local mayors give mixed reviews",
     publisher: "Capitol News Illinois",
     date: "2026",
     url: "https://capitolnewsillinois.com/news/how-do-data-centers-benefit-the-places-where-theyre-built-local-mayors-give-mixed-reviews/",
+    tier: "primary",
   },
   dceo2026: {
     title: "Data Center Investment Tax Exemptions and Credits",
@@ -81,12 +89,14 @@ export const sources = {
     publisher: "Chicago Tribune",
     date: "June 5, 2026",
     url: "https://www.chicagotribune.com/2026/06/05/grayslake-data-center-3/",
+    tier: "primary",
   },
   chronicle2026: {
     title: "Grayslake data center approval sparks growing controversy",
     publisher: "Chronicle Media",
     date: "June 26, 2026",
     url: "https://chronicleillinois.com/news/lake-county-news/grayslake-data-center-approval-sparks-growing-controversy/",
+    tier: "primary",
   },
   mundeleindata: {
     title: "Information related to the Grayslake T5 data center",
@@ -100,6 +110,7 @@ export const sources = {
     date: "July 31, 2026",
     url: "https://www.dailyherald.com/20260731/construction/t-5-suspends-wetland-permit-application-in-light-of-community-concern/",
     verified: "Aug 5, 2026",
+    tier: "primary",
   },
   lakecounty_tad2026: {
     title: "Temporary Administrative Deferral — Data Center Applications in Unincorporated Lake County",
@@ -148,5 +159,6 @@ export const sources = {
     date: "Oct. 11, 2025",
     url: "https://www.dailyherald.com/20251011/business/a-place-of-innovation-and-opportunity-work-underway-for-data-center-campus-in-grayslake/",
     verified: "Aug 5, 2026",
+    tier: "primary",
   },
 };
