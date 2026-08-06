@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+﻿import { useState, useEffect } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { NAV_LINKS } from '../../data/navLinks'
 
@@ -88,7 +88,7 @@ export default function Header() {
       {/* ── Main bar ──────────────────────────────────────────────────────────── */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center py-2.5 gap-3 sm:gap-5">
 
-        <Link to="/" className="shrink-0 flex items-center gap-2.5 group" aria-label="Grayslake Data Center Tracker — Home">
+        <Link to="/" className="shrink-0 flex items-center gap-2.5 group" aria-label="Grayslake Data Center Tracker, Home">
           <TrackerIcon />
           <div className="flex flex-col min-w-0">
             <span className="text-sm font-semibold text-gray-900 group-hover:text-blue-700 transition-colors leading-tight whitespace-nowrap tracking-tight">

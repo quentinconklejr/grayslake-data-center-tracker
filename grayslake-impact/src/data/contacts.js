@@ -1,4 +1,4 @@
-// Contact information drawn only from public documents already on file in sources.js and timeline.js.
+﻿// Contact information drawn only from public documents already on file in sources.js and timeline.js.
 // Where no contact info appears in those records it is marked explicitly.
 export const contacts = [
   {
@@ -7,7 +7,7 @@ export const contacts = [
     website: null,
     phone: null,
     email: null,
-    note: "No T5 press or public contact information appears in source documents on file for this site. Media inquiries about the project have been covered by Data Center Dynamics, Daily Herald, and Chicago Tribune — links available on the Sources page.",
+    note: "No T5 press or public contact information appears in source documents on file for this site. Media inquiries about the project have been covered by Data Center Dynamics, Daily Herald, and Chicago Tribune. Links are on the Documents page.",
   },
   {
     org: "Village of Grayslake Administration",

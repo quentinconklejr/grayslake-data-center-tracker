@@ -1,7 +1,7 @@
-export const questions = [
+﻿export const questions = [
   {
     id: 'water-usage',
-    plain: "The campus is expected to use less than 50,000 gallons a day once fully built \u2014 the Village calls that 4.0% more than it currently supplies, and the regional water agency puts the same volume at 0.25% of its system. Cooling is closed-loop, so water circulates rather than being consumed. The one large draw is a one-time flush of about 3.2 million gallons per 200 MW building, staged over several days. What is not settled is how much water the electricity generation behind the campus consumes, which happens at the power plant rather than here.",
+    plain: "The campus is expected to use less than 50,000 gallons a day once fully built. The Village calls that 4.0% more than it currently supplies, and the regional water agency puts the same volume at 0.25% of its system. Cooling is closed-loop, so water circulates rather than being consumed. The one large draw is a one-time flush of about 3.2 million gallons per 200 MW building, staged over several days. What is not settled is how much water the electricity generation behind the campus consumes, which happens at the power plant rather than here.",
     question: 'How much water will the campus use, and from where?',
     category: 'water',
     stated: [
@@ -18,7 +18,7 @@ export const questions = [
         sourceKeys: ['villagefaq_archived', 'clcjawa2026'],
       },
       {
-        text: 'CLCJAWA estimates the initial flush and fill for one 200 MW building at 3.2 million gallons — roughly 15% of the agency\'s daily demand if drawn at once, but planned and staged over several days.',
+        text: 'CLCJAWA estimates the initial flush and fill for one 200 MW building at 3.2 million gallons, roughly 15% of the agency\'s daily demand if drawn at once, but planned and staged over several days.',
         sourceKey: 'clcjawa2026',
       },
     ],
@@ -75,7 +75,7 @@ export const questions = [
     category: 'scale',
     stated: [
       {
-        text: 'The Village FAQ states the approved campus "covers up to 472 acres and can include no more than 10,100,000 square feet of data center space in several individual buildings" — it gives no building count. Daily Herald reporting puts the count at 18. CLCJAWA records 470 acres, up to 10 million square feet, in fewer than 20 buildings.',
+        text: 'The Village FAQ states the approved campus "covers up to 472 acres and can include no more than 10,100,000 square feet of data center space in several individual buildings" and gives no building count. Daily Herald reporting puts the count at 18. CLCJAWA records 470 acres, up to 10 million square feet, in fewer than 20 buildings.',
         sourceKeys: ['villagefaq_archived', 'dailyherald2026', 'clcjawa2026'],
       },
       {
@@ -170,7 +170,7 @@ export const questions = [
     id: 'jobs',
     question: 'How many jobs will it actually create?',
     category: 'jobs',
-    plain: "Three numbers have been given. Mayor Davies cited 1,500 permanent jobs in October 2025. The T5 chief executive cited \u201cover 1,600\u201d in July 2026. The Village FAQ reaches 1,680, but gets there by assuming 50 jobs for every 300,000 square feet and that the full 10 million square feet actually gets built \u2014 and it cautions the estimate may change. Construction work is counted separately and described only as \u201chundreds\u201d of trade jobs.",
+    plain: "Three numbers have been given. Mayor Davies cited 1,500 permanent jobs in October 2025. The T5 chief executive cited \u201cover 1,600\u201d in July 2026. The Village FAQ reaches 1,680, but gets there by assuming 50 jobs for every 300,000 square feet and that the full 10 million square feet actually gets built, and it cautions the estimate may change. Construction work is counted separately and described only as \u201chundreds\u201d of trade jobs.",
     stated: [
       {
         text: 'Mayor Elizabeth Davies cited 1,500 permanent positions at full buildout, plus hundreds of construction and trade jobs during development.',

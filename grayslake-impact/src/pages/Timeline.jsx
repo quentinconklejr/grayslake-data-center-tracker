@@ -1,4 +1,4 @@
-import { useState } from 'react'
+﻿import { useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import PageTitle from '../components/ui/PageTitle'
 import BackToTop from '../components/ui/BackToTop'
@@ -50,7 +50,7 @@ export default function TimelinePage() {
         <p className="text-xs font-mono text-blue-600 uppercase tracking-[0.2em] mb-3">Project History</p>
         <h1 className="text-4xl sm:text-5xl font-display font-bold text-gray-900 tracking-tight mb-4">How We Got Here</h1>
         <p className="text-lg text-gray-700 max-w-2xl leading-relaxed mb-2">
-          Approvals, legal challenges, opposition actions, and policy changes &mdash; each entry cited.
+          Approvals, legal challenges, opposition actions, and policy changes, each entry cited.
         </p>
         <p className="text-base text-gray-600 max-w-2xl leading-relaxed">
           Entries are cited. Solid markers are confirmed events; hollow markers are projected milestones from developer filings.
@@ -149,7 +149,7 @@ export default function TimelinePage() {
       <PageNext
         to="/questions"
         label="Questions & Answers"
-        desc="What's settled, what's disputed, and what has no public answer yet — water, energy, jobs, taxes, and process."
+        desc="What's settled, what's disputed, and what has no public answer yet: water, energy, jobs, taxes, and process."
         color="text-blue-700"
         hoverBorder="hover:border-blue-300"
       />

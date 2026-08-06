@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+﻿import { useEffect, useState } from 'react'
 import PageTitle from '../components/ui/PageTitle'
 import BackToTop from '../components/ui/BackToTop'
 import PageNext from '../components/ui/PageNext'
@@ -67,10 +67,10 @@ export default function Project() {
           <p className="text-xs font-mono text-blue-700 uppercase tracking-[0.2em] mb-3">T5 @ Chicago IV</p>
           <h1 className="text-4xl sm:text-5xl font-display font-bold text-gray-900 tracking-tight mb-4">The Project</h1>
           <p className="text-lg text-gray-700 max-w-2xl leading-relaxed mb-2">
-            An $8.5–18B campus under construction — one of the largest data centers proposed anywhere in the U.S.
+            An $8.5–18B campus under construction, one of the largest data centers proposed anywhere in the U.S.
           </p>
           <p className="text-sm text-gray-500 max-w-2xl leading-relaxed">
-            Energy draw, permanent jobs, developer fees, and school funding — every figure with the
+            Energy draw, permanent jobs, developer fees, and school funding. Every figure carries the
             condition attached to it, linked to its source.
           </p>
           <p className="text-xs font-mono text-gray-400 mt-3">Last verified {LAST_VERIFIED}</p>
@@ -120,7 +120,7 @@ export default function Project() {
       <PageNext
         to="/timeline"
         label="Event Timeline"
-        desc="Every approval, lawsuit, construction event, and opposition milestone — sourced, in order."
+        desc="Every approval, lawsuit, construction event, and opposition milestone, sourced and in order."
         color="text-cyan-700"
         hoverBorder="hover:border-cyan-300"
       />

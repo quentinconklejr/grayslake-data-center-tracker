@@ -1,4 +1,4 @@
-import PageTitle from '../components/ui/PageTitle'
+﻿import PageTitle from '../components/ui/PageTitle'
 import { pageMeta } from '../data/pageMeta'
 import StatCard from '../components/ui/StatCard'
 import SchoolFundingChart from '../components/charts/SchoolFundingChart'
@@ -160,7 +160,7 @@ export default function Schools({ asSection = false }) {
           <p className="text-2xs font-mono text-amber-700 uppercase tracking-widest mb-2">What's still missing</p>
           <p className="text-base text-gray-600 leading-relaxed">
             The Village FAQ states the development agreements provide no financial incentives to T5.
-            The figures on this page are what village officials said publicly &mdash; no independent estimate exists.
+            The figures on this page are what village officials said publicly. No independent estimate exists.
             Any per-district projection requires a Lake County Assessor valuation and applicable levy rates;
             neither has been published.
           </p>

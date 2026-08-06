@@ -1,4 +1,4 @@
-export const projections = {
+﻿export const projections = {
   project: {
     name: "T5 @ Chicago IV",
     developer: "T5 Data Centers",
@@ -72,7 +72,7 @@ export const projections = {
     districtName: "School District 428",
     outcome: "Funded construction of Mitchell Elementary, opened 2025",
     totalPropertyTaxBilled2025: 31.1, // millions — one facility, 2025 tax year
-    taxNote: "2025 tax bill for one Meta facility — from a separate dataset than the 60.9% figure",
+    taxNote: "2025 tax bill for one Meta facility, from a separate dataset than the 60.9% figure",
   },
   stateIncentiveContext: {
     program: "Illinois Data Center Investment Tax Exemption",

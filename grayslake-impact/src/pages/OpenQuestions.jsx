@@ -1,4 +1,4 @@
-import { useState } from 'react'
+﻿import { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import PageTitle from '../components/ui/PageTitle'
 import PageNext from '../components/ui/PageNext'
@@ -168,7 +168,7 @@ export default function OpenQuestions() {
         <p className="text-2xs font-mono text-blue-700 uppercase tracking-[0.2em] mb-3">Questions &amp; Answers</p>
         <h1 className="text-4xl font-display font-bold text-gray-900 tracking-tight mb-3">What&rsquo;s Settled, What&rsquo;s Not</h1>
         <p className="text-base text-gray-600 max-w-2xl leading-relaxed">
-          What&rsquo;s confirmed in the public record, what&rsquo;s contested, and what has no answer yet &mdash; on water, electricity,
+          What&rsquo;s confirmed in the public record, what&rsquo;s contested, and what has no answer yet: water, electricity,
           scale, jobs, taxes and the approval process.
         </p>
 
@@ -207,7 +207,7 @@ export default function OpenQuestions() {
               <p className="text-xs font-display font-semibold text-blue-800 mb-1.5">How this page works</p>
               <p className="text-sm text-gray-600 leading-relaxed">
                 All statements here come from public records, journalism, or legal filings.
-                The categories describe who made each claim &mdash; not whether it&rsquo;s accurate.
+                The categories describe who made each claim, not whether it&rsquo;s accurate.
                 <span className="text-emerald-700"> "Stated"</span> reflects what officials or the developer have said on record.
                 <span className="text-amber-700"> "Disputed"</span> reflects what critics, advocates, or independent researchers have said on record.
                 <span className="text-gray-400"> "Not Yet Public"</span> marks questions with no public answer.

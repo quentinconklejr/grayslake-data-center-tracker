@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+﻿import { Link } from 'react-router-dom'
 import PageTitle from '../components/ui/PageTitle'
 import PageNext from '../components/ui/PageNext'
 import { pageMeta } from '../data/pageMeta'
@@ -124,7 +124,7 @@ export default function Home() {
 
           <FadeIn>
             <p className="text-sm text-blue-700/70 font-medium mb-2">
-              In plain language: a very large computing facility — one of the biggest proposed anywhere in the U.S.
+              In plain language: a very large computing facility, one of the biggest proposed anywhere in the U.S.
             </p>
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold text-gray-900 leading-tight tracking-tight mb-4 max-w-[52ch]">
               T5 @ Chicago IV is an approved $8.5–18B hyperscale AI data center under construction in Grayslake, Illinois.
@@ -332,7 +332,7 @@ export default function Home() {
       <PageNext
         to="/project"
         label="The Project"
-        desc="Energy, jobs, taxes, and school funding — every figure with its source and condition."
+        desc="Energy, jobs, taxes, and school funding, every figure with its source and condition."
         color="text-blue-700"
         hoverBorder="hover:border-blue-300"
       />

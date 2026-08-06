@@ -1,4 +1,4 @@
-import PageTitle from '../components/ui/PageTitle'
+﻿import PageTitle from '../components/ui/PageTitle'
 import { pageMeta } from '../data/pageMeta'
 import StatCard from '../components/ui/StatCard'
 import JobsTimelineChart from '../components/charts/JobsTimelineChart'
@@ -74,7 +74,7 @@ export default function Jobs({ asSection = false }) {
           {jobs.permanentDavies.toLocaleString()} to the Chicago Tribune in October 2025. T5 CEO Pete Marin cited
           &ldquo;over {jobs.permanentMarin.toLocaleString()}&rdquo; in July 2026. The Village FAQ reaches{' '}
           {jobs.permanent.toLocaleString()} by estimating {jobs.permanentBasis}, and states that figure holds{' '}
-          {jobs.permanentCondition} &mdash; a footprint the approvals permit but T5 has not committed to. The FAQ
+          {jobs.permanentCondition}, a footprint the approvals permit but T5 has not committed to. The FAQ
           hedges its own number, noting that job estimates &ldquo;may change&rdquo; as operations and technologies do,
           and excludes site development and construction employment from it. That construction workforce is described
           separately as &ldquo;{jobs.constructionPhase}&rdquo; with no precise headcount publicly sourced.
