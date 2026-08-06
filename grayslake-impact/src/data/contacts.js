@@ -3,7 +3,7 @@
 export const contacts = [
   {
     org: "T5 Data Centers",
-    role: "Developer — T5 @ Chicago IV campus",
+    role: "Developer of the T5 @ Chicago IV campus",
     website: null,
     phone: null,
     email: null,
@@ -19,7 +19,7 @@ export const contacts = [
   },
   {
     org: "Lake County Board",
-    role: "County government — district representatives serve the Grayslake area",
+    role: "County government. District representatives serve the Grayslake area",
     website: null,
     phone: null,
     email: null,
@@ -27,7 +27,7 @@ export const contacts = [
   },
   {
     org: "Avon Township",
-    role: "Township government — adopted transparency resolution, June 2026",
+    role: "Township government; adopted a transparency resolution in June 2026",
     website: null,
     phone: null,
     email: null,

@@ -46,7 +46,11 @@ export default function Schools({ asSection = false }) {
       </FadeIn>
 
       <FadeIn className="mb-10">
+<<<<<<< HEAD
         <p className="text-xs font-mono text-gray-500 uppercase tracking-widest mb-4">Official projections</p>
+=======
+        <p className="text-2xs font-mono text-gray-400 uppercase tracking-widest mb-4">Official projections, not confirmed outcomes</p>
+>>>>>>> edbb41e84b58ac626434a7840196b4d46519f2d5
         <div className="grid md:grid-cols-2 gap-4">
           <div className="glass-card p-6">
             <p className="text-2xs font-mono text-blue-600 uppercase tracking-widest mb-2">Mayor of Grayslake</p>
@@ -86,7 +90,11 @@ export default function Schools({ asSection = false }) {
               <circle cx="8" cy="8" r="7" /><path d="M8 7v4M8 5.5v.5" strokeLinecap="round" />
             </svg>
             <div>
+<<<<<<< HEAD
               <p className="text-sm font-display font-semibold text-blue-800 mb-1.5">Illinois comparison: DeKalb / Meta</p>
+=======
+              <p className="text-sm font-display font-semibold text-blue-800 mb-1.5">Comparable case: how the revenue split worked in Illinois</p>
+>>>>>>> edbb41e84b58ac626434a7840196b4d46519f2d5
               <p className="text-base text-gray-600 leading-relaxed">
                 The data below comes from the Meta data center in DeKalb, IL. Two figures are cited:
                 the 2025 property tax bill for one Meta facility ($31.1M), and School District 428's
@@ -101,7 +109,7 @@ export default function Schools({ asSection = false }) {
       </FadeIn>
 
       <FadeIn className="grid grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
-        <StatCard label="One Facility — 2025 Tax"   value={`$${meta.totalPropertyTaxBilled2025}M`} sub="Single facility, 2025 tax year"                                       accent="green" sourceKey="capitolnews2026" />
+        <StatCard label="One facility, 2025 tax"   value={`$${meta.totalPropertyTaxBilled2025}M`} sub="Single facility, 2025 tax year"                                       accent="green" sourceKey="capitolnews2026" />
         <StatCard label="School District Share"     value={`${meta.percentToSchoolDistrict}%`}     sub="Avg. across three properties, 2021–2024"              accent="green" sourceKey="capitolnews2026" />
         <StatCard label="Other Taxing Bodies"       value={`${metaOtherPct}%`}                     sub={`Calculated: 100% − ${meta.percentToSchoolDistrict}%`} accent="blue" badge="Derived" />
         <StatCard label="Documented Outcome"        value="1 School Built"                         sub={meta.outcome}                                          accent="green" sourceKey="capitolnews2026" />
@@ -172,7 +180,7 @@ export default function Schools({ asSection = false }) {
         <div className="mb-6 border border-gray-300 rounded-sm bg-white overflow-hidden shadow-sm">
           <div className="bg-gray-100 border-b border-gray-300 px-4 py-2.5 flex items-center justify-between gap-3">
             <div>
-              <p className="text-2xs font-mono text-gray-500 uppercase tracking-widest leading-none mb-0.5">Village of Grayslake — Official FAQ</p>
+              <p className="text-2xs font-mono text-gray-500 uppercase tracking-widest leading-none mb-0.5">Village of Grayslake official FAQ</p>
               <div className="flex items-center gap-2 mt-0.5">
                 <span className="text-xs text-gray-500">June 2026</span>
                 <span className="text-2xs font-mono bg-white border border-gray-300 text-gray-500 px-1.5 py-0.5 rounded-sm">p. 2</span>
@@ -191,7 +199,7 @@ export default function Schools({ asSection = false }) {
             <p className="text-xs text-gray-700 leading-relaxed">
               The FAQ also states that the development agreements provide no financial incentives to T5 Data Centers.
             </p>
-            <p className="text-2xs font-mono text-gray-400 pt-1 border-t border-gray-200">Paraphrase — not a verbatim quote. Verify against the linked original.</p>
+            <p className="text-2xs font-mono text-gray-400 pt-1 border-t border-gray-200">Paraphrase, not a verbatim quote. Verify against the linked original.</p>
           </div>
         </div>
         <div className="grid md:grid-cols-2 gap-3">
@@ -202,7 +210,7 @@ export default function Schools({ asSection = false }) {
               <p className="text-sm text-gray-500 leading-relaxed">{desc}</p>
               <div className="mt-4 pt-3 border-t border-gray-100 flex justify-between">
                 <span className="text-2xs font-mono text-gray-500 uppercase tracking-widest">Est. annual share</span>
-                <span className="text-xs text-gray-400">— no public projection yet</span>
+                <span className="text-xs text-gray-500">No public projection yet</span>
               </div>
             </div>
           ))}

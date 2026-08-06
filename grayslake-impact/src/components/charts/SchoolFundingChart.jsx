@@ -41,14 +41,14 @@ export default function SchoolFundingChart() {
         <div>
           <div className="flex items-baseline gap-2 mb-0.5">
             <span className="text-4xl font-display font-bold text-gray-900 tracking-tight">${TOTAL_M}M</span>
-            <span className="text-sm text-gray-500">2025 tax bill — one DeKalb facility</span>
+            <span className="text-sm text-gray-500">2025 tax bill, one DeKalb facility</span>
           </div>
           <p className="text-2xs font-mono text-gray-400">Single-facility figure · 2025 tax year</p>
         </div>
 
         {/* Separator note */}
         <p className="text-2xs font-mono text-amber-700 uppercase tracking-widest border-t border-amber-100 pt-3">
-          School share below — three-property average, 2021–2024
+          School share below is a three-property average, 2021–2024
         </p>
 
         {/* Proportion bar */}
@@ -117,7 +117,7 @@ export default function SchoolFundingChart() {
         <div className="border-t border-gray-200 pt-4">
           <p className="text-2xs font-mono text-emerald-700 uppercase tracking-widest mb-1">Documented outcome</p>
           <p className="text-xs text-gray-600 leading-relaxed">
-            Funded construction of Mitchell Elementary School — opened 2025.
+            Funded construction of Mitchell Elementary School, which opened in 2025.
           </p>
         </div>
       </div>

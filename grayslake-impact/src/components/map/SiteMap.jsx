@@ -148,7 +148,7 @@ export default function SiteMap({ className = 'h-[480px]' }) {
       <strong className="font-semibold text-gray-800">
         This shows land T5 owns, not the approved campus boundary
       </strong>{' '}
-      &mdash; the Village approved development on up to 472 acres, a larger area that is not published
+      . The Village approved development on up to 472 acres, a larger area that is not published
       as a mappable boundary.
     </p>
   )

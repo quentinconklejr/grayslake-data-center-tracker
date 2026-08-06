@@ -32,7 +32,7 @@ export const EVIDENCE = {
     bg:      'bg-gray-50',
     labelCls: 'text-gray-400',
     tag:     'Not Yet Public',
-    desc:    'Genuinely unanswered — no public document covers this',
+    desc:    'Genuinely unanswered. No public document covers this',
     icon: (
       <svg className="w-3 h-3 shrink-0" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5">
         <circle cx="6" cy="6" r="5" />

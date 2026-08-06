@@ -20,7 +20,7 @@ const ITEMS = [
   },
   {
     label:    'Construction Workforce',
-    sublabel: '"Hundreds" per Village documents — shown at ~400 (estimated)',
+    sublabel: '"Hundreds" per Village documents; shown at ~400 (estimated)',
     value:    constructionMidpoint,
     max:      permanent,
     color:    '#d97706',

@@ -57,8 +57,13 @@ export default function Energy({ asSection = false }) {
         <p className="text-sm text-gray-500 mb-8 max-w-prose">
           The two figures charted below are T5&rsquo;s own disclosures. No estimation is involved.
           T5 originally announced the campus at 480 MW (2024) and later raised the leasable IT capacity target to 1,200 MW.
+<<<<<<< HEAD
           A third figure &mdash; {project.comEdCapacityGW} GW of total ComEd capacity &mdash; describes the utility connection rather
           than the computing load; see the comparison below.
+=======
+          A third figure, {project.comEdCapacityGW} GW of total ComEd capacity, describes the utility connection rather
+          than the computing load. The comparison below sets the three side by side.
+>>>>>>> edbb41e84b58ac626434a7840196b4d46519f2d5
         </p>
         <EnergyDrawChart />
       </FadeIn>

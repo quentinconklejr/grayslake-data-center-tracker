@@ -133,7 +133,11 @@ export default function TaxImpact({ asSection = false }) {
         <div className="bg-amber-50 border border-amber-200 rounded-xl px-6 py-5">
           <div className="flex items-start justify-between gap-4">
             <div>
+<<<<<<< HEAD
               <p className="text-2xs font-mono text-amber-700 uppercase tracking-widest mb-2">State incentive program</p>
+=======
+              <p className="text-2xs font-mono text-amber-700 uppercase tracking-widest mb-2">State incentive program: status change</p>
+>>>>>>> edbb41e84b58ac626434a7840196b4d46519f2d5
               <p className="text-base text-gray-600 leading-relaxed">
                 {incentive.statusChange}. The program had required ${incentive.minInvestmentRequired}M+ investment over
                 60 months and offered a {incentive.constructionWageTaxCredit}% construction wage tax credit for projects

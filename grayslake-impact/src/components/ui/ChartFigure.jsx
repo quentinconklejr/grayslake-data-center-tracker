@@ -25,7 +25,7 @@ export default function ChartFigure({ caption, description, rows, children }) {
 
       {rows && (
         <table id={`${id}-tbl`} className="sr-only">
-          <caption>{caption} — underlying values</caption>
+          <caption>Underlying values for: {caption}</caption>
           <thead>
             <tr>
               <th scope="col">Measure</th>

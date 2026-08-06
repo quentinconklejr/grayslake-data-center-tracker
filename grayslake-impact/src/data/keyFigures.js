@@ -37,7 +37,7 @@ export const keyFigures = [
     value: `up to ${project.totalAcres} acres`,
     qualifier: 'maximum permitted, not a commitment',
     detail:
-      'Village approvals permit development on up to 472 acres with no more than 10,100,000 sq ft of building, described as "several individual buildings" without a count.',
+      'Village approvals permit development on up to 472 acres with no more than 10,100,000 sq ft of building, described as “several individual buildings” without a count.',
     sourceKey: 'villagefaq_archived',
   },
   {
@@ -63,7 +63,7 @@ export const keyFigures = [
     value: `${project.approvedBuildings} approved`,
     qualifier: `CEO cited up to ${project.maxBuildings} as an upper estimate`,
     detail:
-      'The Village FAQ says "several individual buildings" and gives no count. The count of 18 comes from Daily Herald reporting; Pete Marin cited up to 20.',
+      'The Village FAQ says “several individual buildings” and gives no count. The count of 18 comes from Daily Herald reporting; Pete Marin cited up to 20.',
     sourceKeys: ['dailyherald2026', 'govtech2025'],
   },
   {
@@ -72,7 +72,7 @@ export const keyFigures = [
     value: `1,500 – ${jobs.permanent.toLocaleString()}`,
     qualifier: 'upper figure only if all 10M sq ft is built',
     detail:
-      'Mayor Davies cited 1,500 (Oct. 2025). CEO Marin cited "over 1,600" (Jul. 2026). The Village FAQ reaches 1,680 by estimating 50 jobs per 300,000 sq ft, hedges that estimate as subject to change, and excludes construction jobs.',
+      'Mayor Davies cited 1,500 (Oct. 2025). CEO Marin cited “over 1,600” (Jul. 2026). The Village FAQ reaches 1,680 by estimating 50 jobs per 300,000 sq ft, hedges that estimate as subject to change, and excludes construction jobs.',
     sourceKeys: ['villagefaq_archived', 'govtech2025', 'dailyherald_jul2026'],
   },
   {

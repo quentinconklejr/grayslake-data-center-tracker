@@ -79,7 +79,7 @@ export function FootnoteList() {
                   {source.title}
                 </span>
                 {source.publisher && (
-                  <span className="text-gray-500"> — {source.publisher}</span>
+                  <span className="text-gray-500"> · {source.publisher}</span>
                 )}
                 {source.date && (
                   <span className="text-gray-500"> · {source.date}</span>
