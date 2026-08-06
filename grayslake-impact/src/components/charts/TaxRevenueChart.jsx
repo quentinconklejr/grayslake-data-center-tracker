@@ -11,15 +11,15 @@ const DEFAULT_DATA = [
 // Maps base color hex → gradient + glow so external callers don't need updating
 const COLOR_META = {
   '#d97706': {
-    gradient: 'linear-gradient(180deg, rgba(251,191,36,0.95) 0%, rgba(217,119,6,0.88) 100%)',
+    gradient: 'linear-gradient(180deg, rgba(245,158,11,0.95) 0%, rgba(180,83,9,0.88) 100%)',
     glow:     '0 4px 14px rgba(217,119,6,0.55), 0 1px 5px rgba(217,119,6,0.30)',
   },
   '#0284c7': {
-    gradient: 'linear-gradient(180deg, rgba(56,189,248,0.95) 0%, rgba(2,132,199,0.88) 100%)',
+    gradient: 'linear-gradient(180deg, rgba(59,130,246,0.95) 0%, rgba(29,78,216,0.88) 100%)',
     glow:     '0 4px 14px rgba(2,132,199,0.55), 0 1px 5px rgba(2,132,199,0.30)',
   },
   '#059669': {
-    gradient: 'linear-gradient(180deg, rgba(52,211,153,0.95) 0%, rgba(5,150,105,0.88) 100%)',
+    gradient: 'linear-gradient(180deg, rgba(16,185,129,0.95) 0%, rgba(4,120,87,0.88) 100%)',
     glow:     '0 4px 14px rgba(5,150,105,0.55), 0 1px 5px rgba(5,150,105,0.30)',
   },
 }
