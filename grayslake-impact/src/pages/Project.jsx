@@ -68,7 +68,6 @@ export default function Project() {
           <h1 className="text-4xl sm:text-5xl font-display font-bold text-gray-900 tracking-tight mb-4">The Project</h1>
           <p className="text-lg text-gray-700 max-w-2xl leading-relaxed mb-2">
             An $8.5–18B campus under construction — one of the largest data centers proposed anywhere in the U.S.
-            Here is what the approvals actually permit, what has been built, and exactly what each number rests on.
           </p>
           <p className="text-sm text-gray-500 max-w-2xl leading-relaxed">
             Energy draw, permanent jobs, developer fees, and school funding — every figure with the

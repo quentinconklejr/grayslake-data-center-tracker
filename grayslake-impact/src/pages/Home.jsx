@@ -301,7 +301,6 @@ export default function Home() {
             <span className="inline-block w-4 h-px bg-gray-300" />
             Impact by category
           </p>
-          <h2 className="text-2xl font-display font-bold text-gray-900">Four areas of impact.</h2>
         </FadeIn>
 
         <div className="grid sm:grid-cols-2 gap-4">

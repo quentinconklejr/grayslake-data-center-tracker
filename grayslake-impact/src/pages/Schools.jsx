@@ -160,9 +160,9 @@ export default function Schools({ asSection = false }) {
           <p className="text-2xs font-mono text-amber-700 uppercase tracking-widest mb-2">What's still missing</p>
           <p className="text-base text-gray-600 leading-relaxed">
             The Village FAQ states the development agreements provide no financial incentives to T5.
-            The official projections above are village officials' statements, not independently
-            verified estimates. A verified per-district revenue figure requires a Lake County Assessor
-            valuation of the T5 campus and the applicable levy rates for each district.
+            The figures on this page are what village officials said publicly &mdash; no independent estimate exists.
+            Any per-district projection requires a Lake County Assessor valuation and applicable levy rates;
+            neither has been published.
           </p>
         </div>
       </FadeIn>
