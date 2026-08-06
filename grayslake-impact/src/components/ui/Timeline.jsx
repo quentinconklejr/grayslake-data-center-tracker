@@ -99,7 +99,7 @@ export default function Timeline({ events = [], proportional = false }) {
                       />
                       <div className="absolute inset-0 flex items-center pl-9">
                         <span className="text-2xs font-mono text-gray-400 italic bg-white border border-gray-100 px-2 py-0.5 rounded">
-                          {gapLabel(prevTs, currTs)} — no recorded events
+                          {gapLabel(prevTs, currTs)} with no recorded events
                         </span>
                       </div>
                     </>

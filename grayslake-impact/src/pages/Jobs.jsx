@@ -165,7 +165,7 @@ export default function Jobs({ asSection = false }) {
             </p>
             <ul className="space-y-2">
               {[
-                'IBEW Local 176 — Electricians',
+                'IBEW Local 176 (electricians)',
                 'Iron Workers Local 508',
                 'Operating Engineers Local 150',
                 'Laborers Local 149',

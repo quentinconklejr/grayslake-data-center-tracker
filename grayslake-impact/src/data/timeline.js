@@ -64,7 +64,7 @@ export const timelineEvents = [
   },
   {
     date: "2026-06-05",
-    title: "Village FAQ updated — litigation notice added",
+    title: "Village FAQ updated, litigation notice added",
     description: "The Village of Grayslake FAQ was updated as of June 5, 2026, stating the Village can no longer respond to further questions about the project due to pending litigation. The Daily Herald quoted the notice directly. The FAQ document itself became unreachable by August 5, 2026.",
     category: "legal",
     sourceKey: "dailyherald2026",

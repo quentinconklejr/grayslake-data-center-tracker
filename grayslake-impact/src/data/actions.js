@@ -91,7 +91,7 @@ export const actions = [
     jurisdiction: "Village of Grayslake",
     actionType: "Building Permit",
     description:
-      "Deputy Village Manager Chase Muscato stated that a foundation permit has been issued for the first building, and that T5 is in the \u201cadministrative technical building permit process\u201d for that building and its associated electrical facility, to be located near the water tower at Cornerstone. General site work \u2014 water mains and roads \u2014 is being carried out by the original Cornerstone developer, the Alter Group.",
+      "Deputy Village Manager Chase Muscato stated that a foundation permit has been issued for the first building, and that T5 is in the \u201cadministrative technical building permit process\u201d for that building and its associated electrical facility, to be located near the water tower at Cornerstone. General site work (water mains and roads) is being carried out by the original Cornerstone developer, the Alter Group.",
     outcome: "Foundation permit issued for the first building; technical permit review ongoing.",
     sourceIds: ["dailyherald_jul2026"],
     status: "complete",

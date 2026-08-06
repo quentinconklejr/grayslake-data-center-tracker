@@ -22,9 +22,9 @@ export default function MapPage() {
         <p className="text-2xs font-mono text-blue-700 uppercase tracking-[0.2em] mb-3">T5 @ Chicago IV · Cornerstone business park, Grayslake</p>
         <h1 className="text-4xl font-display font-bold text-gray-900 tracking-tight mb-4">Land Ownership Map</h1>
         <p className="text-base text-gray-600 max-w-2xl leading-relaxed">
-          This map shows the {parcels.metadata.parcelCount} parcels recorded to T5 in Grayslake &mdash;{' '}
-          {parcels.metadata.countyAcresSum} acres across {outline.features.length} non-contiguous groups &mdash; drawn from
-          Lake County&rsquo;s tax parcel layer. Zoom in for individual lot lines; select a parcel for its
+          This map shows the {parcels.metadata.parcelCount} parcels recorded to T5 in Grayslake:{' '}
+          {parcels.metadata.countyAcresSum} acres across {outline.features.length} non-contiguous groups, drawn from
+          Lake County&rsquo;s tax parcel layer. Zoom in for individual lot lines, or select a parcel for its
           PIN, acreage and recorded sale.
         </p>
         <p className="text-base text-gray-600 max-w-2xl leading-relaxed mt-3">

@@ -1,7 +1,7 @@
 // Inline marker for a figure whose only source is no longer reachable.
 // Used instead of silently dropping the citation or substituting a different
 // party's number, either of which would misrepresent the record.
-export default function UnverifiedTag({ note = 'Source unreachable — pending re-verification' }) {
+export default function UnverifiedTag({ note = 'Source unreachable, pending re-verification' }) {
   return (
     <span
       title={note}
