@@ -27,7 +27,7 @@ export default function TaxImpact({ asSection = false }) {
       {!asSection && <PageTitle {...pageMeta['/tax-impact']} />}
 
       <FadeIn className="mb-10 pb-8 border-b border-gray-200">
-        <p className="text-2xs font-mono text-blue-600/60 uppercase tracking-[0.2em] mb-3">Fiscal Impact</p>
+        <p className="text-2xs font-mono text-blue-600 uppercase tracking-[0.2em] mb-3">Fiscal Impact</p>
         {asSection ? (
           <h2 className="text-4xl font-display font-bold text-gray-900 tracking-tight mb-3">Tax Revenue &amp; Developer Fees</h2>
         ) : (
@@ -51,7 +51,7 @@ export default function TaxImpact({ asSection = false }) {
       <FadeIn className="glass-card px-6 py-6 mb-8">
         <div className="flex items-start justify-between mb-1">
           <div>
-            <p className="text-2xs font-mono text-gray-400 uppercase tracking-widest mb-1">Who Receives the Tax Base</p>
+            <p className="text-xs font-mono text-gray-500 uppercase tracking-widest mb-1">Who Receives the Tax Base</p>
             <h2 className="text-2xl font-display font-bold text-gray-900">Taxing districts covering the campus</h2>
           </div>
           <SourceCitation sourceKey="villagefaq_archived" />
@@ -91,7 +91,7 @@ export default function TaxImpact({ asSection = false }) {
         <FadeIn className="bg-white p-8">
           <div className="flex items-start justify-between mb-1">
             <div>
-              <p className="text-2xs font-mono text-gray-400 uppercase tracking-widest mb-1">Mayor's Estimate</p>
+              <p className="text-xs font-mono text-gray-500 uppercase tracking-widest mb-1">Mayor's Estimate</p>
               <h2 className="text-2xl font-display font-bold text-gray-900">Developer Fee Allocation</h2>
             </div>
             <SourceCitation sourceKey="govtech2025" />
@@ -103,7 +103,7 @@ export default function TaxImpact({ asSection = false }) {
         <FadeIn delay={0.08} className="bg-white p-8">
           <div className="flex items-start justify-between mb-1">
             <div>
-              <p className="text-2xs font-mono text-gray-400 uppercase tracking-widest mb-1">Illinois Precedent</p>
+              <p className="text-xs font-mono text-gray-500 uppercase tracking-widest mb-1">Illinois Precedent</p>
               <h2 className="text-2xl font-display font-bold text-gray-900">Meta / DeKalb, IL</h2>
             </div>
             <SourceCitation sourceKey="capitolnews2026" />

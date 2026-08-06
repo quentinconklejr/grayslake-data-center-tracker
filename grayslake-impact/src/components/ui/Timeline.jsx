@@ -128,7 +128,7 @@ export default function Timeline({ events = [], proportional = false }) {
                 </div>
 
                 {/* Date */}
-                <time className="shrink-0 sm:w-28 text-2xs font-mono text-gray-400 pt-0.5 leading-tight">
+                <time className="shrink-0 sm:w-28 text-xs font-mono text-gray-500 pt-0.5 leading-tight">
                   {fmtDate(event.date)}
                 </time>
 
@@ -139,7 +139,7 @@ export default function Timeline({ events = [], proportional = false }) {
 
                 {/* Content */}
                 <div className={`flex-1 min-w-0 sm:pt-px ${projected ? 'opacity-60' : ''}`}>
-                  <p className="text-sm font-display font-semibold text-gray-900 leading-snug">
+                  <p className="text-base font-display font-semibold text-gray-900 leading-snug">
                     {event.title}
                     {!event.description && (
                       event.sourceKeys
@@ -148,7 +148,7 @@ export default function Timeline({ events = [], proportional = false }) {
                     )}
                   </p>
                   {event.description && (
-                    <p className="text-xs text-gray-500 leading-relaxed mt-0.5">
+                    <p className="text-sm text-gray-600 leading-relaxed mt-0.5">
                       {event.description}
                       {event.sourceKeys
                         ? event.sourceKeys.map(k => <SourceCitation key={k} sourceKey={k} />)

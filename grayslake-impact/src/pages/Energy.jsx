@@ -20,7 +20,7 @@ export default function Energy({ asSection = false }) {
       {!asSection && <PageTitle {...pageMeta['/energy']} />}
 
       <FadeIn className="mb-10 pb-8 border-b border-gray-200">
-        <p className="text-2xs font-mono text-blue-600/60 uppercase tracking-[0.2em] mb-3">Grid Impact</p>
+        <p className="text-xs font-mono text-blue-600 uppercase tracking-[0.2em] mb-3">Grid Impact</p>
         {asSection ? (
           <h2 className="text-4xl font-display font-bold text-gray-900 tracking-tight mb-3">Energy Draw</h2>
         ) : (
@@ -47,7 +47,7 @@ export default function Energy({ asSection = false }) {
       <FadeIn className="glass-card p-8 mb-6">
         <div className="flex items-start justify-between mb-1">
           <div>
-            <p className="text-2xs font-mono text-gray-400 uppercase tracking-widest mb-1">Power Profile</p>
+            <p className="text-xs font-mono text-gray-500 uppercase tracking-widest mb-1">Power Profile</p>
             <h2 className="text-2xl font-display font-bold text-gray-900">Secured Power vs. IT Capacity</h2>
           </div>
           <div className="flex items-center gap-3">
@@ -64,7 +64,7 @@ export default function Energy({ asSection = false }) {
       </FadeIn>
 
       <FadeIn className="glass-card px-6 py-6 mb-6">
-        <p className="text-2xs font-mono text-gray-400 uppercase tracking-widest mb-2">Which Capacity Figure Is Which</p>
+        <p className="text-xs font-mono text-gray-500 uppercase tracking-widest mb-2">Which Capacity Figure Is Which</p>
         <p className="text-sm text-gray-500 mb-5 max-w-prose">{capacityNote}</p>
         <div className="space-y-3">
           {capacityFigures.map(f => (
@@ -89,7 +89,7 @@ export default function Energy({ asSection = false }) {
       </FadeIn>
 
       <FadeIn className="glass-card px-6 py-6 mb-6">
-        <p className="text-2xs font-mono text-gray-400 uppercase tracking-widest mb-5">Residential Rate Impact</p>
+        <p className="text-xs font-mono text-gray-500 uppercase tracking-widest mb-5">Residential Rate Impact</p>
         <div className="space-y-3">
 
           <EvidenceBlock type="stated" title="Power costs: T5 responsible under Illinois rate standards" sourceKey="villagefaq_archived">
@@ -135,7 +135,7 @@ export default function Energy({ asSection = false }) {
 
       <div className="grid md:grid-cols-2 gap-4">
         <FadeIn className="glass-card p-6">
-          <p className="text-2xs font-mono text-gray-400 uppercase tracking-widest mb-5">Grid &amp; Interconnection Context</p>
+          <p className="text-xs font-mono text-gray-500 uppercase tracking-widest mb-5">Grid &amp; Interconnection Context</p>
           <div className="space-y-4 text-base text-gray-600 leading-relaxed">
             <p>
               The ComEd transmission zone covers northeastern Illinois and is managed by PJM Interconnection.
@@ -161,7 +161,7 @@ export default function Energy({ asSection = false }) {
         </FadeIn>
 
         <FadeIn delay={0.08} className="glass-card p-6">
-          <p className="text-2xs font-mono text-gray-400 uppercase tracking-widest mb-5">Technical Key Metrics</p>
+          <p className="text-xs font-mono text-gray-500 uppercase tracking-widest mb-5">Technical Key Metrics</p>
           <div className="space-y-0">
             {[
               ['Secured Power',         `${project.securedPowerMW.toLocaleString()} MW`, 'dcdGW2026'],

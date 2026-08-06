@@ -63,7 +63,7 @@ export default function Jobs({ asSection = false }) {
       {!asSection && <PageTitle {...pageMeta['/jobs']} />}
 
       <FadeIn className="mb-10 pb-8 border-b border-gray-200">
-        <p className="text-2xs font-mono text-blue-600/60 uppercase tracking-[0.2em] mb-3">Employment</p>
+        <p className="text-2xs font-mono text-blue-600 uppercase tracking-[0.2em] mb-3">Employment</p>
         {asSection ? (
           <h2 className="text-4xl font-display font-bold text-gray-900 tracking-tight mb-3">Job Creation</h2>
         ) : (
@@ -92,7 +92,7 @@ export default function Jobs({ asSection = false }) {
       <FadeIn className="glass-card p-6 sm:p-8 mb-3">
         <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-1 mb-1">
           <div>
-            <p className="text-2xs font-mono text-gray-400 uppercase tracking-widest mb-1">Workforce Comparison</p>
+            <p className="text-xs font-mono text-gray-500 uppercase tracking-widest mb-1">Workforce Comparison</p>
             <h2 className="text-xl sm:text-2xl font-display font-bold text-gray-900">Permanent vs. Construction</h2>
           </div>
           <div className="flex items-center gap-3">
@@ -108,7 +108,7 @@ export default function Jobs({ asSection = false }) {
       </FadeIn>
 
       <FadeIn className="mb-10">
-        <p className="text-2xs font-mono text-gray-400 uppercase tracking-widest mb-5">Employment by Phase</p>
+        <p className="text-xs font-mono text-gray-500 uppercase tracking-widest mb-5">Employment by Phase</p>
         <div className="space-y-3">
           {PHASES.map(({ period, phase, status, accent, dot, label, jobs: jobDesc, note, sourceKey }) => (
             <div key={phase} className={`border rounded-xl px-6 py-5 ${accent}`}>
@@ -123,7 +123,7 @@ export default function Jobs({ asSection = false }) {
                   </div>
                   <p className="text-base font-display font-semibold text-gray-900 mb-0.5">{phase}</p>
                   <p className="text-sm text-gray-600">{jobDesc}</p>
-                  <p className="text-sm text-gray-400 mt-1">
+                  <p className="text-sm text-gray-500 mt-1">
                     {note}
                     {sourceKey && <SourceCitation sourceKey={sourceKey} />}
                   </p>
@@ -137,7 +137,7 @@ export default function Jobs({ asSection = false }) {
       <div className="grid md:grid-cols-2 gap-4">
         <FadeIn className="glass-card p-6">
           <div className="flex items-center justify-between mb-5">
-            <p className="text-2xs font-mono text-gray-400 uppercase tracking-widest">Typical Permanent Roles</p>
+            <p className="text-xs font-mono text-gray-500 uppercase tracking-widest">Typical Permanent Roles</p>
             <span className="text-2xs text-gray-400">Industry standard</span>
           </div>
           <div className="space-y-0">
@@ -152,7 +152,7 @@ export default function Jobs({ asSection = false }) {
 
         <FadeIn delay={0.08} className="glass-card p-6">
           <div className="flex items-center justify-between mb-5">
-            <p className="text-2xs font-mono text-gray-400 uppercase tracking-widest">Construction Workforce</p>
+            <p className="text-xs font-mono text-gray-500 uppercase tracking-widest">Construction Workforce</p>
             <SourceCitation sourceKey="dailyherald2026" />
           </div>
           <p className="text-base text-gray-600 leading-relaxed mb-5">
@@ -160,7 +160,7 @@ export default function Jobs({ asSection = false }) {
             Projects of this size often include project labor agreements (PLAs) with regional trade unions.
           </p>
           <div className="border-t border-gray-100 pt-5">
-            <p className="text-2xs font-mono text-gray-400 uppercase tracking-widest mb-3">
+            <p className="text-xs font-mono text-gray-500 uppercase tracking-widest mb-3">
               Trade unions likely involved
             </p>
             <ul className="space-y-2">
@@ -176,7 +176,7 @@ export default function Jobs({ asSection = false }) {
                 </li>
               ))}
             </ul>
-            <p className="text-sm text-gray-400 mt-4">
+            <p className="text-sm text-gray-500 mt-4">
               Union involvement is unconfirmed. Names are drawn from comparable Illinois projects.
             </p>
           </div>

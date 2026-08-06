@@ -195,7 +195,7 @@ export default function Home() {
                     )}
                     <SourceCitation sourceKey={src} />
                   </p>
-                  <p className="text-xs text-gray-400 mt-1">{note}</p>
+                  <p className="text-xs text-gray-500 mt-1">{note}</p>
                   <CopyKPIButton copyText={buildCopyText(displayValue, note, src)} />
                 </FadeIn>
               )

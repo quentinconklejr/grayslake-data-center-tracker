@@ -24,7 +24,7 @@ export default function KeyFigureList({ figures, variant = 'table', groups = nul
         {groups.map(group => (
           <div key={group.id}>
             {group.label && (
-              <p className="text-2xs font-mono uppercase tracking-widest text-gray-400 mb-3 pb-2 border-b border-gray-100">
+              <p className="text-xs font-mono uppercase tracking-widest text-gray-500 mb-3 pb-2 border-b border-gray-100">
                 {group.label}
               </p>
             )}

@@ -53,7 +53,7 @@ export default function EvidenceBlock({ type = 'stated', title, desc, sourceKey,
         {desc && (
           <>
             <span aria-hidden="true" className="text-2xs text-gray-300">·</span>
-            <p className="text-2xs text-gray-400">{desc}</p>
+            <p className="text-xs text-gray-500">{desc}</p>
           </>
         )}
         {sourceKey && <SourceCitation sourceKey={sourceKey} />}

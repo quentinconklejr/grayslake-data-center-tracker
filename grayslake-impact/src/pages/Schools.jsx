@@ -30,7 +30,7 @@ export default function Schools({ asSection = false }) {
       {!asSection && <PageTitle {...pageMeta['/schools']} />}
 
       <FadeIn className="mb-10 pb-8 border-b border-gray-200">
-        <p className="text-2xs font-mono text-blue-600/60 uppercase tracking-[0.2em] mb-3">Education</p>
+        <p className="text-2xs font-mono text-blue-600 uppercase tracking-[0.2em] mb-3">Education</p>
         {asSection ? (
           <h2 className="text-4xl font-display font-bold text-gray-900 tracking-tight mb-3">School Funding Impact</h2>
         ) : (
@@ -46,13 +46,13 @@ export default function Schools({ asSection = false }) {
       </FadeIn>
 
       <FadeIn className="mb-10">
-        <p className="text-2xs font-mono text-gray-400 uppercase tracking-widest mb-4">Official Projections — Not Confirmed Outcomes</p>
+        <p className="text-xs font-mono text-gray-500 uppercase tracking-widest mb-4">Official Projections — Not Confirmed Outcomes</p>
         <div className="grid md:grid-cols-2 gap-4">
           <div className="glass-card p-6">
             <p className="text-2xs font-mono text-blue-600 uppercase tracking-widest mb-2">Mayor of Grayslake</p>
             <p className="text-4xl font-display font-bold text-gray-900 tracking-tight mb-1">~$300M</p>
             <p className="text-sm text-gray-500 mb-4">projected property tax revenue over the coming decades</p>
-            <p className="text-xs text-gray-400 leading-relaxed">
+            <p className="text-xs text-gray-500 leading-relaxed">
               Official statement from the Mayor of Grayslake. Not independently verified.
               Actual revenue depends on the Lake County Assessor's campus valuation, which
               has not been publicly released.
@@ -66,7 +66,7 @@ export default function Schools({ asSection = false }) {
             <p className="text-2xs font-mono text-blue-600 uppercase tracking-widest mb-2">Deputy Village Manager</p>
             <p className="text-4xl font-display font-bold text-gray-900 tracking-tight mb-1">$1B+</p>
             <p className="text-sm text-gray-500 mb-4">projected across all taxing districts over 20 years</p>
-            <p className="text-xs text-gray-400 leading-relaxed">
+            <p className="text-xs text-gray-500 leading-relaxed">
               Official statement from the Deputy Village Manager. Not independently verified.
               Actual revenue depends on the Lake County Assessor's campus valuation, which
               has not been publicly released.
@@ -111,7 +111,7 @@ export default function Schools({ asSection = false }) {
         <FadeIn className="lg:col-span-2 glass-card p-8">
           <div className="flex items-start justify-between mb-1">
             <div>
-              <p className="text-2xs font-mono text-gray-400 uppercase tracking-widest mb-1">Tax Allocation</p>
+              <p className="text-xs font-mono text-gray-500 uppercase tracking-widest mb-1">Tax Allocation</p>
               <h2 className="text-2xl font-display font-bold text-gray-900">DeKalb Precedent</h2>
             </div>
             <SourceCitation sourceKey="capitolnews2026" />
@@ -123,7 +123,7 @@ export default function Schools({ asSection = false }) {
         <FadeIn delay={0.08} className="lg:col-span-3 glass-card p-8">
           <div className="flex items-start justify-between mb-1">
             <div>
-              <p className="text-2xs font-mono text-gray-400 uppercase tracking-widest mb-1">Case Study</p>
+              <p className="text-xs font-mono text-gray-500 uppercase tracking-widest mb-1">Case Study</p>
               <h2 className="text-2xl font-display font-bold text-gray-900">Meta, DeKalb, IL</h2>
             </div>
             <SourceCitation sourceKey="capitolnews2026" />
@@ -169,7 +169,7 @@ export default function Schools({ asSection = false }) {
       </FadeIn>
 
       <FadeIn>
-        <p className="text-2xs font-mono text-gray-400 uppercase tracking-widest mb-5">Grayslake Districts That Would Receive Revenue</p>
+        <p className="text-xs font-mono text-gray-500 uppercase tracking-widest mb-5">Grayslake Districts That Would Receive Revenue</p>
         <div className="mb-6 border border-gray-300 rounded-sm bg-white overflow-hidden shadow-sm">
           <div className="bg-gray-100 border-b border-gray-300 px-4 py-2.5 flex items-center justify-between gap-3">
             <div>
@@ -199,7 +199,7 @@ export default function Schools({ asSection = false }) {
           {GRAYSLAKE_DISTRICTS.map(({ name, desc, sub }) => (
             <div key={name} className="glass-card-hover p-5">
               <p className="text-base font-display font-semibold text-gray-900 mb-0.5">{name}</p>
-              <p className="text-sm text-gray-400 mb-3">{sub}</p>
+              <p className="text-sm text-gray-500 mb-3">{sub}</p>
               <p className="text-sm text-gray-500 leading-relaxed">{desc}</p>
               <div className="mt-4 pt-3 border-t border-gray-100 flex justify-between">
                 <span className="text-2xs font-mono text-gray-500 uppercase tracking-widest">Est. annual share</span>
