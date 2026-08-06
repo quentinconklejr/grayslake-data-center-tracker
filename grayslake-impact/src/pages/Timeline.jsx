@@ -93,9 +93,10 @@ export default function TimelinePage() {
           role="switch"
           aria-checked={proportional}
           onClick={() => setProportional(v => !v)}
-          className="text-2xs font-mono text-gray-500 hover:text-gray-800 transition-colors duration-150 flex items-center gap-1.5 shrink-0"
+          className="text-xs font-mono text-gray-500 hover:text-gray-800 transition-colors duration-150 flex items-center gap-1.5 shrink-0"
+          title="When on, the gap between events reflects the actual time between them"
         >
-          {proportional ? 'Proportional spacing: ON' : 'Proportional spacing: OFF'}
+          {proportional ? 'Date gaps: on' : 'Date gaps: off'}
           <svg className="w-3 h-3" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5">
             <path d="M2 2v8M10 2v8M2 4.5h8M2 7.5h5" strokeLinecap="round" />
           </svg>
