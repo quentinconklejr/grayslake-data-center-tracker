@@ -1,4 +1,4 @@
-﻿import { useEffect, useState } from 'react'
+﻿import { useEffect, useRef, useState } from 'react'
 import PageTitle from '../components/ui/PageTitle'
 import BackToTop from '../components/ui/BackToTop'
 import PageNext from '../components/ui/PageNext'
@@ -61,8 +61,11 @@ const ACCENT_TEXT = {
 
 export default function Project() {
   const [active, setActive] = useState(SECTIONS[0].id)
+  const [showNav, setShowNav] = useState(false)
+  const cardsRef = useRef(null)
 
   useEffect(() => {
+    const observers = []
     const observer = new IntersectionObserver(
       entries => {
         const visible = entries.filter(e => e.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)
@@ -70,11 +73,24 @@ export default function Project() {
       },
       { rootMargin: '-30% 0px -60% 0px', threshold: [0, 0.25, 0.5] },
     )
+    const cards = cardsRef.current
+    if (cards) {
+      const cardIO = new IntersectionObserver(
+        ([e]) => setShowNav(!e.isIntersecting),
+        { rootMargin: '-72px 0px 0px 0px' },
+      )
+      cardIO.observe(cards)
+      observers.push(cardIO)
+    }
+
     for (const { id } of SECTIONS) {
       const el = document.getElementById(id)
       if (el) observer.observe(el)
     }
-    return () => observer.disconnect()
+    return () => {
+      observer.disconnect()
+      observers.forEach(o => o.disconnect())
+    }
   }, [])
 
   return (
@@ -97,6 +113,7 @@ export default function Project() {
 
         {/* Four jump cards. Previously twelve figures in five groups sat here,
             which meant scrolling a long way before reaching any actual section. */}
+        <div ref={cardsRef}>
         <Reveal className="py-9">
           <p className="text-2xs font-mono text-gray-600 uppercase tracking-[0.15em] mb-5">Four areas of impact</p>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -123,12 +140,16 @@ export default function Project() {
             })}
           </div>
         </Reveal>
+        </div>
       </div>
 
-      {/* In-page nav — replaces four separate nav entries */}
+      {/* Sticky wayfinder. Hidden while the cards above are still on screen:
+          two identical navigations stacked together was pure clutter. */}
       <nav
         aria-label="Sections of this page"
-        className="sticky top-14 z-20 bg-white/95 backdrop-blur border-b border-edge-soft"
+        className={`sticky top-14 z-20 bg-white/95 backdrop-blur border-b border-edge-soft transition-opacity duration-200 ${
+          showNav ? 'opacity-100' : 'opacity-0 pointer-events-none'
+        }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 flex gap-1 overflow-x-auto">
           {SECTIONS.map(({ id, label }) => (
@@ -136,10 +157,10 @@ export default function Project() {
               key={id}
               href={`#${id}`}
               aria-current={active === id ? 'true' : undefined}
-              className={`shrink-0 px-3 py-3 text-sm border-b-2 transition-colors font-medium ${
+              className={`shrink-0 px-4 py-3.5 text-sm border-b-2 transition-colors font-medium ${
                 active === id
                   ? 'border-blue-600 text-blue-700'
-                  : 'border-transparent text-gray-500 hover:text-gray-900 hover:border-edge-soft'
+                  : 'border-transparent text-gray-600 hover:text-gray-900 hover:border-edge-soft'
               }`}
             >
               {label}

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { Fragment, useEffect, useRef, useState } from 'react'
 
 const PREFERS_REDUCED =
   typeof window !== 'undefined' &&
@@ -32,7 +32,11 @@ export default function RevealHeadline({ text, className = '', as: Tag = 'h1', s
   return (
     <Tag ref={ref} className={className}>
       {words.map((w, i) => (
-        <span key={i} className="inline-block overflow-hidden align-bottom">
+        // The space must be a sibling of the wrapper, not a child of it. Inside
+        // an inline-block with overflow-hidden the browser collapses trailing
+        // whitespace, which ran every word together.
+        <Fragment key={i}>
+          <span className="inline-block overflow-hidden align-bottom">
           <span
             className="inline-block"
             style={
@@ -47,8 +51,9 @@ export default function RevealHeadline({ text, className = '', as: Tag = 'h1', s
           >
             {w}
           </span>
-          {i < words.length - 1 && ' '}
-        </span>
+          </span>
+          {i < words.length - 1 ? ' ' : null}
+        </Fragment>
       ))}
     </Tag>
   )

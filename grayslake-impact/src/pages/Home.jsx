@@ -23,40 +23,6 @@ const HERO_SESSION_KEY = 'gdct-hero-animated'
 
 // Homepage impact cards — one sentence each, link to /project for the full analysis.
 // Charts live on /project where readers have chosen to go deeper; the homepage teases.
-const IMPACT_CARDS = [
-  {
-    to: '/project#jobs',
-    cat: 'Employment',
-    catColor: 'text-emerald-700',
-    topBorder: 'border-t-emerald-400',
-    headline: `${figureById['jobs-permanent'].value} permanent jobs — ${figureById['jobs-permanent'].qualifier}.`,
-    sourceKey: 'govtech2025',
-  },
-  {
-    to: '/project#energy',
-    cat: 'Energy Draw',
-    catColor: 'text-amber-700',
-    topBorder: 'border-t-amber-400',
-    headline: 'Three capacity figures, three different measurements.',
-    sourceKey: 'govtech2025',
-  },
-  {
-    to: '/project#tax',
-    cat: 'Fiscal Impact',
-    catColor: 'text-blue-600',
-    topBorder: 'border-t-blue-400',
-    headline: 'Developer fees in the tens of millions.',
-    sourceKey: 'govtech2025',
-  },
-  {
-    to: '/project#schools',
-    cat: 'School Funding',
-    catColor: 'text-violet-600',
-    topBorder: 'border-t-violet-400',
-    headline: 'In DeKalb, 60.9% went to schools.',
-    sourceKey: 'capitolnews2026',
-  },
-]
 
 // Secondary stats — numeric ones get count-up animation and copy button
 const SECONDARY_STATS = [
@@ -177,12 +143,37 @@ export default function Home() {
                 {figureById['investment'].value}
               </p>
               <p className="text-sm text-gray-500 mt-4 leading-snug">
-                {figureById['investment'].qualifier}<SourceCitation sourceKey="govtech2025" />
+                Grayslake&rsquo;s mayor put it at $8.5B; T5&rsquo;s chief executive said up to $18B.
+                No independent valuation has been published.<SourceCitation sourceKey="govtech2025" />
               </p>
               <CopyKPIButton copyText={figureCopyText('investment')} />
             </Reveal>
 
           </div>
+
+
+      {/* ── Site map ─────────────────────────────────────────────────────────── */}
+      <section data-section="Land Ownership" className="-mx-4 sm:-mx-6 mt-12 mb-4 px-4 sm:px-6">
+        <FadeIn>
+          <div className="flex items-end justify-between mb-5">
+            <div>
+              <p className="text-2xs font-mono text-blue-700 uppercase tracking-[0.2em] mb-1">Land Ownership</p>
+              <h2 className="text-3xl font-display font-bold text-gray-900">Land recorded to T5</h2>
+              <p className="text-sm text-gray-600 mt-1 max-w-md leading-snug">
+                {figureById['acres-owned'].value} across {figureById['acres-owned'].qualifier}. The approved
+                campus is larger and is not mapped.
+              </p>
+            </div>
+            <Link to="/map" className="text-sm text-gray-500 hover:text-gray-900 transition-colors flex items-center gap-1">
+              Full map
+              <svg className="w-3.5 h-3.5" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <path d="M2 6h8M6 2l4 4-4 4" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </Link>
+          </div>
+          <SiteMap className="h-[480px]" />
+        </FadeIn>
+      </section>
 
           {/* Secondary stats with count-up and copy buttons */}
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 mt-10 pt-8 border-t border-gray-100">
@@ -280,66 +271,12 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── Site map ─────────────────────────────────────────────────────────── */}
-      <section data-section="Land Ownership" className="max-w-7xl mx-auto px-4 sm:px-6 pt-14 pb-14">
-        <FadeIn>
-          <div className="flex items-end justify-between mb-5">
-            <div>
-              <p className="text-2xs font-mono text-blue-700 uppercase tracking-[0.2em] mb-1">Land Ownership</p>
-              <h2 className="text-3xl font-display font-bold text-gray-900">Land recorded to T5</h2>
-              <p className="text-sm text-gray-600 mt-1 max-w-md leading-snug">
-                {figureById['acres-owned'].value} across {figureById['acres-owned'].qualifier}. The approved
-                campus is larger and is not mapped.
-              </p>
-            </div>
-            <Link to="/map" className="text-sm text-gray-500 hover:text-gray-900 transition-colors flex items-center gap-1">
-              Full map
-              <svg className="w-3.5 h-3.5" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5">
-                <path d="M2 6h8M6 2l4 4-4 4" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </Link>
-          </div>
-          <SiteMap className="h-[480px]" />
-        </FadeIn>
-      </section>
 
-      {/* ── Impact overview ───────────────────────────────────────────────────── */}
-      <section data-section="Impact Overview" className="max-w-5xl mx-auto px-4 sm:px-6 pt-12 pb-14">
-
-        <FadeIn className="mb-8">
-          <p className="text-2xs font-mono text-gray-400 uppercase tracking-[0.18em] mb-4 flex items-center gap-2">
-            <span className="inline-block w-4 h-px bg-gray-300" />
-            Impact by category
-          </p>
-        </FadeIn>
-
-        <div className="grid sm:grid-cols-2 gap-4">
-          {IMPACT_CARDS.map(({ to, cat, catColor, topBorder, headline, sourceKey }, i) => (
-            <FadeIn key={to} delay={Math.min(i * 0.05, 0.12)}>
-              <Link
-                to={to}
-                className={`group flex flex-col h-full bg-white border border-edge border-t-[5px] ${topBorder} rounded-xl px-5 py-5 hover:shadow-glass-md hover:border-gray-300 transition-all duration-150`}
-              >
-                <p className={`text-2xs font-mono uppercase tracking-[0.18em] mb-4 ${catColor}`}>{cat}</p>
-                <p className="text-sm font-display font-semibold text-gray-900 leading-snug flex-1 mb-4">{headline}</p>
-                <div className="flex items-center justify-between mt-auto">
-                  <span className="text-xs font-medium text-blue-600 group-hover:text-blue-700 flex items-center gap-1 transition-colors">
-                    Full analysis
-                    <svg className="w-3 h-3 group-hover:translate-x-0.5 transition-transform duration-150" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
-                      <path d="M2 6h8M6 2l4 4-4 4" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  </span>
-                  {sourceKey && <SourceCitation sourceKey={sourceKey} />}
-                </div>
-              </Link>
-            </FadeIn>
-          ))}
-        </div>
-      </section>
       <div className="max-w-5xl mx-auto px-4 sm:px-6">
         <FootnoteList />
       </div>
       <PageNext
+        prominent
         to="/project"
         label="The Project"
         desc="Energy, jobs, taxes, and school funding, every figure with its source and condition."

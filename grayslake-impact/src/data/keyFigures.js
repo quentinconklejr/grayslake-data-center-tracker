@@ -88,8 +88,8 @@ export const keyFigures = [
     id: 'investment',
     label: 'Estimated investment',
     value: `$${project.costLow}–${project.costHigh}B`,
-    qualifier: 'Davies $8.5B · Marin up to $18B',
-    detail: 'Two figures from two speakers; no independent valuation has been published.',
+    qualifier: 'Mayor Davies said $8.5B; T5 chief executive Pete Marin said up to $18B',
+    detail: 'Two figures from two people, not a range anyone calculated. Grayslake Mayor Elizabeth Davies gave the lower number and T5 chief executive Pete Marin the higher one. No independent valuation has been published.',
     sourceKey: 'govtech2025',
   },
   {
