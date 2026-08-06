@@ -140,6 +140,9 @@ export default function Home() {
         <div className="max-w-5xl mx-auto px-4 sm:px-6 pt-14 pb-14">
 
           <FadeIn>
+            <p className="text-sm text-gray-500 mb-2">
+              In plain language: a very large computing facility — one of the biggest proposed anywhere in the U.S.
+            </p>
             <h1 className="text-3xl sm:text-4xl font-display font-bold text-gray-900 leading-tight tracking-tight mb-4 max-w-[52ch]">
               T5 @ Chicago IV is an approved $8.5–18B hyperscale AI data center under construction in Grayslake, Illinois.
             </h1>
