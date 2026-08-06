@@ -302,9 +302,6 @@ export default function Home() {
             Impact by category
           </p>
           <h2 className="text-2xl font-display font-bold text-gray-900">Four areas of impact.</h2>
-          <p className="text-base text-gray-500 mt-2 max-w-xl leading-relaxed">
-            Each card links to the full sourced analysis on The Project page.
-          </p>
         </FadeIn>
 
         <div className="grid sm:grid-cols-2 gap-4">

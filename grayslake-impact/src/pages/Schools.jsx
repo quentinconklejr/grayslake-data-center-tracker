@@ -13,14 +13,14 @@ const { schoolFundingComparable: meta } = projections
 const metaOtherPct = +(100 - meta.percentToSchoolDistrict).toFixed(1)
 
 const GRAYSLAKE_DISTRICTS = [
-  { name: 'Fremont Elementary District 79',             desc: 'Elementary school district. Named in Village FAQ as a taxing body.',          sub: 'Village FAQ p. 2' },
-  { name: 'Grayslake Community High School Dist. 127',  desc: 'High school district serving Grayslake. Named in Village FAQ as a taxing body.', sub: 'Village FAQ p. 2' },
-  { name: 'Mundelein High School District 120',          desc: 'High school district. Named in Village FAQ as a taxing body.',                sub: 'Village FAQ p. 2' },
-  { name: 'Fremont Library',                             desc: 'Public library district. Named in Village FAQ as a taxing body.',             sub: 'Village FAQ p. 2' },
-  { name: 'Round Lake Area Park District',               desc: 'Park district. Named in Village FAQ as a taxing body.',                       sub: 'Village FAQ p. 2' },
-  { name: 'Grayslake Park District',                     desc: 'Park district. Named in Village FAQ as a taxing body.',                       sub: 'Village FAQ p. 2' },
-  { name: 'Grayslake Fire Protection District',          desc: 'Fire protection district. Named in Village FAQ as a taxing body.',            sub: 'Village FAQ p. 2' },
-  { name: 'Village of Grayslake',                        desc: 'The Village itself receives a share as a taxing body. Named in Village FAQ.', sub: 'Village FAQ p. 2' },
+  { name: 'Fremont Elementary District 79',             desc: 'Elementary school district.',                        sub: 'Village FAQ p. 2' },
+  { name: 'Grayslake Community High School Dist. 127',  desc: 'High school district serving Grayslake.',            sub: 'Village FAQ p. 2' },
+  { name: 'Mundelein High School District 120',          desc: 'High school district. Campus straddles this boundary.', sub: 'Village FAQ p. 2' },
+  { name: 'Fremont Library',                             desc: 'Public library district.',                           sub: 'Village FAQ p. 2' },
+  { name: 'Round Lake Area Park District',               desc: 'Park district.',                                     sub: 'Village FAQ p. 2' },
+  { name: 'Grayslake Park District',                     desc: 'Park district.',                                     sub: 'Village FAQ p. 2' },
+  { name: 'Grayslake Fire Protection District',          desc: 'Fire protection district.',                          sub: 'Village FAQ p. 2' },
+  { name: 'Village of Grayslake',                        desc: 'The Village receives a share as a taxing body.',    sub: 'Village FAQ p. 2' },
 ]
 
 export default function Schools({ asSection = false }) {
@@ -148,9 +148,9 @@ export default function Schools({ asSection = false }) {
           <div className="bg-emerald-50 border border-emerald-200 rounded-xl px-5 py-4">
             <p className="text-2xs font-mono text-emerald-700 uppercase tracking-widest mb-2">Key Takeaway</p>
             <p className="text-base text-gray-600 leading-relaxed">
-              In DeKalb, over 60% of a hyperscale data center's annual property tax bill flows
-              directly to the school district. What that precedent means for Grayslake schools depends
-              on the Lake County Assessor's valuation, which has not been publicly released.
+              In DeKalb, school districts received about 60.9% of Meta&rsquo;s property taxes across
+              three properties. What that means for Grayslake depends on the Lake County Assessor&rsquo;s
+              valuation, which has not been published.
             </p>
           </div>
         </FadeIn>

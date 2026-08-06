@@ -79,7 +79,7 @@ export const pageMeta = {
   '/reporters': {
     title: 'For Reporters',
     description:
-      'Key figures, citations, and press contact reference for T5 @ Chicago IV — among the largest developments in Lake County history.',
+      'Key figures, citations, and press contacts for T5 @ Chicago IV.',
     ogImage: '/og/reporters.png',
   },
   '/actions': {

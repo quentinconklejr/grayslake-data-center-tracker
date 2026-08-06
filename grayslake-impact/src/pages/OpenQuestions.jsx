@@ -206,8 +206,8 @@ export default function OpenQuestions() {
             <div>
               <p className="text-xs font-display font-semibold text-blue-800 mb-1.5">How this page works</p>
               <p className="text-sm text-gray-600 leading-relaxed">
-                This page organizes publicly sourced statements around unresolved questions.
-                It takes no position.
+                All statements here come from public records, journalism, or legal filings.
+                The categories describe who made each claim &mdash; not whether it&rsquo;s accurate.
                 <span className="text-emerald-700"> "Stated"</span> reflects what officials or the developer have said on record.
                 <span className="text-amber-700"> "Disputed"</span> reflects what critics, advocates, or independent researchers have said on record.
                 <span className="text-gray-400"> "Not Yet Public"</span> marks questions with no public answer.
@@ -301,8 +301,7 @@ export default function OpenQuestions() {
       <FadeIn>
         <div className="mt-10 pt-6 border-t border-gray-200">
           <p className="text-xs text-gray-500 leading-relaxed">
-            Questions are added as new disputes emerge in public documents, journalism, or legal filings.
-            Source citations link to the outlet or organization that made the statement.
+            Questions are added as new disputes surface in public records, journalism, or court filings.
           </p>
         </div>
       </FadeIn>

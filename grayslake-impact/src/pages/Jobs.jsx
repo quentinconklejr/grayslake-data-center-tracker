@@ -32,7 +32,7 @@ const PHASES = [
     dot: 'bg-blue-500',
     label: 'text-blue-700',
     jobs: 'Peak construction workforce across all phases',
-    note: 'All phases scaling in parallel as demand grows.',
+    note: 'Phasing tied to leasing demand, per developer; no detailed schedule has been published.',
   },
   {
     period: '2029+',
@@ -156,8 +156,8 @@ export default function Jobs({ asSection = false }) {
             <SourceCitation sourceKey="dailyherald2026" />
           </div>
           <p className="text-base text-gray-600 leading-relaxed mb-5">
-            Data center construction at this scale draws on multiple skilled trades.
-            Projects of this size often include project labor agreements (PLAs) with regional trade unions.
+            The workforce has been described only as &ldquo;hundreds of construction and trade jobs.&rdquo;
+            T5 has not confirmed a project labor agreement with any regional union.
           </p>
           <div className="border-t border-gray-100 pt-5">
             <p className="text-xs font-mono text-gray-500 uppercase tracking-widest mb-3">

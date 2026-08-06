@@ -28,9 +28,9 @@ export default function Footer() {
               <span className="text-sm font-semibold text-gray-800 tracking-tight">Grayslake Data Center Tracker</span>
             </div>
             <p className="text-xs text-gray-500 leading-relaxed">
-              A civic data tool tracking the fiscal, employment, energy, and environmental
-              impacts of T5 @ Chicago IV — the hyperscale AI data center campus under
-              development in Grayslake, Illinois.
+              An independent tracker collecting public records and press coverage
+              on T5 @ Chicago IV &mdash; a hyperscale data center under construction
+              in Grayslake, Illinois.
             </p>
           </div>
 
