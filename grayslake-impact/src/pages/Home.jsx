@@ -203,15 +203,10 @@ export default function Home() {
           <div className="grid md:grid-cols-2 gap-10 md:gap-0 border-t border-gray-200 pt-10">
 
             <FadeIn className="md:pr-12 md:border-r border-gray-200">
-              <p className="text-2xs font-mono text-gray-400 uppercase tracking-[0.2em] mb-3">Permanent Jobs at Full Buildout (max)</p>
-              <AnimatedNumber
-                value={jobs.permanent}
-                suffix=""
-                duration={0.6}
-                delay={0.1}
-                sessionKey={HERO_SESSION_KEY}
-                className="text-7xl sm:text-8xl font-display font-black text-gray-900 leading-none tracking-tighter block"
-              />
+              <p className="text-2xs font-mono text-gray-400 uppercase tracking-[0.2em] mb-3">Permanent Jobs Estimated (range)</p>
+              <p className="text-6xl sm:text-7xl font-display font-black text-gray-900 leading-none tracking-tighter">
+                {figureById['jobs-permanent'].value}
+              </p>
               <p className="text-sm text-gray-500 mt-4 leading-snug">
                 Village FAQ estimate, conditional on all 10 million sq ft being built and hedged as subject
                 to change. Excludes construction jobs. Davies cited 1,500 (Oct. 2025); Marin cited &ldquo;over
