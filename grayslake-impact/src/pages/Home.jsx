@@ -174,7 +174,7 @@ export default function Home() {
           </div>
 
           {/* Secondary stats with count-up and copy buttons */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 mt-10 pt-8 border-t border-gray-100">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 mt-10 pt-8 border-t border-gray-100">
             {SECONDARY_STATS.map(({ label, numValue, suffix = '', value, note, src }) => {
               const displayValue = numValue != null
                 ? `${numValue.toLocaleString()}${suffix}`
@@ -223,7 +223,7 @@ export default function Home() {
           {/* START HERE — shown after the stats so headline numbers hit first */}
           <FadeIn>
             <div className="mt-10 pt-8 border-t border-gray-200">
-              <p className="text-2xs font-mono text-gray-400 uppercase tracking-[0.2em] mb-4 flex items-center gap-2">
+              <p className="text-2xs font-mono text-gray-400 uppercase tracking-[0.2em] mb-3 flex items-center gap-2">
                 <span className="inline-block w-4 h-px bg-gray-300" />
                 Start here
               </p>
@@ -293,7 +293,7 @@ export default function Home() {
       </section>
 
       {/* ── Impact overview ───────────────────────────────────────────────────── */}
-      <section data-section="Impact Overview" className="max-w-5xl mx-auto px-4 sm:px-6 pb-16">
+      <section data-section="Impact Overview" className="max-w-5xl mx-auto px-4 sm:px-6 pt-12 pb-14">
 
         <FadeIn className="mb-8">
           <p className="text-2xs font-mono text-gray-400 uppercase tracking-[0.2em] mb-3 flex items-center gap-2">

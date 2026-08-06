@@ -78,7 +78,7 @@ export default function Project() {
             as an empty [] linking to #fn-null. */}
         <FootnoteProvider preload={GLANCE_KEYS}>
           <FadeIn className="py-8 border-b border-gray-200">
-            <p className="text-2xs font-mono text-gray-600 uppercase tracking-widest mb-4">At a glance</p>
+            <p className="text-2xs font-mono text-gray-400 uppercase tracking-[0.2em] mb-3">At a glance</p>
             <KeyFigureList figures={keyFigures} variant="grouped" groups={GLANCE_GROUPS} />
             <FootnoteList />
           </FadeIn>
