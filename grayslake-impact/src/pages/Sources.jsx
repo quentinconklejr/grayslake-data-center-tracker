@@ -1,6 +1,7 @@
 import PageTitle from '../components/ui/PageTitle'
 import { pageMeta } from '../data/pageMeta'
 import FadeIn from '../components/ui/FadeIn'
+import BackToTop from '../components/ui/BackToTop'
 import { sources } from '../data/sources'
 import { LAST_VERIFIED } from '../data/siteConfig'
 
@@ -130,6 +131,7 @@ export default function Sources() {
           </div>
         </div>
       </FadeIn>
+      <BackToTop />
     </div>
   )
 }

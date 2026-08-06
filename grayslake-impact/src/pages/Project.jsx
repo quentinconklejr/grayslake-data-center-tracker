@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import PageTitle from '../components/ui/PageTitle'
+import BackToTop from '../components/ui/BackToTop'
 import { pageMeta } from '../data/pageMeta'
 import FadeIn from '../components/ui/FadeIn'
 import KeyFigureList from '../components/ui/KeyFigureList'
@@ -113,6 +114,7 @@ export default function Project() {
           <Component asSection />
         </section>
       ))}
+      <BackToTop />
     </div>
   )
 }

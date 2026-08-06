@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import PageTitle from '../components/ui/PageTitle'
+import BackToTop from '../components/ui/BackToTop'
 import { pageMeta } from '../data/pageMeta'
 import TimelineUI from '../components/ui/Timeline'
 import FadeIn from '../components/ui/FadeIn'
@@ -143,6 +144,7 @@ export default function TimelinePage() {
       </FadeIn>
 
       <FootnoteList />
+      <BackToTop />
     </div>
     </FootnoteProvider>
   )
