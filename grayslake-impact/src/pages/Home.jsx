@@ -222,59 +222,10 @@ export default function Home() {
             </div>
           </FadeIn>
 
-          {/* START HERE — shown after the stats so headline numbers hit first */}
-          <FadeIn>
-            <div className="mt-10 pt-8 border-t border-edge-soft">
-              <p className="text-2xs font-mono text-gray-400 uppercase tracking-[0.18em] mb-4 flex items-center gap-2">
-                <span className="inline-block w-4 h-px bg-gray-300" />
-                Start here
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                {[
-                  {
-                    to: '/questions',
-                    label: 'Residents',
-                    color: 'text-blue-700',
-                    hoverBorder: 'hover:border-blue-300',
-                    desc: 'Plain-language answers on water, energy, jobs, taxes and the approval process.',
-                  },
-                  {
-                    to: '/reporters',
-                    label: 'Reporters',
-                    color: 'text-violet-700',
-                    hoverBorder: 'hover:border-violet-300',
-                    desc: 'Key figures with citations and a contacts reference for press inquiries.',
-                  },
-                ].map(({ to, label, color, hoverBorder, desc }) => (
-                  <Link
-                    key={to}
-                    to={to}
-                    className={`group block bg-white border border-edge ${hoverBorder} rounded-xl px-5 py-5 transition-all duration-150 hover:shadow-glass-md`}
-                  >
-                    <div className="flex items-start justify-between gap-3">
-                      <div className="min-w-0">
-                        <p className={`text-xs font-mono uppercase tracking-[0.2em] font-semibold mb-1.5 ${color}`}>{label}</p>
-                        <p className="text-xs text-gray-600 leading-relaxed group-hover:text-gray-800 transition-colors">{desc}</p>
-                      </div>
-                      <svg
-                        className={`shrink-0 w-3.5 h-3.5 mt-0.5 ${color} opacity-40 group-hover:opacity-80 group-hover:translate-x-0.5 transition-all duration-150`}
-                        viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true"
-                      >
-                        <path d="M2 7h10M7 2l5 5-5 5" strokeLinecap="round" strokeLinejoin="round" />
-                      </svg>
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            </div>
-          </FadeIn>
         </div>
       </section>
 
 
-      <div className="max-w-5xl mx-auto px-4 sm:px-6">
-        <FootnoteList />
-      </div>
       <PageNext
         prominent
         to="/project"
@@ -283,6 +234,10 @@ export default function Home() {
         color="text-blue-700"
         hoverBorder="hover:border-blue-300"
       />
+
+      <div className="max-w-5xl mx-auto px-4 sm:px-6">
+        <FootnoteList />
+      </div>
     </div>
     </FootnoteProvider>
   )
