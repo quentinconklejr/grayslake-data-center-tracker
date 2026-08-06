@@ -36,7 +36,7 @@ export default function Energy({ asSection = false }) {
         <p className="text-2xs font-mono text-gray-400 mt-3">Last verified {LAST_VERIFIED}</p>
       </FadeIn>
 
-      <FadeIn className="grid grid-cols-2 lg:grid-cols-5 gap-8 mb-12">
+      <FadeIn className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 mb-12">
         <StatCard label="Secured Power"     value={`${project.securedPowerMW.toLocaleString()} MW`}  sub="Utility-contracted capacity"   accent="amber" sourceKey="dcdGW2026" />
         <StatCard label="IT Capacity"       value={`${project.totalCapacityMW.toLocaleString()} MW`} sub="Leasable at full buildout"      accent="blue"  sourceKey="dcdGW2026" />
         <StatCard label="Total ComEd Capacity" value={`${project.comEdCapacityGW} GW`}                sub="Secured from ComEd, per T5 CEO"  accent="amber" sourceKey="govtech2025" />

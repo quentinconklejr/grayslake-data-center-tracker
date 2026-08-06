@@ -16,7 +16,7 @@ export default function CopyKPIButton({ copyText }) {
       type="button"
       onClick={handleCopy}
       title={copied ? 'Copied!' : `Copy: ${copyText}`}
-      className={`mt-2 inline-flex items-center gap-1 text-2xs font-mono transition-colors duration-150 min-h-6 px-1 -ml-1 ${
+      className={`mt-2 inline-flex items-center gap-1.5 text-xs font-mono transition-colors duration-150 min-h-[44px] px-2 -ml-2 ${
         copied ? 'text-emerald-700' : 'text-gray-500 hover:text-gray-700'
       }`}
     >
@@ -33,7 +33,7 @@ export default function CopyKPIButton({ copyText }) {
             <rect x="4.5" y="4.5" width="6" height="6" rx="1" />
             <path d="M7.5 4.5V3a1 1 0 00-1-1H3a1 1 0 00-1 1v3.5a1 1 0 001 1h1.5" />
           </svg>
-          <span className="sr-only">Copy figure with citation</span>
+          <span>Copy</span>
         </>
       )}
       {/* Copy success was signalled only by a colour and icon swap. */}

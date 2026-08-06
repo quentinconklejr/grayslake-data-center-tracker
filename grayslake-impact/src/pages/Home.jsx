@@ -120,7 +120,7 @@ export default function Home() {
 
       {/* ── Intro + key stats ──────────────────────────────────────────────── */}
       <section data-section="Key Facts" className="bg-white border-b border-gray-200">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 pt-14 pb-14">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 pt-10 sm:pt-14 pb-10 sm:pb-14">
 
           <FadeIn>
             <p className="text-sm text-gray-500 mb-2">
