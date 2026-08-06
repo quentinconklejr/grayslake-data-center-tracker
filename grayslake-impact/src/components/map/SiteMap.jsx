@@ -264,7 +264,7 @@ export default function SiteMap({ className = 'h-[480px]' }) {
       </div>
 
       {/* Text equivalent — the same data the map carries, for anyone not using it visually */}
-      <details id="parcel-list" open className="mt-4 border border-gray-200 rounded-xl bg-white scroll-mt-24">
+      <details id="parcel-list" className="mt-4 border border-gray-200 rounded-xl bg-white scroll-mt-24">
         <summary className="px-4 py-3 text-sm font-medium text-gray-800 cursor-pointer select-none">
           Parcel list ({META.parcelCount} parcels, {META.countyAcresSum} acres)
         </summary>
