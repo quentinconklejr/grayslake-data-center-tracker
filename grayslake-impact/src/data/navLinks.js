@@ -1,18 +1,14 @@
-// Five destinations. The previous thirteen (ten nav plus three audience
-// guides) forced a first-time visitor to guess whether Questions, Timeline and
-// Actions were three things or one. Energy, Jobs, Tax and Schools are now
-// sections of /project; Actions is merged into /timeline; the audience guides
-// are entry points on the homepage rather than peers of the topic pages.
+// All destinations shown flat — no dropdowns. The previous desktop nav hid
+// Residents (/questions) and Reporters under a "Guides" dropdown, which
+// also created a duplicate path to /questions (once as "Questions", once as
+// "Guides → Residents"). Reporters is now a top-level link; the duplicate
+// Residents→/questions entry is removed; the desktop and mobile navs match.
 export const NAV_LINKS = [
   { to: '/project',   label: 'The Project', end: false },
   { to: '/timeline',  label: 'Timeline',    end: false },
   { to: '/questions', label: 'Questions',   end: false },
   { to: '/documents', label: 'Documents',   end: false },
   { to: '/map',       label: 'Map',         end: false },
+  { to: '/reporters', label: 'Reporters',   end: false },
   { to: '/about',     label: 'About',       end: false },
-]
-
-export const GUIDE_LINKS = [
-  { to: '/questions', label: 'Residents' },
-  { to: '/reporters', label: 'Reporters' },
 ]
