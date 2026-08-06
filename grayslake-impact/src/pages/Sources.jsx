@@ -72,12 +72,12 @@ export default function Sources() {
                   href={source.localCopy}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-2xs font-mono text-blue-600 hover:text-blue-700 inline-flex items-center gap-1 mb-1 transition-colors"
+                  className="inline-flex items-center gap-1.5 mt-1 mb-1 px-2.5 py-1.5 rounded border border-blue-200 bg-blue-50 text-xs font-mono text-blue-700 hover:bg-blue-100 hover:border-blue-300 transition-colors duration-150"
                 >
-                  <svg className="w-3 h-3" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.4" aria-hidden="true">
+                  <svg className="w-3 h-3 shrink-0" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.4" aria-hidden="true">
                     <path d="M6 1.5v6M3.5 5.5L6 8l2.5-2.5M2 9.5h8" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
-                  mirrored copy hosted here (PDF)
+                  Download PDF mirror
                 </a>
               )}
               {source.status === 'dead' ? (

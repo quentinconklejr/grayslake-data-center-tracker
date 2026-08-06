@@ -71,7 +71,7 @@ export default function Footer() {
                 <a
                   key={to}
                   href={to}
-                  className="text-2xs font-mono text-gray-400 hover:text-gray-700 transition-colors duration-150"
+                  className="text-xs font-mono text-gray-500 hover:text-gray-800 transition-colors duration-150"
                 >
                   {label}
                 </a>
@@ -79,7 +79,7 @@ export default function Footer() {
                 <Link
                   key={to}
                   to={to}
-                  className="text-2xs font-mono text-gray-400 hover:text-gray-700 transition-colors duration-150"
+                  className="text-xs font-mono text-gray-500 hover:text-gray-800 transition-colors duration-150"
                 >
                   {label}
                 </Link>

@@ -9,7 +9,7 @@ export default function About() {
       <PageTitle {...pageMeta['/about']} />
 
       <FadeIn className="mb-10 pb-8 border-b border-gray-200">
-        <p className="text-2xs font-mono text-blue-600/60 uppercase tracking-[0.2em] mb-3">About This Site</p>
+        <p className="text-xs font-mono text-blue-600 uppercase tracking-[0.2em] mb-3">About This Site</p>
         <h1 className="text-4xl font-display font-bold text-gray-900 tracking-tight mb-3">Why I Built This</h1>
         <p className="text-base text-gray-600 max-w-2xl leading-relaxed">
           A resident-built resource. No affiliation with T5 Data Centers or the Village of Grayslake.
@@ -54,39 +54,31 @@ export default function About() {
       </FadeIn>
 
       <FadeIn>
-        <div className="border border-gray-200 rounded-xl px-6 py-6 bg-white">
-          <p className="text-2xs font-mono text-gray-400 uppercase tracking-widest mb-4">Contact</p>
-          <p className="text-sm text-gray-600 leading-relaxed mb-5">
+        <div className="border border-blue-200 rounded-xl px-6 py-6 bg-blue-50/40">
+          <p className="text-xs font-mono text-blue-700 uppercase tracking-widest mb-2">Get in touch</p>
+          <p className="text-sm text-gray-700 leading-relaxed mb-5">
             If you have a correction or a document this site is missing, please reach out.
             I'd rather fix a mistake than leave it standing.
           </p>
-          <div className="space-y-3">
+          <div className="flex flex-col sm:flex-row gap-3">
             <a
               href={`mailto:${SITE_CONTACT.email}`}
-              className="flex items-center gap-3 group"
+              className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-lg bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 transition-colors duration-150 min-h-[44px]"
             >
-              <div className="w-7 h-7 rounded bg-gray-100 border border-gray-200 flex items-center justify-center shrink-0 group-hover:border-blue-300 group-hover:bg-blue-50 transition-colors">
-                <svg className="w-3.5 h-3.5 text-gray-400 group-hover:text-blue-600 transition-colors" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.4">
-                  <rect x="1" y="3" width="12" height="8" rx="1.2" />
-                  <path d="M1 4l6 4.5L13 4" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </div>
-              <span className="text-sm font-mono text-gray-600 group-hover:text-blue-600 transition-colors">
-                {SITE_CONTACT.email}
-              </span>
+              <svg className="w-4 h-4 shrink-0" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
+                <rect x="1.5" y="3.5" width="13" height="9" rx="1.5" />
+                <path d="M1.5 5l6.5 5 6.5-5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+              Email me
             </a>
             <a
               href={`tel:${SITE_CONTACT.phoneTel}`}
-              className="flex items-center gap-3 group"
+              className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-lg border border-gray-300 bg-white text-gray-700 text-sm font-medium hover:border-gray-400 hover:text-gray-900 transition-colors duration-150 min-h-[44px]"
             >
-              <div className="w-7 h-7 rounded bg-gray-100 border border-gray-200 flex items-center justify-center shrink-0 group-hover:border-blue-300 group-hover:bg-blue-50 transition-colors">
-                <svg className="w-3.5 h-3.5 text-gray-400 group-hover:text-blue-600 transition-colors" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.4">
-                  <path d="M2 2.5C2 2.5 3 5.5 5.5 8S11.5 12 11.5 12l1-2.5-2-1-1 1C8 9 5 6 5 4.5l1-1-1-2L2 2.5z" strokeLinejoin="round" />
-                </svg>
-              </div>
-              <span className="text-sm font-mono text-gray-600 group-hover:text-blue-600 transition-colors">
-                {SITE_CONTACT.phone}
-              </span>
+              <svg className="w-4 h-4 shrink-0 text-gray-500" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
+                <path d="M3 3C3 3 4 7 7 10s7 4 7 4l1.5-3-2.5-1.5-1.5 1.5C10 10 6 6 6 5.5l1.5-1.5L6 2 3 3z" strokeLinejoin="round" />
+              </svg>
+              {SITE_CONTACT.phone}
             </a>
           </div>
         </div>
