@@ -9,7 +9,7 @@ export const timelineEvents = [
   {
     date: "2025-05-06",
     title: "Village approval process complete",
-    description: "The Village FAQ records the approval as completed \u201cover an almost eight-month period between 9/23/2024 and 5/6/2025\u201d after a number of public hearings and Village Board meetings. Mayor Davies cited 1,500 permanent jobs and major tax revenue during this period.",
+    description: "The Village FAQ records the approval as completed \u201cover an almost eight-month period between 9/23/2024 and 5/6/2025\u201d after a number of public hearings and Village Board meetings. Grayslake Mayor Elizabeth Davies cited 1,500 permanent jobs and major tax revenue during this period.",
     category: "approval",
     sourceKeys: ["villagefaq_archived", "dailyherald2026", "govtech2025"],
   },

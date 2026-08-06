@@ -6,6 +6,7 @@ import SourceCitation from '../components/ui/SourceCitation'
 import FadeIn from '../components/ui/FadeIn'
 import AnimatedNumber from '../components/ui/AnimatedNumber'
 import { FootnoteProvider, FootnoteList } from '../components/ui/FootnoteContext'
+import { Fragment } from 'react'
 import { projections } from '../data/projections'
 import Figure from '../components/ui/Figure'
 import { figureById } from '../data/keyFigures'
@@ -57,8 +58,12 @@ const PERM_ROLES = [
 ]
 
 export default function Jobs({ asSection = false }) {
+  // Embedded in /project the page shares one footnote scope with the rest of
+  // the page, so sources can all live in a single block at the bottom.
+  const Wrap = asSection ? Fragment : FootnoteProvider
+
   return (
-    <FootnoteProvider>
+    <Wrap>
     <div className={`max-w-7xl mx-auto px-4 sm:px-6 ${asSection ? "pt-2 pb-10" : "py-12"}`}>
       {!asSection && <PageTitle {...pageMeta['/jobs']} />}
 
@@ -70,7 +75,7 @@ export default function Jobs({ asSection = false }) {
           <h1 className="text-5xl font-display font-bold text-gray-900 tracking-tight mb-3">Job Creation</h1>
         )}
         <p className="text-base text-gray-600 max-w-2xl leading-relaxed">
-          Permanent headcount has been stated three ways. Mayor Davies cited{' '}
+          Permanent headcount has been stated three ways. Grayslake Mayor Elizabeth Davies cited{' '}
           {jobs.permanentDavies.toLocaleString()} to the Chicago Tribune in October 2025. T5 CEO Pete Marin cited
           &ldquo;over {jobs.permanentMarin.toLocaleString()}&rdquo; in July 2026. The Village FAQ reaches{' '}
           {jobs.permanent.toLocaleString()} by estimating {jobs.permanentBasis}, and states that figure holds{' '}
@@ -181,8 +186,8 @@ export default function Jobs({ asSection = false }) {
           </div>
         </FadeIn>
       </div>
-      <FootnoteList />
+      {!asSection && <FootnoteList />}
     </div>
-    </FootnoteProvider>
+    </Wrap>
   )
 }

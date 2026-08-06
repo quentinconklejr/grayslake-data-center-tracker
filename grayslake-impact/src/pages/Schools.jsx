@@ -5,6 +5,7 @@ import SchoolFundingChart from '../components/charts/SchoolFundingChart'
 import SourceCitation from '../components/ui/SourceCitation'
 import FadeIn from '../components/ui/FadeIn'
 import { FootnoteProvider, FootnoteList } from '../components/ui/FootnoteContext'
+import { Fragment } from 'react'
 import { projections } from '../data/projections'
 import { LAST_VERIFIED } from '../data/siteConfig'
 
@@ -24,8 +25,12 @@ const GRAYSLAKE_DISTRICTS = [
 ]
 
 export default function Schools({ asSection = false }) {
+  // Embedded in /project the page shares one footnote scope with the rest of
+  // the page, so sources can all live in a single block at the bottom.
+  const Wrap = asSection ? Fragment : FootnoteProvider
+
   return (
-    <FootnoteProvider>
+    <Wrap>
     <div className={`max-w-7xl mx-auto px-4 sm:px-6 ${asSection ? "pt-2 pb-10" : "py-12"}`}>
       {!asSection && <PageTitle {...pageMeta['/schools']} />}
 
@@ -208,8 +213,8 @@ export default function Schools({ asSection = false }) {
           ))}
         </div>
       </FadeIn>
-      <FootnoteList />
+      {!asSection && <FootnoteList />}
     </div>
-    </FootnoteProvider>
+    </Wrap>
   )
 }

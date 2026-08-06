@@ -254,10 +254,19 @@ export default function SiteMap({ className = 'h-[480px]' }) {
           <span className="w-4 h-px bg-blue-200 shrink-0" aria-hidden="true" />
           <span className="text-xs text-gray-700">Individual lot lines (zoom in)</span>
         </div>
-        <div className="flex items-center gap-2 bg-amber-50 px-3 py-1.5 rounded-lg border border-amber-200">
-          <span className="text-xs text-amber-900">Approved 472-acre boundary: not published as a map</span>
-        </div>
       </div>
+
+      {/* Not a legend entry: there is no 472-acre shape on the map to key. It sat
+          in the legend row and read as a layer the reader could not find. */}
+      <p className="mt-3 flex items-start gap-2 text-xs text-amber-900 bg-amber-50 border border-amber-300 rounded-lg px-3 py-2.5">
+        <svg className="w-4 h-4 shrink-0 mt-px" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
+          <circle cx="8" cy="8" r="6.5" /><path d="M8 5v3.5M8 10.5v.5" strokeLinecap="round" />
+        </svg>
+        <span>
+          The approved 472-acre boundary is <strong className="font-semibold">not drawn here</strong>. The Village has
+          not published it as a mappable shape, so nothing on this map represents it.
+        </span>
+      </p>
 
       <div className="mt-3 flex items-start gap-2">
         {provenance}

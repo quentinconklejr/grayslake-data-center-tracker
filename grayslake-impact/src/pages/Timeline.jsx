@@ -144,8 +144,6 @@ export default function TimelinePage() {
           ))}.
         </p>
       </FadeIn>
-
-      <FootnoteList />
       <PageNext
         to="/questions"
         label="Questions & Answers"
@@ -153,6 +151,9 @@ export default function TimelinePage() {
         color="text-blue-700"
         hoverBorder="hover:border-blue-300"
       />
+
+
+      <FootnoteList />
       <BackToTop />
     </div>
     </FootnoteProvider>

@@ -307,7 +307,6 @@ export default function OpenQuestions() {
           </p>
         </div>
       </FadeIn>
-      <FootnoteList />
       <PageNext
         to="/reporters"
         label="For Reporters"
@@ -315,6 +314,8 @@ export default function OpenQuestions() {
         color="text-violet-700"
         hoverBorder="hover:border-violet-300"
       />
+
+      <FootnoteList />
       <BackToTop />
     </div>
     </FootnoteProvider>

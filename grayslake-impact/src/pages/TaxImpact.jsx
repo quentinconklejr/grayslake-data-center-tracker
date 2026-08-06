@@ -6,6 +6,7 @@ import SchoolFundingChart from '../components/charts/SchoolFundingChart'
 import SourceCitation from '../components/ui/SourceCitation'
 import FadeIn from '../components/ui/FadeIn'
 import { FootnoteProvider, FootnoteList } from '../components/ui/FootnoteContext'
+import { Fragment } from 'react'
 import { projections } from '../data/projections'
 import { figureById } from '../data/keyFigures'
 import { LAST_VERIFIED } from '../data/siteConfig'
@@ -21,8 +22,12 @@ const FEE_DATA = [
 ]
 
 export default function TaxImpact({ asSection = false }) {
+  // Embedded in /project the page shares one footnote scope with the rest of
+  // the page, so sources can all live in a single block at the bottom.
+  const Wrap = asSection ? Fragment : FootnoteProvider
+
   return (
-    <FootnoteProvider>
+    <Wrap>
     <div className={`max-w-7xl mx-auto px-4 sm:px-6 ${asSection ? "pt-2 pb-10" : "py-12"}`}>
       {!asSection && <PageTitle {...pageMeta['/tax-impact']} />}
 
@@ -43,7 +48,7 @@ export default function TaxImpact({ asSection = false }) {
 
       <FadeIn className="grid grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
         <StatCard label="Total Investment"    value={figureById['investment'].value} sub={figureById['investment'].qualifier} badge="Range" accent="blue"  sourceKey="govtech2025" />
-        <StatCard label="Developer Fees"      value="Tens of millions"                             sub="Ballpark, per Mayor Davies"          accent="blue"  sourceKey="govtech2025" />
+        <StatCard label="Developer Fees"      value="Tens of millions"                             sub="Ballpark, per Grayslake's mayor"          accent="blue"  sourceKey="govtech2025" />
         <StatCard label="Meta / DeKalb"        value={`$${meta.totalPropertyTaxBilled2025}M`}      sub="One facility, 2025 tax year"          accent="green" sourceKey="capitolnews2026" />
         <StatCard label="DeKalb → Schools"    value={`${meta.percentToSchoolDistrict}%`}            sub="Avg. across 3 properties, 2021–2024"              accent="green" sourceKey="capitolnews2026" />
       </FadeIn>
@@ -96,7 +101,7 @@ export default function TaxImpact({ asSection = false }) {
             </div>
             <SourceCitation sourceKey="govtech2025" />
           </div>
-          <p className="text-sm text-gray-500 mb-8">Per Mayor Davies (Government Technology) · ballpark figures, still under negotiation</p>
+          <p className="text-sm text-gray-500 mb-8">Per Grayslake Mayor Elizabeth Davies (Government Technology) · ballpark figures, still under negotiation</p>
           <TaxRevenueChart data={FEE_DATA} />
         </FadeIn>
 
@@ -144,8 +149,8 @@ export default function TaxImpact({ asSection = false }) {
           </div>
         </div>
       </FadeIn>
-      <FootnoteList />
+      {!asSection && <FootnoteList />}
     </div>
-    </FootnoteProvider>
+    </Wrap>
   )
 }

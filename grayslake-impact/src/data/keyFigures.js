@@ -72,7 +72,7 @@ export const keyFigures = [
     value: `1,500 – ${jobs.permanent.toLocaleString()}`,
     qualifier: 'upper figure only if all 10M sq ft is built',
     detail:
-      'Mayor Davies cited 1,500 (Oct. 2025). CEO Marin cited “over 1,600” (Jul. 2026). The Village FAQ reaches 1,680 by estimating 50 jobs per 300,000 sq ft, hedges that estimate as subject to change, and excludes construction jobs.',
+      'Grayslake Mayor Elizabeth Davies cited 1,500 (Oct. 2025). T5 chief executive Pete Marin cited “over 1,600” (Jul. 2026). The Village FAQ reaches 1,680 by estimating 50 jobs per 300,000 sq ft, hedges that estimate as subject to change, and excludes construction jobs.',
     sourceKeys: ['villagefaq_archived', 'govtech2025', 'dailyherald_jul2026'],
   },
   {
@@ -88,7 +88,7 @@ export const keyFigures = [
     id: 'investment',
     label: 'Estimated investment',
     value: `$${project.costLow}–${project.costHigh}B`,
-    qualifier: 'Mayor Davies said $8.5B; T5 chief executive Pete Marin said up to $18B',
+    qualifier: 'Grayslake’s mayor said $8.5B; T5’s chief executive said up to $18B',
     detail: 'Two figures from two people, not a range anyone calculated. Grayslake Mayor Elizabeth Davies gave the lower number and T5 chief executive Pete Marin the higher one. No independent valuation has been published.',
     sourceKey: 'govtech2025',
   },

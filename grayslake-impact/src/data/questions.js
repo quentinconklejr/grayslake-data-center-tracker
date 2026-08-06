@@ -51,7 +51,7 @@
     category: 'energy',
     stated: [
       {
-        text: 'The Village FAQ states T5 will pay for all electricity used on the campus "as per State of Illinois electric rate standards and as provided for in electric supply agreements that are already in place between T5 and ComEd," that Illinois places large users in a separate rate class so their demand does not directly affect residential rates, and that the developer funds the supply infrastructure including its own substation with the Village paying nothing. Mayor Davies separately said residents will not see power impacts, and Dan Diorio of the Data Center Coalition said the industry is "fully committed to paying their full cost of service."',
+        text: 'The Village FAQ states T5 will pay for all electricity used on the campus "as per State of Illinois electric rate standards and as provided for in electric supply agreements that are already in place between T5 and ComEd," that Illinois places large users in a separate rate class so their demand does not directly affect residential rates, and that the developer funds the supply infrastructure including its own substation with the Village paying nothing. Grayslake Mayor Elizabeth Davies separately said residents will not see power impacts, and Dan Diorio of the Data Center Coalition said the industry is "fully committed to paying their full cost of service."',
         sourceKeys: ['villagefaq_archived', 'govtech2025'],
       },
     ],
@@ -103,7 +103,7 @@
     category: 'tax',
     stated: [
       {
-        text: 'Mayor Davies described the fee split as approximately 50% to major infrastructure, 25% to special community projects, and 25% to resident cost-control measures. These figures were characterized as ballpark estimates and the final allocation was still under negotiation at the time of the Government Technology article.',
+        text: 'Grayslake Mayor Elizabeth Davies described the fee split as approximately 50% to major infrastructure, 25% to special community projects, and 25% to resident cost-control measures. These figures were characterized as ballpark estimates and the final allocation was still under negotiation at the time of the Government Technology article.',
         sourceKey: 'govtech2025',
       },
       {
@@ -170,7 +170,7 @@
     id: 'jobs',
     question: 'How many jobs will it actually create?',
     category: 'jobs',
-    plain: "Three numbers have been given. Mayor Davies cited 1,500 permanent jobs in October 2025. The T5 chief executive cited \u201cover 1,600\u201d in July 2026. The Village FAQ reaches 1,680, but gets there by assuming 50 jobs for every 300,000 square feet and that the full 10 million square feet actually gets built, and it cautions the estimate may change. Construction work is counted separately and described only as \u201chundreds\u201d of trade jobs.",
+    plain: "Three numbers have been given. Grayslake Mayor Elizabeth Davies cited 1,500 permanent jobs in October 2025. The T5 chief executive cited \u201cover 1,600\u201d in July 2026. The Village FAQ reaches 1,680, but gets there by assuming 50 jobs for every 300,000 square feet and that the full 10 million square feet actually gets built, and it cautions the estimate may change. Construction work is counted separately and described only as \u201chundreds\u201d of trade jobs.",
     stated: [
       {
         text: 'Mayor Elizabeth Davies cited 1,500 permanent positions at full buildout, plus hundreds of construction and trade jobs during development.',

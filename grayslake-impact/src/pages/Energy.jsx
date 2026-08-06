@@ -5,6 +5,7 @@ import EnergyDrawChart from '../components/charts/EnergyDrawChart'
 import SourceCitation from '../components/ui/SourceCitation'
 import FadeIn from '../components/ui/FadeIn'
 import { FootnoteProvider, FootnoteList } from '../components/ui/FootnoteContext'
+import { Fragment } from 'react'
 import EvidenceBlock from '../components/ui/EvidenceBlock'
 import { projections } from '../data/projections'
 import { figureById } from '../data/keyFigures'
@@ -14,8 +15,12 @@ const { project, capacityFigures, capacityNote } = projections
 const buffer = project.securedPowerMW - project.totalCapacityMW
 
 export default function Energy({ asSection = false }) {
+  // Embedded in /project the page shares one footnote scope with the rest of
+  // the page, so sources can all live in a single block at the bottom.
+  const Wrap = asSection ? Fragment : FootnoteProvider
+
   return (
-    <FootnoteProvider>
+    <Wrap>
     <div className={`max-w-7xl mx-auto px-4 sm:px-6 ${asSection ? "pt-2 pb-10" : "py-12"}`}>
       {!asSection && <PageTitle {...pageMeta['/energy']} />}
 
@@ -97,7 +102,7 @@ export default function Energy({ asSection = false }) {
               The Village FAQ states T5 will pay for all electricity used on the campus &ldquo;as per State
               of Illinois electric rate standards and as provided for in electric supply agreements that are
               already in place between T5 and ComEd.&rdquo; Power is bought through a private competitive
-              process and distributed by ComEd. Mayor Davies separately said residents will not see impacts
+              process and distributed by ComEd. Grayslake Mayor Elizabeth Davies separately said residents will not see impacts
               to water or power.<SourceCitation sourceKey="govtech2025" />
             </p>
           </EvidenceBlock>
@@ -190,8 +195,8 @@ export default function Energy({ asSection = false }) {
           </div>
         </FadeIn>
       </div>
-      <FootnoteList />
+      {!asSection && <FootnoteList />}
     </div>
-    </FootnoteProvider>
+    </Wrap>
   )
 }

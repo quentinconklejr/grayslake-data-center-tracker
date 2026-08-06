@@ -19,7 +19,7 @@ export const actions = [
     jurisdiction: "Village of Grayslake",
     actionType: "Land-Use Approval",
     description:
-      "Village approval process concludes. The Village FAQ records it as completed \u201cover an almost eight-month period between 9/23/2024 and 5/6/2025\u201d following a number of public hearings and Village Board meetings. Approvals cover up to 472 acres and no more than 10,100,000 square feet; the FAQ describes this as \u201cseveral individual buildings\u201d without giving a count. Daily Herald reporting puts the count at 18. Mayor Davies cited 1,500 permanent jobs and major tax revenue during this period.",
+      "Village approval process concludes. The Village FAQ records it as completed \u201cover an almost eight-month period between 9/23/2024 and 5/6/2025\u201d following a number of public hearings and Village Board meetings. Approvals cover up to 472 acres and no more than 10,100,000 square feet; the FAQ describes this as \u201cseveral individual buildings\u201d without giving a count. Daily Herald reporting puts the count at 18. Grayslake Mayor Elizabeth Davies cited 1,500 permanent jobs and major tax revenue during this period.",
     outcome: "Approved.",
     sourceIds: ["villagefaq_archived", "dailyherald2026", "govtech2025"],
     status: "complete",

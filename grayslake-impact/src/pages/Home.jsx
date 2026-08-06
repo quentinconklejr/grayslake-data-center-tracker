@@ -130,8 +130,8 @@ export default function Home() {
               </div>
               <p className="text-sm text-gray-500 mt-4 leading-snug">
                 Village FAQ estimate, conditional on all 10 million sq ft being built and hedged as subject
-                to change. Excludes construction jobs. Davies cited 1,500 (Oct. 2025); Marin cited &ldquo;over
-                1,600&rdquo; (Jul. 2026).<SourceCitation sourceKey="villagefaq_archived" />{' '}
+                to change. Excludes construction jobs. Grayslake Mayor Elizabeth Davies cited 1,500 (Oct. 2025);
+                T5 chief executive Pete Marin cited &ldquo;over 1,600&rdquo; (Jul. 2026).<SourceCitation sourceKey="villagefaq_archived" />{' '}
                 <Link to="/project#jobs" className="text-blue-600 hover:text-blue-700 transition-colors">Full range on The Project →</Link>
               </p>
               <CopyKPIButton copyText={figureCopyText('jobs-permanent')} />

@@ -94,6 +94,7 @@ export default function Project() {
   }, [])
 
   return (
+    <FootnoteProvider preload={GLANCE_KEYS}>
     <div>
       <PageTitle {...pageMeta['/project']} />
 
@@ -172,23 +173,34 @@ export default function Project() {
       {SECTIONS.map(({ id, label, Component }) => (
         <section key={id} id={id} aria-label={label} className="scroll-mt-28 border-b border-edge-soft last:border-0">
           <Component asSection />
+          {/* Sources for every section live in one block at the foot of the
+              page, matching the rest of the site. This is the way down to it. */}
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 pb-10 -mt-4">
+            <a
+              href="#sources"
+              className="inline-flex items-center gap-1.5 text-sm font-medium text-blue-700 hover:text-blue-800 transition-colors"
+            >
+              Sources for {label.toLowerCase()}
+              <svg className="w-3.5 h-3.5" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true">
+                <path d="M7 2v10M2.5 7.5L7 12l4.5-4.5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </a>
+          </div>
         </section>
       ))}
 
       {/* Every figure in one table, after the sections rather than in front of
           them. Useful as a reference once you have read the detail. */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <FootnoteProvider preload={GLANCE_KEYS}>
-          <Reveal className="py-12 border-t border-edge-soft">
-            <h2 className="text-3xl font-display font-bold text-gray-900 mb-2">Every figure on one page</h2>
-            <p className="text-base text-gray-600 max-w-2xl mb-7">
-              The same numbers as above, grouped, each with the condition attached to it and a link to its source.
-            </p>
-            <KeyFigureList figures={keyFigures} variant="grouped" groups={GLANCE_GROUPS} />
-            <FootnoteList />
-          </Reveal>
-        </FootnoteProvider>
+        <Reveal className="py-12 border-t border-edge-soft">
+          <h2 className="text-3xl font-display font-bold text-gray-900 mb-2">Every figure on one page</h2>
+          <p className="text-base text-gray-600 max-w-2xl mb-7">
+            The same numbers as above, grouped, each with the condition attached to it and a link to its source.
+          </p>
+          <KeyFigureList figures={keyFigures} variant="grouped" groups={GLANCE_GROUPS} />
+        </Reveal>
       </div>
+
       <PageNext
         to="/timeline"
         label="Event Timeline"
@@ -196,7 +208,14 @@ export default function Project() {
         color="text-cyan-700"
         hoverBorder="hover:border-cyan-300"
       />
+
+      {/* Sources last, as on every other page. */}
+      <div id="sources" className="max-w-7xl mx-auto px-4 sm:px-6 scroll-mt-28">
+        <FootnoteList />
+      </div>
+
       <BackToTop />
     </div>
+    </FootnoteProvider>
   )
 }

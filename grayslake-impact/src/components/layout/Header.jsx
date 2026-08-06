@@ -4,17 +4,6 @@ import { NAV_LINKS } from '../../data/navLinks'
 
 // Maps route paths to human-readable breadcrumb labels.
 // Kept separate from pageMeta so breadcrumbs always match the nav labels.
-const BREADCRUMB_LABELS = {
-  '/project':   'The Project',
-  '/timeline':  'Timeline',
-  '/questions': 'Questions & Answers',
-  '/documents': 'Documents',
-  '/map':       'Map',
-  '/reporters': 'Reporters',
-  '/about':     'About',
-  '/actions':   'Actions',
-}
-
 function NavLink_({ to, label, end }) {
   return (
     <NavLink
@@ -67,8 +56,6 @@ export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const location = useLocation()
 
-  const isHome      = location.pathname === '/'
-  const crumbLabel  = BREADCRUMB_LABELS[location.pathname] ?? null
 
   useEffect(() => {
     setMobileOpen(false)
@@ -129,21 +116,6 @@ export default function Header() {
 
       </div>
 
-      {/* ── Breadcrumb strip — non-home pages only ──────────────────────────── */}
-      {!isHome && crumbLabel && (
-        <div className="border-t border-gray-100 bg-gray-50/60">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 py-1 flex items-center gap-1.5" aria-label="Breadcrumb">
-            <Link
-              to="/"
-              className="text-2xs font-mono text-gray-400 hover:text-blue-600 transition-colors"
-            >
-              Home
-            </Link>
-            <span className="text-2xs text-gray-300 select-none" aria-hidden="true">›</span>
-            <span className="text-2xs font-mono text-gray-700 font-medium">{crumbLabel}</span>
-          </div>
-        </div>
-      )}
 
       {/* ── Mobile menu ──────────────────────────────────────────────────────── */}
       {mobileOpen && (
