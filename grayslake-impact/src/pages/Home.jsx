@@ -5,10 +5,6 @@ import AnimatedNumber from '../components/ui/AnimatedNumber'
 import FadeIn from '../components/ui/FadeIn'
 import CopyKPIButton from '../components/ui/CopyKPIButton'
 import SectionBar from '../components/ui/SectionBar'
-import TaxRevenueChart from '../components/charts/TaxRevenueChart'
-import JobsTimelineChart from '../components/charts/JobsTimelineChart'
-import EnergyDrawChart from '../components/charts/EnergyDrawChart'
-import SchoolFundingChart from '../components/charts/SchoolFundingChart'
 import SiteMap from '../components/map/SiteMap'
 import SourceCitation from '../components/ui/SourceCitation'
 import { FootnoteProvider, FootnoteList } from '../components/ui/FootnoteContext'
@@ -22,54 +18,40 @@ const { project, jobs } = projections
 // "once per session" key — shared so all hero numbers skip together on revisit
 const HERO_SESSION_KEY = 'gdct-hero-animated'
 
-const FACETS = [
+// Homepage impact cards — one sentence each, link to /project for the full analysis.
+// Charts live on /project where readers have chosen to go deeper; the homepage teases.
+const IMPACT_CARDS = [
   {
-    to: '/tax-impact',
-    cat: 'Fiscal Impact',
-    catColor: 'text-blue-600',
-    catBorder: 'border-blue-200',
-    headline: 'Developer fees in the tens of millions.',
-    body: 'Mayor Davies described the developer fee split as approximately 50% to major infrastructure, 25% community projects, and 25% to resident cost-control. He characterized those as ballpark figures still under negotiation. Property tax revenue depends on Lake County assessor valuation. No projection has been released.',
-    chart: <TaxRevenueChart />,
-    chartLabel: 'Developer Fee Allocation',
-    sourceKey: 'govtech2025',
-    textCls: 'lg:col-span-5', chartCls: 'lg:col-span-7', flip: false,
-  },
-  {
-    to: '/jobs',
+    to: '/project#jobs',
     cat: 'Employment',
     catColor: 'text-emerald-700',
-    catBorder: 'border-emerald-200',
+    topBorder: 'border-t-emerald-400',
     headline: `${figureById['jobs-permanent'].value} permanent jobs — ${figureById['jobs-permanent'].qualifier}.`,
-    body: 'The Village FAQ gives no flat headcount. It states that "if all 10 million sq ft of approved data center space is built," an estimated "50 permanent jobs are created for every 300,000 sq ft, or 1,680 permanent jobs" — and hedges that estimate, noting job creation "may change" as operations and technologies do. That footprint is a ceiling the approvals allow, not a commitment. Two lower figures were stated directly by people: Mayor Davies cited 1,500 permanent positions in October 2025, and CEO Pete Marin cited "over 1,600" in July 2026. Construction employment is counted separately: the FAQ excludes it, and it runs to "hundreds" of trade workers through 2027–2029.',
-    chart: <JobsTimelineChart />,
-    chartLabel: 'Permanent vs. Construction Workforce',
     sourceKey: 'govtech2025',
-    textCls: 'lg:col-span-6', chartCls: 'lg:col-span-6', flip: true,
   },
   {
-    to: '/energy',
+    to: '/project#energy',
     cat: 'Energy Draw',
     catColor: 'text-amber-700',
-    catBorder: 'border-amber-200',
+    topBorder: 'border-t-amber-400',
     headline: 'Three capacity figures, three different measurements.',
-    body: 'T5 CEO Pete Marin described 1.55 GW of capacity secured from ComEd, of which 1.2 GW is leasable IT capacity; the campus includes a ComEd-built substation. CLCJAWA\'s utility briefing separately records 1.6 GW available to Phase I. These describe the utility connection and the computing load, not competing estimates of one number. Residential electric rates are not directly affected under Illinois\'s separate utility rate class structure for data centers.',
-    chart: <EnergyDrawChart />,
-    chartLabel: 'Secured Power vs. IT Capacity',
     sourceKey: 'govtech2025',
-    textCls: 'lg:col-span-5', chartCls: 'lg:col-span-7', flip: true,
   },
   {
-    to: '/schools',
+    to: '/project#tax',
+    cat: 'Fiscal Impact',
+    catColor: 'text-blue-600',
+    topBorder: 'border-t-blue-400',
+    headline: 'Developer fees in the tens of millions.',
+    sourceKey: 'govtech2025',
+  },
+  {
+    to: '/project#schools',
     cat: 'School Funding',
     catColor: 'text-violet-600',
-    catBorder: 'border-violet-200',
+    topBorder: 'border-t-violet-400',
     headline: 'In DeKalb, 60.9% went to schools.',
-    body: 'No Grayslake-specific school funding projection has been released. The Meta data center in DeKalb provides the closest Illinois precedent: School District 428 received ~60.9% of Meta\'s taxes across three properties (multi-year data). The 2025 bill for one facility was $31.1M, a figure drawn from a separate dataset.',
-    chart: <SchoolFundingChart />,
-    chartLabel: 'DeKalb / Meta Precedent (2025)',
     sourceKey: 'capitolnews2026',
-    textCls: 'lg:col-span-7', chartCls: 'lg:col-span-5', flip: false,
   },
 ]
 
@@ -310,51 +292,39 @@ export default function Home() {
         </FadeIn>
       </section>
 
-      {/* ── Impact facets ─────────────────────────────────────────────────────── */}
-      <section data-section="Impact Overview" className="max-w-7xl mx-auto px-4 sm:px-6 pb-12">
+      {/* ── Impact overview ───────────────────────────────────────────────────── */}
+      <section data-section="Impact Overview" className="max-w-5xl mx-auto px-4 sm:px-6 pb-16">
 
-        <FadeIn className="mb-12">
+        <FadeIn className="mb-8">
           <p className="text-2xs font-mono text-gray-400 uppercase tracking-[0.2em] mb-3 flex items-center gap-2">
             <span className="inline-block w-4 h-px bg-gray-300" />
             Impact by category
           </p>
           <h2 className="text-2xl font-display font-bold text-gray-900">Four areas of impact.</h2>
           <p className="text-base text-gray-500 mt-2 max-w-xl leading-relaxed">
-            Each section links to a full page with sourced data and methodology.
+            Each card links to the full sourced analysis on The Project page.
           </p>
         </FadeIn>
 
-        <div className="space-y-0">
-          {FACETS.map(({ to, cat, catColor, catBorder, headline, body, chart, chartLabel, sourceKey, textCls, chartCls, flip }, i) => (
-            <FadeIn key={to} delay={Math.min(i * 0.05, 0.15)}>
-              <div data-section={cat} className={`border-t ${catBorder} pt-10 pb-14 grid lg:grid-cols-12 gap-8 lg:gap-12`}>
-
-                <div className={`${textCls}${flip ? ' lg:order-last' : ''}`}>
-                  <p className={`text-2xs font-mono uppercase tracking-[0.2em] mb-3 ${catColor}`}>{cat}</p>
-                  <h3 className="text-xl font-display font-bold text-gray-900 leading-tight mb-5">
-                    {headline}
-                  </h3>
-                  <p className="text-base text-gray-600 leading-relaxed mb-5">{body}</p>
-                  <div className="flex items-center gap-4">
-                    <Link
-                      to={to}
-                      className="text-sm font-medium text-blue-600 hover:text-blue-700 transition-colors flex items-center gap-1.5"
-                    >
-                      View full analysis
-                      <svg className="w-3.5 h-3.5" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5">
-                        <path d="M2 7h10M7 2l5 5-5 5" strokeLinecap="round" strokeLinejoin="round" />
-                      </svg>
-                    </Link>
-                    {sourceKey && <SourceCitation sourceKey={sourceKey} />}
-                  </div>
+        <div className="grid sm:grid-cols-2 gap-4">
+          {IMPACT_CARDS.map(({ to, cat, catColor, topBorder, headline, sourceKey }, i) => (
+            <FadeIn key={to} delay={Math.min(i * 0.05, 0.12)}>
+              <Link
+                to={to}
+                className={`group flex flex-col h-full bg-white border border-gray-200 border-t-4 ${topBorder} rounded-xl px-5 py-5 hover:shadow-sm hover:border-gray-300 transition-all duration-150`}
+              >
+                <p className={`text-2xs font-mono uppercase tracking-[0.2em] mb-3 ${catColor}`}>{cat}</p>
+                <p className="text-sm font-display font-semibold text-gray-900 leading-snug flex-1 mb-4">{headline}</p>
+                <div className="flex items-center justify-between mt-auto">
+                  <span className="text-xs font-medium text-blue-600 group-hover:text-blue-700 flex items-center gap-1 transition-colors">
+                    Full analysis
+                    <svg className="w-3 h-3 group-hover:translate-x-0.5 transition-transform duration-150" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
+                      <path d="M2 6h8M6 2l4 4-4 4" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </span>
+                  {sourceKey && <SourceCitation sourceKey={sourceKey} />}
                 </div>
-
-                <div className={`${chartCls}${flip ? ' lg:order-first' : ''}`}>
-                  <p className="text-2xs font-mono text-gray-400 uppercase tracking-widest mb-5">{chartLabel}</p>
-                  {chart}
-                </div>
-
-              </div>
+              </Link>
             </FadeIn>
           ))}
         </div>
