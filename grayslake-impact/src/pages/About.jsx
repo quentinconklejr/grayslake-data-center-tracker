@@ -1,6 +1,7 @@
 import PageTitle from '../components/ui/PageTitle'
 import { pageMeta } from '../data/pageMeta'
 import FadeIn from '../components/ui/FadeIn'
+import BackToTop from '../components/ui/BackToTop'
 import { LAST_VERIFIED, SITE_CONTACT } from '../data/siteConfig'
 
 export default function About() {
@@ -55,10 +56,14 @@ export default function About() {
 
       <FadeIn>
         <div className="border border-blue-200 rounded-xl px-6 py-6 bg-blue-50/40">
-          <p className="text-xs font-mono text-blue-700 uppercase tracking-widest mb-2">Get in touch</p>
-          <p className="text-sm text-gray-700 leading-relaxed mb-5">
+          <p className="text-xs font-mono text-blue-700 uppercase tracking-widest mb-4">Get in touch</p>
+          <blockquote className="border-l-4 border-blue-400 pl-5 mb-4">
+            <p className="text-lg font-display font-semibold text-gray-800 leading-snug">
+              &ldquo;I&rsquo;d rather fix a mistake than leave it standing.&rdquo;
+            </p>
+          </blockquote>
+          <p className="text-sm text-gray-600 leading-relaxed mb-5">
             If you have a correction or a document this site is missing, please reach out.
-            I'd rather fix a mistake than leave it standing.
           </p>
           <div className="flex flex-col sm:flex-row gap-3">
             <a
@@ -83,6 +88,7 @@ export default function About() {
           </div>
         </div>
       </FadeIn>
+      <BackToTop />
     </div>
   )
 }

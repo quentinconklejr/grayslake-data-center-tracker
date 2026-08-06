@@ -107,7 +107,7 @@ export default function Timeline({ events = [], proportional = false }) {
                 </div>
               )}
               <div
-                className={`relative flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-4 group py-4 pl-9 ${
+                className={`relative flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-4 group py-4 pl-9 rounded-lg hover:bg-gray-50/60 transition-colors duration-100 ${
                   !proportional && i < events.length - 1 ? 'border-b border-gray-100' : ''
                 }`}
               >
@@ -119,11 +119,11 @@ export default function Timeline({ events = [], proportional = false }) {
                 >
                   {projected ? (
                     <span
-                      className="block w-3 h-3 rounded-full bg-white"
-                      style={{ border: '1.5px dashed #9ca3af' }}
+                      className="block w-3.5 h-3.5 rounded-full bg-white"
+                      style={{ border: '2px dashed #9ca3af' }}
                     />
                   ) : (
-                    <span className={`block w-2.5 h-2.5 rounded-full ${cat.dot}`} />
+                    <span className={`block w-3.5 h-3.5 rounded-full ${cat.dot}`} />
                   )}
                 </div>
 
@@ -133,7 +133,7 @@ export default function Timeline({ events = [], proportional = false }) {
                 </time>
 
                 {/* Category badge — fixed width so headline text aligns regardless of category length */}
-                <span className={`self-start shrink-0 inline-flex w-24 justify-center px-1.5 py-0.5 rounded-sm border text-2xs font-mono font-semibold uppercase tracking-widest ${cat.badge}`}>
+                <span className={`self-start shrink-0 inline-flex w-24 justify-center px-1.5 py-1 rounded-sm border text-2xs font-mono font-semibold uppercase tracking-widest ${cat.badge}`}>
                   {event.category}
                 </span>
 

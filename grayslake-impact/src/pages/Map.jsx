@@ -4,6 +4,7 @@ import SiteMap from '../components/map/SiteMap'
 import parcels from '../data/parcels.geojson'
 import outline from '../data/parcelsOutline.geojson'
 import FadeIn from '../components/ui/FadeIn'
+import BackToTop from '../components/ui/BackToTop'
 import { FootnoteProvider, FootnoteList } from '../components/ui/FootnoteContext'
 import { LAST_VERIFIED } from '../data/siteConfig'
 import SourceCitation from '../components/ui/SourceCitation'
@@ -56,6 +57,7 @@ export default function MapPage() {
         </div>
       </FadeIn>
       <FootnoteList />
+      <BackToTop />
     </div>
     </FootnoteProvider>
   )

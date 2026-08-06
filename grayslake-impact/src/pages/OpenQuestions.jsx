@@ -26,12 +26,12 @@ for (const q of questions) {
 }
 
 const CAT_META = {
-  water:   { label: 'Water',   active: 'text-sky-700 bg-sky-50 border-sky-300',          inactive: 'text-gray-500 border-gray-200 hover:text-sky-700 hover:border-sky-300' },
-  energy:  { label: 'Energy',  active: 'text-amber-700 bg-amber-50 border-amber-300',    inactive: 'text-gray-500 border-gray-200 hover:text-amber-700 hover:border-amber-300' },
-  scale:   { label: 'Scale',   active: 'text-violet-700 bg-violet-50 border-violet-300', inactive: 'text-gray-500 border-gray-200 hover:text-violet-700 hover:border-violet-300' },
-  tax:     { label: 'Tax',     active: 'text-emerald-700 bg-emerald-50 border-emerald-300', inactive: 'text-gray-500 border-gray-200 hover:text-emerald-700 hover:border-emerald-300' },
-  jobs:    { label: 'Jobs',    active: 'text-blue-700 bg-blue-50 border-blue-300',       inactive: 'text-gray-500 border-gray-200 hover:text-blue-700 hover:border-blue-300' },
-  process: { label: 'Process', active: 'text-red-700 bg-red-50 border-red-300',          inactive: 'text-gray-500 border-gray-200 hover:text-red-700 hover:border-red-300' },
+  water:   { label: 'Water',   accent: 'border-l-sky-400',     active: 'text-sky-700 bg-sky-50 border-sky-300',          inactive: 'text-gray-500 border-gray-200 hover:text-sky-700 hover:border-sky-300' },
+  energy:  { label: 'Energy',  accent: 'border-l-amber-400',   active: 'text-amber-700 bg-amber-50 border-amber-300',    inactive: 'text-gray-500 border-gray-200 hover:text-amber-700 hover:border-amber-300' },
+  scale:   { label: 'Scale',   accent: 'border-l-violet-400',  active: 'text-violet-700 bg-violet-50 border-violet-300', inactive: 'text-gray-500 border-gray-200 hover:text-violet-700 hover:border-violet-300' },
+  tax:     { label: 'Tax',     accent: 'border-l-emerald-400', active: 'text-emerald-700 bg-emerald-50 border-emerald-300', inactive: 'text-gray-500 border-gray-200 hover:text-emerald-700 hover:border-emerald-300' },
+  jobs:    { label: 'Jobs',    accent: 'border-l-blue-400',    active: 'text-blue-700 bg-blue-50 border-blue-300',       inactive: 'text-gray-500 border-gray-200 hover:text-blue-700 hover:border-blue-300' },
+  process: { label: 'Process', accent: 'border-l-red-400',     active: 'text-red-700 bg-red-50 border-red-300',          inactive: 'text-gray-500 border-gray-200 hover:text-red-700 hover:border-red-300' },
 }
 
 // dotCls values are rendered on an aria-hidden bullet that repeats the
@@ -225,7 +225,7 @@ export default function OpenQuestions() {
             type="button"
             aria-pressed={activeCategory === 'all'}
             onClick={() => handleCategoryChange('all')}
-            className={`inline-flex items-center px-2.5 py-1 rounded-sm border text-2xs font-mono font-semibold uppercase tracking-widest transition-colors duration-150 ${
+            className={`inline-flex items-center px-2.5 py-1.5 rounded-sm border text-2xs font-mono font-semibold uppercase tracking-widest transition-colors duration-150 ${
               activeCategory === 'all'
                 ? 'text-gray-900 bg-gray-100 border-gray-300'
                 : 'text-gray-500 border-gray-200 hover:text-gray-800 hover:border-gray-300'
@@ -241,7 +241,7 @@ export default function OpenQuestions() {
                 type="button"
                 aria-pressed={activeCategory === cat}
                 onClick={() => handleCategoryChange(cat)}
-                className={`inline-flex items-center px-2.5 py-1 rounded-sm border text-2xs font-mono font-semibold uppercase tracking-widest transition-colors duration-150 ${
+                className={`inline-flex items-center px-2.5 py-1.5 rounded-sm border text-2xs font-mono font-semibold uppercase tracking-widest transition-colors duration-150 ${
                   activeCategory === cat ? meta.active : meta.inactive
                 }`}
               >
@@ -275,10 +275,12 @@ export default function OpenQuestions() {
               />
             ) : (
               <section aria-labelledby={`q-${q.id}`}>
-                <h2 id={`q-${q.id}`} className="text-xl font-display font-bold text-gray-900 mb-3">
-                  {q.question}
-                </h2>
-                <p className="text-base text-gray-700 leading-relaxed">{q.plain}</p>
+                <div className={`pl-5 border-l-4 mb-4 ${(CAT_META[q.category] ?? CAT_META.water).accent}`}>
+                  <h2 id={`q-${q.id}`} className="text-xl font-display font-bold text-gray-900 mb-2">
+                    {q.question}
+                  </h2>
+                  <p className="text-base text-gray-700 leading-relaxed">{q.plain}</p>
+                </div>
                 <button
                   type="button"
                   onClick={() => {

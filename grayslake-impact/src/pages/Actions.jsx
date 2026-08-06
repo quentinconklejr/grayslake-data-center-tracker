@@ -145,7 +145,7 @@ export default function Actions() {
             type="button"
             aria-pressed={juriFilter === 'all'}
             onClick={() => setJuriFilter('all')}
-            className={`inline-flex items-center px-2.5 py-1 rounded-sm border text-2xs font-mono font-semibold uppercase tracking-widest transition-colors duration-150 ${
+            className={`inline-flex items-center px-2.5 py-1.5 rounded-sm border text-2xs font-mono font-semibold uppercase tracking-widest transition-colors duration-150 ${
               juriFilter === 'all'
                 ? 'text-gray-900 bg-gray-100 border-gray-300'
                 : 'text-gray-500 border-gray-200 hover:text-gray-800 hover:border-gray-300'
@@ -162,7 +162,7 @@ export default function Actions() {
                 type="button"
                 aria-pressed={juriFilter === j}
                 onClick={() => setJuriFilter(j)}
-                className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-sm border text-2xs font-mono font-semibold uppercase tracking-widest transition-colors duration-150 ${
+                className={`inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-sm border text-2xs font-mono font-semibold uppercase tracking-widest transition-colors duration-150 ${
                   juriFilter === j ? colors.active : colors.inactive
                 }`}
               >
@@ -182,7 +182,7 @@ export default function Actions() {
             type="button"
             aria-pressed={typeFilter === 'all'}
             onClick={() => setTypeFilter('all')}
-            className={`inline-flex items-center px-2.5 py-1 rounded-sm border text-2xs font-mono font-semibold uppercase tracking-widest transition-colors duration-150 ${
+            className={`inline-flex items-center px-2.5 py-1.5 rounded-sm border text-2xs font-mono font-semibold uppercase tracking-widest transition-colors duration-150 ${
               typeFilter === 'all'
                 ? 'text-gray-900 bg-gray-100 border-gray-300'
                 : 'text-gray-500 border-gray-200 hover:text-gray-800 hover:border-gray-300'
@@ -196,7 +196,7 @@ export default function Actions() {
               type="button"
               aria-pressed={typeFilter === t}
               onClick={() => setTypeFilter(t)}
-              className={`inline-flex items-center px-2.5 py-1 rounded-sm border text-2xs font-mono font-semibold uppercase tracking-widest transition-colors duration-150 ${
+              className={`inline-flex items-center px-2.5 py-1.5 rounded-sm border text-2xs font-mono font-semibold uppercase tracking-widest transition-colors duration-150 ${
                 typeFilter === t
                   ? 'text-gray-900 bg-gray-100 border-gray-300'
                   : 'text-gray-500 border-gray-200 hover:text-gray-800 hover:border-gray-300'

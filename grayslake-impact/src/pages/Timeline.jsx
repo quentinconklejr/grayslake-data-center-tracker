@@ -70,7 +70,7 @@ export default function TimelinePage() {
         <div className="flex flex-wrap gap-2">
           <button
             onClick={() => setActiveCategory('all')}
-            className={`inline-flex items-center px-2.5 py-1 rounded-sm border text-2xs font-mono font-semibold uppercase tracking-widest transition-all duration-150 ${
+            className={`inline-flex items-center px-2.5 py-1.5 rounded-sm border text-2xs font-mono font-semibold uppercase tracking-widest transition-all duration-150 ${
               activeCategory === 'all'
                 ? 'text-gray-900 bg-gray-100 border-gray-300'
                 : 'text-gray-500 border-gray-200 hover:text-gray-800 hover:border-gray-300'
@@ -85,7 +85,7 @@ export default function TimelinePage() {
               <button
                 key={key}
                 onClick={() => handleCategory(key)}
-                className={`inline-flex items-center px-2.5 py-1 rounded-sm border text-2xs font-mono font-semibold uppercase tracking-widest transition-all duration-150 ${isActive ? active : inactive}`}
+                className={`inline-flex items-center px-2.5 py-1.5 rounded-sm border text-2xs font-mono font-semibold uppercase tracking-widest transition-all duration-150 ${isActive ? active : inactive}`}
               >
                 {label} ({count})
               </button>
