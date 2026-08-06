@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import PageTitle from '../components/ui/PageTitle'
+import PageNext from '../components/ui/PageNext'
 import { pageMeta } from '../data/pageMeta'
 import AnimatedNumber from '../components/ui/AnimatedNumber'
 import FadeIn from '../components/ui/FadeIn'
@@ -332,6 +333,13 @@ export default function Home() {
       <div className="max-w-5xl mx-auto px-4 sm:px-6">
         <FootnoteList />
       </div>
+      <PageNext
+        to="/project"
+        label="The Project"
+        desc="Every figure with its qualifier and source — energy, jobs, taxes, and school funding in one place."
+        color="text-blue-700"
+        hoverBorder="hover:border-blue-300"
+      />
     </div>
     </FootnoteProvider>
   )

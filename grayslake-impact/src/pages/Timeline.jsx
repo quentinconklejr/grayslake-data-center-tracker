@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import PageTitle from '../components/ui/PageTitle'
 import BackToTop from '../components/ui/BackToTop'
+import PageNext from '../components/ui/PageNext'
 import { pageMeta } from '../data/pageMeta'
 import TimelineUI from '../components/ui/Timeline'
 import FadeIn from '../components/ui/FadeIn'
@@ -144,6 +145,13 @@ export default function TimelinePage() {
       </FadeIn>
 
       <FootnoteList />
+      <PageNext
+        to="/questions"
+        label="Questions & Answers"
+        desc="What's settled, what's disputed, and what has no public answer yet — water, energy, jobs, taxes, and process."
+        color="text-blue-700"
+        hoverBorder="hover:border-blue-300"
+      />
       <BackToTop />
     </div>
     </FootnoteProvider>

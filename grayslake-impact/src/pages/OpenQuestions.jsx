@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import PageTitle from '../components/ui/PageTitle'
+import PageNext from '../components/ui/PageNext'
 import { pageMeta } from '../data/pageMeta'
 import ItemCitations from '../components/ui/ItemCitations'
 import { keysOf } from '../lib/citationKeys'
@@ -303,6 +304,13 @@ export default function OpenQuestions() {
         </div>
       </FadeIn>
       <FootnoteList />
+      <PageNext
+        to="/reporters"
+        label="For Reporters"
+        desc="Key figures with citations ready to copy, plus a press contacts reference for story inquiries."
+        color="text-violet-700"
+        hoverBorder="hover:border-violet-300"
+      />
     </div>
     </FootnoteProvider>
   )

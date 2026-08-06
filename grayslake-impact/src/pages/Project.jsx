@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import PageTitle from '../components/ui/PageTitle'
 import BackToTop from '../components/ui/BackToTop'
+import PageNext from '../components/ui/PageNext'
 import { pageMeta } from '../data/pageMeta'
 import FadeIn from '../components/ui/FadeIn'
 import KeyFigureList from '../components/ui/KeyFigureList'
@@ -114,6 +115,13 @@ export default function Project() {
           <Component asSection />
         </section>
       ))}
+      <PageNext
+        to="/timeline"
+        label="Event Timeline"
+        desc="Key milestones — approvals, legal challenges, construction activity, and opposition — sourced and in order."
+        color="text-cyan-700"
+        hoverBorder="hover:border-cyan-300"
+      />
       <BackToTop />
     </div>
   )
