@@ -53,9 +53,9 @@ export const pageMeta = {
     ogImage: '/og/timeline.png',
   },
   '/questions': {
-    title: 'Open Questions',
+    title: 'Questions & Answers',
     description:
-      'Unresolved disputes and data gaps around T5 @ Chicago IV: water sourcing, energy rate impacts, campus scale, tax projections, and approval process adequacy.',
+      'Plain-language answers on water, energy, jobs, taxes and the approval process for T5 @ Chicago IV — with sourced evidence for what is settled, disputed, and not yet public.',
     ogImage: '/og/questions.png',
   },
   '/map': {

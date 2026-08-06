@@ -163,8 +163,8 @@ export default function OpenQuestions() {
       <PageTitle {...pageMeta['/questions']} />
 
       <FadeIn className="mb-10 pb-8 border-b border-gray-200">
-        <p className="text-2xs font-mono text-blue-700 uppercase tracking-[0.2em] mb-3">Unresolved Issues</p>
-        <h1 className="text-4xl font-display font-bold text-gray-900 tracking-tight mb-3">Open Questions</h1>
+        <p className="text-2xs font-mono text-blue-700 uppercase tracking-[0.2em] mb-3">Questions &amp; Answers</p>
+        <h1 className="text-4xl font-display font-bold text-gray-900 tracking-tight mb-3">What&rsquo;s Settled, What&rsquo;s Not</h1>
         <p className="text-base text-gray-600 max-w-2xl leading-relaxed">
           What is settled, what is disputed and what has no public answer yet &mdash; on water, electricity,
           scale, jobs, taxes and the approval process. Start with the plain-language answer; switch to
