@@ -19,7 +19,7 @@ export const EVIDENCE = {
     bg:      'bg-amber-50/60',
     labelCls: 'text-amber-700',
     tag:     'Disputed',
-    desc:    'Contested by critics, advocates, or independent research',
+    desc:    'Contested by critics, advocates, or independent researchers',
     icon: (
       <svg className="w-3 h-3 shrink-0" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5">
         <path d="M6 1.5l4.5 8H1.5L6 1.5z" strokeLinejoin="round" />

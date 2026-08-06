@@ -13,7 +13,7 @@ export const SITE_ORIGIN = 'https://grayslakedatacentertracker.org'
 export const pageMeta = {
   '/': {
     description:
-      'A civic data dashboard tracking the T5 @ Chicago IV hyperscale AI data center development in Grayslake, Illinois — jobs, taxes, energy, water, and legal challenges, all sourced.',
+      'Public-records tracker for T5 @ Chicago IV — a hyperscale data center under construction in Grayslake, Illinois. Every claim linked to its source.',
     ogImage: '/og/home.png',
   },
   '/project': {
@@ -85,7 +85,7 @@ export const pageMeta = {
   '/actions': {
     title: 'Jurisdictional Actions',
     description:
-      'Cross-jurisdictional action tracker for T5 @ Chicago IV — filterable record of permit applications, legal challenges, resolutions, and policy changes across Village, County, State, and Federal bodies.',
+      'Permit applications, legal challenges, resolutions, and policy changes for T5 @ Chicago IV, filterable by jurisdiction and action type.',
     ogImage: '/og/actions.png',
   },
 }

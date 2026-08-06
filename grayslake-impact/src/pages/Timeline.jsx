@@ -50,7 +50,7 @@ export default function TimelinePage() {
         <p className="text-xs font-mono text-blue-600 uppercase tracking-[0.2em] mb-3">Project History</p>
         <h1 className="text-4xl sm:text-5xl font-display font-bold text-gray-900 tracking-tight mb-4">How We Got Here</h1>
         <p className="text-lg text-gray-700 max-w-2xl leading-relaxed mb-2">
-          From first vote to active construction — a sourced record of every key approval, lawsuit, opposition milestone, and policy change.
+          A sourced record of every key approval, lawsuit, opposition milestone, and policy change.
         </p>
         <p className="text-base text-gray-600 max-w-2xl leading-relaxed">
           Entries are cited. Solid markers are confirmed events; hollow markers are projected milestones from developer filings.

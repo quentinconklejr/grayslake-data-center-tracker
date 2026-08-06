@@ -121,7 +121,7 @@ export default function Project() {
       <PageNext
         to="/timeline"
         label="Event Timeline"
-        desc="Key milestones — approvals, legal challenges, construction activity, and opposition — sourced and in order."
+        desc="Every approval, lawsuit, construction event, and opposition milestone — sourced, in order."
         color="text-cyan-700"
         hoverBorder="hover:border-cyan-300"
       />

@@ -46,7 +46,7 @@ export default function Reporters() {
       <FadeIn className="mb-14">
         <p className="text-2xs font-mono text-gray-400 uppercase tracking-widest mb-2">Contacts</p>
         <p className="text-xs text-gray-500 mb-5">
-          Contact information comes from source documents on file. Where none appears for an organization, it is noted below.
+          Contact information comes from source documents on file.
         </p>
         <div className="space-y-4">
           {contacts.map(c => (

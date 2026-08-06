@@ -122,7 +122,7 @@ export default function Actions() {
       <PageTitle {...pageMeta['/actions']} />
 
       <FadeIn className="mb-10 pb-8 border-b border-gray-200">
-        <p className="text-2xs font-mono text-blue-600/60 uppercase tracking-[0.2em] mb-3">Cross-Jurisdictional Record</p>
+        <p className="text-2xs font-mono text-blue-600/60 uppercase tracking-[0.2em] mb-3">Regulatory actions</p>
         <h1 className="text-4xl font-display font-bold text-gray-900 tracking-tight mb-3">Jurisdictional Actions</h1>
         <p className="text-base text-gray-600 max-w-2xl leading-relaxed">
           Approvals, permit applications, legal challenges, and policy actions across the municipal,

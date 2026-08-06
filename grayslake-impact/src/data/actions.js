@@ -32,7 +32,7 @@ export const actions = [
     actionType: "Official Statement",
     description:
       "Village FAQ updated as of June 5, 2026, stating the Village can no longer respond to further questions about the project due to pending litigation. The Daily Herald quoted the notice directly. The FAQ document itself became unreachable by August 5, 2026.",
-    outcome: "Village entered litigation posture; no further Q&A responses.",
+    outcome: "Village stopped responding to project questions; litigation pending.",
     sourceIds: ["dailyherald2026"],
     status: "complete",
     lastVerified: "June 5, 2026",
@@ -68,7 +68,7 @@ export const actions = [
     actionType: "Permit Application",
     description:
       "T5 applied for a Section 404 permit to fill approximately 15.75 acres of wetlands on the site. A September 2025 Stormwater Management Commission letter reportedly indicates some of those wetlands may fall under US Army Corps jurisdiction.",
-    outcome: "Application filed June 2026; indefinitely suspended by T5 on July 31, 2026 (see below).",
+    outcome: "Application filed June 2026; indefinitely suspended by T5 on July 31, 2026.",
     sourceIds: ["chitrib_june2026", "dailyherald_jul2026"],
     status: "complete",
     lastVerified: "Aug 5, 2026",

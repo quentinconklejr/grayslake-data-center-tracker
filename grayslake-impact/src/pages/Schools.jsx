@@ -46,7 +46,7 @@ export default function Schools({ asSection = false }) {
       </FadeIn>
 
       <FadeIn className="mb-10">
-        <p className="text-xs font-mono text-gray-500 uppercase tracking-widest mb-4">Official Projections — Not Confirmed Outcomes</p>
+        <p className="text-xs font-mono text-gray-500 uppercase tracking-widest mb-4">Official projections</p>
         <div className="grid md:grid-cols-2 gap-4">
           <div className="glass-card p-6">
             <p className="text-2xs font-mono text-blue-600 uppercase tracking-widest mb-2">Mayor of Grayslake</p>
@@ -86,7 +86,7 @@ export default function Schools({ asSection = false }) {
               <circle cx="8" cy="8" r="7" /><path d="M8 7v4M8 5.5v.5" strokeLinecap="round" />
             </svg>
             <div>
-              <p className="text-sm font-display font-semibold text-blue-800 mb-1.5">Comparable Case Study — Illinois Precedent for Distribution Pattern</p>
+              <p className="text-sm font-display font-semibold text-blue-800 mb-1.5">Illinois comparison: DeKalb / Meta</p>
               <p className="text-base text-gray-600 leading-relaxed">
                 The data below comes from the Meta data center in DeKalb, IL. Two figures are cited:
                 the 2025 property tax bill for one Meta facility ($31.1M), and School District 428's
@@ -146,7 +146,6 @@ export default function Schools({ asSection = false }) {
           </dl>
 
           <div className="bg-emerald-50 border border-emerald-200 rounded-xl px-5 py-4">
-            <p className="text-2xs font-mono text-emerald-700 uppercase tracking-widest mb-2">Key Takeaway</p>
             <p className="text-base text-gray-600 leading-relaxed">
               In DeKalb, school districts received about 60.9% of Meta&rsquo;s property taxes across
               three properties. What that means for Grayslake depends on the Lake County Assessor&rsquo;s
@@ -158,7 +157,7 @@ export default function Schools({ asSection = false }) {
 
       <FadeIn>
         <div className="bg-amber-50 border border-amber-200 rounded-xl px-6 py-5 mb-8">
-          <p className="text-2xs font-mono text-amber-700 uppercase tracking-widest mb-2">What's Still Needed for a Verified Figure</p>
+          <p className="text-2xs font-mono text-amber-700 uppercase tracking-widest mb-2">What's still missing</p>
           <p className="text-base text-gray-600 leading-relaxed">
             The Village FAQ states the development agreements provide no financial incentives to T5.
             The official projections above are village officials' statements, not independently
@@ -169,7 +168,7 @@ export default function Schools({ asSection = false }) {
       </FadeIn>
 
       <FadeIn>
-        <p className="text-xs font-mono text-gray-500 uppercase tracking-widest mb-5">Grayslake Districts That Would Receive Revenue</p>
+        <p className="text-xs font-mono text-gray-500 uppercase tracking-widest mb-5">Grayslake districts listed in the Village FAQ</p>
         <div className="mb-6 border border-gray-300 rounded-sm bg-white overflow-hidden shadow-sm">
           <div className="bg-gray-100 border-b border-gray-300 px-4 py-2.5 flex items-center justify-between gap-3">
             <div>

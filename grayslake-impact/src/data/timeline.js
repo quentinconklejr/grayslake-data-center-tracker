@@ -114,7 +114,7 @@ export const timelineEvents = [
   {
     date: "2027-Q4",
     title: "First building projected online",
-    description: "First phase expected to deliver 60MW of initial IT capacity.",
+    description: "T5 projects the first building at 60 MW of IT capacity.",
     category: "construction",
     sourceKey: "dcd2026",
   },

@@ -137,8 +137,7 @@ export default function Jobs({ asSection = false }) {
       <div className="grid md:grid-cols-2 gap-4">
         <FadeIn className="glass-card p-6">
           <div className="flex items-center justify-between mb-5">
-            <p className="text-xs font-mono text-gray-500 uppercase tracking-widest">Typical Permanent Roles</p>
-            <span className="text-2xs text-gray-400">Industry standard</span>
+            <p className="text-xs font-mono text-gray-500 uppercase tracking-widest">Typical permanent roles</p>
           </div>
           <div className="space-y-0">
             {PERM_ROLES.map(([role, desc]) => (

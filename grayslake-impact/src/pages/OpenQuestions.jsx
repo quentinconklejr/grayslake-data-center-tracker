@@ -168,8 +168,7 @@ export default function OpenQuestions() {
         <h1 className="text-4xl font-display font-bold text-gray-900 tracking-tight mb-3">What&rsquo;s Settled, What&rsquo;s Not</h1>
         <p className="text-base text-gray-600 max-w-2xl leading-relaxed">
           What is settled, what is disputed and what has no public answer yet &mdash; on water, electricity,
-          scale, jobs, taxes and the approval process. Start with the plain-language answer; switch to
-          full detail for the sourced evidence behind it.
+          scale, jobs, taxes and the approval process. Start with the plain-language answer; switch to full detail for the evidence.
         </p>
 
         <div className="mt-5 inline-flex rounded-lg border border-gray-300 p-0.5 bg-gray-50" role="group" aria-label="Level of detail">

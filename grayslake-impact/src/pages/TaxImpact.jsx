@@ -44,7 +44,7 @@ export default function TaxImpact({ asSection = false }) {
       <FadeIn className="grid grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
         <StatCard label="Total Investment"    value={figureById['investment'].value} sub={figureById['investment'].qualifier} badge="Range" accent="blue"  sourceKey="govtech2025" />
         <StatCard label="Developer Fees"      value="Tens of millions"                             sub="Ballpark, per Mayor Davies"          accent="blue"  sourceKey="govtech2025" />
-        <StatCard label="Meta / DeKalb Ref."  value={`$${meta.totalPropertyTaxBilled2025}M`}      sub="One facility, 2025 tax year"          accent="green" sourceKey="capitolnews2026" />
+        <StatCard label="Meta / DeKalb"        value={`$${meta.totalPropertyTaxBilled2025}M`}      sub="One facility, 2025 tax year"          accent="green" sourceKey="capitolnews2026" />
         <StatCard label="DeKalb → Schools"    value={`${meta.percentToSchoolDistrict}%`}            sub="Avg. across 3 properties, 2021–2024"              accent="green" sourceKey="capitolnews2026" />
       </FadeIn>
 
@@ -108,7 +108,7 @@ export default function TaxImpact({ asSection = false }) {
             </div>
             <SourceCitation sourceKey="capitolnews2026" />
           </div>
-          <p className="text-sm text-gray-500 mb-6">Closest publicly documented Illinois data center tax case</p>
+          <p className="text-sm text-gray-500 mb-6">The closest Illinois precedent on file</p>
 
           <SchoolFundingChart />
 
@@ -133,7 +133,7 @@ export default function TaxImpact({ asSection = false }) {
         <div className="bg-amber-50 border border-amber-200 rounded-xl px-6 py-5">
           <div className="flex items-start justify-between gap-4">
             <div>
-              <p className="text-2xs font-mono text-amber-700 uppercase tracking-widest mb-2">State Incentive Program — Status Change</p>
+              <p className="text-2xs font-mono text-amber-700 uppercase tracking-widest mb-2">State incentive program</p>
               <p className="text-base text-gray-600 leading-relaxed">
                 {incentive.statusChange}. The program had required ${incentive.minInvestmentRequired}M+ investment over
                 60 months and offered a {incentive.constructionWageTaxCredit}% construction wage tax credit for projects

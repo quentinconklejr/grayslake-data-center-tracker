@@ -333,7 +333,7 @@ export default function Home() {
       <PageNext
         to="/project"
         label="The Project"
-        desc="Every figure with its qualifier and source — energy, jobs, taxes, and school funding in one place."
+        desc="Energy, jobs, taxes, and school funding — every figure with its source and condition."
         color="text-blue-700"
         hoverBorder="hover:border-blue-300"
       />
