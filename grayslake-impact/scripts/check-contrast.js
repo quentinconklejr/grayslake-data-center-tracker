@@ -66,6 +66,13 @@ function walk(dir, out = []) {
   return out
 }
 const files = walk(join(ROOT, 'src'))
+
+// Files that paint onto a dark surface. Their text is checked against that
+// surface, not white, so light-on-dark stops reporting as a failure.
+const DARK_SURFACE = /className="[^"]*bg-(?:gray|slate)-(?:800|900|950)\b/
+const darkFiles = new Set(
+  files.filter(f => DARK_SURFACE.test(readFileSync(f, 'utf8'))).map(f => f.replace(ROOT + '/', '')),
+)
 const usage = new Map() // token -> Set of files
 for (const f of files) {
   const src = readFileSync(f, 'utf8')
@@ -110,8 +117,9 @@ for (const [token, where] of [...usage].sort()) {
     const need = 4.5 // all body/caption text on this site is < 24px
     const pass = r >= need
     rows.push({ token, hex, bg: bgName, r: +r.toFixed(2), need, pass, small, files: [...where].length })
-    if (!pass && (bgName === 'white' || bgName === 'gray-50')) {
-      fails.push({ token, hex, bg: bgName, r: +r.toFixed(2), small, where: [...where] })
+    const lightOnly = [...where].filter(w => !darkFiles.has(w))
+    if (!pass && (bgName === 'white' || bgName === 'gray-50') && lightOnly.length) {
+      fails.push({ token, hex, bg: bgName, r: +r.toFixed(2), small, where: lightOnly })
     }
   }
 }

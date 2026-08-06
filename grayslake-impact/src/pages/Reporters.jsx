@@ -15,14 +15,14 @@ import AudienceBreadcrumb from '../components/ui/AudienceBreadcrumb'
 export default function Reporters() {
   return (
     <FootnoteProvider>
-    <div className="max-w-3xl mx-auto px-4 sm:px-6 py-12">
+    <div className="max-w-5xl mx-auto px-4 sm:px-6 py-12">
       <AudienceBreadcrumb current="Reporters" />
       <PageTitle {...pageMeta['/reporters']} />
 
       <FadeIn className="mb-10 pb-8 border-b border-gray-200">
-        <p className="text-2xs font-mono text-blue-600/60 uppercase tracking-[0.2em] mb-3">Press Reference</p>
-        <h1 className="text-4xl font-display font-bold text-gray-900 tracking-tight mb-3">Key figures and contacts</h1>
-        <p className="text-base text-gray-600 max-w-2xl leading-relaxed">
+        <p className="text-2xs font-mono text-blue-600/60 uppercase tracking-[0.18em] mb-4">Press Reference</p>
+        <h1 className="text-5xl font-display font-bold text-gray-900 tracking-tight mb-3">Key figures and contacts</h1>
+        <p className="text-lg text-gray-600 max-w-3xl leading-relaxed">
           Sourced figures from public documents and press coverage on T5 @ Chicago IV.
           Every number links to its primary source. See{' '}
           <Link to="/documents" className="text-blue-600 hover:text-blue-700 transition-colors">the Documents page</Link>
@@ -33,7 +33,7 @@ export default function Reporters() {
 
       {/* Key figures — rendered from the canonical source, never retyped */}
       <FadeIn className="mb-14">
-        <p className="text-2xs font-mono text-gray-600 uppercase tracking-widest mb-5">Key Figures</p>
+        <p className="text-2xs font-mono text-gray-600 uppercase tracking-[0.15em] mb-6">Key Figures</p>
         <KeyFigureList figures={keyFigures} copyable />
         <p className="text-xs text-gray-600 mt-3 leading-relaxed">
           Each figure is shown with the condition attached to it. Several are conditional or

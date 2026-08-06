@@ -6,13 +6,13 @@ import { LAST_VERIFIED, SITE_CONTACT } from '../data/siteConfig'
 
 export default function About() {
   return (
-    <div className="max-w-3xl mx-auto px-4 sm:px-6 py-12">
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 py-12">
       <PageTitle {...pageMeta['/about']} />
 
       <FadeIn className="mb-10 pb-8 border-b border-gray-200">
-        <p className="text-xs font-mono text-blue-600 uppercase tracking-[0.2em] mb-3">About This Site</p>
-        <h1 className="text-4xl font-display font-bold text-gray-900 tracking-tight mb-3">Why I Built This</h1>
-        <p className="text-base text-gray-600 max-w-2xl leading-relaxed">
+        <p className="text-xs font-mono text-blue-600 uppercase tracking-[0.18em] mb-4">About This Site</p>
+        <h1 className="text-5xl font-display font-bold text-gray-900 tracking-tight mb-3">Why I Built This</h1>
+        <p className="text-lg text-gray-600 max-w-3xl leading-relaxed">
           A resident-built resource. No affiliation with T5 Data Centers or the Village of Grayslake.
         </p>
         <p className="text-2xs font-mono text-gray-400 mt-3">Last updated {LAST_VERIFIED}</p>
@@ -56,7 +56,7 @@ export default function About() {
 
       <FadeIn>
         <div className="border border-blue-200 rounded-xl px-6 py-6 bg-blue-50/40">
-          <p className="text-xs font-mono text-blue-700 uppercase tracking-widest mb-4">Get in touch</p>
+          <p className="text-xs font-mono text-blue-700 uppercase tracking-[0.15em] mb-5">Get in touch</p>
           <blockquote className="border-l-4 border-blue-400 pl-5 mb-4">
             <p className="text-lg font-display font-semibold text-gray-800 leading-snug">
               &ldquo;I&rsquo;d rather fix a mistake than leave it standing.&rdquo;

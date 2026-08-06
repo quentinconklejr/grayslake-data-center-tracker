@@ -21,7 +21,7 @@ function NavLink_({ to, label, end }) {
       to={to}
       end={end}
       className={({ isActive }) =>
-        `inline-flex items-center text-xs font-medium whitespace-nowrap transition-colors duration-150 py-1 border-b-2 ${
+        `inline-flex items-center text-sm font-medium whitespace-nowrap transition-colors duration-150 py-1.5 border-b-2 ${
           isActive
             ? 'text-blue-700 border-blue-600 font-semibold'
             : 'text-gray-500 border-transparent hover:text-gray-900 hover:border-gray-300'
@@ -86,12 +86,12 @@ export default function Header() {
     }`}>
 
       {/* ── Main bar ──────────────────────────────────────────────────────────── */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center py-2.5 gap-3 sm:gap-5">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center py-3.5 gap-3 sm:gap-6">
 
         <Link to="/" className="shrink-0 flex items-center gap-2.5 group" aria-label="Grayslake Data Center Tracker, Home">
           <TrackerIcon />
           <div className="flex flex-col min-w-0">
-            <span className="text-sm font-semibold text-gray-900 group-hover:text-blue-700 transition-colors leading-tight whitespace-nowrap tracking-tight">
+            <span className="text-base font-semibold text-gray-900 group-hover:text-blue-700 transition-colors leading-tight whitespace-nowrap tracking-tight">
               Grayslake Data Center Tracker
             </span>
             <span className="hidden sm:block text-2xs font-mono text-gray-400 leading-tight mt-0.5 whitespace-nowrap">
@@ -102,7 +102,7 @@ export default function Header() {
 
         {/* Desktop nav */}
         <nav
-          className="hidden md:flex items-center gap-3 lg:gap-4 flex-1 justify-end"
+          className="hidden lg:flex items-center gap-4 xl:gap-6 flex-1 justify-end"
           aria-label="Main navigation"
         >
           {NAV_LINKS.map(l => <NavLink_ key={l.to} {...l} />)}
@@ -110,7 +110,7 @@ export default function Header() {
 
         {/* Mobile hamburger */}
         <button
-          className="md:hidden ml-auto text-gray-500 hover:text-gray-800 transition-colors p-2.5 -mr-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg hover:bg-gray-100"
+          className="lg:hidden ml-auto text-gray-500 hover:text-gray-800 transition-colors p-2.5 -mr-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg hover:bg-gray-100"
           onClick={() => setMobileOpen(v => !v)}
           aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
           aria-expanded={mobileOpen}
@@ -149,7 +149,7 @@ export default function Header() {
       {mobileOpen && (
         <div
           id="mobile-menu"
-          className="md:hidden border-t border-gray-100 bg-white/98 overflow-y-auto max-h-[calc(100dvh-4rem)]"
+          className="lg:hidden border-t border-gray-100 bg-white/98 overflow-y-auto max-h-[calc(100dvh-4rem)]"
         >
           <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-1 pb-2">
             {NAV_LINKS.map(l => <MobileNavLink key={l.to} {...l} />)}

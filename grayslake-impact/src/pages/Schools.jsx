@@ -30,11 +30,11 @@ export default function Schools({ asSection = false }) {
       {!asSection && <PageTitle {...pageMeta['/schools']} />}
 
       <FadeIn className="mb-10 pb-8 border-b border-gray-200">
-        <p className="text-2xs font-mono text-blue-600 uppercase tracking-[0.2em] mb-3">Education</p>
+        <p className="text-2xs font-mono text-blue-600 uppercase tracking-[0.18em] mb-4">Education</p>
         {asSection ? (
           <h2 className="text-4xl font-display font-bold text-gray-900 tracking-tight mb-3">School Funding Impact</h2>
         ) : (
-          <h1 className="text-4xl font-display font-bold text-gray-900 tracking-tight mb-3">School Funding Impact</h1>
+          <h1 className="text-5xl font-display font-bold text-gray-900 tracking-tight mb-3">School Funding Impact</h1>
         )}
         <p className="text-base text-gray-600 max-w-2xl leading-relaxed">
           Village officials have publicly cited projections ranging from approximately $300 million
@@ -46,7 +46,7 @@ export default function Schools({ asSection = false }) {
       </FadeIn>
 
       <FadeIn className="mb-10">
-        <p className="text-xs font-mono text-gray-500 uppercase tracking-widest mb-4">Official projections</p>
+        <p className="text-xs font-mono text-gray-500 uppercase tracking-[0.15em] mb-5">Official projections</p>
         <div className="grid md:grid-cols-2 gap-4">
           <div className="glass-card p-6">
             <p className="text-2xs font-mono text-blue-600 uppercase tracking-widest mb-2">Mayor of Grayslake</p>
@@ -112,7 +112,7 @@ export default function Schools({ asSection = false }) {
           <div className="flex items-start justify-between mb-1">
             <div>
               <p className="text-xs font-mono text-gray-500 uppercase tracking-widest mb-1">Tax Allocation</p>
-              <h2 className="text-2xl font-display font-bold text-gray-900">DeKalb Precedent</h2>
+              <h2 className="text-3xl font-display font-bold text-gray-900">DeKalb Precedent</h2>
             </div>
             <SourceCitation sourceKey="capitolnews2026" />
           </div>
@@ -124,7 +124,7 @@ export default function Schools({ asSection = false }) {
           <div className="flex items-start justify-between mb-1">
             <div>
               <p className="text-xs font-mono text-gray-500 uppercase tracking-widest mb-1">Case Study</p>
-              <h2 className="text-2xl font-display font-bold text-gray-900">Meta, DeKalb, IL</h2>
+              <h2 className="text-3xl font-display font-bold text-gray-900">Meta, DeKalb, IL</h2>
             </div>
             <SourceCitation sourceKey="capitolnews2026" />
           </div>
@@ -168,7 +168,7 @@ export default function Schools({ asSection = false }) {
       </FadeIn>
 
       <FadeIn>
-        <p className="text-xs font-mono text-gray-500 uppercase tracking-widest mb-5">Grayslake districts listed in the Village FAQ</p>
+        <p className="text-xs font-mono text-gray-500 uppercase tracking-[0.15em] mb-6">Grayslake districts listed in the Village FAQ</p>
         <div className="mb-6 border border-gray-300 rounded-sm bg-white overflow-hidden shadow-sm">
           <div className="bg-gray-100 border-b border-gray-300 px-4 py-2.5 flex items-center justify-between gap-3">
             <div>

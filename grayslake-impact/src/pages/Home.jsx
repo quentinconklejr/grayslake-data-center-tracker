@@ -120,7 +120,7 @@ export default function Home() {
 
       {/* ── Intro + key stats ──────────────────────────────────────────────── */}
       <section data-section="Key Facts" className="bg-gradient-to-b from-blue-50/60 to-white border-b border-gray-200">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 pt-12 sm:pt-16 pb-10 sm:pb-14">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 pt-12 sm:pt-16 pb-10 sm:pb-14">
 
           <FadeIn>
             <p className="text-sm text-blue-700/70 font-medium mb-2">
@@ -140,7 +140,7 @@ export default function Home() {
           <div className="grid md:grid-cols-2 gap-10 md:gap-0 border-t border-gray-200 pt-10">
 
             <FadeIn className="md:pr-12 md:border-r border-gray-200">
-              <p className="text-2xs font-mono text-gray-400 uppercase tracking-[0.2em] mb-3">Permanent Jobs (estimated max)</p>
+              <p className="text-2xs font-mono text-gray-400 uppercase tracking-[0.18em] mb-4">Permanent Jobs (estimated max)</p>
               <div className="flex items-baseline gap-2 leading-none">
                 <span className="text-2xl sm:text-3xl font-display font-medium text-gray-400">up to</span>
                 <AnimatedNumber
@@ -162,7 +162,7 @@ export default function Home() {
             </FadeIn>
 
             <FadeIn delay={0.08} className="md:pl-12 border-t border-gray-200 pt-10 md:pt-0 md:border-t-0">
-              <p className="text-2xs font-mono text-gray-400 uppercase tracking-[0.2em] mb-3">Total Estimated Investment</p>
+              <p className="text-2xs font-mono text-gray-400 uppercase tracking-[0.18em] mb-4">Total Estimated Investment</p>
               <p className="text-6xl sm:text-7xl font-display font-black text-gray-900 leading-none tracking-tighter">
                 {figureById['investment'].value}
               </p>
@@ -224,7 +224,7 @@ export default function Home() {
           {/* START HERE — shown after the stats so headline numbers hit first */}
           <FadeIn>
             <div className="mt-10 pt-8 border-t border-gray-200">
-              <p className="text-2xs font-mono text-gray-400 uppercase tracking-[0.2em] mb-3 flex items-center gap-2">
+              <p className="text-2xs font-mono text-gray-400 uppercase tracking-[0.18em] mb-4 flex items-center gap-2">
                 <span className="inline-block w-4 h-px bg-gray-300" />
                 Start here
               </p>
@@ -276,7 +276,7 @@ export default function Home() {
           <div className="flex items-end justify-between mb-5">
             <div>
               <p className="text-2xs font-mono text-blue-700 uppercase tracking-[0.2em] mb-1">Land Ownership</p>
-              <h2 className="text-2xl font-display font-bold text-gray-900">Land recorded to T5</h2>
+              <h2 className="text-3xl font-display font-bold text-gray-900">Land recorded to T5</h2>
               <p className="text-sm text-gray-600 mt-1 max-w-md leading-snug">
                 {figureById['acres-owned'].value} across {figureById['acres-owned'].qualifier}. The approved
                 campus is larger and is not mapped.
@@ -297,7 +297,7 @@ export default function Home() {
       <section data-section="Impact Overview" className="max-w-5xl mx-auto px-4 sm:px-6 pt-12 pb-14">
 
         <FadeIn className="mb-8">
-          <p className="text-2xs font-mono text-gray-400 uppercase tracking-[0.2em] mb-3 flex items-center gap-2">
+          <p className="text-2xs font-mono text-gray-400 uppercase tracking-[0.18em] mb-4 flex items-center gap-2">
             <span className="inline-block w-4 h-px bg-gray-300" />
             Impact by category
           </p>
@@ -310,7 +310,7 @@ export default function Home() {
                 to={to}
                 className={`group flex flex-col h-full bg-white border border-gray-200 border-t-[5px] ${topBorder} rounded-xl px-5 py-5 hover:shadow-glass-md hover:border-gray-300 transition-all duration-150`}
               >
-                <p className={`text-2xs font-mono uppercase tracking-[0.2em] mb-3 ${catColor}`}>{cat}</p>
+                <p className={`text-2xs font-mono uppercase tracking-[0.18em] mb-4 ${catColor}`}>{cat}</p>
                 <p className="text-sm font-display font-semibold text-gray-900 leading-snug flex-1 mb-4">{headline}</p>
                 <div className="flex items-center justify-between mt-auto">
                   <span className="text-xs font-medium text-blue-600 group-hover:text-blue-700 flex items-center gap-1 transition-colors">

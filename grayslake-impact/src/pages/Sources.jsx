@@ -14,13 +14,13 @@ const SOURCE_ENTRIES = Object.entries(sources)
 
 export default function Sources() {
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 py-12">
+    <div className="max-w-5xl mx-auto px-4 sm:px-6 py-12">
       <PageTitle {...pageMeta['/documents']} />
 
       <FadeIn className="mb-10 pb-8 border-b border-gray-200">
-        <p className="text-2xs font-mono text-blue-600/60 uppercase tracking-[0.2em] mb-3">Transparency</p>
-        <h1 className="text-4xl font-display font-bold text-gray-900 tracking-tight mb-3">Documents &amp; Sources</h1>
-        <p className="text-base text-gray-600 max-w-2xl leading-relaxed">
+        <p className="text-2xs font-mono text-blue-600/60 uppercase tracking-[0.18em] mb-4">Transparency</p>
+        <h1 className="text-5xl font-display font-bold text-gray-900 tracking-tight mb-3">Documents &amp; Sources</h1>
+        <p className="text-lg text-gray-600 max-w-3xl leading-relaxed">
           All figures in this tracker come from public documents and press coverage on file.
           Estimated figures are labeled.
         </p>
@@ -112,7 +112,7 @@ export default function Sources() {
               {source.status === 'background' && (
                 <span className="text-2xs font-mono text-gray-400 uppercase tracking-widest">background</span>
               )}
-              <span className="text-2xs font-mono text-gray-300 uppercase tracking-widest">{key}</span>
+              <span className="text-2xs font-mono text-gray-500 uppercase tracking-widest">{key}</span>
             </div>
           </div>
         ))}
@@ -120,7 +120,7 @@ export default function Sources() {
 
       <FadeIn>
         <div className="bg-gray-50 border border-gray-200 rounded-xl p-6">
-          <p className="text-2xs font-mono text-gray-400 uppercase tracking-widest mb-5">Source Categories</p>
+          <p className="text-2xs font-mono text-gray-400 uppercase tracking-[0.15em] mb-6">Source Categories</p>
           <div className="grid md:grid-cols-2 gap-6">
             {SOURCE_CATEGORIES.map(({ label, desc }) => (
               <div key={label}>

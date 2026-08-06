@@ -63,11 +63,11 @@ export default function Jobs({ asSection = false }) {
       {!asSection && <PageTitle {...pageMeta['/jobs']} />}
 
       <FadeIn className="mb-10 pb-8 border-b border-gray-200">
-        <p className="text-2xs font-mono text-blue-600 uppercase tracking-[0.2em] mb-3">Employment</p>
+        <p className="text-2xs font-mono text-blue-600 uppercase tracking-[0.18em] mb-4">Employment</p>
         {asSection ? (
           <h2 className="text-4xl font-display font-bold text-gray-900 tracking-tight mb-3">Job Creation</h2>
         ) : (
-          <h1 className="text-4xl font-display font-bold text-gray-900 tracking-tight mb-3">Job Creation</h1>
+          <h1 className="text-5xl font-display font-bold text-gray-900 tracking-tight mb-3">Job Creation</h1>
         )}
         <p className="text-base text-gray-600 max-w-2xl leading-relaxed">
           Permanent headcount has been stated three ways. Mayor Davies cited{' '}
@@ -108,7 +108,7 @@ export default function Jobs({ asSection = false }) {
       </FadeIn>
 
       <FadeIn className="mb-10">
-        <p className="text-xs font-mono text-gray-500 uppercase tracking-widest mb-5">Employment by Phase</p>
+        <p className="text-xs font-mono text-gray-500 uppercase tracking-[0.15em] mb-6">Employment by Phase</p>
         <div className="space-y-3">
           {PHASES.map(({ period, phase, status, accent, dot, label, jobs: jobDesc, note, sourceKey }) => (
             <div key={phase} className={`border rounded-xl px-6 py-5 ${accent}`}>

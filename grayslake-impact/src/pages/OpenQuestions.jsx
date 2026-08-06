@@ -161,13 +161,13 @@ export default function OpenQuestions() {
 
   return (
     <FootnoteProvider preload={PRELOAD_KEYS}>
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 py-12">
+    <div className="max-w-5xl mx-auto px-4 sm:px-6 py-12">
       <PageTitle {...pageMeta['/questions']} />
 
       <FadeIn className="mb-10 pb-8 border-b border-gray-200">
-        <p className="text-2xs font-mono text-blue-700 uppercase tracking-[0.2em] mb-3">Questions &amp; Answers</p>
-        <h1 className="text-4xl font-display font-bold text-gray-900 tracking-tight mb-3">What&rsquo;s Settled, What&rsquo;s Not</h1>
-        <p className="text-base text-gray-600 max-w-2xl leading-relaxed">
+        <p className="text-2xs font-mono text-blue-700 uppercase tracking-[0.18em] mb-4">Questions &amp; Answers</p>
+        <h1 className="text-5xl font-display font-bold text-gray-900 tracking-tight mb-3">What&rsquo;s Settled, What&rsquo;s Not</h1>
+        <p className="text-lg text-gray-600 max-w-3xl leading-relaxed">
           What&rsquo;s confirmed in the public record, what&rsquo;s contested, and what has no answer yet: water, electricity,
           scale, jobs, taxes and the approval process.
         </p>

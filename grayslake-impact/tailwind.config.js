@@ -113,19 +113,23 @@ export default {
 
       // ── Type scale ────────────────────────────────────────────────────────────
       fontSize: {
-        '2xs': ['10px', { lineHeight: '1.4', letterSpacing: '0.05em' }],
-        'xs':  ['12px', { lineHeight: '1.5', letterSpacing: '0.01em' }],
-        'sm':  ['14px', { lineHeight: '1.6' }],
-        'base':['16px', { lineHeight: '1.75' }],
-        'lg':  ['18px', { lineHeight: '1.65' }],
-        'xl':  ['20px', { lineHeight: '1.5' }],
-        '2xl': ['24px', { lineHeight: '1.35' }],
-        '3xl': ['30px', { lineHeight: '1.2',  letterSpacing: '-0.01em' }],
-        '4xl': ['36px', { lineHeight: '1.1',  letterSpacing: '-0.02em' }],
-        '5xl': ['48px', { lineHeight: '1.05', letterSpacing: '-0.025em' }],
-        '6xl': ['60px', { lineHeight: '1.0',  letterSpacing: '-0.03em' }],
-        '7xl': ['72px', { lineHeight: '0.95', letterSpacing: '-0.035em' }],
-        '8xl': ['96px', { lineHeight: '0.9',  letterSpacing: '-0.04em' }],
+        // The site was built almost entirely from 10px and 12px type: 151 uses
+        // of 2xs and 96 of xs against 22 of base. Every size moves up a step so
+        // the page reads at arm's length instead of asking the reader to squint.
+        // Line heights loosen with it.
+        '2xs':  ['12px',   { lineHeight: '1.5',  letterSpacing: '0.045em' }],
+        'xs':   ['13.5px', { lineHeight: '1.6' }],
+        'sm':   ['15px',   { lineHeight: '1.65' }],
+        'base': ['17px',   { lineHeight: '1.7' }],
+        'lg':   ['19px',   { lineHeight: '1.6' }],
+        'xl':   ['22px',   { lineHeight: '1.45' }],
+        '2xl':  ['28px',   { lineHeight: '1.3',  letterSpacing: '-0.01em' }],
+        '3xl':  ['34px',   { lineHeight: '1.22', letterSpacing: '-0.015em' }],
+        '4xl':  ['44px',   { lineHeight: '1.12', letterSpacing: '-0.022em' }],
+        '5xl':  ['56px',   { lineHeight: '1.06', letterSpacing: '-0.028em' }],
+        '6xl':  ['68px',   { lineHeight: '1.0',  letterSpacing: '-0.032em' }],
+        '7xl':  ['84px',   { lineHeight: '0.96', letterSpacing: '-0.036em' }],
+        '8xl':  ['104px',  { lineHeight: '0.92', letterSpacing: '-0.04em' }],
       },
 
       // ── Shadows ──────────────────────────────────────────────────────────────

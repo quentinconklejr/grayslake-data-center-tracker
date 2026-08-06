@@ -119,13 +119,13 @@ export default function Actions() {
 
   return (
     <FootnoteProvider preload={PRELOAD_KEYS}>
-    <div className="max-w-3xl mx-auto px-4 sm:px-6 py-12">
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 py-12">
       <PageTitle {...pageMeta['/actions']} />
 
       <FadeIn className="mb-10 pb-8 border-b border-gray-200">
-        <p className="text-2xs font-mono text-blue-600/60 uppercase tracking-[0.2em] mb-3">Regulatory actions</p>
-        <h1 className="text-4xl font-display font-bold text-gray-900 tracking-tight mb-3">Jurisdictional Actions</h1>
-        <p className="text-base text-gray-600 max-w-2xl leading-relaxed">
+        <p className="text-2xs font-mono text-blue-600/60 uppercase tracking-[0.18em] mb-4">Regulatory actions</p>
+        <h1 className="text-5xl font-display font-bold text-gray-900 tracking-tight mb-3">Jurisdictional Actions</h1>
+        <p className="text-lg text-gray-600 max-w-3xl leading-relaxed">
           Approvals, permit applications, legal challenges, and policy actions across the municipal,
           county, state, and federal bodies with jurisdiction over T5 @ Chicago IV.
           All entries are sourced and cited. Verification dates appear on each entry.

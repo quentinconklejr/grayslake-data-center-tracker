@@ -2,9 +2,9 @@ import SourceCitation from './SourceCitation'
 
 const ACCENT = {
   blue:   { top: 'border-t-blue-500',    label: 'text-blue-600'    },
-  green:  { top: 'border-t-emerald-500', label: 'text-emerald-600' },
-  amber:  { top: 'border-t-amber-500',   label: 'text-amber-600'   },
-  red:    { top: 'border-t-red-500',     label: 'text-red-600'     },
+  green:  { top: 'border-t-emerald-500', label: 'text-emerald-700' },
+  amber:  { top: 'border-t-amber-500',   label: 'text-amber-700'   },
+  red:    { top: 'border-t-red-500',     label: 'text-red-700'     },
   violet: { top: 'border-t-violet-500',  label: 'text-violet-600'  },
 }
 

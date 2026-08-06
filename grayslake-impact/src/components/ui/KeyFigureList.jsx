@@ -63,11 +63,11 @@ export default function KeyFigureList({ figures, variant = 'table', groups = nul
 
   if (variant === 'cards') {
     return (
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {figures.map(f => (
-          <div key={f.id} className="border border-gray-200 rounded-lg bg-white px-4 py-3.5">
+          <div key={f.id} className="border border-gray-200 rounded-xl bg-white px-6 py-5">
             <p className="text-2xs font-mono uppercase tracking-widest text-gray-600 mb-1">{f.label}</p>
-            <p className="text-lg font-display font-bold text-gray-900 leading-tight">{f.value}</p>
+            <p className="text-2xl font-display font-bold text-gray-900 leading-tight">{f.value}</p>
             <p className="text-xs text-gray-600 mt-0.5 leading-snug">{f.qualifier}</p>
             <p className="text-xs text-gray-500 mt-2 leading-relaxed">
               {f.detail}
@@ -85,7 +85,7 @@ export default function KeyFigureList({ figures, variant = 'table', groups = nul
   return (
     <div className="divide-y divide-gray-100 border border-gray-200 rounded-xl overflow-hidden bg-white">
       {figures.map(f => (
-        <div key={f.id} className="grid sm:grid-cols-5 gap-2 sm:gap-4 px-5 py-4">
+        <div key={f.id} className="grid sm:grid-cols-5 gap-2 sm:gap-5 px-6 py-5">
           <div className="sm:col-span-2">
             <p className="text-2xs font-mono text-gray-600 uppercase tracking-widest leading-tight">{f.label}</p>
           </div>
