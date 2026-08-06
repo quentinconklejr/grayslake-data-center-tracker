@@ -29,7 +29,7 @@ export default function Schools({ asSection = false }) {
     <div className={`max-w-7xl mx-auto px-4 sm:px-6 ${asSection ? "pt-2 pb-10" : "py-12"}`}>
       {!asSection && <PageTitle {...pageMeta['/schools']} />}
 
-      <FadeIn className="mb-10 pb-8 border-b border-gray-200">
+      <FadeIn className="mb-10 pb-8 border-b border-edge-soft">
         <p className="text-2xs font-mono text-blue-600 uppercase tracking-[0.18em] mb-4">Education</p>
         {asSection ? (
           <h2 className="text-4xl font-display font-bold text-gray-900 tracking-tight mb-3">School Funding Impact</h2>
@@ -138,7 +138,7 @@ export default function Schools({ asSection = false }) {
               ['District',              meta.districtName],
               ['Documented outcome',    meta.outcome],
             ].map(([k, v]) => (
-              <div key={k} className="flex justify-between items-start gap-3 py-2.5 border-b border-gray-100 last:border-0">
+              <div key={k} className="flex justify-between items-start gap-3 py-2.5 border-b border-edge-soft/50 last:border-0">
                 <dt className="text-sm text-gray-500 shrink-0">{k}</dt>
                 <dd className="text-sm text-gray-800 font-medium text-right">{v}</dd>
               </div>
@@ -191,7 +191,7 @@ export default function Schools({ asSection = false }) {
             <p className="text-xs text-gray-700 leading-relaxed">
               The FAQ also states that the development agreements provide no financial incentives to T5 Data Centers.
             </p>
-            <p className="text-2xs font-mono text-gray-400 pt-1 border-t border-gray-200">Paraphrase — not a verbatim quote. Verify against the linked original.</p>
+            <p className="text-2xs font-mono text-gray-400 pt-1 border-t border-edge-soft">Paraphrase — not a verbatim quote. Verify against the linked original.</p>
           </div>
         </div>
         <div className="grid md:grid-cols-2 gap-3">

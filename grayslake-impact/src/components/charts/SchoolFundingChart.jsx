@@ -114,7 +114,7 @@ export default function SchoolFundingChart() {
           </div>
         </div>
 
-        <div className="border-t border-gray-200 pt-4">
+        <div className="border-t border-edge-soft pt-4">
           <p className="text-2xs font-mono text-emerald-700 uppercase tracking-widest mb-1">Documented outcome</p>
           <p className="text-xs text-gray-600 leading-relaxed">
             Funded construction of Mitchell Elementary School, which opened in 2025.

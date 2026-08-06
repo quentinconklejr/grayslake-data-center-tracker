@@ -8,7 +8,6 @@ import { keyFigures } from '../data/keyFigures'
 import KeyFigureList from '../components/ui/KeyFigureList'
 import { contacts } from '../data/contacts'
 import { LAST_VERIFIED } from '../data/siteConfig'
-import AudienceBreadcrumb from '../components/ui/AudienceBreadcrumb'
 
 
 
@@ -16,19 +15,18 @@ export default function Reporters() {
   return (
     <FootnoteProvider>
     <div className="max-w-5xl mx-auto px-4 sm:px-6 py-12">
-      <AudienceBreadcrumb current="Reporters" />
-      <PageTitle {...pageMeta['/reporters']} />
+      <PageTitle {...pageMeta['/figures']} />
 
-      <FadeIn className="mb-10 pb-8 border-b border-gray-200">
-        <p className="text-2xs font-mono text-blue-600/60 uppercase tracking-[0.18em] mb-4">Press Reference</p>
-        <h1 className="text-5xl font-display font-bold text-gray-900 tracking-tight mb-3">Key figures and contacts</h1>
+      <FadeIn className="mb-10 pb-8 border-b border-edge-soft">
+        <p className="text-2xs font-mono text-blue-700 uppercase tracking-[0.15em] mb-4">Quick Reference</p>
+        <h1 className="text-5xl font-display font-bold text-gray-900 tracking-tight mb-4">Key Figures</h1>
         <p className="text-lg text-gray-600 max-w-3xl leading-relaxed">
           Sourced figures from public documents and press coverage on T5 @ Chicago IV.
           Every number links to its primary source. See{' '}
           <Link to="/documents" className="text-blue-600 hover:text-blue-700 transition-colors">the Documents page</Link>
           {' '}for full citation details.
         </p>
-        <p className="text-2xs font-mono text-gray-400 mt-3">Last verified {LAST_VERIFIED}</p>
+        <p className="text-2xs font-mono text-gray-500 mt-4">Last verified {LAST_VERIFIED}</p>
       </FadeIn>
 
       {/* Key figures — rendered from the canonical source, never retyped */}
@@ -51,7 +49,7 @@ export default function Reporters() {
         </p>
         <div className="space-y-4">
           {contacts.map(c => (
-            <div key={c.org} className="border border-gray-200 rounded-xl px-5 py-4 bg-white">
+            <div key={c.org} className="border border-edge rounded-xl px-5 py-4 bg-white">
               <p className="text-sm font-display font-semibold text-gray-900">{c.org}</p>
               <p className="text-2xs font-mono text-gray-400 uppercase tracking-widest mt-0.5 mb-3">{c.role}</p>
               <div className="space-y-1.5">
@@ -80,7 +78,7 @@ export default function Reporters() {
       </FadeIn>
 
       {/* Note on coverage */}
-      <FadeIn className="border-t border-gray-200 pt-8">
+      <FadeIn className="border-t border-edge-soft pt-8">
         <p className="text-2xs font-mono text-gray-400 uppercase tracking-widest mb-3">Coverage on File</p>
         <p className="text-sm text-gray-600 leading-relaxed mb-4">
           This site indexes primary reporting from the Daily Herald, Chicago Tribune, Data Center Dynamics,

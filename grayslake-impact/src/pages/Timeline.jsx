@@ -46,7 +46,7 @@ export default function TimelinePage() {
     <div className="max-w-4xl mx-auto px-4 sm:px-6 py-12">
       <PageTitle {...pageMeta['/timeline']} />
 
-      <FadeIn className="mb-10 pb-8 border-b border-gray-200">
+      <FadeIn className="mb-10 pb-8 border-b border-edge-soft">
         <p className="text-xs font-mono text-blue-600 uppercase tracking-[0.18em] mb-4">Project History</p>
         <h1 className="text-5xl sm:text-5xl font-display font-bold text-gray-900 tracking-tight mb-4">How We Got Here</h1>
         <p className="text-lg text-gray-700 max-w-2xl leading-relaxed mb-2">
@@ -73,7 +73,7 @@ export default function TimelinePage() {
             className={`inline-flex items-center px-2.5 py-1.5 rounded-sm border text-2xs font-mono font-semibold uppercase tracking-widest transition-all duration-150 ${
               activeCategory === 'all'
                 ? 'text-gray-900 bg-gray-100 border-gray-300'
-                : 'text-gray-500 border-gray-200 hover:text-gray-800 hover:border-gray-300'
+                : 'text-gray-500 border-edge-soft hover:text-gray-800 hover:border-gray-300'
             }`}
           >
             All ({timelineEvents.length})
@@ -108,19 +108,19 @@ export default function TimelinePage() {
 
       <TimelineUI events={visible} proportional={proportional} />
 
-      <div className="mt-12 pt-6 border-t border-gray-200">
+      <div className="mt-12 pt-6 border-t border-edge-soft">
         <p className="text-xs text-gray-500 leading-relaxed">
           Events marked <span className="text-emerald-700">construction</span> beyond Nov 2025 are
           projected milestones per developer filings, not confirmed completions.
           Hollow markers indicate projected events; solid markers indicate documented events.
         </p>
       </div>
-      <FadeIn className="mt-10 pt-8 border-t border-gray-200">
+      <FadeIn className="mt-10 pt-8 border-t border-edge-soft">
         <p className="text-2xs font-mono text-gray-600 uppercase tracking-widest mb-2">When Is &ldquo;Full Buildout&rdquo;?</p>
         <p className="text-sm text-gray-600 mb-5 max-w-prose">{buildoutHorizon.note}</p>
         <div className="grid sm:grid-cols-2 gap-3 mb-4">
           {buildoutHorizon.claims.map(c => (
-            <div key={c.key} className="border border-gray-200 rounded-lg bg-white px-4 py-3.5">
+            <div key={c.key} className="border border-edge rounded-lg bg-white px-4 py-3.5">
               <div className="flex items-baseline gap-2 mb-1">
                 <p className="text-lg font-display font-bold text-gray-900 leading-tight">{c.value}</p>
                 <span className="text-2xs font-mono uppercase tracking-widest text-gray-600">{c.framing}</span>

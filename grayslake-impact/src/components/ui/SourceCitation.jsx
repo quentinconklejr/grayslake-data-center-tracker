@@ -80,7 +80,7 @@ export default function SourceCitation({ sourceKey }) {
             whiteSpace: 'normal',
           }}
         >
-          <span className="block w-56 max-w-[min(14rem,80vw)] bg-white border border-gray-200 rounded-lg shadow-glass-md p-3 text-left font-sans not-italic normal-case">
+          <span className="block w-56 max-w-[min(14rem,80vw)] bg-white border border-edge rounded-lg shadow-glass-md p-3 text-left font-sans not-italic normal-case">
             <span className="block text-xs font-medium text-gray-900 leading-snug">{source.title}</span>
             {(source.publisher || source.date) && (
               <span className="block text-2xs font-mono text-gray-500 mt-1.5">

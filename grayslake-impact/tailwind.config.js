@@ -27,6 +27,13 @@ export default {
 
       // ── Color palette ────────────────────────────────────────────────────────
       colors: {
+        // Boundary colours. border-gray-200 measured 1.23:1 against white,
+        // which is why cards read as floating rather than contained. These
+        // clear the 3:1 that WCAG 1.4.11 asks of UI boundaries.
+        edge: {
+          DEFAULT: '#7f90a6',  // 3.26:1 — card and panel outlines
+          soft:    '#a9b6c6',  // 2.06:1 — internal dividers, not boundaries
+        },
         // Clean slate ramp — light, high-precision civic feel
         gray: {
           50:  '#f8fafc',

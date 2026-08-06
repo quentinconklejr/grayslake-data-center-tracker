@@ -39,7 +39,7 @@ function MobileNavLink({ to, label, end }) {
       to={to}
       end={end}
       className={({ isActive }) =>
-        `block py-3 text-sm border-b border-gray-100 last:border-0 transition-colors duration-150 ${
+        `block py-3 text-sm border-b border-edge-soft/50 last:border-0 transition-colors duration-150 ${
           isActive ? 'text-blue-700 font-semibold' : 'text-gray-500 hover:text-gray-900 font-medium'
         }`
       }

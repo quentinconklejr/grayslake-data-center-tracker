@@ -129,7 +129,7 @@ export default function JobsTimelineChart() {
           </div>
         ))}
 
-        <p className="text-xs text-gray-400 pt-2 border-t border-gray-200">
+        <p className="text-xs text-gray-400 pt-2 border-t border-edge-soft">
           Dimmed bar = estimated figure. Solid bar = sourced Village projection.
         </p>
       </div>

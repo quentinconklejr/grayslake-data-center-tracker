@@ -10,6 +10,6 @@ export const NAV_LINKS = [
   { to: '/questions', label: 'Questions',   end: false },
   { to: '/documents', label: 'Documents',   end: false },
   { to: '/map',       label: 'Map',         end: false },
-  { to: '/reporters', label: 'Reporters',   end: false },
+  { to: '/figures',   label: 'Key Figures', end: false },
   { to: '/about',     label: 'About',       end: false },
 ]

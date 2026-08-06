@@ -50,7 +50,7 @@ export function FootnoteList() {
   if (!order.length) return null
 
   return (
-    <div className="mt-10 pt-6 border-t border-gray-200">
+    <div className="mt-10 pt-6 border-t border-edge-soft">
       <p className="text-2xs font-mono text-gray-400 uppercase tracking-widest mb-5">Sources</p>
       <ol className="space-y-3">
         {order.map((key, i) => {

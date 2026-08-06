@@ -9,7 +9,7 @@ export default function PageNext({ to, label, desc, color = 'text-blue-700', hov
       </p>
       <Link
         to={to}
-        className={`group flex items-center justify-between gap-4 bg-white border border-gray-200 ${hoverBorder} rounded-xl px-6 py-5 hover:bg-gray-50/50 hover:shadow-glass-md transition-all duration-150`}
+        className={`group flex items-center justify-between gap-4 bg-white border border-edge ${hoverBorder} rounded-xl px-6 py-5 hover:bg-gray-50/50 hover:shadow-glass-md transition-all duration-150`}
       >
         <div className="min-w-0">
           <p className={`text-xs font-mono uppercase tracking-[0.2em] font-semibold mb-1 ${color}`}>{label}</p>

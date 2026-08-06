@@ -4,6 +4,8 @@ import PageNext from '../components/ui/PageNext'
 import { pageMeta } from '../data/pageMeta'
 import AnimatedNumber from '../components/ui/AnimatedNumber'
 import FadeIn from '../components/ui/FadeIn'
+import Reveal from '../components/ui/Reveal'
+import RevealHeadline from '../components/ui/RevealHeadline'
 import CopyKPIButton from '../components/ui/CopyKPIButton'
 import SectionBar from '../components/ui/SectionBar'
 import SiteMap from '../components/map/SiteMap'
@@ -119,27 +121,35 @@ export default function Home() {
       <SectionBar />
 
       {/* ── Intro + key stats ──────────────────────────────────────────────── */}
-      <section data-section="Key Facts" className="bg-gradient-to-b from-blue-50/60 to-white border-b border-gray-200">
+      <section data-section="Key Facts" className="bg-gradient-to-b from-blue-50/60 to-white border-b border-edge-soft">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 pt-12 sm:pt-16 pb-10 sm:pb-14">
 
-          <FadeIn>
-            <p className="text-sm text-blue-700/70 font-medium mb-2">
+          <RevealHeadline
+            as="h1"
+            text="T5 @ Chicago IV is an approved $8.5–18B hyperscale AI data center under construction in Grayslake, Illinois."
+            className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold text-gray-900 leading-tight tracking-tight mb-5 max-w-[52ch]"
+          />
+
+          {/* The plain-language gloss sits after the headline: it explains the
+              headline, so it cannot precede it. */}
+          <Reveal delay={0.1}>
+            <p className="text-lg text-blue-800 font-medium mb-5 max-w-[60ch] border-l-2 border-blue-300 pl-4">
               In plain language: a very large computing facility, one of the biggest proposed anywhere in the U.S.
             </p>
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold text-gray-900 leading-tight tracking-tight mb-4 max-w-[52ch]">
-              T5 @ Chicago IV is an approved $8.5–18B hyperscale AI data center under construction in Grayslake, Illinois.
-            </h1>
+          </Reveal>
+
+          <Reveal delay={0.16}>
             <p className="text-xl text-gray-600 leading-relaxed max-w-[65ch] mb-4">
               This tracker collects public records and press coverage on the project and links every
               claim to its source.
             </p>
-            <p className="text-2xs font-mono text-gray-400 mb-8">Last verified {LAST_VERIFIED}</p>
-          </FadeIn>
+            <p className="text-2xs font-mono text-gray-500 mb-8">Last verified {LAST_VERIFIED}</p>
+          </Reveal>
 
           {/* Headline stats — typographically dominant */}
-          <div className="grid md:grid-cols-2 gap-10 md:gap-0 border-t border-gray-200 pt-10">
+          <div className="grid md:grid-cols-2 gap-10 md:gap-0 border-t border-edge-soft pt-10">
 
-            <FadeIn className="md:pr-12 md:border-r border-gray-200">
+            <Reveal className="md:pr-12 md:border-r border-gray-300">
               <p className="text-2xs font-mono text-gray-400 uppercase tracking-[0.18em] mb-4">Permanent Jobs (estimated max)</p>
               <div className="flex items-baseline gap-2 leading-none">
                 <span className="text-2xl sm:text-3xl font-display font-medium text-gray-400">up to</span>
@@ -159,9 +169,9 @@ export default function Home() {
                 <Link to="/project#jobs" className="text-blue-600 hover:text-blue-700 transition-colors">Full range on The Project →</Link>
               </p>
               <CopyKPIButton copyText={figureCopyText('jobs-permanent')} />
-            </FadeIn>
+            </Reveal>
 
-            <FadeIn delay={0.08} className="md:pl-12 border-t border-gray-200 pt-10 md:pt-0 md:border-t-0">
+            <Reveal delay={0.08} className="md:pl-12 border-t border-gray-300 pt-10 md:pt-0 md:border-t-0">
               <p className="text-2xs font-mono text-gray-400 uppercase tracking-[0.18em] mb-4">Total Estimated Investment</p>
               <p className="text-6xl sm:text-7xl font-display font-black text-gray-900 leading-none tracking-tighter">
                 {figureById['investment'].value}
@@ -170,7 +180,7 @@ export default function Home() {
                 {figureById['investment'].qualifier}<SourceCitation sourceKey="govtech2025" />
               </p>
               <CopyKPIButton copyText={figureCopyText('investment')} />
-            </FadeIn>
+            </Reveal>
 
           </div>
 
@@ -223,7 +233,7 @@ export default function Home() {
 
           {/* START HERE — shown after the stats so headline numbers hit first */}
           <FadeIn>
-            <div className="mt-10 pt-8 border-t border-gray-200">
+            <div className="mt-10 pt-8 border-t border-edge-soft">
               <p className="text-2xs font-mono text-gray-400 uppercase tracking-[0.18em] mb-4 flex items-center gap-2">
                 <span className="inline-block w-4 h-px bg-gray-300" />
                 Start here
@@ -248,7 +258,7 @@ export default function Home() {
                   <Link
                     key={to}
                     to={to}
-                    className={`group block bg-white border border-gray-200 ${hoverBorder} rounded-xl px-5 py-5 transition-all duration-150 hover:shadow-glass-md`}
+                    className={`group block bg-white border border-edge ${hoverBorder} rounded-xl px-5 py-5 transition-all duration-150 hover:shadow-glass-md`}
                   >
                     <div className="flex items-start justify-between gap-3">
                       <div className="min-w-0">
@@ -308,7 +318,7 @@ export default function Home() {
             <FadeIn key={to} delay={Math.min(i * 0.05, 0.12)}>
               <Link
                 to={to}
-                className={`group flex flex-col h-full bg-white border border-gray-200 border-t-[5px] ${topBorder} rounded-xl px-5 py-5 hover:shadow-glass-md hover:border-gray-300 transition-all duration-150`}
+                className={`group flex flex-col h-full bg-white border border-edge border-t-[5px] ${topBorder} rounded-xl px-5 py-5 hover:shadow-glass-md hover:border-gray-300 transition-all duration-150`}
               >
                 <p className={`text-2xs font-mono uppercase tracking-[0.18em] mb-4 ${catColor}`}>{cat}</p>
                 <p className="text-sm font-display font-semibold text-gray-900 leading-snug flex-1 mb-4">{headline}</p>

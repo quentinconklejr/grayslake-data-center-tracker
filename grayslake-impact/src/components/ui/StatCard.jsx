@@ -12,7 +12,7 @@ export default function StatCard({ label, value, sub, badge, accent = 'blue', so
   const a = ACCENT[accent] ?? ACCENT.blue
 
   return (
-    <div className={`bg-white border border-gray-200 border-t-4 ${a.top} rounded-xl px-4 pt-4 pb-4 flex flex-col shadow-glass hover:shadow-glass-hover transition-shadow duration-150`}>
+    <div className={`bg-white border border-edge border-t-4 ${a.top} rounded-xl px-4 pt-4 pb-4 flex flex-col shadow-glass hover:shadow-glass-hover transition-shadow duration-150`}>
       <p className={`text-2xs font-mono uppercase tracking-[0.18em] mb-3 ${a.label}`}>
         {label}
       </p>

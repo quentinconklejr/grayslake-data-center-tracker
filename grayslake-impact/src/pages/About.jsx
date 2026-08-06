@@ -9,7 +9,7 @@ export default function About() {
     <div className="max-w-4xl mx-auto px-4 sm:px-6 py-12">
       <PageTitle {...pageMeta['/about']} />
 
-      <FadeIn className="mb-10 pb-8 border-b border-gray-200">
+      <FadeIn className="mb-10 pb-8 border-b border-edge-soft">
         <p className="text-xs font-mono text-blue-600 uppercase tracking-[0.18em] mb-4">About This Site</p>
         <h1 className="text-5xl font-display font-bold text-gray-900 tracking-tight mb-3">Why I Built This</h1>
         <p className="text-lg text-gray-600 max-w-3xl leading-relaxed">

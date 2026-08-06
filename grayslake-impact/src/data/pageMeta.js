@@ -76,8 +76,8 @@ export const pageMeta = {
       'Who builds the Grayslake Data Center Tracker, how figures get verified, and how to send a correction.',
     ogImage: '/og/about.png',
   },
-  '/reporters': {
-    title: 'For Reporters',
+  '/figures': {
+    title: 'Key Figures',
     description:
       'Key figures with citations, contacts and source documents for reporters covering T5 @ Chicago IV in Grayslake, Illinois.',
     ogImage: '/og/reporters.png',

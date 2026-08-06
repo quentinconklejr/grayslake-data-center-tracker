@@ -44,7 +44,8 @@ export default function App() {
             {/* Residents folded into /questions, which now carries its plain-language
                 answers behind a toggle. Redirected, not 404'd. */}
             <Route path="/residents" element={<Navigate to="/questions" replace />} />
-            <Route path="/reporters" element={<Reporters />} />
+            <Route path="/figures" element={<Reporters />} />
+            <Route path="/reporters" element={<Navigate to="/figures" replace />} />
             {/* /officials deleted — it rendered timelineEvents filtered to three
                 categories and nothing else. Redirected rather than 404'd. */}
             <Route path="/officials" element={<Navigate to="/timeline" replace />} />

@@ -155,7 +155,7 @@ export default function SiteMap({ className = 'h-[480px]' }) {
 
   if (!TOKEN) {
     return (
-      <div className={`${className} bg-gray-50 border border-gray-200 rounded-xl flex items-center justify-center`}>
+      <div className={`${className} bg-gray-50 border border-edge rounded-xl flex items-center justify-center`}>
         <div className="text-center px-6 max-w-sm">
           <p className="text-sm font-display font-semibold text-gray-800 mb-2">Map requires a Mapbox token</p>
           <code className="text-2xs font-mono text-blue-700 bg-blue-50 px-2 py-1 rounded block mb-4">
@@ -173,7 +173,7 @@ export default function SiteMap({ className = 'h-[480px]' }) {
 
   return (
     <div>
-      <div className={`relative ${className} max-h-[60vh] sm:max-h-none rounded-xl overflow-hidden border border-gray-200 shadow-sm`}>
+      <div className={`relative ${className} max-h-[60vh] sm:max-h-none rounded-xl overflow-hidden border border-edge shadow-sm`}>
         <div
           ref={containerRef}
           className="w-full h-full"
@@ -205,9 +205,9 @@ export default function SiteMap({ className = 'h-[480px]' }) {
           <div
             role="region"
             aria-label={`Details for parcel ${selected.pin}`}
-            className="absolute inset-y-0 right-0 w-64 bg-white/97 backdrop-blur-xl border-l border-gray-200 flex flex-col z-20 shadow-lg"
+            className="absolute inset-y-0 right-0 w-64 bg-white/97 backdrop-blur-xl border-l border-edge-soft flex flex-col z-20 shadow-lg"
           >
-            <div className="flex items-start justify-between p-4 border-b border-gray-100 shrink-0">
+            <div className="flex items-start justify-between p-4 border-b border-edge-soft/50 shrink-0">
               <div className="min-w-0">
                 <p className="text-xs font-mono text-blue-700 uppercase tracking-widest mb-0.5">Parcel</p>
                 <h3 className="text-sm font-display font-bold text-gray-900 leading-snug">PIN {selected.pin}</h3>
@@ -230,7 +230,7 @@ export default function SiteMap({ className = 'h-[480px]' }) {
                   ['Recorded sale', usd(selected.saleAmount) ?? 'No sale recorded'],
                   ['Sale date', prettyDate(selected.saleDate) ?? '—'],
                 ].map(([k, v]) => (
-                  <div key={k} className="py-2.5 border-b border-gray-100 last:border-0">
+                  <div key={k} className="py-2.5 border-b border-edge-soft/50 last:border-0">
                     <dt className="text-xs font-mono text-gray-600 uppercase tracking-widest leading-none mb-0.5">{k}</dt>
                     <dd className="text-xs text-gray-900 font-medium">{v}</dd>
                   </div>
@@ -246,11 +246,11 @@ export default function SiteMap({ className = 'h-[480px]' }) {
 
       {/* Legend */}
       <div className="flex flex-wrap gap-2 mt-3">
-        <div className="flex items-center gap-2 bg-white px-3 py-1.5 rounded-lg border border-gray-200">
+        <div className="flex items-center gap-2 bg-white px-3 py-1.5 rounded-lg border border-edge">
           <span className="w-4 h-2.5 rounded-sm bg-blue-600/25 border border-blue-300 shrink-0" aria-hidden="true" />
           <span className="text-xs text-gray-700">Land recorded to T5 ({META.countyAcresSum} ac)</span>
         </div>
-        <div className="flex items-center gap-2 bg-white px-3 py-1.5 rounded-lg border border-gray-200">
+        <div className="flex items-center gap-2 bg-white px-3 py-1.5 rounded-lg border border-edge">
           <span className="w-4 h-px bg-blue-200 shrink-0" aria-hidden="true" />
           <span className="text-xs text-gray-700">Individual lot lines (zoom in)</span>
         </div>
@@ -264,7 +264,7 @@ export default function SiteMap({ className = 'h-[480px]' }) {
       </div>
 
       {/* Text equivalent — the same data the map carries, for anyone not using it visually */}
-      <details id="parcel-list" className="mt-4 border border-gray-200 rounded-xl bg-white scroll-mt-24">
+      <details id="parcel-list" className="mt-4 border border-edge rounded-xl bg-white scroll-mt-24">
         <summary className="px-4 py-3 text-sm font-medium text-gray-800 cursor-pointer select-none">
           Parcel list ({META.parcelCount} parcels, {META.countyAcresSum} acres)
         </summary>
@@ -274,7 +274,7 @@ export default function SiteMap({ className = 'h-[480px]' }) {
               Parcels recorded to T5 in Grayslake, from the Lake County GIS tax parcel layer, retrieved {META.retrieved}
             </caption>
             <thead>
-              <tr className="border-b border-gray-200">
+              <tr className="border-b border-edge-soft">
                 <th scope="col" className="py-2 pr-4 text-2xs font-mono uppercase tracking-widest text-gray-600">PIN</th>
                 <th scope="col" className="py-2 pr-4 text-2xs font-mono uppercase tracking-widest text-gray-600">Acres</th>
                 <th scope="col" className="py-2 pr-4 text-2xs font-mono uppercase tracking-widest text-gray-600">Recorded sale</th>
@@ -283,7 +283,7 @@ export default function SiteMap({ className = 'h-[480px]' }) {
             </thead>
             <tbody>
               {SORTED.map(f => (
-                <tr key={f.properties.pin} className="border-b border-gray-100 last:border-0">
+                <tr key={f.properties.pin} className="border-b border-edge-soft/50 last:border-0">
                   <th scope="row" className="py-1.5 pr-4 text-xs font-mono font-normal text-gray-700">{f.properties.pin}</th>
                   <td className="py-1.5 pr-4 text-xs text-gray-700 tabular-nums">{f.properties.acres}</td>
                   <td className="py-1.5 pr-4 text-xs text-gray-700 tabular-nums">{usd(f.properties.saleAmount) ?? '—'}</td>

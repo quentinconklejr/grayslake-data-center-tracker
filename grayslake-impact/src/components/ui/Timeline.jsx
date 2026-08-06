@@ -47,7 +47,7 @@ const CAT = {
   construction: { badge: 'text-emerald-700 bg-emerald-50 border-emerald-200', dot: 'bg-emerald-500' },
   legal:        { badge: 'text-red-700 bg-red-50 border-red-200',             dot: 'bg-red-500'     },
   policy:       { badge: 'text-amber-700 bg-amber-50 border-amber-200',       dot: 'bg-amber-500'   },
-  default:      { badge: 'text-gray-600 bg-gray-100 border-gray-200',         dot: 'bg-gray-400'    },
+  default:      { badge: 'text-gray-600 bg-gray-100 border-edge-soft',         dot: 'bg-gray-400'    },
 }
 
 const PROP_HEIGHT = 700
@@ -108,7 +108,7 @@ export default function Timeline({ events = [], proportional = false }) {
               )}
               <div
                 className={`relative flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-4 group py-4 pl-9 rounded-lg hover:bg-gray-50/60 transition-colors duration-100 ${
-                  !proportional && i < events.length - 1 ? 'border-b border-gray-100' : ''
+                  !proportional && i < events.length - 1 ? 'border-b border-edge-soft/50' : ''
                 }`}
               >
                 {/* Dot on spine */}

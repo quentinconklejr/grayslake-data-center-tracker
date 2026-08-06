@@ -19,7 +19,7 @@ export default function Energy({ asSection = false }) {
     <div className={`max-w-7xl mx-auto px-4 sm:px-6 ${asSection ? "pt-2 pb-10" : "py-12"}`}>
       {!asSection && <PageTitle {...pageMeta['/energy']} />}
 
-      <FadeIn className="mb-10 pb-8 border-b border-gray-200">
+      <FadeIn className="mb-10 pb-8 border-b border-edge-soft">
         <p className="text-2xs font-mono text-blue-600/60 uppercase tracking-[0.18em] mb-4">Grid Impact</p>
         {asSection ? (
           <h2 className="text-4xl font-display font-bold text-gray-900 tracking-tight mb-3">Energy Draw</h2>
@@ -70,7 +70,7 @@ export default function Energy({ asSection = false }) {
           {capacityFigures.map(f => (
             <div
               key={f.key}
-              className="border border-gray-200 bg-white rounded-lg px-4 py-3.5"
+              className="border border-edge bg-white rounded-lg px-4 py-3.5"
             >
               <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1 mb-1.5">
                 <span className="text-lg font-display font-bold text-gray-900">{f.value}</span>
@@ -178,7 +178,7 @@ export default function Energy({ asSection = false }) {
               ['ComEd Supply Agreement',   'Stated as already in place',  'villagefaq_archived'],
               ['PUE Target',            '— not disclosed', null],
             ].map(([k, v, src, note]) => (
-              <div key={k} className="flex justify-between items-center py-2.5 border-b border-gray-100 last:border-0">
+              <div key={k} className="flex justify-between items-center py-2.5 border-b border-edge-soft/50 last:border-0">
                 <span className="text-sm text-gray-500">{k}</span>
                 <span className="flex items-center gap-1.5 text-sm font-mono text-gray-800">
                   {v}

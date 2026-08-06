@@ -24,7 +24,7 @@ export default function KeyFigureList({ figures, variant = 'table', groups = nul
         {groups.map(group => (
           <div key={group.id}>
             {group.label && (
-              <p className="text-xs font-mono uppercase tracking-widest text-gray-500 mb-3 pb-2 border-b border-gray-100">
+              <p className="text-xs font-mono uppercase tracking-widest text-gray-500 mb-3 pb-2 border-b border-edge-soft/50">
                 {group.label}
               </p>
             )}
@@ -35,7 +35,7 @@ export default function KeyFigureList({ figures, variant = 'table', groups = nul
                 return (
                   <div
                     key={f.id}
-                    className={`border border-gray-200 rounded-xl bg-white ${group.hero ? 'px-5 py-5' : 'px-4 py-4'}`}
+                    className={`border border-edge rounded-xl bg-white ${group.hero ? 'px-5 py-5' : 'px-4 py-4'}`}
                   >
                     <p className="text-2xs font-mono uppercase tracking-widest text-gray-500 mb-1">{f.label}</p>
                     <p className={`font-display font-bold text-gray-900 leading-tight ${group.hero ? 'text-2xl mt-0.5' : 'text-lg'}`}>
@@ -65,7 +65,7 @@ export default function KeyFigureList({ figures, variant = 'table', groups = nul
     return (
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {figures.map(f => (
-          <div key={f.id} className="border border-gray-200 rounded-xl bg-white px-6 py-5">
+          <div key={f.id} className="border border-edge rounded-xl bg-white px-6 py-5">
             <p className="text-2xs font-mono uppercase tracking-widest text-gray-600 mb-1">{f.label}</p>
             <p className="text-2xl font-display font-bold text-gray-900 leading-tight">{f.value}</p>
             <p className="text-xs text-gray-600 mt-0.5 leading-snug">{f.qualifier}</p>
@@ -83,7 +83,7 @@ export default function KeyFigureList({ figures, variant = 'table', groups = nul
   }
 
   return (
-    <div className="divide-y divide-gray-100 border border-gray-200 rounded-xl overflow-hidden bg-white">
+    <div className="divide-y divide-edge-soft/60 border border-edge rounded-xl overflow-hidden bg-white">
       {figures.map(f => (
         <div key={f.id} className="grid sm:grid-cols-5 gap-2 sm:gap-5 px-6 py-5">
           <div className="sm:col-span-2">

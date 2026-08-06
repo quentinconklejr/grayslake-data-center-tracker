@@ -17,7 +17,7 @@ export default function Sources() {
     <div className="max-w-5xl mx-auto px-4 sm:px-6 py-12">
       <PageTitle {...pageMeta['/documents']} />
 
-      <FadeIn className="mb-10 pb-8 border-b border-gray-200">
+      <FadeIn className="mb-10 pb-8 border-b border-edge-soft">
         <p className="text-2xs font-mono text-blue-600/60 uppercase tracking-[0.18em] mb-4">Transparency</p>
         <h1 className="text-5xl font-display font-bold text-gray-900 tracking-tight mb-3">Documents &amp; Sources</h1>
         <p className="text-lg text-gray-600 max-w-3xl leading-relaxed">
@@ -58,7 +58,7 @@ export default function Sources() {
                     </span>
                   )}
                   {source.tier === 'aggregator' && (
-                    <span className="inline-flex items-center px-1.5 py-0.5 rounded text-2xs font-mono font-semibold bg-gray-100 text-gray-500 border border-gray-200 uppercase tracking-widest">
+                    <span className="inline-flex items-center px-1.5 py-0.5 rounded text-2xs font-mono font-semibold bg-gray-100 text-gray-500 border border-edge uppercase tracking-widest">
                       Aggregator
                     </span>
                   )}
@@ -119,7 +119,7 @@ export default function Sources() {
       </FadeIn>
 
       <FadeIn>
-        <div className="bg-gray-50 border border-gray-200 rounded-xl p-6">
+        <div className="bg-gray-50 border border-edge rounded-xl p-6">
           <p className="text-2xs font-mono text-gray-400 uppercase tracking-[0.15em] mb-6">Source Categories</p>
           <div className="grid md:grid-cols-2 gap-6">
             {SOURCE_CATEGORIES.map(({ label, desc }) => (

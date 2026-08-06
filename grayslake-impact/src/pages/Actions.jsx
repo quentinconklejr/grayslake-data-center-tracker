@@ -25,14 +25,14 @@ const JURISDICTIONS = [
 const ACTION_TYPES = [...new Set(actions.map(a => a.actionType))].sort()
 
 const JURI_COLORS = {
-  'Village of Grayslake':                  { active: 'text-blue-700 bg-blue-50 border-blue-300',    inactive: 'text-gray-500 border-gray-200 hover:text-blue-700 hover:border-blue-300' },
-  'Lake County Board':                     { active: 'text-violet-700 bg-violet-50 border-violet-300', inactive: 'text-gray-500 border-gray-200 hover:text-violet-700 hover:border-violet-300' },
-  'Lake County Zoning Board of Appeals':   { active: 'text-purple-700 bg-purple-50 border-purple-300', inactive: 'text-gray-500 border-gray-200 hover:text-purple-700 hover:border-purple-300' },
-  'Lake County SMC':                       { active: 'text-cyan-700 bg-cyan-50 border-cyan-300',    inactive: 'text-gray-500 border-gray-200 hover:text-cyan-700 hover:border-cyan-300' },
-  'Avon Township':                         { active: 'text-amber-700 bg-amber-50 border-amber-300', inactive: 'text-gray-500 border-gray-200 hover:text-amber-700 hover:border-amber-300' },
-  'US Army Corps of Engineers':            { active: 'text-emerald-700 bg-emerald-50 border-emerald-300', inactive: 'text-gray-500 border-gray-200 hover:text-emerald-700 hover:border-emerald-300' },
-  'ComEd/PJM':                             { active: 'text-orange-700 bg-orange-50 border-orange-300', inactive: 'text-gray-500 border-gray-200 hover:text-orange-700 hover:border-orange-300' },
-  'State of Illinois':                     { active: 'text-gray-700 bg-gray-100 border-gray-400',  inactive: 'text-gray-500 border-gray-200 hover:text-gray-700 hover:border-gray-400' },
+  'Village of Grayslake':                  { active: 'text-blue-700 bg-blue-50 border-blue-300',    inactive: 'text-gray-500 border-edge-soft hover:text-blue-700 hover:border-blue-300' },
+  'Lake County Board':                     { active: 'text-violet-700 bg-violet-50 border-violet-300', inactive: 'text-gray-500 border-edge-soft hover:text-violet-700 hover:border-violet-300' },
+  'Lake County Zoning Board of Appeals':   { active: 'text-purple-700 bg-purple-50 border-purple-300', inactive: 'text-gray-500 border-edge-soft hover:text-purple-700 hover:border-purple-300' },
+  'Lake County SMC':                       { active: 'text-cyan-700 bg-cyan-50 border-cyan-300',    inactive: 'text-gray-500 border-edge-soft hover:text-cyan-700 hover:border-cyan-300' },
+  'Avon Township':                         { active: 'text-amber-700 bg-amber-50 border-amber-300', inactive: 'text-gray-500 border-edge-soft hover:text-amber-700 hover:border-amber-300' },
+  'US Army Corps of Engineers':            { active: 'text-emerald-700 bg-emerald-50 border-emerald-300', inactive: 'text-gray-500 border-edge-soft hover:text-emerald-700 hover:border-emerald-300' },
+  'ComEd/PJM':                             { active: 'text-orange-700 bg-orange-50 border-orange-300', inactive: 'text-gray-500 border-edge-soft hover:text-orange-700 hover:border-orange-300' },
+  'State of Illinois':                     { active: 'text-gray-700 bg-gray-100 border-gray-400',  inactive: 'text-gray-500 border-edge-soft hover:text-gray-700 hover:border-gray-400' },
 }
 
 const JURI_BADGE = {
@@ -67,12 +67,12 @@ for (const a of actions) {
 }
 
 function ActionCard({ action }) {
-  const juriBadge = JURI_BADGE[action.jurisdiction] ?? 'text-gray-600 bg-gray-100 border-gray-200'
+  const juriBadge = JURI_BADGE[action.jurisdiction] ?? 'text-gray-600 bg-gray-100 border-edge-soft'
   const isPending = action.status === 'pending'
   return (
-    <div className="border border-gray-200 rounded-xl bg-white overflow-hidden">
+    <div className="border border-edge rounded-xl bg-white overflow-hidden">
       {/* Header row */}
-      <div className="flex flex-wrap items-center gap-2 px-5 pt-4 pb-3 border-b border-gray-100">
+      <div className="flex flex-wrap items-center gap-2 px-5 pt-4 pb-3 border-b border-edge-soft/50">
         <time className="text-2xs font-mono text-gray-400 shrink-0">{fmtDate(action.date)}</time>
         <span aria-hidden="true" className="text-gray-200 text-2xs">·</span>
         <span className={`inline-flex items-center px-1.5 py-0.5 rounded-sm border text-2xs font-mono font-semibold uppercase tracking-widest ${juriBadge}`}>
@@ -122,7 +122,7 @@ export default function Actions() {
     <div className="max-w-4xl mx-auto px-4 sm:px-6 py-12">
       <PageTitle {...pageMeta['/actions']} />
 
-      <FadeIn className="mb-10 pb-8 border-b border-gray-200">
+      <FadeIn className="mb-10 pb-8 border-b border-edge-soft">
         <p className="text-2xs font-mono text-blue-600/60 uppercase tracking-[0.18em] mb-4">Regulatory actions</p>
         <h1 className="text-5xl font-display font-bold text-gray-900 tracking-tight mb-3">Jurisdictional Actions</h1>
         <p className="text-lg text-gray-600 max-w-3xl leading-relaxed">
@@ -148,7 +148,7 @@ export default function Actions() {
             className={`inline-flex items-center px-2.5 py-1.5 rounded-sm border text-2xs font-mono font-semibold uppercase tracking-widest transition-colors duration-150 ${
               juriFilter === 'all'
                 ? 'text-gray-900 bg-gray-100 border-gray-300'
-                : 'text-gray-500 border-gray-200 hover:text-gray-800 hover:border-gray-300'
+                : 'text-gray-500 border-edge-soft hover:text-gray-800 hover:border-gray-300'
             }`}
           >
             All
@@ -185,7 +185,7 @@ export default function Actions() {
             className={`inline-flex items-center px-2.5 py-1.5 rounded-sm border text-2xs font-mono font-semibold uppercase tracking-widest transition-colors duration-150 ${
               typeFilter === 'all'
                 ? 'text-gray-900 bg-gray-100 border-gray-300'
-                : 'text-gray-500 border-gray-200 hover:text-gray-800 hover:border-gray-300'
+                : 'text-gray-500 border-edge-soft hover:text-gray-800 hover:border-gray-300'
             }`}
           >
             All types
@@ -199,7 +199,7 @@ export default function Actions() {
               className={`inline-flex items-center px-2.5 py-1.5 rounded-sm border text-2xs font-mono font-semibold uppercase tracking-widest transition-colors duration-150 ${
                 typeFilter === t
                   ? 'text-gray-900 bg-gray-100 border-gray-300'
-                  : 'text-gray-500 border-gray-200 hover:text-gray-800 hover:border-gray-300'
+                  : 'text-gray-500 border-edge-soft hover:text-gray-800 hover:border-gray-300'
               }`}
             >
               {t}
@@ -226,7 +226,7 @@ export default function Actions() {
         )}
       </div>
 
-      <FadeIn className="mt-12 border-t border-gray-200 pt-8">
+      <FadeIn className="mt-12 border-t border-edge-soft pt-8">
         <div className="flex flex-wrap gap-4 text-sm mb-6">
           <Link to="/officials" className="text-blue-600 hover:text-blue-700 transition-colors">
             Officials overview →

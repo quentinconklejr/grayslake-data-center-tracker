@@ -42,7 +42,7 @@ export default function EnergyDrawChart() {
       <div ref={ref} className="space-y-8">
 
         {/* Primary figure */}
-        <div className="flex items-end justify-between gap-4 pb-6 border-b border-gray-200">
+        <div className="flex items-end justify-between gap-4 pb-6 border-b border-edge-soft">
           <div>
             <p className="text-2xs font-mono text-gray-400 uppercase tracking-widest mb-1">Secured Utility Power</p>
             <p className="text-5xl font-display font-bold text-gray-900 tracking-tight">1,600 <span className="text-2xl text-gray-400">MW</span></p>
@@ -116,7 +116,7 @@ export default function EnergyDrawChart() {
         </div>
 
         {/* Key metrics */}
-        <div className="grid grid-cols-3 gap-4 pt-2 border-t border-gray-200">
+        <div className="grid grid-cols-3 gap-4 pt-2 border-t border-edge-soft">
           {[
             { label: 'Secured',  value: `${SECURED.toLocaleString()} MW`, color: 'text-gray-800' },
             { label: 'IT Cap.',  value: `${CAPACITY.toLocaleString()} MW`, color: 'text-blue-600' },

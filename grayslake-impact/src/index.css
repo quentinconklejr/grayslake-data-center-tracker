@@ -37,19 +37,19 @@ body {
 /* ─── Glass card utilities ──────────────────────────────────────────────────── */
 @layer components {
   .glass-card {
-    @apply bg-white border border-gray-200 rounded-xl shadow-glass;
+    @apply bg-white border border-edge rounded-xl shadow-glass;
   }
   .glass-card-hover {
-    @apply bg-white border border-gray-200 rounded-xl shadow-glass
+    @apply bg-white border border-edge rounded-xl shadow-glass
            transition-all duration-200
            hover:border-gray-300 hover:shadow-glass-hover;
   }
   .glass-panel {
-    @apply bg-white/80 backdrop-blur-sm border border-gray-200 rounded-xl shadow-glass;
+    @apply bg-white/80 backdrop-blur-sm border border-edge rounded-xl shadow-glass;
   }
   /* Accent-bordered card — used for highlighted data blocks */
   .card-accent-blue {
-    @apply bg-white border border-blue-200 rounded-xl shadow-glass;
+    @apply bg-white border border-blue-400 rounded-xl shadow-glass;
   }
   /* Section eyebrow — consistent label style above section headings */
   .eyebrow {

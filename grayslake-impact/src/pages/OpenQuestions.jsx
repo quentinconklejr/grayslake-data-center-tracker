@@ -26,12 +26,12 @@ for (const q of questions) {
 }
 
 const CAT_META = {
-  water:   { label: 'Water',   accent: 'border-l-sky-400',     active: 'text-sky-700 bg-sky-50 border-sky-300',          inactive: 'text-gray-500 border-gray-200 hover:text-sky-700 hover:border-sky-300' },
-  energy:  { label: 'Energy',  accent: 'border-l-amber-400',   active: 'text-amber-700 bg-amber-50 border-amber-300',    inactive: 'text-gray-500 border-gray-200 hover:text-amber-700 hover:border-amber-300' },
-  scale:   { label: 'Scale',   accent: 'border-l-violet-400',  active: 'text-violet-700 bg-violet-50 border-violet-300', inactive: 'text-gray-500 border-gray-200 hover:text-violet-700 hover:border-violet-300' },
-  tax:     { label: 'Tax',     accent: 'border-l-emerald-400', active: 'text-emerald-700 bg-emerald-50 border-emerald-300', inactive: 'text-gray-500 border-gray-200 hover:text-emerald-700 hover:border-emerald-300' },
-  jobs:    { label: 'Jobs',    accent: 'border-l-blue-400',    active: 'text-blue-700 bg-blue-50 border-blue-300',       inactive: 'text-gray-500 border-gray-200 hover:text-blue-700 hover:border-blue-300' },
-  process: { label: 'Process', accent: 'border-l-red-400',     active: 'text-red-700 bg-red-50 border-red-300',          inactive: 'text-gray-500 border-gray-200 hover:text-red-700 hover:border-red-300' },
+  water:   { label: 'Water',   accent: 'border-l-sky-400',     active: 'text-sky-700 bg-sky-50 border-sky-300',          inactive: 'text-gray-500 border-edge-soft hover:text-sky-700 hover:border-sky-300' },
+  energy:  { label: 'Energy',  accent: 'border-l-amber-400',   active: 'text-amber-700 bg-amber-50 border-amber-300',    inactive: 'text-gray-500 border-edge-soft hover:text-amber-700 hover:border-amber-300' },
+  scale:   { label: 'Scale',   accent: 'border-l-violet-400',  active: 'text-violet-700 bg-violet-50 border-violet-300', inactive: 'text-gray-500 border-edge-soft hover:text-violet-700 hover:border-violet-300' },
+  tax:     { label: 'Tax',     accent: 'border-l-emerald-400', active: 'text-emerald-700 bg-emerald-50 border-emerald-300', inactive: 'text-gray-500 border-edge-soft hover:text-emerald-700 hover:border-emerald-300' },
+  jobs:    { label: 'Jobs',    accent: 'border-l-blue-400',    active: 'text-blue-700 bg-blue-50 border-blue-300',       inactive: 'text-gray-500 border-edge-soft hover:text-blue-700 hover:border-blue-300' },
+  process: { label: 'Process', accent: 'border-l-red-400',     active: 'text-red-700 bg-red-50 border-red-300',          inactive: 'text-gray-500 border-edge-soft hover:text-red-700 hover:border-red-300' },
 }
 
 // dotCls values are rendered on an aria-hidden bullet that repeats the
@@ -46,7 +46,7 @@ const BLOCKS = [
 function QuestionCard({ q, isExpanded, onToggle }) {
   const cat = CAT_META[q.category]
   return (
-    <div className="border border-gray-200 rounded-xl overflow-hidden bg-white hover:border-gray-300 transition-colors duration-150">
+    <div className="border border-edge rounded-xl overflow-hidden bg-white hover:border-gray-300 transition-colors duration-150">
       <button
         onClick={onToggle}
         className="w-full flex items-start justify-between gap-4 px-6 py-5 text-left hover:bg-gray-50 transition-colors duration-150 group"
@@ -164,7 +164,7 @@ export default function OpenQuestions() {
     <div className="max-w-5xl mx-auto px-4 sm:px-6 py-12">
       <PageTitle {...pageMeta['/questions']} />
 
-      <FadeIn className="mb-10 pb-8 border-b border-gray-200">
+      <FadeIn className="mb-10 pb-8 border-b border-edge-soft">
         <p className="text-2xs font-mono text-blue-700 uppercase tracking-[0.18em] mb-4">Questions &amp; Answers</p>
         <h1 className="text-5xl font-display font-bold text-gray-900 tracking-tight mb-3">What&rsquo;s Settled, What&rsquo;s Not</h1>
         <p className="text-lg text-gray-600 max-w-3xl leading-relaxed">
@@ -184,7 +184,7 @@ export default function OpenQuestions() {
               aria-pressed={detailed === key}
               className={`px-4 py-2 text-sm rounded-md transition-colors min-h-[40px] ${
                 detailed === key
-                  ? 'bg-white text-gray-900 font-medium shadow-sm border border-gray-200'
+                  ? 'bg-white text-gray-900 font-medium shadow-sm border border-edge'
                   : 'text-gray-600 hover:text-gray-900'
               }`}
             >
@@ -228,7 +228,7 @@ export default function OpenQuestions() {
             className={`inline-flex items-center px-2.5 py-1.5 rounded-sm border text-2xs font-mono font-semibold uppercase tracking-widest transition-colors duration-150 ${
               activeCategory === 'all'
                 ? 'text-gray-900 bg-gray-100 border-gray-300'
-                : 'text-gray-500 border-gray-200 hover:text-gray-800 hover:border-gray-300'
+                : 'text-gray-500 border-edge-soft hover:text-gray-800 hover:border-gray-300'
             }`}
           >
             All ({questions.length})
@@ -301,7 +301,7 @@ export default function OpenQuestions() {
       </div>
 
       <FadeIn>
-        <div className="mt-10 pt-6 border-t border-gray-200">
+        <div className="mt-10 pt-6 border-t border-edge-soft">
           <p className="text-xs text-gray-500 leading-relaxed">
             Questions are added as new disputes surface in public records, journalism, or court filings.
           </p>

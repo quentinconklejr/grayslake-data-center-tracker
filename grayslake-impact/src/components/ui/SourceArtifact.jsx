@@ -40,7 +40,7 @@ export default function SourceArtifact({ publisher, date, pageRef, url, excerpts
           </blockquote>
         ))}
         {annotation && (
-          <p className="text-2xs font-mono text-gray-400 pt-1 border-t border-gray-200">{annotation}</p>
+          <p className="text-2xs font-mono text-gray-400 pt-1 border-t border-edge-soft">{annotation}</p>
         )}
       </div>
     </div>

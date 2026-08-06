@@ -26,7 +26,7 @@ export default function TaxImpact({ asSection = false }) {
     <div className={`max-w-7xl mx-auto px-4 sm:px-6 ${asSection ? "pt-2 pb-10" : "py-12"}`}>
       {!asSection && <PageTitle {...pageMeta['/tax-impact']} />}
 
-      <FadeIn className="mb-10 pb-8 border-b border-gray-200">
+      <FadeIn className="mb-10 pb-8 border-b border-edge-soft">
         <p className="text-2xs font-mono text-blue-600 uppercase tracking-[0.18em] mb-4">Fiscal Impact</p>
         {asSection ? (
           <h2 className="text-4xl font-display font-bold text-gray-900 tracking-tight mb-3">Tax Revenue &amp; Developer Fees</h2>
@@ -63,7 +63,7 @@ export default function TaxImpact({ asSection = false }) {
         </p>
         <ul className="grid sm:grid-cols-2 gap-x-8 gap-y-0 mb-5">
           {taxingDistricts.map(d => (
-            <li key={d.name} className="flex items-center gap-2.5 py-2.5 border-b border-gray-100">
+            <li key={d.name} className="flex items-center gap-2.5 py-2.5 border-b border-edge-soft/50">
               <span
                 className={`shrink-0 w-1.5 h-1.5 rounded-full ${d.grayslake ? 'bg-blue-500' : 'bg-amber-500'}`}
                 aria-hidden="true"
@@ -86,7 +86,7 @@ export default function TaxImpact({ asSection = false }) {
         <p className="text-xs text-gray-500 leading-relaxed border-t border-gray-100 pt-4">{taxingDistrictsNote}</p>
       </FadeIn>
 
-      <div className="grid lg:grid-cols-2 gap-px bg-gray-200 rounded-xl overflow-hidden border border-gray-200 mb-8">
+      <div className="grid lg:grid-cols-2 gap-px bg-gray-200 rounded-xl overflow-hidden border border-edge mb-8">
 
         <FadeIn className="bg-white p-8">
           <div className="flex items-start justify-between mb-1">
@@ -112,7 +112,7 @@ export default function TaxImpact({ asSection = false }) {
 
           <SchoolFundingChart />
 
-          <dl className="mt-8 space-y-0 border-t border-gray-200 pt-6">
+          <dl className="mt-8 space-y-0 border-t border-edge-soft pt-6">
             {[
               ['Facility',              meta.source],
               ['One-facility tax (2025)', `$${meta.totalPropertyTaxBilled2025}M / year`],
@@ -120,7 +120,7 @@ export default function TaxImpact({ asSection = false }) {
               ['School district',       meta.districtName],
               ['Outcome',               meta.outcome],
             ].map(([k, v]) => (
-              <div key={k} className="flex justify-between items-start gap-4 py-2.5 border-b border-gray-100 last:border-0">
+              <div key={k} className="flex justify-between items-start gap-4 py-2.5 border-b border-edge-soft/50 last:border-0">
                 <dt className="text-sm text-gray-500 shrink-0">{k}</dt>
                 <dd className="text-sm text-gray-800 font-medium text-right">{v}</dd>
               </div>

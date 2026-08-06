@@ -28,7 +28,7 @@ export const EVIDENCE = {
     ),
   },
   unknown: {
-    border:  'border-gray-200',
+    border:  'border-edge-soft',
     bg:      'bg-gray-50',
     labelCls: 'text-gray-400',
     tag:     'Not Yet Public',

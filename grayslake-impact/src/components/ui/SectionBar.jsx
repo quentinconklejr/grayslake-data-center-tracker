@@ -42,7 +42,7 @@ export default function SectionBar() {
 
   return (
     <div
-      className="sticky z-40 overflow-hidden bg-white/95 backdrop-blur-sm border-b border-gray-100"
+      className="sticky z-40 overflow-hidden bg-white/95 backdrop-blur-sm border-b border-edge-soft/50"
       style={{
         top: headerH,
         maxHeight: visible && current ? 36 : 0,

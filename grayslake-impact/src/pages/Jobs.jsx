@@ -62,7 +62,7 @@ export default function Jobs({ asSection = false }) {
     <div className={`max-w-7xl mx-auto px-4 sm:px-6 ${asSection ? "pt-2 pb-10" : "py-12"}`}>
       {!asSection && <PageTitle {...pageMeta['/jobs']} />}
 
-      <FadeIn className="mb-10 pb-8 border-b border-gray-200">
+      <FadeIn className="mb-10 pb-8 border-b border-edge-soft">
         <p className="text-2xs font-mono text-blue-600 uppercase tracking-[0.18em] mb-4">Employment</p>
         {asSection ? (
           <h2 className="text-4xl font-display font-bold text-gray-900 tracking-tight mb-3">Job Creation</h2>
@@ -141,7 +141,7 @@ export default function Jobs({ asSection = false }) {
           </div>
           <div className="space-y-0">
             {PERM_ROLES.map(([role, desc]) => (
-              <div key={role} className="py-3 border-b border-gray-100 last:border-0">
+              <div key={role} className="py-3 border-b border-edge-soft/50 last:border-0">
                 <p className="text-sm font-medium text-gray-800 mb-0.5">{role}</p>
                 <p className="text-sm text-gray-500">{desc}</p>
               </div>
