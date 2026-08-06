@@ -23,6 +23,14 @@ for (const f of keyFigures) {
   }
 }
 
+const GLANCE_GROUPS = [
+  { id: 'hero',     ids: ['jobs-permanent', 'investment'],                                        cols: 'sm:grid-cols-2',  hero: true },
+  { id: 'land',     label: 'Land',              ids: ['acres-owned', 'acres-approved', 'acres-controlled'], cols: 'sm:grid-cols-3' },
+  { id: 'power',    label: 'Power & Scale',     ids: ['capacity-comed', 'buildable-area'],        cols: 'sm:grid-cols-2' },
+  { id: 'timeline', label: 'Timeline & Status', ids: ['buildout', 'buildings', 'wetlands'],       cols: 'sm:grid-cols-3' },
+  { id: 'water',    label: 'Water',             ids: ['water', 'water-flush'],                    cols: 'sm:grid-cols-2' },
+]
+
 const SECTIONS = [
   { id: 'energy', label: 'Energy', Component: Energy },
   { id: 'jobs', label: 'Jobs', Component: Jobs },
@@ -71,7 +79,7 @@ export default function Project() {
         <FootnoteProvider preload={GLANCE_KEYS}>
           <FadeIn className="py-8 border-b border-gray-200">
             <p className="text-2xs font-mono text-gray-600 uppercase tracking-widest mb-4">At a glance</p>
-            <KeyFigureList figures={keyFigures} variant="cards" />
+            <KeyFigureList figures={keyFigures} variant="grouped" groups={GLANCE_GROUPS} />
             <FootnoteList />
           </FadeIn>
         </FootnoteProvider>
