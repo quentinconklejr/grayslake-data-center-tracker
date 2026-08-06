@@ -17,7 +17,7 @@ export default function NotFound() {
       </p>
       <Link
         to="/"
-        className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-50 border border-blue-200 text-blue-700 text-sm font-medium hover:bg-blue-100 transition-colors"
+        className="inline-flex items-center gap-2 px-5 py-3 rounded-lg bg-blue-50 border border-blue-200 text-blue-700 text-sm font-medium hover:bg-blue-100 transition-colors min-h-[44px]"
       >
         <svg viewBox="0 0 16 16" className="w-3.5 h-3.5" fill="currentColor">
           <path fillRule="evenodd" d="M7.707 1.293a1 1 0 00-1.414 0l-6 6a1 1 0 000 1.414l6 6a1 1 0 001.414-1.414L3.414 9H14a1 1 0 000-2H3.414l4.293-4.293a1 1 0 000-1.414z" clipRule="evenodd" />

@@ -182,7 +182,7 @@ export default function OpenQuestions() {
               type="button"
               onClick={() => setDetailed(key)}
               aria-pressed={detailed === key}
-              className={`px-3.5 py-1.5 text-sm rounded-md transition-colors ${
+              className={`px-4 py-2 text-sm rounded-md transition-colors min-h-[40px] ${
                 detailed === key
                   ? 'bg-white text-gray-900 font-medium shadow-sm border border-gray-200'
                   : 'text-gray-600 hover:text-gray-900'
