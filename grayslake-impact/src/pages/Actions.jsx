@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import PageTitle from '../components/ui/PageTitle'
+import BackToTop from '../components/ui/BackToTop'
 import { pageMeta } from '../data/pageMeta'
 import FadeIn from '../components/ui/FadeIn'
 import SourceCitation from '../components/ui/SourceCitation'
@@ -240,6 +241,7 @@ export default function Actions() {
       </FadeIn>
 
       <FootnoteList />
+      <BackToTop />
     </div>
     </FootnoteProvider>
   )

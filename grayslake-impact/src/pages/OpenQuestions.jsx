@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import PageTitle from '../components/ui/PageTitle'
 import PageNext from '../components/ui/PageNext'
+import BackToTop from '../components/ui/BackToTop'
 import { pageMeta } from '../data/pageMeta'
 import ItemCitations from '../components/ui/ItemCitations'
 import { keysOf } from '../lib/citationKeys'
@@ -312,6 +313,7 @@ export default function OpenQuestions() {
         color="text-violet-700"
         hoverBorder="hover:border-violet-300"
       />
+      <BackToTop />
     </div>
     </FootnoteProvider>
   )

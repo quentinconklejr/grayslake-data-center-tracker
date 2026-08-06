@@ -4,6 +4,7 @@
 // "Guides → Residents"). Reporters is now a top-level link; the duplicate
 // Residents→/questions entry is removed; the desktop and mobile navs match.
 export const NAV_LINKS = [
+  { to: '/',           label: 'Home',        end: true  },
   { to: '/project',   label: 'The Project', end: false },
   { to: '/timeline',  label: 'Timeline',    end: false },
   { to: '/questions', label: 'Questions',   end: false },

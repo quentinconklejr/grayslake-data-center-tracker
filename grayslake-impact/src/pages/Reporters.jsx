@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import PageTitle from '../components/ui/PageTitle'
+import BackToTop from '../components/ui/BackToTop'
 import { pageMeta } from '../data/pageMeta'
 import FadeIn from '../components/ui/FadeIn'
 import { FootnoteProvider, FootnoteList } from '../components/ui/FootnoteContext'
@@ -99,6 +100,7 @@ export default function Reporters() {
       </FadeIn>
 
       <FootnoteList />
+      <BackToTop />
     </div>
     </FootnoteProvider>
   )

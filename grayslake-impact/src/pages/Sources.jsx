@@ -21,7 +21,7 @@ export default function Sources() {
         <p className="text-2xs font-mono text-blue-600/60 uppercase tracking-[0.2em] mb-3">Transparency</p>
         <h1 className="text-4xl font-display font-bold text-gray-900 tracking-tight mb-3">Documents &amp; Sources</h1>
         <p className="text-base text-gray-600 max-w-2xl leading-relaxed">
-          All figures in this tracker come from publicly available documents and verified journalism.
+          All figures in this tracker come from public documents and press coverage on file.
           Estimated figures are labeled.
         </p>
         <p className="text-2xs font-mono text-gray-400 mt-3">Last verified {LAST_VERIFIED}</p>

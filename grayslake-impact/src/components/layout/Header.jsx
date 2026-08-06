@@ -2,16 +2,29 @@ import { useState, useEffect } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { NAV_LINKS } from '../../data/navLinks'
 
+// Maps route paths to human-readable breadcrumb labels.
+// Kept separate from pageMeta so breadcrumbs always match the nav labels.
+const BREADCRUMB_LABELS = {
+  '/project':   'The Project',
+  '/timeline':  'Timeline',
+  '/questions': 'Questions & Answers',
+  '/documents': 'Documents',
+  '/map':       'Map',
+  '/reporters': 'Reporters',
+  '/about':     'About',
+  '/actions':   'Actions',
+}
+
 function NavLink_({ to, label, end }) {
   return (
     <NavLink
       to={to}
       end={end}
       className={({ isActive }) =>
-        `inline-flex items-center text-xs font-medium whitespace-nowrap transition-colors duration-150 py-1.5 ${
+        `inline-flex items-center text-xs font-medium whitespace-nowrap transition-colors duration-150 py-1 border-b-2 ${
           isActive
-            ? 'text-gray-900'
-            : 'text-gray-500 hover:text-gray-800'
+            ? 'text-blue-700 border-blue-600 font-semibold'
+            : 'text-gray-500 border-transparent hover:text-gray-900 hover:border-gray-300'
         }`
       }
     >
@@ -27,7 +40,7 @@ function MobileNavLink({ to, label, end }) {
       end={end}
       className={({ isActive }) =>
         `block py-3 text-sm border-b border-gray-100 last:border-0 transition-colors duration-150 ${
-          isActive ? 'text-gray-900 font-semibold' : 'text-gray-500 hover:text-gray-800 font-medium'
+          isActive ? 'text-blue-700 font-semibold' : 'text-gray-500 hover:text-gray-900 font-medium'
         }`
       }
     >
@@ -36,10 +49,26 @@ function MobileNavLink({ to, label, end }) {
   )
 }
 
+function TrackerIcon() {
+  return (
+    <div className="w-7 h-7 rounded-lg bg-blue-600 flex items-center justify-center shrink-0 shadow-sm">
+      <svg viewBox="0 0 14 14" className="w-4 h-4" fill="none" aria-hidden="true">
+        <rect x="1.5" y="7.5" width="2.5" height="5" rx="0.5" fill="white"/>
+        <rect x="5.5" y="4.5" width="2.5" height="8" rx="0.5" fill="white"/>
+        <rect x="9.5" y="6" width="2.5" height="6.5" rx="0.5" fill="white"/>
+        <path d="M3 5.5L7 2.5L11 4" stroke="white" strokeWidth="0.9" strokeLinecap="round" strokeLinejoin="round" opacity="0.55"/>
+      </svg>
+    </div>
+  )
+}
+
 export default function Header() {
   const [scrolled, setScrolled]     = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
   const location = useLocation()
+
+  const isHome      = location.pathname === '/'
+  const crumbLabel  = BREADCRUMB_LABELS[location.pathname] ?? null
 
   useEffect(() => {
     setMobileOpen(false)
@@ -52,32 +81,40 @@ export default function Header() {
   }, [])
 
   return (
-    <header className={`sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b transition-all duration-200 ${
-      scrolled ? 'border-gray-200 shadow-glass' : 'border-gray-100'
+    <header className={`sticky top-0 z-50 bg-white/97 backdrop-blur-sm border-b transition-all duration-200 ${
+      scrolled ? 'border-blue-200/50 shadow-glass-md' : 'border-gray-100'
     }`}>
 
-      {/* Main bar */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center py-3.5 gap-4 sm:gap-8">
+      {/* ── Main bar ──────────────────────────────────────────────────────────── */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center py-2.5 gap-3 sm:gap-5">
 
-        <Link to="/" className="shrink-0 flex flex-col group">
-          <span className="text-sm font-semibold text-gray-900 group-hover:text-gray-600 transition-colors leading-tight whitespace-nowrap tracking-tight">
-            Grayslake Data Center Tracker
-          </span>
-          <span className="hidden sm:block text-2xs font-mono text-gray-400 leading-tight mt-0.5">
-            An independent public-records project · Not affiliated with T5 or the Village
-          </span>
+        <Link to="/" className="shrink-0 flex items-center gap-2.5 group" aria-label="Grayslake Data Center Tracker — Home">
+          <TrackerIcon />
+          <div className="flex flex-col min-w-0">
+            <span className="text-sm font-semibold text-gray-900 group-hover:text-blue-700 transition-colors leading-tight whitespace-nowrap tracking-tight">
+              Grayslake Data Center Tracker
+            </span>
+            <span className="hidden sm:block text-2xs font-mono text-gray-400 leading-tight mt-0.5 whitespace-nowrap">
+              Not affiliated with T5 or the Village
+            </span>
+          </div>
         </Link>
 
         {/* Desktop nav */}
-        <nav className="hidden md:flex items-center gap-3 flex-1 justify-end flex-wrap">
+        <nav
+          className="hidden md:flex items-center gap-3 lg:gap-4 flex-1 justify-end"
+          aria-label="Main navigation"
+        >
           {NAV_LINKS.map(l => <NavLink_ key={l.to} {...l} />)}
         </nav>
 
         {/* Mobile hamburger */}
         <button
-          className="md:hidden ml-auto text-gray-500 hover:text-gray-800 transition-colors p-2.5 -mr-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center"
+          className="md:hidden ml-auto text-gray-500 hover:text-gray-800 transition-colors p-2.5 -mr-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg hover:bg-gray-100"
           onClick={() => setMobileOpen(v => !v)}
           aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+          aria-expanded={mobileOpen}
+          aria-controls="mobile-menu"
         >
           {mobileOpen ? (
             <svg className="w-4 h-4" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
@@ -92,9 +129,28 @@ export default function Header() {
 
       </div>
 
-      {/* Mobile menu */}
+      {/* ── Breadcrumb strip — non-home pages only ──────────────────────────── */}
+      {!isHome && crumbLabel && (
+        <div className="border-t border-gray-100 bg-gray-50/60">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 py-1 flex items-center gap-1.5" aria-label="Breadcrumb">
+            <Link
+              to="/"
+              className="text-2xs font-mono text-gray-400 hover:text-blue-600 transition-colors"
+            >
+              Home
+            </Link>
+            <span className="text-2xs text-gray-300 select-none" aria-hidden="true">›</span>
+            <span className="text-2xs font-mono text-gray-700 font-medium">{crumbLabel}</span>
+          </div>
+        </div>
+      )}
+
+      {/* ── Mobile menu ──────────────────────────────────────────────────────── */}
       {mobileOpen && (
-        <div className="md:hidden border-t border-gray-100 bg-white/98 overflow-y-auto max-h-[calc(100dvh-4rem)]">
+        <div
+          id="mobile-menu"
+          className="md:hidden border-t border-gray-100 bg-white/98 overflow-y-auto max-h-[calc(100dvh-4rem)]"
+        >
           <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-1 pb-2">
             {NAV_LINKS.map(l => <MobileNavLink key={l.to} {...l} />)}
           </div>

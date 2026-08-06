@@ -119,14 +119,14 @@ export default function Home() {
       <SectionBar />
 
       {/* ── Intro + key stats ──────────────────────────────────────────────── */}
-      <section data-section="Key Facts" className="bg-white border-b border-gray-200">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 pt-10 sm:pt-14 pb-10 sm:pb-14">
+      <section data-section="Key Facts" className="bg-gradient-to-b from-blue-50/60 to-white border-b border-gray-200">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 pt-12 sm:pt-16 pb-10 sm:pb-14">
 
           <FadeIn>
-            <p className="text-sm text-gray-500 mb-2">
+            <p className="text-sm text-blue-700/70 font-medium mb-2">
               In plain language: a very large computing facility — one of the biggest proposed anywhere in the U.S.
             </p>
-            <h1 className="text-3xl sm:text-4xl font-display font-bold text-gray-900 leading-tight tracking-tight mb-4 max-w-[52ch]">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold text-gray-900 leading-tight tracking-tight mb-4 max-w-[52ch]">
               T5 @ Chicago IV is an approved $8.5–18B hyperscale AI data center under construction in Grayslake, Illinois.
             </h1>
             <p className="text-xl text-gray-600 leading-relaxed max-w-[65ch] mb-4">
@@ -248,7 +248,7 @@ export default function Home() {
                   <Link
                     key={to}
                     to={to}
-                    className={`group block bg-white border border-gray-200 ${hoverBorder} rounded-xl px-5 py-4 transition-all duration-150 hover:shadow-sm`}
+                    className={`group block bg-white border border-gray-200 ${hoverBorder} rounded-xl px-5 py-5 transition-all duration-150 hover:shadow-glass-md`}
                   >
                     <div className="flex items-start justify-between gap-3">
                       <div className="min-w-0">
@@ -271,7 +271,7 @@ export default function Home() {
       </section>
 
       {/* ── Site map ─────────────────────────────────────────────────────────── */}
-      <section data-section="Land Ownership" className="max-w-7xl mx-auto px-4 sm:px-6 pt-12 pb-14">
+      <section data-section="Land Ownership" className="max-w-7xl mx-auto px-4 sm:px-6 pt-14 pb-14">
         <FadeIn>
           <div className="flex items-end justify-between mb-5">
             <div>
@@ -308,7 +308,7 @@ export default function Home() {
             <FadeIn key={to} delay={Math.min(i * 0.05, 0.12)}>
               <Link
                 to={to}
-                className={`group flex flex-col h-full bg-white border border-gray-200 border-t-4 ${topBorder} rounded-xl px-5 py-5 hover:shadow-sm hover:border-gray-300 transition-all duration-150`}
+                className={`group flex flex-col h-full bg-white border border-gray-200 border-t-[5px] ${topBorder} rounded-xl px-5 py-5 hover:shadow-glass-md hover:border-gray-300 transition-all duration-150`}
               >
                 <p className={`text-2xs font-mono uppercase tracking-[0.2em] mb-3 ${catColor}`}>{cat}</p>
                 <p className="text-sm font-display font-semibold text-gray-900 leading-snug flex-1 mb-4">{headline}</p>
