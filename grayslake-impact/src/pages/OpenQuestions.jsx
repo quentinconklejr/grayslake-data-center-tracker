@@ -285,9 +285,12 @@ export default function OpenQuestions() {
                     setDetailed(true)
                     setExpandedIds(prev => new Set(prev).add(q.id))
                   }}
-                  className="mt-3 text-sm font-medium text-blue-700 hover:text-blue-800 transition-colors"
+                  className="mt-4 inline-flex items-center gap-2 px-4 py-2.5 rounded-lg border border-blue-200 bg-blue-50 text-sm font-medium text-blue-700 hover:bg-blue-100 hover:border-blue-300 hover:text-blue-800 transition-all duration-150 min-h-[44px]"
                 >
-                  See the sources behind this &rarr;
+                  See the sources behind this
+                  <svg className="w-3.5 h-3.5 shrink-0" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
+                    <path d="M2 7h10M7 2l5 5-5 5" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
                 </button>
               </section>
             )}

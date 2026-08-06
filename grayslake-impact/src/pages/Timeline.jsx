@@ -47,12 +47,13 @@ export default function TimelinePage() {
       <PageTitle {...pageMeta['/timeline']} />
 
       <FadeIn className="mb-10 pb-8 border-b border-gray-200">
-        <p className="text-2xs font-mono text-blue-600/60 uppercase tracking-[0.2em] mb-3">Project History</p>
-        <h1 className="text-4xl font-display font-bold text-gray-900 tracking-tight mb-3">Sourced Event Timeline</h1>
+        <p className="text-xs font-mono text-blue-600 uppercase tracking-[0.2em] mb-3">Project History</p>
+        <h1 className="text-4xl sm:text-5xl font-display font-bold text-gray-900 tracking-tight mb-4">How We Got Here</h1>
+        <p className="text-lg text-gray-700 max-w-2xl leading-relaxed mb-2">
+          From first vote to active construction — a sourced record of every key approval, lawsuit, opposition milestone, and policy change.
+        </p>
         <p className="text-base text-gray-600 max-w-2xl leading-relaxed">
-          Key milestones in the T5 @ Chicago IV development. Entries span village approvals,
-          community opposition, legal challenges, construction activity, and state policy changes.
-          All events are sourced and cited.
+          Entries are cited. Solid markers are confirmed events; hollow markers are projected milestones from developer filings.
         </p>
         <div className="flex items-center gap-4 mt-4">
           <span className="text-2xs font-mono text-gray-400">{visible.length} of {timelineEvents.length} events</span>

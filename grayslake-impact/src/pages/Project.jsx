@@ -64,14 +64,17 @@ export default function Project() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-12">
         <FadeIn className="pb-8 border-b border-gray-200">
-          <p className="text-2xs font-mono text-blue-700 uppercase tracking-[0.2em] mb-3">T5 @ Chicago IV</p>
-          <h1 className="text-4xl font-display font-bold text-gray-900 tracking-tight mb-3">The Project</h1>
-          <p className="text-base text-gray-600 max-w-2xl leading-relaxed">
-            What the approvals permit, what has been built, and what each figure actually rests on.
-            Energy, employment, tax and school funding in one place, every number carrying the
-            condition attached to it.
+          <p className="text-xs font-mono text-blue-700 uppercase tracking-[0.2em] mb-3">T5 @ Chicago IV</p>
+          <h1 className="text-4xl sm:text-5xl font-display font-bold text-gray-900 tracking-tight mb-4">The Project</h1>
+          <p className="text-lg text-gray-700 max-w-2xl leading-relaxed mb-2">
+            An $8.5–18B campus under construction — one of the largest data centers proposed anywhere in the U.S.
+            Here is what the approvals actually permit, what has been built, and exactly what each number rests on.
           </p>
-          <p className="text-2xs font-mono text-gray-600 mt-3">Last verified {LAST_VERIFIED}</p>
+          <p className="text-sm text-gray-500 max-w-2xl leading-relaxed">
+            Energy draw, permanent jobs, developer fees, and school funding — every figure with the
+            condition attached to it, linked to its source.
+          </p>
+          <p className="text-xs font-mono text-gray-400 mt-3">Last verified {LAST_VERIFIED}</p>
         </FadeIn>
 
         {/* Its own footnote scope. The four sections below each carry their own
