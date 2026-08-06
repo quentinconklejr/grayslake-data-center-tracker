@@ -153,52 +153,6 @@ export default function Home() {
             <p className="text-2xs font-mono text-gray-400 mb-8">Last verified {LAST_VERIFIED}</p>
           </FadeIn>
 
-          {/* START HERE — audience entry points, shown before the stats so first-time visitors know where to go */}
-          <FadeIn>
-            <p className="text-2xs font-mono text-gray-400 uppercase tracking-[0.2em] mb-3 flex items-center gap-2">
-              <span className="inline-block w-4 h-px bg-gray-300" />
-              Start here
-            </p>
-            <div className="grid sm:grid-cols-2 gap-4 mb-10">
-              {[
-                {
-                  to: '/questions',
-                  label: 'Residents',
-                  color: 'text-blue-700',
-                  bg: 'bg-blue-50',
-                  border: 'border-blue-200 hover:border-blue-400',
-                  desc: 'Plain-language answers on water, energy, jobs, taxes and the approval process.',
-                },
-                {
-                  to: '/reporters',
-                  label: 'Reporters',
-                  color: 'text-violet-700',
-                  bg: 'bg-violet-50',
-                  border: 'border-violet-200 hover:border-violet-400',
-                  desc: 'Key figures with citations and a contacts reference for press inquiries.',
-                },
-              ].map(({ to, label, color, bg, border, desc }) => (
-                <Link
-                  key={to}
-                  to={to}
-                  className={`group block ${bg} border-2 ${border} rounded-xl px-6 py-5 transition-all duration-150 shadow-sm hover:shadow-md`}
-                >
-                  <div className="flex items-center justify-between mb-2">
-                    <p className={`text-xs font-mono uppercase tracking-[0.2em] font-bold ${color}`}>{label}</p>
-                    <svg
-                      className={`w-4 h-4 ${color} opacity-40 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all duration-150`}
-                      viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true"
-                    >
-                      <path d="M2 7h10M7 2l5 5-5 5" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  </div>
-                  <p className="text-sm font-display font-semibold text-gray-900 mb-1">Quick guide</p>
-                  <p className="text-xs text-gray-600 leading-relaxed group-hover:text-gray-800 transition-colors">{desc}</p>
-                </Link>
-              ))}
-            </div>
-          </FadeIn>
-
           {/* Headline stats — typographically dominant */}
           <div className="grid md:grid-cols-2 gap-10 md:gap-0 border-t border-gray-200 pt-10">
 
@@ -271,6 +225,54 @@ export default function Home() {
                 <p className="text-sm font-display font-bold text-gray-800">{figureById['water-flush'].value}<SourceCitation sourceKey="clcjawa2026" /></p>
                 <p className="text-2xs text-gray-600 mt-0.5">{figureById['water-flush'].qualifier}</p>
                 <CopyKPIButton copyText={figureCopyText('water-flush')} />
+              </div>
+            </div>
+          </FadeIn>
+
+          {/* START HERE — shown after the stats so headline numbers hit first */}
+          <FadeIn>
+            <div className="mt-10 pt-8 border-t border-gray-200">
+              <p className="text-2xs font-mono text-gray-400 uppercase tracking-[0.2em] mb-4 flex items-center gap-2">
+                <span className="inline-block w-4 h-px bg-gray-300" />
+                Start here
+              </p>
+              <div className="grid sm:grid-cols-2 gap-4">
+                {[
+                  {
+                    to: '/questions',
+                    label: 'Residents',
+                    color: 'text-blue-700',
+                    bg: 'bg-blue-50',
+                    border: 'border-blue-200 hover:border-blue-400',
+                    desc: 'Plain-language answers on water, energy, jobs, taxes and the approval process.',
+                  },
+                  {
+                    to: '/reporters',
+                    label: 'Reporters',
+                    color: 'text-violet-700',
+                    bg: 'bg-violet-50',
+                    border: 'border-violet-200 hover:border-violet-400',
+                    desc: 'Key figures with citations and a contacts reference for press inquiries.',
+                  },
+                ].map(({ to, label, color, bg, border, desc }) => (
+                  <Link
+                    key={to}
+                    to={to}
+                    className={`group block ${bg} border-2 ${border} rounded-xl px-6 py-5 transition-all duration-150 shadow-sm hover:shadow-md`}
+                  >
+                    <div className="flex items-center justify-between mb-2">
+                      <p className={`text-xs font-mono uppercase tracking-[0.2em] font-bold ${color}`}>{label}</p>
+                      <svg
+                        className={`w-4 h-4 ${color} opacity-40 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all duration-150`}
+                        viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true"
+                      >
+                        <path d="M2 7h10M7 2l5 5-5 5" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </div>
+                    <p className="text-sm font-display font-semibold text-gray-900 mb-1">Quick guide</p>
+                    <p className="text-xs text-gray-600 leading-relaxed group-hover:text-gray-800 transition-colors">{desc}</p>
+                  </Link>
+                ))}
               </div>
             </div>
           </FadeIn>
