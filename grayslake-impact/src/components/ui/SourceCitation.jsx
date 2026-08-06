@@ -38,7 +38,7 @@ export default function SourceCitation({ sourceKey }) {
     <span
       ref={wrapperRef}
       className="relative inline-block"
-      style={{ fontSize: '0.6em', verticalAlign: 'super', lineHeight: 0 }}
+      style={{ fontSize: '0.75rem', verticalAlign: 'super', lineHeight: 0 }}
       onMouseEnter={open}
       onMouseLeave={close}
       onFocus={open}
