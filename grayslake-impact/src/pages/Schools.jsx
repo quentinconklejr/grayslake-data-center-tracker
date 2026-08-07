@@ -39,7 +39,7 @@ export default function Schools({ asSection = false }) {
         {asSection ? (
           <h3 className="text-3xl font-display font-bold text-gray-900 tracking-tight mb-3">School Funding Impact</h3>
         ) : (
-          <h1 className="text-5xl font-display font-bold text-gray-900 tracking-tight mb-3">School Funding Impact</h1>
+          <h1 className="text-4xl sm:text-5xl font-display font-bold text-gray-900 tracking-tight break-words mb-3">School Funding Impact</h1>
         )}
         <p className="text-base text-gray-600 max-w-2xl leading-relaxed">
           Village officials have publicly cited projections ranging from approximately $300 million
@@ -55,7 +55,7 @@ export default function Schools({ asSection = false }) {
         <div className="grid md:grid-cols-2 gap-4">
           <div className="glass-card p-6">
             <p className="text-2xs font-mono text-blue-600 uppercase tracking-widest mb-2">Mayor of Grayslake</p>
-            <p className="text-4xl font-display font-bold text-gray-900 tracking-tight mb-1">~$300M</p>
+            <p className="text-3xl sm:text-4xl font-display font-bold text-gray-900 tracking-tight break-words mb-1">~$300M</p>
             <p className="text-sm text-gray-500 mb-4">projected property tax revenue over the coming decades</p>
             <p className="text-xs text-gray-500 leading-relaxed">
               Official statement from the Mayor of Grayslake. Not independently verified.
@@ -69,7 +69,7 @@ export default function Schools({ asSection = false }) {
           </div>
           <div className="glass-card p-6">
             <p className="text-2xs font-mono text-blue-600 uppercase tracking-widest mb-2">Deputy Village Manager</p>
-            <p className="text-4xl font-display font-bold text-gray-900 tracking-tight mb-1">$1B+</p>
+            <p className="text-3xl sm:text-4xl font-display font-bold text-gray-900 tracking-tight break-words mb-1">$1B+</p>
             <p className="text-sm text-gray-500 mb-4">projected across all taxing districts over 20 years</p>
             <p className="text-xs text-gray-500 leading-relaxed">
               Official statement from the Deputy Village Manager. Not independently verified.

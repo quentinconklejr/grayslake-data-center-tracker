@@ -21,7 +21,7 @@ export default function MapPage() {
 
       <FadeIn className="mb-8 pb-8 border-b border-edge-soft">
         <p className="text-2xs font-mono text-blue-700 uppercase tracking-[0.18em] mb-4">T5 @ Chicago IV · Cornerstone business park, Grayslake</p>
-        <h1 className="text-5xl font-display font-bold text-gray-900 tracking-tight mb-4">Land Ownership Map</h1>
+        <h1 className="text-4xl sm:text-5xl font-display font-bold text-gray-900 tracking-tight break-words mb-4">Land Ownership Map</h1>
         <p className="text-lg text-gray-600 max-w-3xl leading-relaxed">
           This map shows the {parcels.metadata.parcelCount} parcels recorded to T5 in Grayslake:{' '}
           {parcels.metadata.countyAcresSum} acres across {outline.features.length} non-contiguous groups, drawn from

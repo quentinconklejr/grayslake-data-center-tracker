@@ -11,7 +11,7 @@ export default function About() {
 
       <FadeIn className="mb-10 pb-8 border-b border-edge-soft">
         <p className="text-xs font-mono text-blue-600 uppercase tracking-[0.18em] mb-4">About This Site</p>
-        <h1 className="text-5xl font-display font-bold text-gray-900 tracking-tight mb-3">Why I Built This</h1>
+        <h1 className="text-4xl sm:text-5xl font-display font-bold text-gray-900 tracking-tight break-words mb-3">Why I Built This</h1>
         <p className="text-lg text-gray-600 max-w-3xl leading-relaxed">
           A resident-built resource. No affiliation with T5 Data Centers or the Village of Grayslake.
         </p>

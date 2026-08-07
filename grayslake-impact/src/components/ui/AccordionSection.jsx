@@ -66,7 +66,7 @@ export default function AccordionSection({
             </span>
 
             <span className="sm:text-right sm:max-w-[16rem] sm:shrink-0">
-              <span className="block text-3xl font-display font-bold text-gray-900 leading-none">
+              <span className="block text-2xl sm:text-3xl font-display font-bold text-gray-900 leading-tight">
                 {value}
               </span>
               <span className="block text-sm text-gray-600 leading-snug mt-1.5">{qualifier}</span>

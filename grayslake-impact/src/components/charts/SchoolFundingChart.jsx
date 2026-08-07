@@ -40,7 +40,7 @@ export default function SchoolFundingChart() {
         {/* Total callout — one facility, 2025 */}
         <div>
           <div className="flex items-baseline gap-2 mb-0.5">
-            <span className="text-4xl font-display font-bold text-gray-900 tracking-tight">${TOTAL_M}M</span>
+            <span className="text-3xl sm:text-4xl font-display font-bold text-gray-900 tracking-tight break-words">${TOTAL_M}M</span>
             <span className="text-sm text-gray-500">2025 tax bill, one DeKalb facility</span>
           </div>
           <p className="text-2xs font-mono text-gray-400">Single-facility figure · 2025 tax year</p>

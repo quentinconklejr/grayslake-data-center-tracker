@@ -166,7 +166,7 @@ export default function OpenQuestions() {
 
       <FadeIn className="mb-10 pb-8 border-b border-edge-soft">
         <p className="text-2xs font-mono text-blue-700 uppercase tracking-[0.18em] mb-4">Questions &amp; Answers</p>
-        <h1 className="text-5xl font-display font-bold text-gray-900 tracking-tight mb-3">What&rsquo;s Settled, What&rsquo;s Not</h1>
+        <h1 className="text-4xl sm:text-5xl font-display font-bold text-gray-900 tracking-tight break-words mb-3">What&rsquo;s Settled, What&rsquo;s Not</h1>
         <p className="text-lg text-gray-600 max-w-3xl leading-relaxed">
           What&rsquo;s confirmed in the public record, what&rsquo;s contested, and what has no answer yet: water, electricity,
           scale, jobs, taxes and the approval process.

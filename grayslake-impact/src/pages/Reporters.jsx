@@ -19,7 +19,7 @@ export default function Reporters() {
 
       <FadeIn className="mb-10 pb-8 border-b border-edge-soft">
         <p className="text-2xs font-mono text-blue-700 uppercase tracking-[0.15em] mb-4">Quick Reference</p>
-        <h1 className="text-5xl font-display font-bold text-gray-900 tracking-tight mb-4">Key Figures</h1>
+        <h1 className="text-4xl sm:text-5xl font-display font-bold text-gray-900 tracking-tight break-words mb-4">Key Figures</h1>
         <p className="text-lg text-gray-600 max-w-3xl leading-relaxed">
           Sourced figures from public documents and press coverage on T5 @ Chicago IV.
           Every number links to its primary source. See{' '}

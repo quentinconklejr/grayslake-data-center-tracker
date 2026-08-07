@@ -1,6 +1,6 @@
 ﻿import { useState, useEffect } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
-import { NAV_LINKS, NAV_STORY, NAV_TOOLS, NAV_META } from '../../data/navLinks'
+import { NAV_STORY, NAV_TOOLS, NAV_META } from '../../data/navLinks'
 
 // Maps route paths to human-readable breadcrumb labels.
 // Kept separate from pageMeta so breadcrumbs always match the nav labels.
@@ -80,11 +80,16 @@ export default function Header() {
       {/* ── Main bar ──────────────────────────────────────────────────────────── */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center py-3.5 gap-3 sm:gap-6">
 
-        <Link to="/" className="shrink-0 flex items-center gap-2.5 group" aria-label="Grayslake Data Center Tracker, Home">
+        {/* The brand was shrink-0 with whitespace-nowrap at 22px, which is wider
+            than a phone. It could not shrink and it could not wrap, so it pushed
+            the menu button off the right edge. It wraps to two lines below sm
+            instead, at a size that still fits a 320px screen, and goes back to
+            one line from sm up where there is room. */}
+        <Link to="/" className="flex items-center gap-2.5 min-w-0 group" aria-label="Grayslake Data Center Tracker, Home">
           <TrackerIcon />
           <div className="flex flex-col min-w-0">
-            <span className="text-xl sm:text-2xl font-display font-bold text-gray-900 group-hover:text-blue-700 transition-colors leading-tight whitespace-nowrap tracking-tight">
-              Grayslake Data Center Tracker
+            <span className="text-lg sm:text-2xl font-display font-bold text-gray-900 group-hover:text-blue-700 transition-colors leading-[1.15] sm:leading-tight sm:whitespace-nowrap tracking-tight">
+              Grayslake<br className="sm:hidden" /> Data Center Tracker
             </span>
             <span className="hidden sm:block text-2xs font-mono text-gray-600 leading-tight mt-1 whitespace-nowrap">
               Not affiliated with T5 or the Village
@@ -110,7 +115,7 @@ export default function Header() {
 
         {/* Mobile hamburger */}
         <button
-          className="lg:hidden ml-auto text-gray-500 hover:text-gray-800 transition-colors p-2.5 -mr-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg hover:bg-gray-100"
+          className="lg:hidden ml-auto shrink-0 text-gray-500 hover:text-gray-800 transition-colors p-2.5 -mr-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg hover:bg-gray-100"
           onClick={() => setMobileOpen(v => !v)}
           aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
           aria-expanded={mobileOpen}
@@ -134,10 +139,14 @@ export default function Header() {
       {mobileOpen && (
         <div
           id="mobile-menu"
-          className="lg:hidden border-t border-gray-100 bg-white/98 overflow-y-auto max-h-[calc(100dvh-4rem)]"
+          className="lg:hidden border-t border-gray-100 bg-white/98 overflow-y-auto max-h-[calc(100dvh-5.5rem)]"
         >
           <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-1 pb-2">
-            {NAV_LINKS.map(l => <MobileNavLink key={l.to} {...l} />)}
+            {[NAV_STORY, NAV_TOOLS, NAV_META].map((group, i) => (
+              <div key={i} className={i > 0 ? 'border-t border-edge-soft' : undefined}>
+                {group.map(l => <MobileNavLink key={l.to} {...l} />)}
+              </div>
+            ))}
           </div>
         </div>
       )}

@@ -22,7 +22,7 @@ export default function Accessibility() {
 
       <FadeIn className="mb-10 pb-8 border-b border-edge-soft">
         <p className="text-2xs font-mono text-blue-700 uppercase tracking-[0.15em] mb-4">Accessibility</p>
-        <h1 className="text-5xl font-display font-bold text-gray-900 tracking-tight mb-4">
+        <h1 className="text-4xl sm:text-5xl font-display font-bold text-gray-900 tracking-tight break-words mb-4">
           Using this site
         </h1>
         <p className="text-lg text-gray-700 max-w-3xl leading-relaxed">

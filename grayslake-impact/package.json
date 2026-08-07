@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build && node scripts/build-route-html.js",
+    "build": "vite build && node scripts/build-route-html.js && node scripts/build-seo-files.js",
     "check-links": "node scripts/check-links.js",
     "screenshot": "node scripts/screenshot.js",
     "lint": "eslint .",
@@ -14,7 +14,8 @@
     "fetch-parcels": "node scripts/fetch-parcels.js",
     "verify-parcels": "node scripts/verify-parcels.js",
     "check-contrast": "node scripts/check-contrast.js",
-    "a11y": "node scripts/a11y.js"
+    "a11y": "node scripts/a11y.js",
+    "build:icons": "python3 scripts/generate-icons.py"
   },
   "dependencies": {
     "framer-motion": "^12.40.0",

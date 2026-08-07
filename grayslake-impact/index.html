@@ -2,7 +2,19 @@
 <html lang="en" style="background:#f8fafc">
   <head>
     <meta charset="UTF-8" />
+    <!--
+      Icon set. Google picks the favicon for search results from this block on
+      the home page, and wants a square file that is a multiple of 48px; the
+      SVG is listed first for browsers that prefer it, with .ico and a 96px PNG
+      behind it for everything else. Crawlers that ignore the markup entirely
+      and request /favicon.ico blind get a real file.
+      Regenerate with: python3 scripts/generate-icons.py
+    -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png" />
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Grayslake Data Center Tracker — a civic data dashboard following the fiscal, employment, energy, and environmental impact of the T5 @ Chicago IV hyperscale AI data center development in Grayslake, Illinois." />
     <meta name="theme-color" content="#090910" />
@@ -21,6 +33,32 @@
     <meta name="twitter:description" content="Tracking T5 @ Chicago IV — the $8.5–18B AI data center campus approved in Grayslake, Illinois. Sourced data on jobs, taxes, energy, water, and legal challenges." />
     <meta name="twitter:image" content="https://grayslakedatacentertracker.org/og/home.png" />
     <title>Grayslake Data Center Tracker</title>
+
+    <!--
+      Site-level structured data. Google uses WebSite.name to decide what to
+      print as the site name above a result instead of guessing from the
+      domain, and reads the logo here for the knowledge panel. The favicon
+      links above are what supplies the small icon next to the result itself.
+      This block describes the site rather than the page, so it is correct on
+      every route shell copied from this file.
+    -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Grayslake Data Center Tracker",
+      "alternateName": "GDC Tracker",
+      "url": "https://grayslakedatacentertracker.org/",
+      "description": "An independent, sourced public record of the T5 @ Chicago IV data center campus in Grayslake, Illinois.",
+      "publisher": {
+        "@type": "Person",
+        "name": "Quentin Conkle Jr.",
+        "url": "https://grayslakedatacentertracker.org/about"
+      },
+      "image": "https://grayslakedatacentertracker.org/icon-512.png",
+      "isAccessibleForFree": true
+    }
+    </script>
 
     <!--
       Plausible analytics. Cookieless and GDPR/CCPA-compliant, so no consent

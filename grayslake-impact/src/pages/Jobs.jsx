@@ -72,7 +72,7 @@ export default function Jobs({ asSection = false }) {
         {asSection ? (
           <h3 className="text-3xl font-display font-bold text-gray-900 tracking-tight mb-3">Job Creation</h3>
         ) : (
-          <h1 className="text-5xl font-display font-bold text-gray-900 tracking-tight mb-3">Job Creation</h1>
+          <h1 className="text-4xl sm:text-5xl font-display font-bold text-gray-900 tracking-tight break-words mb-3">Job Creation</h1>
         )}
         <p className="text-base text-gray-600 max-w-2xl leading-relaxed">
           Permanent headcount has been stated three ways. Grayslake Mayor Elizabeth Davies cited{' '}

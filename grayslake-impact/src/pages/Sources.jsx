@@ -19,7 +19,7 @@ export default function Sources() {
 
       <FadeIn className="mb-10 pb-8 border-b border-edge-soft">
         <p className="text-2xs font-mono text-blue-600/60 uppercase tracking-[0.18em] mb-4">Transparency</p>
-        <h1 className="text-5xl font-display font-bold text-gray-900 tracking-tight mb-3">Documents &amp; Sources</h1>
+        <h1 className="text-4xl sm:text-5xl font-display font-bold text-gray-900 tracking-tight break-words mb-3">Documents &amp; Sources</h1>
         <p className="text-lg text-gray-600 max-w-3xl leading-relaxed">
           All figures in this tracker come from public documents and press coverage on file.
           Estimated figures are labeled.

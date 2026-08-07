@@ -44,12 +44,26 @@ function setMeta(html, attr, name, content) {
   return html.replace('</head>', `    <meta ${attr}="${name}" content="${escape(content)}" />\n  </head>`)
 }
 
+/**
+ * Routes that still have a shell so old shared links keep producing a correct
+ * card, but which redirect the moment React boots. Their canonical points at
+ * where the content actually lives, otherwise Google indexes both addresses
+ * and splits the ranking between a real page and a page that bounces.
+ */
+const REDIRECT_CANONICAL = {
+  '/tax-impact': '/project',
+  '/jobs': '/project',
+  '/energy': '/project',
+  '/schools': '/project',
+}
+
 const template = readFileSync(join(dist, 'index.html'), 'utf8')
 let count = 0
 
 for (const [route, meta] of Object.entries(pageMeta)) {
   const title = meta.title ? `${meta.title}${SUFFIX}` : BASE_TITLE
   const url = `${SITE_ORIGIN}${route === '/' ? '/' : route}`
+  const canonicalUrl = `${SITE_ORIGIN}${REDIRECT_CANONICAL[route] ?? (route === '/' ? '/' : route)}`
   const image = `${SITE_ORIGIN}${meta.ogImage}`
 
   let html = template
@@ -68,9 +82,9 @@ for (const [route, meta] of Object.entries(pageMeta)) {
 
   // canonical
   if (/<link\s+rel="canonical"/i.test(html)) {
-    html = html.replace(/(<link\s+rel="canonical"\s+href=")[^"]*(")/i, `$1${url}$2`)
+    html = html.replace(/(<link\s+rel="canonical"\s+href=")[^"]*(")/i, `$1${canonicalUrl}$2`)
   } else {
-    html = html.replace('</head>', `    <link rel="canonical" href="${url}" />\n  </head>`)
+    html = html.replace('</head>', `    <link rel="canonical" href="${canonicalUrl}" />\n  </head>`)
   }
 
   const outPath = route === '/' ? join(dist, 'index.html') : join(dist, `${route.slice(1)}.html`)

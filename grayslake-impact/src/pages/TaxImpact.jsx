@@ -36,7 +36,7 @@ export default function TaxImpact({ asSection = false }) {
         {asSection ? (
           <h3 className="text-3xl font-display font-bold text-gray-900 tracking-tight mb-3">Tax Revenue &amp; Developer Fees</h3>
         ) : (
-          <h1 className="text-5xl font-display font-bold text-gray-900 tracking-tight mb-3">Tax Revenue &amp; Developer Fees</h1>
+          <h1 className="text-4xl sm:text-5xl font-display font-bold text-gray-900 tracking-tight break-words mb-3">Tax Revenue &amp; Developer Fees</h1>
         )}
         <p className="text-base text-gray-600 max-w-2xl leading-relaxed">
           Village officials project "{fees.totalDescription}" in developer fees.

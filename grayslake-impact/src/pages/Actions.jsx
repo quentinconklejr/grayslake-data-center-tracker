@@ -124,7 +124,7 @@ export default function Actions() {
 
       <FadeIn className="mb-10 pb-8 border-b border-edge-soft">
         <p className="text-2xs font-mono text-blue-600/60 uppercase tracking-[0.18em] mb-4">Regulatory actions</p>
-        <h1 className="text-5xl font-display font-bold text-gray-900 tracking-tight mb-3">Jurisdictional Actions</h1>
+        <h1 className="text-4xl sm:text-5xl font-display font-bold text-gray-900 tracking-tight break-words mb-3">Jurisdictional Actions</h1>
         <p className="text-lg text-gray-600 max-w-3xl leading-relaxed">
           Approvals, permit applications, legal challenges, and policy actions across the municipal,
           county, state, and federal bodies with jurisdiction over T5 @ Chicago IV.

@@ -125,7 +125,7 @@ export default function Home() {
                   duration={0.6}
                   delay={0.1}
                   sessionKey={HERO_SESSION_KEY}
-                  className="text-6xl sm:text-7xl font-display font-black text-gray-900 tracking-tighter"
+                  className="text-5xl sm:text-7xl font-display font-black text-gray-900 tracking-tighter"
                 />
               </div>
               <p className="text-sm text-gray-500 mt-4 leading-snug">
@@ -139,7 +139,7 @@ export default function Home() {
 
             <Reveal delay={0.08} className="md:pl-12 border-t border-gray-300 pt-10 md:pt-0 md:border-t-0">
               <p className="text-2xs font-mono text-gray-400 uppercase tracking-[0.18em] mb-4">Total Estimated Investment</p>
-              <p className="text-6xl sm:text-7xl font-display font-black text-gray-900 leading-none tracking-tighter">
+              <p className="text-5xl sm:text-7xl font-display font-black text-gray-900 leading-none tracking-tighter">
                 {figureById['investment'].value}
               </p>
               <p className="text-sm text-gray-500 mt-4 leading-snug">

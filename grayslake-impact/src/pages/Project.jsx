@@ -103,7 +103,7 @@ export default function Project() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-12">
         <FadeIn className="pb-8 border-b border-edge-soft">
           <p className="text-xs font-mono text-blue-700 uppercase tracking-[0.18em] mb-4">T5 @ Chicago IV</p>
-          <h1 className="text-5xl sm:text-5xl font-display font-bold text-gray-900 tracking-tight mb-4">The Project</h1>
+          <h1 className="text-4xl sm:text-5xl font-display font-bold text-gray-900 tracking-tight break-words mb-4">The Project</h1>
           <p className="text-lg text-gray-700 max-w-2xl leading-relaxed mb-2">
             An $8.5–18B campus under construction, one of the largest data centers proposed anywhere in the U.S.
           </p>

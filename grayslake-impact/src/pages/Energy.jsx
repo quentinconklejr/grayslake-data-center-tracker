@@ -29,7 +29,7 @@ export default function Energy({ asSection = false }) {
         {asSection ? (
           <h3 className="text-3xl font-display font-bold text-gray-900 tracking-tight mb-3">Energy Draw</h3>
         ) : (
-          <h1 className="text-5xl font-display font-bold text-gray-900 tracking-tight mb-3">Energy Draw</h1>
+          <h1 className="text-4xl sm:text-5xl font-display font-bold text-gray-900 tracking-tight break-words mb-3">Energy Draw</h1>
         )}
         <p className="text-base text-gray-600 max-w-2xl leading-relaxed">
           Three capacity figures for this campus appear in public sources. They measure different
