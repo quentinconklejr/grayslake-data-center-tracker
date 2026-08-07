@@ -1,10 +1,12 @@
-﻿import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import PageTitle from '../components/ui/PageTitle'
 import BackToTop from '../components/ui/BackToTop'
 import PageNext from '../components/ui/PageNext'
 import { pageMeta } from '../data/pageMeta'
 import FadeIn from '../components/ui/FadeIn'
 import KeyFigureList from '../components/ui/KeyFigureList'
+import CopyAllFigures from '../components/ui/CopyAllFigures'
+import AccordionSection from '../components/ui/AccordionSection'
 import Reveal from '../components/ui/Reveal'
 import { FootnoteProvider, FootnoteList } from '../components/ui/FootnoteContext'
 import { keyFigures, figureById } from '../data/keyFigures'
@@ -14,10 +16,15 @@ import Jobs from './Jobs'
 import TaxImpact from './TaxImpact'
 import Schools from './Schools'
 
-// Four topic pages merged into one. Each keeps its own footnote numbering, so
-// citations stay local to the section they support. The old URLs redirect here
-// and land on the matching anchor, so existing links keep working.
-// Every source the At a Glance grid cites, in the order the cards render, so
+// Four topic pages merged into one, each one a panel that opens on click.
+// They used to be stacked open, which put roughly nine screens of scrolling
+// between the top of the page and the sources at the foot of it, and gave a
+// reader no way to see the four areas side by side. Collapsed headers show the
+// headline figure and its condition, so the summary is readable without
+// opening anything. The old topic URLs still redirect here and land on the
+// matching panel.
+
+// Every source the figure list cites, in the order the cards render, so
 // footnote numbers are stable rather than assigned by whichever card mounts first.
 const GLANCE_KEYS = []
 for (const f of keyFigures) {
@@ -49,49 +56,44 @@ const SECTIONS = [
     accent: 'violet' },
 ]
 
-const ACCENT_RING = {
-  amber:   'hover:border-amber-400 focus-visible:border-amber-500',
-  emerald: 'hover:border-emerald-400 focus-visible:border-emerald-500',
-  blue:    'hover:border-blue-400 focus-visible:border-blue-500',
-  violet:  'hover:border-violet-400 focus-visible:border-violet-500',
-}
-const ACCENT_TEXT = {
-  amber: 'text-amber-700', emerald: 'text-emerald-700', blue: 'text-blue-700', violet: 'text-violet-700',
+const IDS = SECTIONS.map(s => s.id)
+
+// A link from elsewhere on the site, or a bookmarked #energy, has to open the
+// panel it points at. Otherwise it scrolls to a closed header and the reader
+// sees nothing new.
+function idFromHash() {
+  const h = typeof window !== 'undefined' ? window.location.hash.replace('#', '') : ''
+  return IDS.includes(h) ? h : null
 }
 
 export default function Project() {
-  const [active, setActive] = useState(SECTIONS[0].id)
-  const [showNav, setShowNav] = useState(false)
-  const cardsRef = useRef(null)
+  const [open, setOpen] = useState(() => {
+    const fromHash = idFromHash()
+    return fromHash ? [fromHash] : []
+  })
+
+  const toggle = useCallback(id => {
+    setOpen(prev => (prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]))
+  }, [])
 
   useEffect(() => {
-    const observers = []
-    const observer = new IntersectionObserver(
-      entries => {
-        const visible = entries.filter(e => e.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)
-        if (visible[0]) setActive(visible[0].target.id)
-      },
-      { rootMargin: '-30% 0px -60% 0px', threshold: [0, 0.25, 0.5] },
-    )
-    const cards = cardsRef.current
-    if (cards) {
-      const cardIO = new IntersectionObserver(
-        ([e]) => setShowNav(!e.isIntersecting),
-        { rootMargin: '-72px 0px 0px 0px' },
-      )
-      cardIO.observe(cards)
-      observers.push(cardIO)
+    const target = idFromHash()
+    if (target) {
+      // The panel opens in the same tick the page mounts, so the element is
+      // its full height by the time we scroll to it.
+      requestAnimationFrame(() => document.getElementById(target)?.scrollIntoView())
     }
-
-    for (const { id } of SECTIONS) {
-      const el = document.getElementById(id)
-      if (el) observer.observe(el)
+    function onHashChange() {
+      const id = idFromHash()
+      if (!id) return
+      setOpen(prev => (prev.includes(id) ? prev : [...prev, id]))
+      requestAnimationFrame(() => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' }))
     }
-    return () => {
-      observer.disconnect()
-      observers.forEach(o => o.disconnect())
-    }
+    window.addEventListener('hashchange', onHashChange)
+    return () => window.removeEventListener('hashchange', onHashChange)
   }, [])
+
+  const allOpen = open.length === IDS.length
 
   return (
     <FootnoteProvider preload={GLANCE_KEYS}>
@@ -105,99 +107,80 @@ export default function Project() {
           <p className="text-lg text-gray-700 max-w-2xl leading-relaxed mb-2">
             An $8.5–18B campus under construction, one of the largest data centers proposed anywhere in the U.S.
           </p>
-          <p className="text-sm text-gray-500 max-w-2xl leading-relaxed">
+          <p className="text-base text-gray-600 max-w-2xl leading-relaxed">
             Energy draw, permanent jobs, developer fees, and school funding. Every figure carries the
             condition attached to it, linked to its source.
           </p>
-          <p className="text-xs font-mono text-gray-400 mt-3">Last verified {LAST_VERIFIED}</p>
+          <p className="text-xs font-mono text-gray-500 mt-3">Last verified {LAST_VERIFIED}</p>
         </FadeIn>
 
-        {/* Four jump cards. Previously twelve figures in five groups sat here,
-            which meant scrolling a long way before reaching any actual section. */}
-        <div ref={cardsRef}>
-        <Reveal className="py-9">
-          <p className="text-2xs font-mono text-gray-600 uppercase tracking-[0.15em] mb-5">Four areas of impact</p>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {SECTIONS.map(({ id, label, figure, blurb, accent }) => {
-              const f = figureById[figure]
-              return (
-                <a
-                  key={id}
-                  href={`#${id}`}
-                  className={`group block rounded-xl border-2 border-edge bg-white px-5 py-5 transition-colors ${ACCENT_RING[accent]}`}
-                >
-                  <p className={`text-2xs font-mono uppercase tracking-[0.15em] mb-3 ${ACCENT_TEXT[accent]}`}>{label}</p>
-                  <p className="text-2xl font-display font-bold text-gray-900 leading-tight mb-1">{f?.value}</p>
-                  <p className="text-xs text-gray-600 leading-snug mb-3">{f?.qualifier}</p>
-                  <p className="text-sm text-gray-700 leading-snug">{blurb}</p>
-                  <span className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-gray-500 group-hover:text-gray-900 transition-colors">
-                    Read this section
-                    <svg className="w-3.5 h-3.5" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true">
-                      <path d="M2 7h10M7 2l5 5-5 5" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  </span>
-                </a>
-              )
-            })}
+        <Reveal className="pt-9 pb-5">
+          <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2">
+            <div>
+              <h2 className="text-2xl font-display font-bold text-gray-900 leading-tight">Four areas of impact</h2>
+              <p className="text-base text-gray-600 mt-1">Select a section to read the detail and its sources.</p>
+            </div>
+            <button
+              type="button"
+              onClick={() => setOpen(allOpen ? [] : IDS)}
+              className="text-sm font-medium text-blue-700 hover:text-blue-800 underline underline-offset-4 decoration-1 min-h-[44px]"
+            >
+              {allOpen ? 'Collapse all' : 'Expand all'}
+            </button>
           </div>
         </Reveal>
+
+        <div className="space-y-4 pb-9">
+          {SECTIONS.map(({ id, label, figure, blurb, accent, Component }) => {
+            const f = figureById[figure]
+            return (
+              <AccordionSection
+                key={id}
+                id={id}
+                label={label}
+                value={f?.value}
+                qualifier={f?.qualifier}
+                blurb={blurb}
+                accent={accent}
+                open={open.includes(id)}
+                onToggle={() => toggle(id)}
+              >
+                <Component asSection />
+                {/* Sources for every section live in one block at the foot of
+                    the page, matching the rest of the site. This is the way
+                    down to it. */}
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 pb-7 -mt-4">
+                  <a
+                    href="#sources"
+                    className="inline-flex items-center gap-1.5 text-sm font-medium text-blue-700 hover:text-blue-800 transition-colors"
+                  >
+                    Sources for {label.toLowerCase()}
+                    <svg className="w-3.5 h-3.5" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true">
+                      <path d="M7 2v10M2.5 7.5L7 12l4.5-4.5" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </a>
+                </div>
+              </AccordionSection>
+            )
+          })}
         </div>
       </div>
-
-      {/* Sticky wayfinder. Hidden while the cards above are still on screen:
-          two identical navigations stacked together was pure clutter. */}
-      <nav
-        aria-label="Sections of this page"
-        className={`sticky top-14 z-20 bg-white/95 backdrop-blur border-b border-edge-soft transition-opacity duration-200 ${
-          showNav ? 'opacity-100' : 'opacity-0 pointer-events-none'
-        }`}
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 flex gap-1 overflow-x-auto">
-          {SECTIONS.map(({ id, label }) => (
-            <a
-              key={id}
-              href={`#${id}`}
-              aria-current={active === id ? 'true' : undefined}
-              className={`shrink-0 px-4 py-3.5 text-sm border-b-2 transition-colors font-medium ${
-                active === id
-                  ? 'border-blue-600 text-blue-700'
-                  : 'border-transparent text-gray-600 hover:text-gray-900 hover:border-edge-soft'
-              }`}
-            >
-              {label}
-            </a>
-          ))}
-        </div>
-      </nav>
-
-      {SECTIONS.map(({ id, label, Component }) => (
-        <section key={id} id={id} aria-label={label} className="scroll-mt-28 border-b border-edge-soft last:border-0">
-          <Component asSection />
-          {/* Sources for every section live in one block at the foot of the
-              page, matching the rest of the site. This is the way down to it. */}
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 pb-10 -mt-4">
-            <a
-              href="#sources"
-              className="inline-flex items-center gap-1.5 text-sm font-medium text-blue-700 hover:text-blue-800 transition-colors"
-            >
-              Sources for {label.toLowerCase()}
-              <svg className="w-3.5 h-3.5" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true">
-                <path d="M7 2v10M2.5 7.5L7 12l4.5-4.5" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </a>
-          </div>
-        </section>
-      ))}
 
       {/* Every figure in one table, after the sections rather than in front of
           them. Useful as a reference once you have read the detail. */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <Reveal className="py-12 border-t border-edge-soft">
-          <h2 className="text-3xl font-display font-bold text-gray-900 mb-2">Every figure on one page</h2>
-          <p className="text-base text-gray-600 max-w-2xl mb-7">
-            The same numbers as above, grouped, each with the condition attached to it and a link to its source.
-          </p>
-          <KeyFigureList figures={keyFigures} variant="grouped" groups={GLANCE_GROUPS} />
+          <div className="flex flex-wrap items-start justify-between gap-x-8 gap-y-4 mb-7">
+            <div className="max-w-2xl">
+              <h2 className="text-3xl font-display font-bold text-gray-900 mb-2">Every figure on one page</h2>
+              <p className="text-base text-gray-600">
+                The same numbers as above, grouped, each with the condition attached to it and a link
+                to its source. Copy any one of them and the condition and citation travel with it.
+              </p>
+            </div>
+            <CopyAllFigures />
+          </div>
+          <KeyFigureList figures={keyFigures} variant="grouped" groups={GLANCE_GROUPS} copyable />
         </Reveal>
       </div>
 

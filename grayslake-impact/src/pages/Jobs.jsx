@@ -70,7 +70,7 @@ export default function Jobs({ asSection = false }) {
       <FadeIn className="mb-10 pb-8 border-b border-edge-soft">
         <p className="text-2xs font-mono text-blue-600 uppercase tracking-[0.18em] mb-4">Employment</p>
         {asSection ? (
-          <h2 className="text-4xl font-display font-bold text-gray-900 tracking-tight mb-3">Job Creation</h2>
+          <h3 className="text-3xl font-display font-bold text-gray-900 tracking-tight mb-3">Job Creation</h3>
         ) : (
           <h1 className="text-5xl font-display font-bold text-gray-900 tracking-tight mb-3">Job Creation</h1>
         )}
@@ -98,7 +98,7 @@ export default function Jobs({ asSection = false }) {
         <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-1 mb-1">
           <div>
             <p className="text-xs font-mono text-gray-500 uppercase tracking-widest mb-1">Workforce Comparison</p>
-            <h2 className="text-xl sm:text-2xl font-display font-bold text-gray-900">Permanent vs. Construction</h2>
+            <h3 className="text-2xl font-display font-bold text-gray-900">Permanent vs. Construction</h3>
           </div>
           <div className="flex items-center gap-3">
             <span className="text-2xs font-mono text-amber-700">Est. included</span>

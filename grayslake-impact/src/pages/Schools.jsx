@@ -37,7 +37,7 @@ export default function Schools({ asSection = false }) {
       <FadeIn className="mb-10 pb-8 border-b border-edge-soft">
         <p className="text-2xs font-mono text-blue-600 uppercase tracking-[0.18em] mb-4">Education</p>
         {asSection ? (
-          <h2 className="text-4xl font-display font-bold text-gray-900 tracking-tight mb-3">School Funding Impact</h2>
+          <h3 className="text-3xl font-display font-bold text-gray-900 tracking-tight mb-3">School Funding Impact</h3>
         ) : (
           <h1 className="text-5xl font-display font-bold text-gray-900 tracking-tight mb-3">School Funding Impact</h1>
         )}
@@ -117,7 +117,7 @@ export default function Schools({ asSection = false }) {
           <div className="flex items-start justify-between mb-1">
             <div>
               <p className="text-xs font-mono text-gray-500 uppercase tracking-widest mb-1">Tax Allocation</p>
-              <h2 className="text-3xl font-display font-bold text-gray-900">DeKalb Precedent</h2>
+              <h3 className="text-2xl font-display font-bold text-gray-900">DeKalb Precedent</h3>
             </div>
             <SourceCitation sourceKey="capitolnews2026" />
           </div>
@@ -129,7 +129,7 @@ export default function Schools({ asSection = false }) {
           <div className="flex items-start justify-between mb-1">
             <div>
               <p className="text-xs font-mono text-gray-500 uppercase tracking-widest mb-1">Case Study</p>
-              <h2 className="text-3xl font-display font-bold text-gray-900">Meta, DeKalb, IL</h2>
+              <h3 className="text-2xl font-display font-bold text-gray-900">Meta, DeKalb, IL</h3>
             </div>
             <SourceCitation sourceKey="capitolnews2026" />
           </div>

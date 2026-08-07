@@ -34,7 +34,7 @@ export default function TaxImpact({ asSection = false }) {
       <FadeIn className="mb-10 pb-8 border-b border-edge-soft">
         <p className="text-2xs font-mono text-blue-600 uppercase tracking-[0.18em] mb-4">Fiscal Impact</p>
         {asSection ? (
-          <h2 className="text-4xl font-display font-bold text-gray-900 tracking-tight mb-3">Tax Revenue &amp; Developer Fees</h2>
+          <h3 className="text-3xl font-display font-bold text-gray-900 tracking-tight mb-3">Tax Revenue &amp; Developer Fees</h3>
         ) : (
           <h1 className="text-5xl font-display font-bold text-gray-900 tracking-tight mb-3">Tax Revenue &amp; Developer Fees</h1>
         )}
@@ -57,7 +57,7 @@ export default function TaxImpact({ asSection = false }) {
         <div className="flex items-start justify-between mb-1">
           <div>
             <p className="text-xs font-mono text-gray-500 uppercase tracking-widest mb-1">Who Receives the Tax Base</p>
-            <h2 className="text-3xl font-display font-bold text-gray-900">Taxing districts covering the campus</h2>
+            <h3 className="text-2xl font-display font-bold text-gray-900">Taxing districts covering the campus</h3>
           </div>
           <SourceCitation sourceKey="villagefaq_archived" />
         </div>
@@ -97,7 +97,7 @@ export default function TaxImpact({ asSection = false }) {
           <div className="flex items-start justify-between mb-1">
             <div>
               <p className="text-xs font-mono text-gray-500 uppercase tracking-widest mb-1">Mayor's Estimate</p>
-              <h2 className="text-3xl font-display font-bold text-gray-900">Developer Fee Allocation</h2>
+              <h3 className="text-2xl font-display font-bold text-gray-900">Developer Fee Allocation</h3>
             </div>
             <SourceCitation sourceKey="govtech2025" />
           </div>
@@ -109,7 +109,7 @@ export default function TaxImpact({ asSection = false }) {
           <div className="flex items-start justify-between mb-1">
             <div>
               <p className="text-xs font-mono text-gray-500 uppercase tracking-widest mb-1">Illinois Precedent</p>
-              <h2 className="text-3xl font-display font-bold text-gray-900">Meta / DeKalb, IL</h2>
+              <h3 className="text-2xl font-display font-bold text-gray-900">Meta / DeKalb, IL</h3>
             </div>
             <SourceCitation sourceKey="capitolnews2026" />
           </div>

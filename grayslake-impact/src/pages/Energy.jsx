@@ -27,7 +27,7 @@ export default function Energy({ asSection = false }) {
       <FadeIn className="mb-10 pb-8 border-b border-edge-soft">
         <p className="text-2xs font-mono text-blue-600/60 uppercase tracking-[0.18em] mb-4">Grid Impact</p>
         {asSection ? (
-          <h2 className="text-4xl font-display font-bold text-gray-900 tracking-tight mb-3">Energy Draw</h2>
+          <h3 className="text-3xl font-display font-bold text-gray-900 tracking-tight mb-3">Energy Draw</h3>
         ) : (
           <h1 className="text-5xl font-display font-bold text-gray-900 tracking-tight mb-3">Energy Draw</h1>
         )}
@@ -53,7 +53,7 @@ export default function Energy({ asSection = false }) {
         <div className="flex items-start justify-between mb-1">
           <div>
             <p className="text-2xs font-mono text-gray-400 uppercase tracking-widest mb-1">Power Profile</p>
-            <h2 className="text-3xl font-display font-bold text-gray-900">Secured Power vs. IT Capacity</h2>
+            <h3 className="text-2xl font-display font-bold text-gray-900">Secured Power vs. IT Capacity</h3>
           </div>
           <div className="flex items-center gap-3">
             <SourceCitation sourceKey="dcdGW2026" />

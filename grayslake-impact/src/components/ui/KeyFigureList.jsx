@@ -24,9 +24,9 @@ export default function KeyFigureList({ figures, variant = 'table', groups = nul
         {groups.map(group => (
           <div key={group.id}>
             {group.label && (
-              <p className="text-xs font-mono uppercase tracking-widest text-gray-500 mb-3 pb-2 border-b border-edge-soft/50">
+              <h3 className="text-sm font-mono uppercase tracking-widest text-gray-700 mb-3 pb-2 border-b border-edge-soft/50">
                 {group.label}
-              </p>
+              </h3>
             )}
             <div className={`grid gap-4 ${group.cols}`}>
               {group.ids.map(id => {
@@ -37,14 +37,14 @@ export default function KeyFigureList({ figures, variant = 'table', groups = nul
                     key={f.id}
                     className={`border border-edge rounded-xl bg-white ${group.hero ? 'px-5 py-5' : 'px-4 py-4'}`}
                   >
-                    <p className="text-2xs font-mono uppercase tracking-widest text-gray-500 mb-1">{f.label}</p>
+                    <p className="text-xs font-mono uppercase tracking-widest text-gray-600 mb-1">{f.label}</p>
                     <p className={`font-display font-bold text-gray-900 leading-tight ${group.hero ? 'text-2xl mt-0.5' : 'text-lg'}`}>
                       {f.value}
                     </p>
-                    <p className={`text-gray-600 mt-1 leading-snug ${group.hero ? 'text-sm' : 'text-xs'}`}>
+                    <p className={`text-gray-700 mt-1 leading-snug ${group.hero ? 'text-base' : 'text-sm'}`}>
                       {f.qualifier}
                     </p>
-                    <p className="text-xs text-gray-500 mt-2 leading-relaxed">
+                    <p className="text-sm text-gray-600 mt-2 leading-relaxed">
                       {f.detail}
                       {[f.sourceKey, ...(f.sourceKeys ?? [])].filter(Boolean).map(k => (
                         <SourceCitation key={k} sourceKey={k} />
@@ -66,9 +66,9 @@ export default function KeyFigureList({ figures, variant = 'table', groups = nul
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {figures.map(f => (
           <div key={f.id} className="border border-edge rounded-xl bg-white px-6 py-5">
-            <p className="text-2xs font-mono uppercase tracking-widest text-gray-600 mb-1">{f.label}</p>
+            <p className="text-xs font-mono uppercase tracking-widest text-gray-600 mb-1">{f.label}</p>
             <p className="text-2xl font-display font-bold text-gray-900 leading-tight">{f.value}</p>
-            <p className="text-xs text-gray-600 mt-0.5 leading-snug">{f.qualifier}</p>
+            <p className="text-sm text-gray-700 mt-0.5 leading-snug">{f.qualifier}</p>
             <p className="text-xs text-gray-500 mt-2 leading-relaxed">
               {f.detail}
               {[f.sourceKey, ...(f.sourceKeys ?? [])].filter(Boolean).map(k => (

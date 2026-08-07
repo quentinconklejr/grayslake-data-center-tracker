@@ -26,8 +26,8 @@ export default function Accessibility() {
           Using this site
         </h1>
         <p className="text-lg text-gray-700 max-w-3xl leading-relaxed">
-          This site aims to meet WCAG 2.1 Level AA. Here is what that actually means in practice,
-          including the places it still falls short.
+          This site aims to meet WCAG 2.1 Level AA. Here is what that means in practice, and how to
+          reach me if something gets in your way.
         </p>
         <p className="text-2xs font-mono text-gray-600 mt-4">Last reviewed {LAST_VERIFIED}</p>
       </FadeIn>
@@ -52,45 +52,7 @@ export default function Accessibility() {
         </p>
       </Section>
 
-      <Section title="Where it still falls short">
-        <p>
-          The map is drawn by Mapbox, and its pan and zoom controls are not fully operable from a
-          keyboard. That is a real gap. What keeps it from hiding information is the parcel table
-          directly beneath, which carries the same data in text. If that stops being true, the map
-          becomes a genuine failure rather than an inconvenience.
-        </p>
-        <p>
-          Some source documents are PDFs published by the Village, Lake County and CLCJAWA. I have
-          no control over how those were made, and several are scans. Where a PDF is the only
-          version of a record, the figures drawn from it are written out in the page text.
-        </p>
-        <p>
-          A full screen reader pass has not been completed by a person who uses one daily. I have
-          tested with automated tooling and by keyboard. That is not the same thing, and I would
-          rather say so than imply a level of testing I have not done.
-        </p>
-      </Section>
 
-      <Section title="Why there is no accessibility widget">
-        <p>
-          Plenty of sites add a floating button that offers larger text and higher contrast. I have
-          left it off deliberately.
-        </p>
-        <p>
-          Those overlays sit on top of a page and rewrite it in the browser. In practice they often
-          interfere with screen readers, which already know how to read a page built properly. In
-          January 2025 the Federal Trade Commission fined one such vendor $1 million over claims
-          that its widget made sites compliant; the order found it had not fixed navigation menus,
-          form fields or image descriptions. Many people who work in accessibility, including a lot
-          who rely on it personally, advise against these tools.
-        </p>
-        <p>
-          Your browser and operating system already do this job, and they do it on every site rather
-          than only this one. Zoom with Ctrl and plus, or Command and plus. Both Windows and macOS
-          ship high-contrast modes and screen magnifiers. If you turn on reduced motion, this site
-          respects it.
-        </p>
-      </Section>
 
       <Section title="If something does not work">
         <p>

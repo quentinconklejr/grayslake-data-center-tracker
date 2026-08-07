@@ -124,9 +124,12 @@ export default {
         // of 2xs and 96 of xs against 22 of base. Every size moves up a step so
         // the page reads at arm's length instead of asking the reader to squint.
         // Line heights loosen with it.
-        '2xs':  ['12px',   { lineHeight: '1.5',  letterSpacing: '0.045em' }],
-        'xs':   ['13.5px', { lineHeight: '1.6' }],
-        'sm':   ['15px',   { lineHeight: '1.65' }],
+        // Second pass: 2xs and xs still read as fine print on a laptop, and
+        // they carry section labels and qualifiers, not footnotes. Both move up
+        // another step. sm follows so the gap between them stays even.
+        '2xs':  ['13px',   { lineHeight: '1.5',  letterSpacing: '0.04em' }],
+        'xs':   ['14.5px', { lineHeight: '1.6' }],
+        'sm':   ['15.5px', { lineHeight: '1.65' }],
         'base': ['17px',   { lineHeight: '1.7' }],
         'lg':   ['19px',   { lineHeight: '1.6' }],
         'xl':   ['22px',   { lineHeight: '1.45' }],
