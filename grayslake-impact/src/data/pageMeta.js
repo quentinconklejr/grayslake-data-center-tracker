@@ -70,6 +70,18 @@ export const pageMeta = {
       'Every document and source behind the tracker, including the archived Village FAQ, Lake County parcel data and press coverage.',
     ogImage: '/og/sources.png',
   },
+  '/accessibility': {
+    title: 'Accessibility',
+    description:
+      'How this site handles accessibility: what meets WCAG 2.1 AA, where it falls short, and how to report a barrier.',
+    ogImage: '/og/accessibility.png',
+  },
+  '/privacy': {
+    title: 'Privacy',
+    description:
+      'What the Grayslake Data Center Tracker collects: no cookies, no accounts, no advertising, and cookieless visit counts.',
+    ogImage: '/og/privacy.png',
+  },
   '/about': {
     title: 'About',
     description:

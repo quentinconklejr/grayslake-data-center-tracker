@@ -1,20 +1,25 @@
 ﻿import { useState, useEffect } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
-import { NAV_LINKS } from '../../data/navLinks'
+import { NAV_LINKS, NAV_STORY, NAV_TOOLS, NAV_META } from '../../data/navLinks'
 
 // Maps route paths to human-readable breadcrumb labels.
 // Kept separate from pageMeta so breadcrumbs always match the nav labels.
-function NavLink_({ to, label, end }) {
+// tone="tool" renders the reference links a step lighter than the reading
+// path, so the bar reads as three sections plus utilities rather than seven
+// equally weighted choices. Contrast still clears AA in both tones.
+function NavLink_({ to, label, end, tone = 'story' }) {
+  const idle =
+    tone === 'tool'
+      ? 'text-gray-600 border-transparent hover:text-gray-900 hover:border-gray-400'
+      : 'text-gray-700 border-transparent hover:text-gray-900 hover:border-gray-400'
   return (
     <NavLink
       to={to}
       end={end}
       className={({ isActive }) =>
-        `inline-flex items-center text-sm font-medium whitespace-nowrap transition-colors duration-150 py-1.5 border-b-2 ${
-          isActive
-            ? 'text-blue-700 border-blue-600 font-semibold'
-            : 'text-gray-500 border-transparent hover:text-gray-900 hover:border-gray-300'
-        }`
+        `inline-flex items-center whitespace-nowrap transition-colors duration-150 py-1.5 border-b-2 ${
+          tone === 'tool' ? 'text-sm font-normal' : 'text-sm font-medium'
+        } ${isActive ? 'text-blue-700 border-blue-600 font-semibold' : idle}`
       }
     >
       {label}
@@ -78,10 +83,10 @@ export default function Header() {
         <Link to="/" className="shrink-0 flex items-center gap-2.5 group" aria-label="Grayslake Data Center Tracker, Home">
           <TrackerIcon />
           <div className="flex flex-col min-w-0">
-            <span className="text-base font-semibold text-gray-900 group-hover:text-blue-700 transition-colors leading-tight whitespace-nowrap tracking-tight">
+            <span className="text-xl sm:text-2xl font-display font-bold text-gray-900 group-hover:text-blue-700 transition-colors leading-tight whitespace-nowrap tracking-tight">
               Grayslake Data Center Tracker
             </span>
-            <span className="hidden sm:block text-2xs font-mono text-gray-400 leading-tight mt-0.5 whitespace-nowrap">
+            <span className="hidden sm:block text-2xs font-mono text-gray-600 leading-tight mt-1 whitespace-nowrap">
               Not affiliated with T5 or the Village
             </span>
           </div>
@@ -92,7 +97,15 @@ export default function Header() {
           className="hidden lg:flex items-center gap-4 xl:gap-6 flex-1 justify-end"
           aria-label="Main navigation"
         >
-          {NAV_LINKS.map(l => <NavLink_ key={l.to} {...l} />)}
+          {NAV_STORY.map(l => <NavLink_ key={l.to} {...l} />)}
+
+          <span className="w-px h-5 bg-edge-soft shrink-0" aria-hidden="true" />
+
+          {NAV_TOOLS.map(l => <NavLink_ key={l.to} {...l} tone="tool" />)}
+
+          <span className="w-px h-5 bg-edge-soft shrink-0" aria-hidden="true" />
+
+          {NAV_META.map(l => <NavLink_ key={l.to} {...l} tone="tool" />)}
         </nav>
 
         {/* Mobile hamburger */}

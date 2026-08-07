@@ -10,6 +10,8 @@ import MapPage from './pages/Map'
 import OpenQuestions from './pages/OpenQuestions'
 import NotFound from './pages/NotFound'
 import About from './pages/About'
+import Accessibility from './pages/Accessibility'
+import Privacy from './pages/Privacy'
 import Reporters from './pages/Reporters'
 import Actions from './pages/Actions'
 
@@ -41,6 +43,8 @@ export default function App() {
             <Route path="/documents" element={<Sources />} />
             <Route path="/sources" element={<Navigate to="/documents" replace />} />
             <Route path="/about" element={<About />} />
+            <Route path="/accessibility" element={<Accessibility />} />
+            <Route path="/privacy" element={<Privacy />} />
             {/* Residents folded into /questions, which now carries its plain-language
                 answers behind a toggle. Redirected, not 404'd. */}
             <Route path="/residents" element={<Navigate to="/questions" replace />} />

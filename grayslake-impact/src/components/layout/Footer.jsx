@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import ReportErrorLink from '../ui/ReportErrorLink'
 import { SITE_CONTACT } from '../../data/siteConfig'
 import { NAV_LINKS } from '../../data/navLinks'
 
@@ -54,11 +55,23 @@ export default function Footer() {
           {/* Methodology */}
           <div>
             <p className="text-2xs font-mono text-gray-500 uppercase tracking-widest mb-3">Methodology</p>
-            <p className="text-xs text-gray-300 leading-relaxed">
+            <p className="text-xs text-gray-300 leading-relaxed mb-5">
               All data is sourced from public filings, Village records, and press
               coverage. Projections are labeled; only figures traceable to a primary source
               are presented as facts.
             </p>
+
+            {/* Accessibility and privacy live here rather than in the top nav, so
+                they are findable without growing the main navigation. */}
+            <div className="flex flex-wrap gap-x-5 gap-y-2">
+              <Link to="/accessibility" className="text-xs text-gray-300 hover:text-white underline underline-offset-2 transition-colors">
+                Accessibility
+              </Link>
+              <Link to="/privacy" className="text-xs text-gray-300 hover:text-white underline underline-offset-2 transition-colors">
+                Privacy
+              </Link>
+              <ReportErrorLink className="text-xs text-gray-300 hover:text-white underline underline-offset-2 transition-colors" />
+            </div>
           </div>
         </div>
 
