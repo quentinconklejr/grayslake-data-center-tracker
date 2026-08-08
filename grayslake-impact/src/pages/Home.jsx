@@ -127,26 +127,26 @@ export default function Home() {
 
           </div>
 
-      <section data-section="Land Ownership" className="-mx-4 sm:-mx-6 mt-12 mb-4 px-4 sm:px-6">
-        <FadeIn>
-          <div className="flex items-end justify-between mb-5">
-            <div>
-              <p className="text-xs font-mono font-semibold text-sky-800 uppercase tracking-[0.15em] mb-1">Land Ownership</p>
-              <h2 className="text-3xl font-display font-bold text-gray-900">Land Recorded to T5</h2>
-              <p className="text-base text-gray-700 mt-1 max-w-md leading-relaxed">
-                {figureById['acres-owned'].value} across {figureById['acres-owned'].qualifier}. The approved campus boundary covers additional area not mapped here.
-              </p>
-            </div>
-            <Link to="/map" className="text-sm font-semibold text-sky-700 hover:text-sky-800 transition-colors flex items-center gap-1">
-              Full interactive map
-              <svg className="w-4 h-4" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.8">
-                <path d="M2 6h8M6 2l4 4-4 4" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </Link>
-          </div>
-          <SiteMap className="h-[480px]" />
-        </FadeIn>
-      </section>
+          <section data-section="Land Ownership" className="-mx-4 sm:-mx-6 mt-12 mb-4 px-4 sm:px-6">
+            <FadeIn>
+              <div className="flex items-end justify-between mb-5">
+                <div>
+                  <p className="text-xs font-mono font-semibold text-sky-800 uppercase tracking-[0.15em] mb-1">Land Ownership</p>
+                  <h2 className="text-3xl font-display font-bold text-gray-900">Land Recorded to T5</h2>
+                  <p className="text-base text-gray-700 mt-1 max-w-md leading-relaxed">
+                    {figureById['acres-owned'].value} across {figureById['acres-owned'].qualifier}. The approved campus boundary covers additional area not mapped here.
+                  </p>
+                </div>
+                <Link to="/map" className="text-sm font-semibold text-sky-700 hover:text-sky-800 transition-colors flex items-center gap-1">
+                  Full interactive map
+                  <svg className="w-4 h-4" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.8">
+                    <path d="M2 6h8M6 2l4 4-4 4" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </Link>
+              </div>
+              <SiteMap className="h-[480px]" />
+            </FadeIn>
+          </section>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 mt-10 pt-8 border-t border-gray-200">
             {SECONDARY_STATS.map(({ label, numValue, suffix = '', value, note, src }) => {
