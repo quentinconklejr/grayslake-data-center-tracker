@@ -37,7 +37,7 @@ const SECTIONS = [
     label: 'Energy',  
     Component: Energy,
     figure: 'capacity-comed', 
-    blurb: "How much power the site draws, who pays for grid upgrades, and what ComEd hasn't filed yet.",
+    blurb: 'Power demand estimates, grid upgrade liability, and unfiled regulatory documents from ComEd.',
     accent: 'amber' 
   },
   { 
@@ -45,7 +45,7 @@ const SECTIONS = [
     label: 'Jobs',    
     Component: Jobs,
     figure: 'jobs-permanent', 
-    blurb: 'Comparing the three official job estimates—and the fine print behind the largest claim.',
+    blurb: 'Comparison of three official employment projections and the specific conditions attached to peak headcount figures.',
     accent: 'emerald' 
   },
   { 
@@ -53,7 +53,7 @@ const SECTIONS = [
     label: 'Tax',     
     Component: TaxImpact,
     figure: 'investment',    
-    blurb: 'How developer fees are split, revenue across eight local taxing districts, and remaining unknowns.',
+    blurb: 'Developer fee allocations, revenue distribution across eight local taxing districts, and unprojected fiscal impacts.',
     accent: 'blue' 
   },
   { 
@@ -61,7 +61,7 @@ const SECTIONS = [
     label: 'Schools', 
     Component: Schools,
     figure: 'buildable-area', 
-    blurb: 'What previous Illinois data center developments (like DeKalb) show for District 127.',
+    blurb: 'Lessons from previous Illinois data center developments, including DeKalb, for Community High School District 127.',
     accent: 'violet' 
   },
 ]
@@ -107,16 +107,14 @@ export default function Project() {
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-12">
           <FadeIn className="pb-8 border-b border-edge-soft">
-            {/* Increased from text-xs to text-sm font-semibold */}
             <p className="text-sm font-mono font-semibold text-blue-700 uppercase tracking-[0.15em] mb-3">T5 @ Chicago IV</p>
             <h1 className="text-4xl sm:text-5xl font-display font-bold text-gray-900 tracking-tight break-words mb-4">The Project</h1>
             <p className="text-lg text-gray-800 max-w-2xl leading-relaxed mb-3 font-medium">
-              An $8.5–18B hyperscale facility currently under construction in Grayslake—one of the largest computing proposals in the country.
+              An $8.5 billion to $18 billion hyperscale facility currently under construction in Grayslake, ranking among the largest computing proposals in the nation.
             </p>
             <p className="text-base text-gray-700 max-w-2xl leading-relaxed">
-              A breakdown of power demand, job projections, developer fees, and school funding. Every figure includes its specific conditions and links directly to official public records.
+              A breakdown of power demand, job projections, developer fees, and school funding. Every claim includes its qualifying conditions and links to official public records.
             </p>
-            {/* Increased from text-xs text-gray-500 to text-sm text-gray-700 */}
             <p className="text-sm font-mono text-gray-700 mt-4 font-medium">Last verified {LAST_VERIFIED}</p>
           </FadeIn>
 
@@ -124,9 +122,8 @@ export default function Project() {
             <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2">
               <div>
                 <h2 className="text-2xl font-display font-bold text-gray-900 leading-tight">Four areas of impact</h2>
-                <p className="text-base text-gray-700 mt-1">Select a section to explore details and primary sources.</p>
+                <p className="text-base text-gray-700 mt-1">Select a section to review detailed analysis and primary sources.</p>
               </div>
-              {/* Increased button size from text-sm to text-base */}
               <button
                 type="button"
                 onClick={() => setOpen(allOpen ? [] : IDS)}
@@ -154,7 +151,6 @@ export default function Project() {
                 >
                   <Component asSection />
                   <div className="max-w-7xl mx-auto px-4 sm:px-6 pb-7 -mt-4">
-                    {/* Increased link text from text-sm to text-base font-semibold */}
                     <a
                       href="#sources"
                       className="inline-flex items-center gap-1.5 text-base font-semibold text-blue-700 hover:text-blue-800 transition-colors"
@@ -177,7 +173,7 @@ export default function Project() {
               <div className="max-w-2xl">
                 <h2 className="text-3xl font-display font-bold text-gray-900 mb-2">At-a-glance project metrics</h2>
                 <p className="text-base text-gray-700">
-                  A master list of verified figures from Village documents and developer announcements. Copying any metric automatically includes its fine print and citation.
+                  A comprehensive record of verified metrics from Village documents and developer filings. Copying any metric includes its source citation and qualifying conditions.
                 </p>
               </div>
               <CopyAllFigures />
@@ -189,7 +185,7 @@ export default function Project() {
         <PageNext
           to="/timeline"
           label="Event Timeline"
-          desc="Every approval, lawsuit, construction milestone, and public meeting, sourced in chronological order."
+          desc="Chronological record of approvals, litigation, construction milestones, and public hearings."
           color="text-cyan-700"
           hoverBorder="hover:border-cyan-300"
         />
