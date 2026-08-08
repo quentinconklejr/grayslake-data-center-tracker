@@ -1,16 +1,16 @@
 /*
  * DESIGN SYSTEM — T5 @ Chicago IV Impact Dashboard
  * ─────────────────────────────────────────────────
- * Typography:  Inter (display/headings/body, 400-700) · JetBrains Mono (data/labels, 400-500)
+ * Typography:  Inter (body/sans, 400-700) · Newsreader/Georgia (editorial display) · JetBrains Mono (data/labels)
  *              Rule: mono ONLY for numbers, data labels, eyebrows, citations.
- *              All prose text uses Inter (both display and sans alias to Inter).
+ *              Prose uses Inter; primary editorial headlines use Newsreader/Georgia.
  *
  * Color:       Near-white slate base (#f8fafc). Text: #0f172a primary, slate-600/700 secondary.
  *              ONE accent: blue-600 (#2563eb) — used sparingly.
  *              Semantic: emerald = confirmed, amber = estimated, red = legal/opposition.
  *
- * Eyebrows:    2xs mono, uppercase, tracking-[0.2em], muted (whisper, not shout).
- * Cards:       .glass-card — white bg, slate border, subtle shadow. Hover lifts.
+ * Eyebrows:    13px (2xs) mono, uppercase, tracking-[0.15em], high contrast.
+ * Cards:       .glass-card — white bg, slate border (#7f90a6), 3:1 WCAG edge boundary.
  * Motion:      Framer Motion — scroll fade/translate, count-ups, bounce scroll cue.
  */
 
@@ -20,21 +20,26 @@ export default {
     extend: {
       // ── Typefaces ────────────────────────────────────────────────────────────
       fontFamily: {
-        display: ['"Inter"', 'system-ui', 'sans-serif'],
+        // Newsroom editorial display for main headlines; falls back to Inter
+        display: ['"Newsreader"', 'Georgia', '"Inter"', 'system-ui', 'serif'],
         sans:    ['"Inter"', 'system-ui', '-apple-system', 'sans-serif'],
         mono:    ['"JetBrains Mono"', 'ui-monospace', 'Menlo', 'monospace'],
       },
 
       // ── Color palette ────────────────────────────────────────────────────────
       colors: {
-        // Boundary colours. border-gray-200 measured 1.23:1 against white,
-        // which is why cards read as floating rather than contained. These
-        // clear the 3:1 that WCAG 1.4.11 asks of UI boundaries.
+        // Paper background tokens
+        paper: {
+          DEFAULT: '#fcfcfc',
+          subtle:  '#f8fafc',
+          card:    '#ffffff',
+        },
+        // Boundary colours clearing WCAG 1.4.11 (3:1 contrast for UI edges)
         edge: {
           DEFAULT: '#7f90a6',  // 3.26:1 — card and panel outlines
-          soft:    '#a9b6c6',  // 2.06:1 — internal dividers, not boundaries
+          soft:    '#a9b6c6',  // 2.06:1 — internal dividers
         },
-        // Clean slate ramp — light, high-precision civic feel
+        // Clean slate ramp for high-precision civic feel
         gray: {
           50:  '#f8fafc',
           100: '#f1f5f9',
@@ -48,7 +53,7 @@ export default {
           900: '#0f172a',
           950: '#020617',
         },
-        // Sky-cobalt — the SINGLE confident accent
+        // Sky-cobalt — single confident accent
         blue: {
           50:  '#eff6ff',
           100: '#dbeafe',
@@ -58,6 +63,7 @@ export default {
           500: '#3b82f6',
           600: '#2563eb',
           700: '#1d4ed8',
+          800: '#1e40af',
           900: '#1e3a8a',
         },
         // Semantic: confirmed / sourced / positive
@@ -109,6 +115,7 @@ export default {
         cyan: {
           400: '#22d3ee',
           500: '#06b6d4',
+          700: '#0e7490',
         },
       },
 
@@ -118,16 +125,9 @@ export default {
         '98': '0.98',
       },
 
-      // ── Type scale ────────────────────────────────────────────────────────────
+      // ── Type scale (Arm's-length legibility scale) ───────────────────────────
       fontSize: {
-        // The site was built almost entirely from 10px and 12px type: 151 uses
-        // of 2xs and 96 of xs against 22 of base. Every size moves up a step so
-        // the page reads at arm's length instead of asking the reader to squint.
-        // Line heights loosen with it.
-        // Second pass: 2xs and xs still read as fine print on a laptop, and
-        // they carry section labels and qualifiers, not footnotes. Both move up
-        // another step. sm follows so the gap between them stays even.
-        '2xs':  ['13px',   { lineHeight: '1.5',  letterSpacing: '0.04em' }],
+        '2xs':  ['13px',   { lineHeight: '1.5',  letterSpacing: '0.03em' }],
         'xs':   ['14.5px', { lineHeight: '1.6' }],
         'sm':   ['15.5px', { lineHeight: '1.65' }],
         'base': ['17px',   { lineHeight: '1.7' }],
@@ -144,20 +144,14 @@ export default {
 
       // ── Shadows ──────────────────────────────────────────────────────────────
       boxShadow: {
-        // Glass-card shadows — light, precise, layered
-        'glass':         '0 1px 3px rgba(15,23,42,0.06), 0 1px 2px rgba(15,23,42,0.04)',
-        'glass-md':      '0 4px 6px rgba(15,23,42,0.07), 0 2px 4px rgba(15,23,42,0.05)',
-        'glass-lg':      '0 10px 25px rgba(15,23,42,0.08), 0 4px 8px rgba(15,23,42,0.05)',
-        'glass-hover':   '0 8px 20px rgba(15,23,42,0.10), 0 2px 6px rgba(15,23,42,0.06)',
-        // Accent glow — used sparingly on key interactive elements
-        'glow-accent':   '0 0 20px rgba(37,99,235,0.15), 0 0 4px rgba(37,99,235,0.08)',
-        // Legacy names kept for backward compat
-        'glow-sm':       '0 0 12px 2px rgba(37,99,235,0.10)',
-        'glow':          '0 0 24px 4px rgba(37,99,235,0.12)',
-        'glow-lg':       '0 0 48px 8px rgba(37,99,235,0.08)',
-        'surface':       '0 1px 3px rgba(15,23,42,0.08), 0 4px 16px rgba(15,23,42,0.04)',
-        'card':          '0 0 0 1px rgba(15,23,42,0.06), 0 2px 8px rgba(15,23,42,0.05)',
-        'elevated':      '0 0 0 1px rgba(15,23,42,0.06), 0 8px 32px rgba(15,23,42,0.08)',
+        'glass':       '0 1px 3px rgba(15,23,42,0.06), 0 1px 2px rgba(15,23,42,0.04)',
+        'glass-md':    '0 4px 6px rgba(15,23,42,0.07), 0 2px 4px rgba(15,23,42,0.05)',
+        'glass-lg':    '0 10px 25px rgba(15,23,42,0.08), 0 4px 8px rgba(15,23,42,0.05)',
+        'glass-hover': '0 8px 20px rgba(15,23,42,0.10), 0 2px 6px rgba(15,23,42,0.06)',
+        'glow-accent': '0 0 20px rgba(37,99,235,0.15), 0 0 4px rgba(37,99,235,0.08)',
+        'surface':     '0 1px 3px rgba(15,23,42,0.08), 0 4px 16px rgba(15,23,42,0.04)',
+        'card':        '0 0 0 1px rgba(15,23,42,0.06), 0 2px 8px rgba(15,23,42,0.05)',
+        'elevated':    '0 0 0 1px rgba(15,23,42,0.06), 0 8px 32px rgba(15,23,42,0.08)',
       },
 
       // ── Animation ────────────────────────────────────────────────────────────
