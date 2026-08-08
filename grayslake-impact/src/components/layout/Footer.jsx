@@ -6,17 +6,17 @@ import { NAV_LINKS } from '../../data/navLinks'
 const NAV = NAV_LINKS.filter(l => l.to !== '/')
 
 const FOOTER_LINKS = [
-  { to: '/about',                        label: 'About',   external: false },
+  { to: '/about',                         label: 'About',   external: false },
   { to: `mailto:${SITE_CONTACT.email}`,  label: 'Contact', external: true  },
 ]
 
 export default function Footer() {
   return (
-    <footer className="border-t border-gray-800 mt-24 bg-gray-900">
+    <footer className="border-t border-slate-800 mt-24 bg-slate-950 text-slate-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
 
         <div className="grid md:grid-cols-3 gap-10 mb-10">
-          {/* Brand */}
+          {/* Brand & Overview */}
           <div>
             <div className="flex items-center gap-2.5 mb-4">
               <div className="w-7 h-7 rounded-lg bg-blue-600 flex items-center justify-center shrink-0">
@@ -27,24 +27,26 @@ export default function Footer() {
                   <path d="M3 5.5L7 2.5L11 4" stroke="white" strokeWidth="0.9" strokeLinecap="round" strokeLinejoin="round" opacity="0.55"/>
                 </svg>
               </div>
-              <span className="text-sm font-semibold text-white tracking-tight">Grayslake Data Center Tracker</span>
+              <span className="text-base font-bold text-white tracking-tight">Grayslake Data Center Tracker</span>
             </div>
-            <p className="text-xs text-gray-300 leading-relaxed">
-              An independent tracker collecting public records and press coverage
-              on T5 @ Chicago IV &mdash; a hyperscale data center under construction
-              in Grayslake, Illinois.
+            <p className="text-sm text-slate-300 leading-relaxed mb-4">
+              An independent civic data repository collecting public records, land deeds, and municipal hearing logs on T5 @ Chicago IV in Grayslake, Illinois.
             </p>
+            <div className="inline-flex items-center gap-2 text-xs font-mono text-emerald-400 bg-emerald-950/60 px-2.5 py-1 rounded border border-emerald-800/80">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+              INDEPENDENT CIVIC REPORTING
+            </div>
           </div>
 
-          {/* Navigation */}
+          {/* Navigation Links */}
           <div>
-            <p className="text-2xs font-mono text-gray-500 uppercase tracking-widest mb-3">Pages</p>
+            <p className="text-xs font-mono text-slate-400 uppercase tracking-widest font-semibold mb-3">Pages</p>
             <div className="grid grid-cols-2 gap-1.5">
               {NAV.map(({ to, label }) => (
                 <Link
                   key={to}
                   to={to}
-                  className="inline-flex items-center text-xs text-gray-300 hover:text-white transition-colors duration-150 py-1.5"
+                  className="inline-flex items-center text-sm text-slate-300 hover:text-white transition-colors duration-150 py-1.5 font-medium"
                 >
                   {label}
                 </Link>
@@ -52,32 +54,29 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Methodology */}
+          {/* Editorial Data Standard & Methodology */}
           <div>
-            <p className="text-2xs font-mono text-gray-500 uppercase tracking-widest mb-3">Methodology</p>
-            <p className="text-xs text-gray-300 leading-relaxed mb-5">
-              All data is sourced from public filings, Village records, and press
-              coverage. Projections are labeled; only figures traceable to a primary source
-              are presented as facts.
+            <p className="text-xs font-mono text-slate-400 uppercase tracking-widest font-semibold mb-3">Methodology</p>
+            <p className="text-sm text-slate-300 leading-relaxed mb-5">
+              All figures are verified against primary filings from Lake County GIS, ComEd utility records, and Village meeting archives. Conditional projections are explicitly labeled.
             </p>
 
-            {/* Accessibility and privacy live here rather than in the top nav, so
-                they are findable without growing the main navigation. */}
             <div className="flex flex-wrap gap-x-5 gap-y-2">
-              <Link to="/accessibility" className="text-xs text-gray-300 hover:text-white underline underline-offset-2 transition-colors">
+              <Link to="/accessibility" className="text-sm text-slate-300 hover:text-white underline underline-offset-4 transition-colors font-medium">
                 Accessibility
               </Link>
-              <Link to="/privacy" className="text-xs text-gray-300 hover:text-white underline underline-offset-2 transition-colors">
+              <Link to="/privacy" className="text-sm text-slate-300 hover:text-white underline underline-offset-4 transition-colors font-medium">
                 Privacy
               </Link>
-              <ReportErrorLink className="text-xs text-gray-300 hover:text-white underline underline-offset-2 transition-colors" />
+              <ReportErrorLink className="text-sm text-slate-300 hover:text-white underline underline-offset-4 transition-colors font-medium" />
             </div>
           </div>
         </div>
 
-        <div className="border-t border-gray-700 pt-6 flex flex-col sm:flex-row justify-between gap-3">
-          <p className="text-2xs font-mono text-gray-400">
-            Compiled by Quentin Conkle Jr. · Peterson Rd &amp; Route 83, Grayslake, IL 60030
+        {/* Creator Attribution */}
+        <div className="border-t border-slate-800 pt-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+          <p className="text-xs font-mono text-slate-400 font-medium">
+            Compiled and maintained by Quentin Conkle Jr. · Peterson Rd &amp; Route 83, Grayslake, IL 60030
           </p>
           <div className="flex items-center gap-4">
             {FOOTER_LINKS.map(({ to, label, external }) =>
@@ -85,7 +84,7 @@ export default function Footer() {
                 <a
                   key={to}
                   href={to}
-                  className="text-xs font-mono text-gray-300 hover:text-white transition-colors duration-150"
+                  className="text-sm font-mono font-medium text-slate-300 hover:text-white transition-colors duration-150"
                 >
                   {label}
                 </a>
@@ -93,7 +92,7 @@ export default function Footer() {
                 <Link
                   key={to}
                   to={to}
-                  className="text-xs font-mono text-gray-300 hover:text-white transition-colors duration-150"
+                  className="text-sm font-mono font-medium text-slate-300 hover:text-white transition-colors duration-150"
                 >
                   {label}
                 </Link>
@@ -103,12 +102,11 @@ export default function Footer() {
         </div>
 
       </div>
+
+      {/* Disclaimers & Institutional Notice */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 pb-8">
-        <p className="text-xs text-gray-400 leading-relaxed border-t border-gray-700 pt-6">
-          This site is not affiliated with T5 Data Centers, LLC or the Village of Grayslake. It is an
-          independent, resident-built resource. Every claim links to a public source; figures that are
-          conditional or contested are labelled as such. If a figure is wrong or a document is missing,
-          please get in touch via the About page.
+        <p className="text-xs text-slate-400 leading-relaxed border-t border-slate-800/80 pt-6">
+          This project is an independent resident initiative and is not affiliated with T5 Data Centers, LLC or the Village of Grayslake. Every claim links to an archived public record or primary document. If a figure requires correction or a document is missing, please submit an update via the About page.
         </p>
       </div>
     </footer>
