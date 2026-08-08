@@ -16,7 +16,6 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
 
         <div className="grid md:grid-cols-3 gap-10 mb-10">
-          {/* Brand & Overview */}
           <div>
             <div className="flex items-center gap-2.5 mb-4">
               <div className="w-7 h-7 rounded-lg bg-blue-600 flex items-center justify-center shrink-0">
@@ -38,7 +37,6 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Navigation Links */}
           <div>
             <p className="text-xs font-mono text-slate-400 uppercase tracking-widest font-semibold mb-3">Pages</p>
             <div className="grid grid-cols-2 gap-1.5">
@@ -54,7 +52,6 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Editorial Data Standard & Methodology */}
           <div>
             <p className="text-xs font-mono text-slate-400 uppercase tracking-widest font-semibold mb-3">Methodology</p>
             <p className="text-sm text-slate-300 leading-relaxed mb-5">
@@ -73,7 +70,6 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Creator Attribution */}
         <div className="border-t border-slate-800 pt-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
           <p className="text-xs font-mono text-slate-400 font-medium">
             Compiled and maintained by Quentin Conkle Jr. · Peterson Rd &amp; Route 83, Grayslake, IL 60030
@@ -103,7 +99,6 @@ export default function Footer() {
 
       </div>
 
-      {/* Disclaimers & Institutional Notice */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 pb-8">
         <p className="text-xs text-slate-400 leading-relaxed border-t border-slate-800/80 pt-6">
           This project is an independent resident initiative and is not affiliated with T5 Data Centers, LLC or the Village of Grayslake. Every claim links to an archived public record or primary document. If a figure requires correction or a document is missing, please submit an update via the About page.
