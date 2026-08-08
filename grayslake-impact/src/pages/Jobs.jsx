@@ -1,10 +1,9 @@
-﻿import PageTitle from '../components/ui/PageTitle'
+import PageTitle from '../components/ui/PageTitle'
 import { pageMeta } from '../data/pageMeta'
 import StatCard from '../components/ui/StatCard'
 import JobsTimelineChart from '../components/charts/JobsTimelineChart'
 import SourceCitation from '../components/ui/SourceCitation'
 import FadeIn from '../components/ui/FadeIn'
-import AnimatedNumber from '../components/ui/AnimatedNumber'
 import { FootnoteProvider, FootnoteList } from '../components/ui/FootnoteContext'
 import { Fragment } from 'react'
 import { projections } from '../data/projections'
@@ -16,32 +15,32 @@ const { project, jobs } = projections
 
 const PHASES = [
   {
-    period: '2025 – Q4 2027',
+    period: '2025 to Q4 2027',
     phase: 'Construction: Phase 1',
-    status: 'Active now',
-    accent: 'border-amber-300 bg-amber-50',
+    status: 'Active',
+    accent: 'border-amber-300 bg-amber-50/80',
     dot: 'bg-amber-500',
-    label: 'text-amber-700',
-    jobs: '"Hundreds" of construction & trade workers (est.)',
-    note: 'Earthmoving and site prep underway as of Nov 2025.',
+    label: 'text-amber-800',
+    jobs: 'Hundreds of construction and trade workers (estimated)',
+    note: 'Site preparation and earthmoving active as of November 2025.',
   },
   {
-    period: '2027 – 2029',
+    period: '2027 to 2029',
     phase: 'Construction: Full Buildout',
     status: 'Projected',
-    accent: 'border-blue-300 bg-blue-50',
+    accent: 'border-blue-300 bg-blue-50/80',
     dot: 'bg-blue-500',
-    label: 'text-blue-700',
-    jobs: 'Peak construction workforce across all phases',
-    note: 'Phasing tied to leasing demand, per developer; no detailed schedule has been published.',
+    label: 'text-blue-800',
+    jobs: 'Peak construction workforce across subsequent phases',
+    note: 'Phasing depends on commercial leasing demand; detailed schedule unreleased.',
   },
   {
     period: '2029+',
     phase: 'Operations: Full Buildout',
     status: 'Projected',
-    accent: 'border-emerald-300 bg-emerald-50',
+    accent: 'border-emerald-300 bg-emerald-50/80',
     dot: 'bg-emerald-500',
-    label: 'text-emerald-700',
+    label: 'text-emerald-800',
     jobs: figureById['jobs-permanent'].value + ' permanent positions',
     note: figureById['jobs-permanent'].detail,
     sourceKeys: ['govtech2025', 'villagefaq_archived'],
@@ -49,17 +48,15 @@ const PHASES = [
 ]
 
 const PERM_ROLES = [
-  ['Data Center Technicians',   'Hardware maintenance, server lifecycle management'],
-  ['Network / IT Engineers',    'Infrastructure, connectivity, systems reliability'],
-  ['Facilities & Mechanical',   'HVAC, electrical, cooling systems'],
-  ['Security Operations',       'Physical and cyber security staff'],
-  ['Site Management',           'Operations leadership, compliance'],
+  ['Data Center Technicians',    'Hardware maintenance, server lifecycle management'],
+  ['Network / IT Engineers',     'Infrastructure, connectivity, systems reliability'],
+  ['Facilities & Mechanical',    'HVAC, electrical, cooling systems'],
+  ['Security Operations',        'Physical and cyber security staff'],
+  ['Site Management',            'Operations leadership, compliance'],
   ['Administrative / Support',  'HR, finance, administration'],
 ]
 
 export default function Jobs({ asSection = false }) {
-  // Embedded in /project the page shares one footnote scope with the rest of
-  // the page, so sources can all live in a single block at the bottom.
   const Wrap = asSection ? Fragment : FootnoteProvider
 
   return (
@@ -68,67 +65,59 @@ export default function Jobs({ asSection = false }) {
       {!asSection && <PageTitle {...pageMeta['/jobs']} />}
 
       <FadeIn className="mb-10 pb-8 border-b border-edge-soft">
-        <p className="text-2xs font-mono text-blue-600 uppercase tracking-[0.18em] mb-4">Employment</p>
+        <p className="text-xs font-mono font-semibold text-sky-800 uppercase tracking-[0.15em] mb-3">Employment</p>
         {asSection ? (
           <h3 className="text-3xl font-display font-bold text-gray-900 tracking-tight mb-3">Job Creation</h3>
         ) : (
           <h1 className="text-4xl sm:text-5xl font-display font-bold text-gray-900 tracking-tight break-words mb-3">Job Creation</h1>
         )}
-        <p className="text-base text-gray-600 max-w-2xl leading-relaxed">
-          Permanent headcount has been stated three ways. Grayslake Mayor Elizabeth Davies cited{' '}
-          {jobs.permanentDavies.toLocaleString()} to the Chicago Tribune in October 2025. T5 CEO Pete Marin cited
-          &ldquo;over {jobs.permanentMarin.toLocaleString()}&rdquo; in July 2026. The Village FAQ reaches{' '}
-          {jobs.permanent.toLocaleString()} by estimating {jobs.permanentBasis}, and states that figure holds{' '}
-          {jobs.permanentCondition}, a footprint the approvals permit but T5 has not committed to. The FAQ
-          hedges its own number, noting that job estimates &ldquo;may change&rdquo; as operations and technologies do,
-          and excludes site development and construction employment from it. That construction workforce is described
-          separately as &ldquo;{jobs.constructionPhase}&rdquo; with no precise headcount publicly sourced.
+        <p className="text-base text-gray-700 max-w-2xl leading-relaxed">
+          Official statements cite three differing permanent employment figures. Grayslake Mayor Elizabeth Davies reported {jobs.permanentDavies.toLocaleString()} jobs in October 2025, while T5 Chief Executive Pete Marin cited more than {jobs.permanentMarin.toLocaleString()} in July 2026. The Village of Grayslake FAQ projects up to {jobs.permanent.toLocaleString()} permanent positions based on a ratio of {jobs.permanentBasis}. This maximum figure assumes full construction of the permitted {jobs.permanentCondition}, which T5 has not formally guaranteed. Construction employment is listed separately as {jobs.constructionPhase} without a specific public headcount.
         </p>
-        <p className="text-2xs font-mono text-gray-400 mt-3">Last verified {LAST_VERIFIED}</p>
+        <p className="text-xs font-mono text-gray-600 mt-3 font-medium">Last verified {LAST_VERIFIED}</p>
       </FadeIn>
 
-      <FadeIn className="grid grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+      <FadeIn className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
         <StatCard label="Permanent Jobs"       value={figureById['jobs-permanent'].value} sub={figureById['jobs-permanent'].qualifier} accent="green" sourceKey="villagefaq_archived" />
-        <StatCard label="Construction"         value="Hundreds"                         sub="Active 2025–2029 (est.)"  badge="Est." accent="amber" sourceKey="govtech2025" />
+        <StatCard label="Construction"         value="Hundreds"                         sub="Active 2025 to 2029 (est.)"  badge="Est." accent="amber" sourceKey="govtech2025" />
         <StatCard label="Phase 1 Online"       value={project.firstBuildingOnline}      sub="First building operational" accent="blue" sourceKey="dcd2026" />
         <StatCard label="Full Buildout"        value={figureById['buildout'].value} sub={figureById['buildout'].qualifier} badge="Disputed" accent="blue" sourceKey="govtech2025" />
       </FadeIn>
 
-      <FadeIn className="glass-card p-6 sm:p-8 mb-3">
+      <FadeIn className="glass-card p-6 sm:p-8 mb-6">
         <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-1 mb-1">
           <div>
-            <p className="text-xs font-mono text-gray-500 uppercase tracking-widest mb-1">Workforce Comparison</p>
-            <h3 className="text-2xl font-display font-bold text-gray-900">Permanent vs. Construction</h3>
+            <p className="text-xs font-mono font-semibold text-slate-500 uppercase tracking-wider mb-1">Workforce Comparison</p>
+            <h3 className="text-2xl font-display font-bold text-gray-900">Permanent vs. Construction Workforce</h3>
           </div>
           <div className="flex items-center gap-3">
-            <span className="text-2xs font-mono text-amber-700">Est. included</span>
+            <span className="text-xs font-mono font-medium text-amber-800 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">Est. included</span>
             <SourceCitation sourceKey="govtech2025" />
           </div>
         </div>
-        <p className="text-sm text-gray-500 mb-8 max-w-prose">
-          Construction count at ~400 represents "hundreds" per Village documents and is treated as an estimate.
-          Permanent headcount is <Figure id="jobs-permanent" />.
+        <p className="text-base text-gray-700 mb-8 max-w-prose leading-relaxed">
+          Construction headcount is estimated at approximately 400 positions based on Village documents. Permanent operational headcount is listed as <Figure id="jobs-permanent" />.
         </p>
         <JobsTimelineChart />
       </FadeIn>
 
       <FadeIn className="mb-10">
-        <p className="text-xs font-mono text-gray-500 uppercase tracking-[0.15em] mb-6">Employment by Phase</p>
-        <div className="space-y-3">
+        <p className="text-xs font-mono font-semibold text-slate-500 uppercase tracking-[0.15em] mb-5">Employment Timeline by Phase</p>
+        <div className="space-y-4">
           {PHASES.map(({ period, phase, status, accent, dot, label, jobs: jobDesc, note, sourceKey }) => (
             <div key={phase} className={`border rounded-xl px-6 py-5 ${accent}`}>
               <div className="flex items-start gap-5">
                 <div className="flex flex-col items-center gap-1 shrink-0 pt-1">
-                  <div className={`w-2 h-2 rounded-full ${dot}`} />
+                  <div className={`w-2.5 h-2.5 rounded-full ${dot}`} />
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap mb-1">
-                    <span className="text-2xs font-mono text-gray-500">{period}</span>
-                    <span className={`text-2xs font-mono uppercase tracking-widest ${label}`}>{status}</span>
+                    <span className="text-xs font-mono font-semibold text-slate-600">{period}</span>
+                    <span className={`text-xs font-mono font-semibold uppercase tracking-wider ${label}`}>{status}</span>
                   </div>
-                  <p className="text-base font-display font-semibold text-gray-900 mb-0.5">{phase}</p>
-                  <p className="text-sm text-gray-600">{jobDesc}</p>
-                  <p className="text-sm text-gray-500 mt-1">
+                  <p className="text-lg font-display font-bold text-gray-900 mb-1">{phase}</p>
+                  <p className="text-base font-medium text-gray-800">{jobDesc}</p>
+                  <p className="text-sm text-gray-600 mt-1 leading-relaxed">
                     {note}
                     {sourceKey && <SourceCitation sourceKey={sourceKey} />}
                   </p>
@@ -139,16 +128,16 @@ export default function Jobs({ asSection = false }) {
         </div>
       </FadeIn>
 
-      <div className="grid md:grid-cols-2 gap-4">
+      <div className="grid md:grid-cols-2 gap-6">
         <FadeIn className="glass-card p-6">
           <div className="flex items-center justify-between mb-5">
-            <p className="text-xs font-mono text-gray-500 uppercase tracking-widest">Typical permanent roles</p>
+            <p className="text-xs font-mono font-semibold text-slate-500 uppercase tracking-wider">Permanent Operational Roles</p>
           </div>
           <div className="space-y-0">
             {PERM_ROLES.map(([role, desc]) => (
               <div key={role} className="py-3 border-b border-edge-soft/50 last:border-0">
-                <p className="text-sm font-medium text-gray-800 mb-0.5">{role}</p>
-                <p className="text-sm text-gray-500">{desc}</p>
+                <p className="text-base font-semibold text-slate-900 mb-0.5">{role}</p>
+                <p className="text-sm text-slate-600">{desc}</p>
               </div>
             ))}
           </div>
@@ -156,32 +145,31 @@ export default function Jobs({ asSection = false }) {
 
         <FadeIn delay={0.08} className="glass-card p-6">
           <div className="flex items-center justify-between mb-5">
-            <p className="text-xs font-mono text-gray-500 uppercase tracking-widest">Construction Workforce</p>
+            <p className="text-xs font-mono font-semibold text-slate-500 uppercase tracking-wider">Construction Trade Workforce</p>
             <SourceCitation sourceKey="dailyherald2026" />
           </div>
-          <p className="text-base text-gray-600 leading-relaxed mb-5">
-            The workforce has been described only as &ldquo;hundreds of construction and trade jobs.&rdquo;
-            T5 has not confirmed a project labor agreement with any regional union.
+          <p className="text-base text-gray-700 leading-relaxed mb-5">
+            The trade workforce is listed in public records as &ldquo;hundreds of construction and trade jobs.&rdquo; T5 has not formally executed a project labor agreement with regional building trades councils.
           </p>
-          <div className="border-t border-gray-100 pt-5">
-            <p className="text-xs font-mono text-gray-500 uppercase tracking-widest mb-3">
-              Trade unions likely involved
+          <div className="border-t border-gray-200 pt-5">
+            <p className="text-xs font-mono font-semibold text-slate-500 uppercase tracking-wider mb-3">
+              Trade Unions Represented in Regional Projects
             </p>
             <ul className="space-y-2">
               {[
-                'IBEW Local 176 (electricians)',
+                'IBEW Local 176 (Electricians)',
                 'Iron Workers Local 508',
                 'Operating Engineers Local 150',
                 'Laborers Local 149',
               ].map(u => (
-                <li key={u} className="text-sm text-gray-500 flex gap-2">
-                  <span aria-hidden="true" className="text-gray-300 shrink-0 mt-0.5">·</span>
+                <li key={u} className="text-sm font-medium text-slate-700 flex gap-2">
+                  <span aria-hidden="true" className="text-slate-400 shrink-0 mt-0.5">·</span>
                   {u}
                 </li>
               ))}
             </ul>
-            <p className="text-sm text-gray-500 mt-4">
-              Union involvement is unconfirmed. Names are drawn from comparable Illinois projects.
+            <p className="text-xs font-mono text-slate-500 mt-4 leading-relaxed">
+              Specific union contracts remain unconfirmed. Trade designations reflect standard regional industrial data center projects.
             </p>
           </div>
         </FadeIn>
