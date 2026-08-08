@@ -125,4 +125,12 @@ export const timelineEvents = [
     category: "construction",
     sourceKeys: ["govtech2025", "dailyherald2026", "patch2026"],
   },
+  {
+  date: 'July 31, 2026',
+  title: 'Resident Lawsuit Filed Against Village & T5',
+  status: 'LEGAL CHALLENGE',
+  type: 'legal',
+  desc: 'The Preservation of Community Well-being Collective LLC and nine Lake County residents filed a lawsuit in Lake County Circuit Court against the Village of Grayslake, T5 Data Centers, and Alter Asset Management. The suit seeks to invalidate 2024–2025 approvals, void the development agreement, and enjoin further permitting, alleging non-compliance with the Village Comprehensive Plan, Sustainability Plan, and state deliberation rules.',
+  sourceKey: 'scannerLawsuit2026',
+},
 ];
