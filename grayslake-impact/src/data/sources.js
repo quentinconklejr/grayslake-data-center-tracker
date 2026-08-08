@@ -161,4 +161,12 @@ export const sources = {
     verified: "Aug 5, 2026",
     tier: "primary",
   },
+  scannerLawsuit2026: {
+  title: "'Project of unprecedented scale': Lake County residents file lawsuit to block 472-acre data center campus in Grayslake",
+  publisher: "Lake & McHenry County Scanner",
+  author: "Sam Borcia",
+  date: "Aug 8, 2026",
+  url: "https://www.lakemchenryscanner.com/2026/08/08/project-of-unprecedented-scale-lake-county-residents-file-lawsuit-to-block-472-acre-data-center-campus-in-grayslake/",
+  type: "PRESS",
+},
 };
