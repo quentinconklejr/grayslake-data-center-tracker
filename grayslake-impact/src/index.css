@@ -2,85 +2,86 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ─── Design tokens ─────────────────────────────────────────────────────────── */
+/* ─── Design tokens (Institutional Newsroom Theme) ─────────────────────────── */
 :root {
-  --bg-base:        #f8fafc;
+  --bg-base:        #fcfcfc;
   --bg-surface:     #ffffff;
-  --bg-raised:      #f1f5f9;
-  --accent:         #2563eb;   /* blue-600 — single confident accent */
-  --accent-muted:   rgba(37, 99, 235, 0.08);
-  --border-subtle:  rgba(15, 23, 42, 0.04);
-  --border-default: rgba(15, 23, 42, 0.08);
-  --border-strong:  rgba(15, 23, 42, 0.13);
+  --bg-raised:      #f8fafc;
+  --accent:         #0369a1;   /* Editorial Slate Blue */
+  --accent-muted:   rgba(3, 105, 161, 0.08);
+  --border-subtle:  #e2e8f0;
+  --border-default: #cbd5e1;
+  --border-strong:  #94a3b8;
 }
 
 /* ─── Base ──────────────────────────────────────────────────────────────────── */
 html {
   scroll-behavior: smooth;
-  background-color: #f8fafc;
+  background-color: #fcfcfc;
 }
 
 body {
-  background-color: #f8fafc;
-  color: #0f172a;
+  background-color: #fcfcfc;
+  color: #334155;
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  line-height: 1.6;
 }
 
-/* Tabular figures for all data contexts */
+/* Tabular figures for data contexts */
 .font-mono, [class*="font-mono"] {
   font-variant-numeric: tabular-nums;
   font-feature-settings: 'tnum';
 }
 
-/* ─── Glass card utilities ──────────────────────────────────────────────────── */
+/* ─── Newsroom Card & Component Utilities ─────────────────────────────────── */
 @layer components {
   .glass-card {
-    @apply bg-white border border-edge rounded-xl shadow-glass;
+    @apply bg-white border border-slate-200/90 rounded-xl shadow-sm;
   }
   .glass-card-hover {
-    @apply bg-white border border-edge rounded-xl shadow-glass
+    @apply bg-white border border-slate-200/90 rounded-xl shadow-sm
            transition-all duration-200
-           hover:border-gray-300 hover:shadow-glass-hover;
+           hover:border-slate-300 hover:shadow-md;
   }
   .glass-panel {
-    @apply bg-white/80 backdrop-blur-sm border border-edge rounded-xl shadow-glass;
+    @apply bg-white/95 backdrop-blur-sm border border-slate-200/90 rounded-xl shadow-sm;
   }
-  /* Accent-bordered card — used for highlighted data blocks */
+  /* Accent-bordered card for highlighted data blocks */
   .card-accent-blue {
-    @apply bg-white border border-blue-400 rounded-xl shadow-glass;
+    @apply bg-white border-2 border-sky-600/80 rounded-xl shadow-sm;
   }
-  /* Section eyebrow — consistent label style above section headings */
+  /* Section eyebrow — upgraded from 10px (2xs) to high-contrast 13px–14px */
   .eyebrow {
-    @apply text-2xs font-mono uppercase tracking-[0.2em] text-blue-700;
+    @apply text-xs sm:text-sm font-mono font-semibold uppercase tracking-[0.15em] text-sky-800;
   }
 }
 
 /* ─── Grid background (hero) ─────────────────────────────────────────────── */
 .bg-grid {
   background-image:
-    radial-gradient(circle, rgba(37, 99, 235, 0.07) 1px, transparent 1px);
+    radial-gradient(circle, rgba(2, 132, 199, 0.08) 1px, transparent 1px);
   background-size: 24px 24px;
 }
 
 /* ─── Custom scrollbar ──────────────────────────────────────────────────────── */
-::-webkit-scrollbar              { width: 5px; height: 5px; }
+::-webkit-scrollbar              { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track        { background: #f1f5f9; }
 ::-webkit-scrollbar-thumb        { background: #cbd5e1; border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover  { background: #64748b; }
 
 /* ─── Selection ─────────────────────────────────────────────────────────────── */
 ::selection {
-  background: rgba(37, 99, 235, 0.12);
-  color: #0f172a;
+  background: #e0f2fe;
+  color: #0c4a6e;
 }
 
 /* ─── Focus ─────────────────────────────────────────────────────────────────── */
 :focus-visible {
-  outline: 2px solid rgba(37, 99, 235, 0.6);
+  outline: 2px solid #0284c7;
   outline-offset: 3px;
-  border-radius: 3px;
+  border-radius: 4px;
 }
 
 /* ─── Recharts ──────────────────────────────────────────────────────────────── */
@@ -89,46 +90,45 @@ body {
 
 /* ─── Mapbox control theming ────────────────────────────────────────────────── */
 .mapboxgl-ctrl-group {
-  background: rgba(255, 255, 255, 0.97) !important;
-  border: 1px solid rgba(15,23,42,0.10) !important;
+  background: rgba(255, 255, 255, 0.98) !important;
+  border: 1px solid rgba(15, 23, 42, 0.12) !important;
   border-radius: 8px !important;
   backdrop-filter: blur(12px);
-  box-shadow: 0 2px 8px rgba(15,23,42,0.08) !important;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06) !important;
 }
 .mapboxgl-ctrl-group button {
   background: transparent !important;
-  color: #64748b !important;
-  border-bottom: 1px solid rgba(15,23,42,0.06) !important;
+  color: #334155 !important;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08) !important;
 }
-.mapboxgl-ctrl-group button:hover { background: rgba(15,23,42,0.04) !important; }
+.mapboxgl-ctrl-group button:hover { background: rgba(15, 23, 42, 0.04) !important; }
 .mapboxgl-ctrl-group button:last-child { border-bottom: none !important; }
 .mapboxgl-ctrl-scale {
-  background: rgba(255, 255, 255, 0.95) !important;
-  border-color: rgba(15,23,42,0.10) !important;
-  color: #64748b !important;
+  background: rgba(255, 255, 255, 0.98) !important;
+  border-color: rgba(15, 23, 42, 0.12) !important;
+  color: #334155 !important;
   font-family: 'JetBrains Mono', monospace !important;
-  font-size: 11px !important;
-  padding: 2px 6px !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  padding: 3px 8px !important;
 }
 .mapboxgl-ctrl-attrib {
-  background: rgba(255, 255, 255, 0.85) !important;
-  color: #64748b !important;
-  font-size: 11px !important;
+  background: rgba(255, 255, 255, 0.90) !important;
+  color: #475569 !important;
+  font-size: 12px !important;
 }
-.mapboxgl-ctrl-attrib a { color: #64748b !important; }
+.mapboxgl-ctrl-attrib a { color: #0369a1 !important; font-weight: 500; }
 
-/* ─── Reduced motion ─────────────────────────────────────────────────────────── */
+/* ─── Reduced motion & Accessibility ───────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   *, ::before, ::after {
-    animation-duration:       0.01ms !important;
+    animation-duration:        0.01ms !important;
     animation-iteration-count: 1 !important;
-    transition-duration:      0.01ms !important;
+    transition-duration:       0.01ms !important;
+    scroll-behavior: auto !important;
   }
-  html { scroll-behavior: auto; }
 }
 
-/* Screen-reader-only utility. Tailwind ships sr-only, but focus:not-sr-only
-   needs the paired rule to be present in the same layer to work reliably. */
 .sr-only {
   position: absolute;
   width: 1px; height: 1px;
@@ -145,13 +145,4 @@ body {
   overflow: visible;
   clip: auto;
   white-space: normal;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
 }
