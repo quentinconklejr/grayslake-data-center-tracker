@@ -22,7 +22,6 @@ export default function SourceCitation({ sourceKey }) {
     ctx?.setHoveredKey?.(null)
   }
 
-  // Close on outside tap (touch devices)
   useEffect(() => {
     if (!show) return
     function handler(e) {
