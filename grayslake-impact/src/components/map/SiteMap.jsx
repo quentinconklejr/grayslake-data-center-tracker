@@ -43,7 +43,7 @@ export default function SiteMap({ className = '' }) {
         paint: {
           'line-color': '#38bdf8',
           'line-width': 2.5,
-          'line-dasharray':,
+          'line-dasharray': JSON.parse(''),
         },
       })
 
