@@ -127,6 +127,15 @@ export const keyFigures = [
       'T5 voluntarily suspended its ~15.75-acre Section 404 application on July 31, 2026. The Village said it had advocated for withdrawal and that the mitigation was not necessary for the project to proceed.',
     sourceKey: 'dailyherald_jul2026',
   },
+  // Add this entry to the keyFigures array in src/data/keyFigures.js
+{
+  id: 'school-funding',
+  label: 'School district coverage',
+  value: '8 Taxing Districts',
+  qualifier: 'including Grayslake CHSD 127 & CCSD 46',
+  detail: 'The campus sits across 8 local taxing bodies. In precedent developments like DeKalb, school districts received ~60.9% of property tax revenues.',
+  sourceKeys: ['villagefaq_archived', 'capitolnews2026'],
+},
 ]
 
 export const figureById = Object.fromEntries(keyFigures.map(f => [f.id, f]))
