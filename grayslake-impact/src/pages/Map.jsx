@@ -8,14 +8,7 @@ import DataTransparencyFootnote from '../components/ui/DataTransparencyFootnote'
 import FadeIn from '../components/ui/FadeIn'
 import { FootnoteProvider, FootnoteList } from '../components/ui/FootnoteContext'
 import { LAST_VERIFIED } from '../data/siteConfig'
-import parcelsGeoJSON from '../data/parcels.geojson'
-
-const PARCEL_DATA = (parcelsGeoJSON?.features || []).map(f => ({
-  pin: f.properties?.pin || f.properties?.PIN || '—',
-  acres: f.properties?.acres || f.properties?.ACRES || '—',
-  salePrice: f.properties?.salePrice || f.properties?.PRICE || '—',
-  date: f.properties?.date || f.properties?.DATE || '—',
-}))
+import { PARCELS_DATA } from '../data/parcels'
 
 export default function MapPage() {
   const [showTable, setShowTable] = useState(false)
@@ -34,17 +27,14 @@ export default function MapPage() {
           <p className="text-xs font-mono text-slate-600 mt-3 font-medium">Last verified {LAST_VERIFIED}</p>
         </FadeIn>
 
-        {/* Enterprise Lead Capture */}
         <FadeIn>
           <EnterpriseLeadBanner />
         </FadeIn>
 
-        {/* Map Component (Uses built-in map legend below map) */}
         <FadeIn className="mb-6">
           <SiteMap className="h-[520px] rounded-xl border border-slate-200 shadow-sm" />
         </FadeIn>
 
-        {/* Collapsible Parcel Table */}
         <FadeIn className="my-8">
           <div className="newsroom-card p-5">
             <div className="flex items-center justify-between">
@@ -63,7 +53,7 @@ export default function MapPage() {
 
             {showTable && (
               <div className="mt-5 pt-4 border-t border-slate-200">
-                <ParcelTable parcels={PARCEL_DATA} sourceKey="gisParcels2026" />
+                <ParcelTable parcels={PARCELS_DATA} sourceKey="gisParcels2026" />
               </div>
             )}
           </div>
