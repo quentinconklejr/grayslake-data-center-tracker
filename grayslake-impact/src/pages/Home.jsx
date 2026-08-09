@@ -64,7 +64,6 @@ export default function Home() {
               <p className="text-xs font-mono text-gray-500 mb-8">Last verified {LAST_VERIFIED}</p>
             </Reveal>
 
-            {/* Hero Headline Stats */}
             <div className="grid md:grid-cols-2 gap-10 md:gap-0 border-t border-edge-soft pt-10">
 
               <Reveal className="md:pr-12 md:border-r border-gray-300">
@@ -100,7 +99,6 @@ export default function Home() {
 
             </div>
 
-            {/* Interactive Map Section */}
             <section data-section="Land Ownership" className="mt-12 mb-8">
               <FadeIn>
                 <div className="flex items-end justify-between mb-5">
@@ -122,7 +120,6 @@ export default function Home() {
               </FadeIn>
             </section>
 
-            {/* Secondary Stats Grid */}
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 mt-12 pt-8 border-t border-gray-200">
               {SECONDARY_STATS.map(({ label, numValue, suffix = '', value, note, src }) => {
                 const displayValue = numValue != null
