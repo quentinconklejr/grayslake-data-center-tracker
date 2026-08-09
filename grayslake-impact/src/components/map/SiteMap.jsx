@@ -14,85 +14,96 @@ export default function SiteMap({ className = '' }) {
   useEffect(() => {
     if (map.current) return
 
-    map.current = new mapboxgl.Map({
-      container: mapContainer.current,
-      style: 'mapbox://styles/mapbox/satellite-streets-v12',
-      center: [-88.0645, 42.3485],
-      zoom: 14.2,
-      pitch: 0,
-    })
-
-    map.current.addControl(new mapboxgl.NavigationControl(), 'top-right')
-
-    map.current.on('load', () => {
-      map.current.addSource('parcels-data', {
-        type: 'geojson',
-        data: parcelsGeoJSON,
+    try {
+      map.current = new mapboxgl.Map({
+        container: mapContainer.current,
+        style: 'mapbox://styles/mapbox/satellite-streets-v12',
+        center: [-88.0645, 42.3485],
+        zoom: 14.2,
+        pitch: 0,
       })
 
-      map.current.addSource('outline-data', {
-        type: 'geojson',
-        data: outlineGeoJSON,
-      })
+      map.current.addControl(new mapboxgl.NavigationControl(), 'top-right')
 
-      // Approved Campus Boundary (Dashed Outline)
-      map.current.addLayer({
-        id: 'campus-outline',
-        type: 'line',
-        source: 'outline-data',
-        paint: {
-          'line-color': '#38bdf8',
-          'line-width': 2.5,
-          'line-dasharray': JSON.parse(''),
-        },
-      })
-
-      // Recorded T5 Parcels Fill
-      map.current.addLayer({
-        id: 'parcels-fill',
-        type: 'fill',
-        source: 'parcels-data',
-        paint: {
-          'fill-color': '#10b981',
-          'fill-opacity': 0.35,
-        },
-      })
-
-      // Parcel Borders
-      map.current.addLayer({
-        id: 'parcels-borders',
-        type: 'line',
-        source: 'parcels-data',
-        paint: {
-          'line-color': '#059669',
-          'line-width': 1.5,
-        },
-      })
-
-      map.current.on('mousemove', 'parcels-fill', (e) => {
-        if (e.features.length > 0) {
-          map.current.getCanvas().style.cursor = 'pointer'
-          const props = e.features[0].properties
-          setHoveredParcel({
-            pin: props.pin || props.PIN || '—',
-            acres: props.acres || props.ACRES || '—',
-            price: props.salePrice || props['Recorded sale'] || props.PRICE || '—',
+      map.current.on('load', () => {
+        try {
+          map.current.addSource('parcels-data', {
+            type: 'geojson',
+            data: parcelsGeoJSON,
           })
+
+          map.current.addSource('outline-data', {
+            type: 'geojson',
+            data: outlineGeoJSON,
+          })
+
+          map.current.addLayer({
+            id: 'campus-outline',
+            type: 'line',
+            source: 'outline-data',
+            paint: {
+              'line-color': '#38bdf8',
+              'line-width': 2.5,
+              'line-dasharray':,
+            },
+          })
+
+          map.current.addLayer({
+            id: 'parcels-fill',
+            type: 'fill',
+            source: 'parcels-data',
+            paint: {
+              'fill-color': '#10b981',
+              'fill-opacity': 0.35,
+            },
+          })
+
+          map.current.addLayer({
+            id: 'parcels-borders',
+            type: 'line',
+            source: 'parcels-data',
+            paint: {
+              'line-color': '#059669',
+              'line-width': 1.5,
+            },
+          })
+
+          map.current.on('mousemove', 'parcels-fill', (e) => {
+            if (e.features && e.features.length > 0) {
+              map.current.getCanvas().style.cursor = 'pointer'
+              const props = e.features[0].properties || {}
+              setHoveredParcel({
+                pin: props.pin || props.PIN || '—',
+                acres: props.acres || props.ACRES || '—',
+                price: props.salePrice || props['Recorded sale'] || props.PRICE || '—',
+              })
+            }
+          })
+
+          map.current.on('mouseleave', 'parcels-fill', () => {
+            if (map.current) map.current.getCanvas().style.cursor = ''
+            setHoveredParcel(null)
+          })
+        } catch (err) {
+          console.error('Mapbox layers error:', err)
         }
       })
+    } catch (err) {
+      console.error('Mapbox initialization error:', err)
+    }
 
-      map.current.on('mouseleave', 'parcels-fill', () => {
-        map.current.getCanvas().style.cursor = ''
-        setHoveredParcel(null)
-      })
-    })
-
-    return () => map.current?.remove()
+    return () => {
+      try {
+        map.current?.remove()
+      } catch (e) {
+        // ignore cleanup error
+      }
+    }
   }, [])
 
   return (
     <div className={`w-full block space-y-3 ${className}`}>
-      <div className="relative w-full h-[520px] rounded-xl overflow-hidden border border-slate-200 shadow-sm">
+      <div className="relative w-full h-[520px] rounded-xl overflow-hidden border border-slate-200 shadow-sm bg-slate-100">
         <div ref={mapContainer} className="w-full h-full" />
 
         {hoveredParcel && (
