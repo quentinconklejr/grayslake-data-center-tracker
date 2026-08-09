@@ -90,7 +90,6 @@ export default function Reporters() {
           <p className="text-xs font-mono text-slate-600 mt-3 font-medium">Last verified {LAST_VERIFIED}</p>
         </FadeIn>
 
-        {/* Project Fast Facts for Newsrooms */}
         <FadeIn className="newsroom-card p-6 mb-10">
           <div className="border-b border-edge-soft pb-4 mb-6">
             <span className="text-xs font-mono font-semibold uppercase text-sky-800 tracking-wider bg-sky-50 px-2 py-0.5 rounded border border-sky-200">
@@ -119,7 +118,6 @@ export default function Reporters() {
           </div>
         </FadeIn>
 
-        {/* Primary Data Exports */}
         <div className="grid md:grid-cols-2 gap-6 mb-12">
           <FadeIn className="newsroom-card p-6">
             <span className="text-xs font-mono font-semibold uppercase text-sky-800 tracking-wider bg-sky-50 px-2 py-0.5 rounded border border-sky-200">
