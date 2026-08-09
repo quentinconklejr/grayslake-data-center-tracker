@@ -2,7 +2,6 @@ import { useState } from 'react'
 import PageTitle from '../components/ui/PageTitle'
 import { pageMeta } from '../data/pageMeta'
 import SiteMap from '../components/map/SiteMap'
-import MapLegend from '../components/map/MapLegend'
 import ParcelTable from '../components/map/ParcelTable'
 import EnterpriseLeadBanner from '../components/ui/EnterpriseLeadBanner'
 import DataTransparencyFootnote from '../components/ui/DataTransparencyFootnote'
@@ -11,7 +10,6 @@ import { FootnoteProvider, FootnoteList } from '../components/ui/FootnoteContext
 import { LAST_VERIFIED } from '../data/siteConfig'
 import parcelsGeoJSON from '../data/parcels.geojson'
 
-// Extract parcel attributes from GeoJSON
 const PARCEL_DATA = (parcelsGeoJSON?.features || []).map(f => ({
   pin: f.properties?.pin || f.properties?.PIN || '—',
   acres: f.properties?.acres || f.properties?.ACRES || '—',
@@ -36,18 +34,17 @@ export default function MapPage() {
           <p className="text-xs font-mono text-slate-600 mt-3 font-medium">Last verified {LAST_VERIFIED}</p>
         </FadeIn>
 
-        {/* Enterprise Lead Capture Banner */}
+        {/* Enterprise Lead Capture */}
         <FadeIn>
           <EnterpriseLeadBanner />
         </FadeIn>
 
-        {/* Map Legend & Interactive Map */}
+        {/* Map Component (Uses built-in map legend below map) */}
         <FadeIn className="mb-6">
-          <MapLegend />
           <SiteMap className="h-[520px] rounded-xl border border-slate-200 shadow-sm" />
         </FadeIn>
 
-        {/* Collapsible Parcel Directory (Keeps Main View Focused on Map) */}
+        {/* Collapsible Parcel Table */}
         <FadeIn className="my-8">
           <div className="newsroom-card p-5">
             <div className="flex items-center justify-between">
@@ -72,9 +69,7 @@ export default function MapPage() {
           </div>
         </FadeIn>
 
-        {/* Data Transparency Footnote */}
         <DataTransparencyFootnote />
-
         <FootnoteList />
       </div>
     </FootnoteProvider>
