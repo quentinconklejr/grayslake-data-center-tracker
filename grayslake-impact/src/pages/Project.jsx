@@ -60,7 +60,7 @@ const SECTIONS = [
     id: 'schools', 
     label: 'Schools', 
     Component: Schools,
-    figure: 'buildable-area', 
+    figure: 'investment', 
     blurb: 'Lessons from previous Illinois data center developments, including DeKalb, for Community High School District 127.',
     accent: 'violet' 
   },
