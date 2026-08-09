@@ -7,6 +7,7 @@ import { LAST_VERIFIED } from '../data/siteConfig'
 import { FootnoteProvider, FootnoteList } from '../components/ui/FootnoteContext'
 
 function CategoryBadge({ category }) {
+  const catKey = typeof category === 'string' ? category.toLowerCase() : 'general'
   const map = {
     water: { label: 'Water Impact', style: 'text-sky-800 bg-sky-50 border-sky-200' },
     energy: { label: 'Power & Grid', style: 'text-amber-800 bg-amber-50 border-amber-200' },
@@ -15,7 +16,7 @@ function CategoryBadge({ category }) {
     process: { label: 'Governance & Process', style: 'text-purple-800 bg-purple-50 border-purple-200' },
     jobs: { label: 'Employment', style: 'text-teal-800 bg-teal-50 border-teal-200' },
   }
-  const meta = map[category?.toLowerCase()] || { label: category || 'General', style: 'text-slate-800 bg-slate-100 border-slate-200' }
+  const meta = map[catKey] || { label: category || 'General', style: 'text-slate-800 bg-slate-100 border-slate-200' }
 
   return (
     <span className={`text-xs font-mono font-semibold uppercase tracking-wider px-2.5 py-0.5 rounded border ${meta.style}`}>
@@ -28,13 +29,17 @@ export default function OpenQuestions() {
   const [search, setSearch] = useState('')
   const [openIds, setOpenIds] = useState([])
 
-  const filteredQuestions = questions.filter(q => {
+  const filteredQuestions = (questions || []).filter(q => {
+    if (!q) return false
     const query = search.toLowerCase().trim()
     if (!query) return true
+    const questionText = q.question || ''
+    const answerText = typeof q.answer === 'string' ? q.answer : ''
+    const catText = q.category || ''
     return (
-      q.question.toLowerCase().includes(query) ||
-      q.answer.toLowerCase().includes(query) ||
-      (q.category && q.category.toLowerCase().includes(query))
+      questionText.toLowerCase().includes(query) ||
+      answerText.toLowerCase().includes(query) ||
+      catText.toLowerCase().includes(query)
     )
   })
 
@@ -58,6 +63,7 @@ export default function OpenQuestions() {
           <p className="text-xs font-mono text-slate-600 mt-3 font-medium">Last verified {LAST_VERIFIED}</p>
         </FadeIn>
 
+        {/* Search Bar & Controls */}
         <FadeIn className="mb-8">
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
             <div className="relative flex-1">
@@ -83,6 +89,7 @@ export default function OpenQuestions() {
           </div>
         </FadeIn>
 
+        {/* Question Cards */}
         <div className="space-y-4 mb-12">
           {filteredQuestions.length > 0 ? (
             filteredQuestions.map(q => {
