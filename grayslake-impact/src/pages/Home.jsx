@@ -20,39 +20,11 @@ const { project, jobs } = projections
 const HERO_SESSION_KEY = 'gdct-hero-animated'
 
 const SECONDARY_STATS = [
-  {
-    label: 'IT Capacity',
-    numValue: project.totalCapacityMW,
-    suffix: ' MW',
-    note: 'Leasable at full buildout',
-    src: 'dcdGW2026',
-  },
-  {
-    label: 'Secured Power',
-    numValue: project.securedPowerMW,
-    suffix: ' MW',
-    note: 'Utility-contracted capacity',
-    src: 'dcdGW2026',
-  },
-  {
-    label: 'ComEd Capacity',
-    value: `${project.comEdCapacityGW} GW`,
-    note: 'Secured from ComEd, per T5 CEO',
-    src: 'govtech2025',
-  },
-  {
-    label: 'Phase 1 Online',
-    value: project.firstBuildingOnline,
-    note: 'Under construction now',
-    src: 'dcd2026',
-  },
-  {
-    label: 'Approved Max',
-    numValue: project.totalAcres,
-    suffix: ' ac',
-    note: 'Approved campus maximum',
-    src: 'villagefaq_archived',
-  },
+  { label: 'IT Capacity', numValue: project.totalCapacityMW, suffix: ' MW', note: 'Leasable at full buildout', src: 'dcdGW2026' },
+  { label: 'Secured Power', numValue: project.securedPowerMW, suffix: ' MW', note: 'Utility-contracted capacity', src: 'dcdGW2026' },
+  { label: 'ComEd Capacity', value: `${project.comEdCapacityGW} GW`, note: 'Secured from ComEd, per T5 CEO', src: 'govtech2025' },
+  { label: 'Phase 1 Online', value: project.firstBuildingOnline, note: 'Under construction now', src: 'dcd2026' },
+  { label: 'Approved Max', numValue: project.totalAcres, suffix: ' ac', note: 'Approved campus maximum', src: 'villagefaq_archived' },
 ]
 
 function buildCopyText(displayValue, note, src) {
@@ -71,7 +43,30 @@ export default function Home() {
       <SectionBar />
 
       <section data-section="Key Facts" className="bg-gradient-to-b from-slate-50/80 to-white border-b border-edge-soft">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 pt-12 sm:pt-16 pb-10 sm:pb-14">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 pt-10 sm:pt-14 pb-10 sm:pb-14">
+
+          {/* Breaking Lawsuit News Banner */}
+          <Reveal>
+            <div className="mb-6 p-4 bg-amber-50 border border-amber-200/90 rounded-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-sm">
+              <div className="flex items-center gap-2 shrink-0">
+                <span className="text-xs font-mono font-bold uppercase text-amber-900 bg-amber-200/80 px-2 py-0.5 rounded">
+                  LEGAL UPDATE
+                </span>
+                <span className="text-xs font-mono text-amber-900 font-medium">Aug 8, 2026</span>
+              </div>
+              <p className="text-sm font-medium text-amber-950 flex-1">
+                Lake County residents file lawsuit in Circuit Court seeking to invalidate Village approvals for 472-acre T5 campus.
+              </p>
+              <a
+                href="https://www.lakemchenryscanner.com/2026/08/08/project-of-unprecedented-scale-lake-county-residents-file-lawsuit-to-block-472-acre-data-center-campus-in-grayslake/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs font-mono font-semibold text-amber-900 hover:text-amber-950 underline underline-offset-4 shrink-0"
+              >
+                Read Coverage →
+              </a>
+            </div>
+          </Reveal>
 
           <RevealHeadline
             as="h1"
@@ -175,23 +170,6 @@ export default function Home() {
               )
             })}
           </div>
-
-          <FadeIn>
-            <div className="mt-6 pt-5 border-t border-gray-200 flex flex-wrap gap-x-8 gap-y-4">
-              <div>
-                <p className="text-xs font-mono font-semibold text-slate-500 uppercase tracking-[0.12em] mb-0.5">Water Consumption (Full Buildout)</p>
-                <p className="text-base font-display font-bold text-slate-900">{figureById['water'].value}<SourceCitation sourceKey="clcjawa2026" /><SourceCitation sourceKey="villagefaq_archived" /></p>
-                <p className="text-xs font-medium text-slate-600 mt-0.5">{figureById['water'].qualifier}</p>
-                <CopyKPIButton copyText={figureCopyText('water')} />
-              </div>
-              <div>
-                <p className="text-xs font-mono font-semibold text-slate-500 uppercase tracking-[0.12em] mb-0.5">Commissioning Flush Volume (200 MW Building)</p>
-                <p className="text-base font-display font-bold text-slate-900">{figureById['water-flush'].value}<SourceCitation sourceKey="clcjawa2026" /></p>
-                <p className="text-xs font-medium text-slate-600 mt-0.5">{figureById['water-flush'].qualifier}</p>
-                <CopyKPIButton copyText={figureCopyText('water-flush')} />
-              </div>
-            </div>
-          </FadeIn>
 
         </div>
       </section>
