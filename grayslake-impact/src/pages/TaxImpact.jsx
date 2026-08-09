@@ -3,7 +3,6 @@ import { pageMeta } from '../data/pageMeta'
 import StatCard from '../components/ui/StatCard'
 import SourceCitation from '../components/ui/SourceCitation'
 import FadeIn from '../components/ui/FadeIn'
-import EvidenceBlock from '../components/ui/EvidenceBlock'
 import { figureById } from '../data/keyFigures'
 import { LAST_VERIFIED } from '../data/siteConfig'
 
@@ -39,7 +38,6 @@ export default function TaxImpact() {
         <StatCard label="EAV Growth" value="Pending" sub="Post-construction valuation" accent="amber" />
       </FadeIn>
 
-      {/* 8 Taxing Districts Breakdown Table */}
       <FadeIn className="newsroom-card p-6 mb-10">
         <div className="border-b border-edge-soft pb-4 mb-5">
           <span className="text-xs font-mono font-semibold uppercase text-sky-800 tracking-wider bg-sky-50 px-2 py-0.5 rounded border border-sky-200">
