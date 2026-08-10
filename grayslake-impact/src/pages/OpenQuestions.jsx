@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import PageTitle from '../components/ui/PageTitle'
 import { pageMeta } from '../data/pageMeta'
 import { questions } from '../data/questions'
@@ -9,6 +9,17 @@ import { FootnoteProvider, FootnoteList } from '../components/ui/FootnoteContext
 export default function OpenQuestions() {
   const [search, setSearch] = useState('')
   const [openIds, setOpenIds] = useState([])
+
+  // Auto-expand accordion if URL hash matches a question ID
+  useEffect(() => {
+    const hash = window.location.hash.replace('#', '')
+    if (hash && questions.some(q => q.id === hash)) {
+      setOpenIds(prev => (prev.includes(hash) ? prev : [...prev, hash]))
+      setTimeout(() => {
+        document.getElementById(hash)?.scrollIntoView({ behavior: 'smooth' })
+      }, 300)
+    }
+  }, [])
 
   const filteredQuestions = (questions || []).filter(q => {
     if (!q) return false
@@ -56,13 +67,23 @@ export default function OpenQuestions() {
 
         {/* Search & Global Toggle */}
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-          <input
-            type="text"
-            value={search}
-            onChange={e => setSearch(e.target.value)}
-            placeholder="Search questions (e.g. water, noise, ComEd, taxes, jobs)..."
-            className="w-full text-sm font-sans px-4 py-2.5 rounded-xl border border-slate-300 focus:border-sky-600 bg-white text-slate-900 placeholder:text-slate-400 shadow-sm focus:outline-none"
-          />
+          <div className="relative w-full">
+            <input
+              type="text"
+              value={search}
+              onChange={e => setSearch(e.target.value)}
+              placeholder="Search questions (e.g. water, noise, ComEd, taxes, jobs)..."
+              className="w-full text-sm font-sans px-4 py-2.5 pr-10 rounded-xl border border-slate-300 focus:border-sky-600 bg-white text-slate-900 placeholder:text-slate-400 shadow-sm focus:outline-none"
+            />
+            {search && (
+              <button
+                onClick={() => setSearch('')}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 font-bold text-sm"
+              >
+                ×
+              </button>
+            )}
+          </div>
           <button
             onClick={() => setOpenIds(allOpen ? [] : filteredQuestions.map(q => q.id))}
             className="text-xs font-mono font-semibold text-sky-800 bg-sky-50 hover:bg-sky-100 px-4 py-2.5 rounded-xl border border-sky-200 transition-colors shrink-0"
@@ -77,7 +98,7 @@ export default function OpenQuestions() {
             filteredQuestions.map(q => {
               const isOpen = openIds.includes(q.id)
               return (
-                <div key={q.id} className="border border-slate-200 rounded-xl bg-white shadow-sm overflow-hidden">
+                <div id={q.id} key={q.id} className="border border-slate-200 rounded-xl bg-white shadow-sm overflow-hidden">
                   <button
                     onClick={() => toggle(q.id)}
                     className="w-full text-left px-5 py-4 flex items-center justify-between gap-4 hover:bg-slate-50/80 transition-colors"
@@ -88,7 +109,6 @@ export default function OpenQuestions() {
 
                   {isOpen && (
                     <div className="px-5 pb-5 pt-1 border-t border-slate-100 space-y-4 text-sm font-sans text-slate-700">
-                      {/* Plain Language Summary */}
                       {q.plain && (
                         <div className="p-3.5 bg-slate-50 rounded-lg border border-slate-200/60 leading-relaxed text-slate-800">
                           <strong className="block text-2xs font-mono uppercase tracking-wider text-slate-500 mb-1">In Plain Language</strong>
@@ -96,7 +116,6 @@ export default function OpenQuestions() {
                         </div>
                       )}
 
-                      {/* Stated Public Record */}
                       {q.stated && q.stated.length > 0 && (
                         <div>
                           <h4 className="text-2xs font-mono uppercase tracking-wider text-emerald-800 font-semibold mb-2">Stated Public Record</h4>
@@ -110,7 +129,6 @@ export default function OpenQuestions() {
                         </div>
                       )}
 
-                      {/* Disputed / Contested Claims */}
                       {q.disputed && q.disputed.length > 0 && (
                         <div>
                           <h4 className="text-2xs font-mono uppercase tracking-wider text-amber-800 font-semibold mb-2">Contested / Disputed Points</h4>
@@ -124,7 +142,6 @@ export default function OpenQuestions() {
                         </div>
                       )}
 
-                      {/* Unanswered Points */}
                       {q.unknown && q.unknown.length > 0 && (
                         <div>
                           <h4 className="text-2xs font-mono uppercase tracking-wider text-slate-500 font-semibold mb-2">Unanswered in Public Filings</h4>
@@ -144,7 +161,7 @@ export default function OpenQuestions() {
             })
           ) : (
             <div className="p-8 text-center text-slate-500 text-sm">
-              No questions match "{search}"
+              No questions match "{search}". <button onClick={() => setSearch('')} className="text-sky-700 underline font-medium">Clear search</button>
             </div>
           )}
         </div>
