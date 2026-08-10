@@ -146,7 +146,6 @@ export default function Energy({ asSection = false }) {
               ['Secured Power',         `${project.securedPowerMW.toLocaleString()} MW`, 'dcdGW2026'],
               ['Leasable IT Capacity',  `${project.totalCapacityMW.toLocaleString()} MW`, 'dcdGW2026'],
               ['Total ComEd Capacity',  `${project.comEdCapacityGW} GW`, 'govtech2025'],
-              ['Power Buffer',          `${buffer} MW`, null, '1,600 minus 1,200'],
               ['PJM Queue ID',          'Unreleased', null],
               ['Interconnect Voltage',  'Pending filing', null],
               ['Power Purchase (PPA)',  'Undisclosed', null],
