@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import PageTitle from '../components/ui/PageTitle'
 import TimelineUI from '../components/ui/Timeline'
 import { pageMeta } from '../data/pageMeta'
@@ -114,6 +114,19 @@ export default function TimelinePage() {
 
         {/* Timeline Visualization */}
         <TimelineUI events={visible} proportional={proportional} />
+
+        {/* Actions is the same record organised by who acted rather than when.
+            It was routed and linked from nowhere; it lives here rather than in
+            the nav, which could not hold a ninth item. */}
+        <div className="mt-10 pt-6 border-t border-edge-soft">
+          <Link
+            to="/actions"
+            className="inline-flex items-center gap-2 text-sm font-medium text-sky-800 hover:text-sky-900 min-h-[44px]"
+          >
+            See the same events by jurisdiction, with verification dates
+            <span aria-hidden="true">&rarr;</span>
+          </Link>
+        </div>
 
         <FootnoteList />
       </div>

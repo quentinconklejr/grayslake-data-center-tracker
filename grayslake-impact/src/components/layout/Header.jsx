@@ -110,7 +110,7 @@ export default function Header() {
         </Link>
 
         {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-5 shrink-0">
+        <nav className="hidden lg:flex items-center gap-4 xl:gap-5 shrink-0">
           {NAV_STORY.map(l => (
             <NavLink_ key={l.to} to={l.to} label={l.label} end={l.end} />
           ))}
@@ -130,7 +130,7 @@ export default function Header() {
           onClick={() => setMobileOpen(v => !v)}
           aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
           aria-expanded={mobileOpen}
-          className="md:hidden flex items-center justify-center p-2 rounded-lg text-slate-700 hover:text-slate-900 hover:bg-slate-100 focus:outline-none shrink-0 min-h-[44px] min-w-[44px]"
+          className="lg:hidden flex items-center justify-center p-2 rounded-lg text-slate-700 hover:text-slate-900 hover:bg-slate-100 focus:outline-none shrink-0 min-h-[44px] min-w-[44px]"
         >
           {mobileOpen ? (
             <span className="text-xl font-bold font-mono">×</span>
@@ -143,7 +143,7 @@ export default function Header() {
       </div>
 
       {mobileOpen && (
-        <div ref={menuRef} className="md:hidden bg-white border-b border-slate-200 px-4 py-3 space-y-1 shadow-lg max-h-[80vh] overflow-y-auto">
+        <div ref={menuRef} className="lg:hidden bg-white border-b border-slate-200 px-4 py-3 space-y-1 shadow-lg max-h-[80vh] overflow-y-auto">
           {NAV_STORY.map(l => (
             <MobileNavLink key={l.to} to={l.to} label={l.label} end={l.end} onClick={() => setMobileOpen(false)} />
           ))}
