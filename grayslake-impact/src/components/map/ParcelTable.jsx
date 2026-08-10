@@ -72,7 +72,8 @@ export default function ParcelTable({ parcels, sourceKey = 'gisParcels2026' }) {
           </p>
         </div>
 
-        <div className="flex items-center gap-2">
+        {/* Single Right-Aligned Action Bar */}
+        <div className="flex items-center gap-2 shrink-0">
           <button
             onClick={handleExportCSV}
             className="text-xs font-mono font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 px-3 py-2 rounded-lg transition-colors"
@@ -82,7 +83,7 @@ export default function ParcelTable({ parcels, sourceKey = 'gisParcels2026' }) {
           {filteredParcels.length > 10 && !search.trim() && (
             <button
               onClick={() => setIsExpanded(prev => !prev)}
-              className="text-xs font-mono font-semibold text-sky-800 bg-sky-50 hover:bg-sky-100 px-3 py-2 rounded-lg border border-sky-200 transition-colors"
+              className="text-xs font-mono font-semibold text-sky-800 bg-sky-50 hover:bg-sky-100 px-3.5 py-2 rounded-lg border border-sky-200 transition-colors"
             >
               {isExpanded ? 'Collapse Directory ▲' : `Show All ${filteredParcels.length} Parcels ▼`}
             </button>
@@ -90,7 +91,7 @@ export default function ParcelTable({ parcels, sourceKey = 'gisParcels2026' }) {
         </div>
       </div>
 
-      {/* Search Input with Clear Button */}
+      {/* Search Input */}
       <div className="relative">
         <input
           type="text"
@@ -109,7 +110,7 @@ export default function ParcelTable({ parcels, sourceKey = 'gisParcels2026' }) {
         )}
       </div>
 
-      {/* Parcel Table */}
+      {/* Table */}
       <div className="overflow-x-auto">
         <table className="w-full text-left border-collapse text-xs font-mono">
           <thead>
@@ -148,18 +149,6 @@ export default function ParcelTable({ parcels, sourceKey = 'gisParcels2026' }) {
           </tbody>
         </table>
       </div>
-
-      {/* Footer Toggle */}
-      {filteredParcels.length > 10 && !search.trim() && (
-        <div className="pt-2 text-center border-t border-slate-100">
-          <button
-            onClick={() => setIsExpanded(prev => !prev)}
-            className="text-xs font-mono text-sky-800 hover:text-sky-900 font-semibold"
-          >
-            {isExpanded ? 'Collapse table ▲' : `Showing 10 of ${filteredParcels.length} parcels — Show all ▼`}
-          </button>
-        </div>
-      )}
     </div>
   )
 }
