@@ -4,6 +4,7 @@ import Footer from './components/layout/Footer'
 import ScrollToTop from './components/layout/ScrollToTop'
 import Home from './pages/Home'
 import Project from './pages/Project'
+import Agreement from './pages/Agreement'
 import TimelinePage from './pages/Timeline'
 import Sources from './pages/Sources'
 import MapPage from './pages/Map'
@@ -32,6 +33,7 @@ export default function App() {
             <Route path="/" element={<Home />} />
             {/* Four topic pages merged into /project; old URLs keep working */}
             <Route path="/project" element={<Project />} />
+            <Route path="/agreement" element={<Agreement />} />
             <Route path="/tax" element={<Navigate to="/project#tax" replace />} />
             <Route path="/tax-impact" element={<Navigate to="/project#tax" replace />} />
             <Route path="/jobs" element={<Navigate to="/project#jobs" replace />} />

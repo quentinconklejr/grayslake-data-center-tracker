@@ -1,5 +1,6 @@
-﻿import PageTitle from '../components/ui/PageTitle'
+import PageTitle from '../components/ui/PageTitle'
 import { pageMeta } from '../data/pageMeta'
+import { sources } from '../data/sources'
 import StatCard from '../components/ui/StatCard'
 import SchoolFundingChart from '../components/charts/SchoolFundingChart'
 import SourceCitation from '../components/ui/SourceCitation'
@@ -183,8 +184,15 @@ export default function Schools({ asSection = false }) {
                 <span className="text-2xs font-mono bg-white border border-gray-300 text-gray-500 px-1.5 py-0.5 rounded-sm">p. 2</span>
               </div>
             </div>
-            <a href="https://villageofgrayslake.com/DocumentCenter/View/15282" target="_blank" rel="noopener noreferrer"
-               className="shrink-0 text-2xs font-mono text-blue-600 hover:text-blue-800 transition-colors">View ↗</a>
+            {/* Was the Village live DocumentCenter URL, dead since Aug 5, 2026 -
+                the most official-looking element on the page sent readers to a
+                404. Points at the archived snapshot and local mirror instead. */}
+            <div className="shrink-0 flex items-center gap-3">
+              <a href={sources.villagefaq_archived.url} target="_blank" rel="noopener noreferrer"
+                 className="text-2xs font-mono text-blue-600 hover:text-blue-800 transition-colors">Archived copy â†—</a>
+              <a href={sources.villagefaq_archived.localCopy} target="_blank" rel="noopener noreferrer"
+                 className="text-2xs font-mono text-blue-600 hover:text-blue-800 transition-colors">PDF mirror â†“</a>
+            </div>
           </div>
           <div className="px-4 py-3 bg-[#fafaf8] space-y-2">
             <p className="text-xs text-gray-700 leading-relaxed">

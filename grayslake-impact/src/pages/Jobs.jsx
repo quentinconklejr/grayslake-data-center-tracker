@@ -151,25 +151,16 @@ export default function Jobs({ asSection = false }) {
           <p className="text-base text-gray-700 leading-relaxed mb-5">
             The trade workforce is listed in public records as &ldquo;hundreds of construction and trade jobs.&rdquo; T5 has not formally executed a project labor agreement with regional building trades councils.
           </p>
+          {/* A list of four named trade locals sat here, with a note beneath
+              conceding the designations were inferred from other projects. No
+              source connects any of them to this campus. Naming real
+              organisations on inference is the one thing this site cannot do
+              and remain useful. */}
           <div className="border-t border-gray-200 pt-5">
-            <p className="text-xs font-mono font-semibold text-slate-500 uppercase tracking-wider mb-3">
-              Trade Unions Represented in Regional Projects
-            </p>
-            <ul className="space-y-2">
-              {[
-                'IBEW Local 176 (Electricians)',
-                'Iron Workers Local 508',
-                'Operating Engineers Local 150',
-                'Laborers Local 149',
-              ].map(u => (
-                <li key={u} className="text-sm font-medium text-slate-700 flex gap-2">
-                  <span aria-hidden="true" className="text-slate-400 shrink-0 mt-0.5">·</span>
-                  {u}
-                </li>
-              ))}
-            </ul>
-            <p className="text-xs font-mono text-slate-500 mt-4 leading-relaxed">
-              Specific union contracts remain unconfirmed. Trade designations reflect standard regional industrial data center projects.
+            <p className="text-xs font-mono text-slate-600 leading-relaxed">
+              No contractor list, trade breakdown or project labor agreement has been published for
+              this campus. General site work at Cornerstone is being carried out by the original
+              developer, the Alter Group.
             </p>
           </div>
         </FadeIn>
