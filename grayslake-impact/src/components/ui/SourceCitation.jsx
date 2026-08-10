@@ -8,15 +8,18 @@ export default function SourceCitation({ sourceKey }) {
   const ctx = useContext(FootnoteCtx)
   const [show, setShow] = useState(false)
   const wrapperRef = useRef(null)
-  const tooltipId = `tooltip-fn-${num}`
 
-  const isHighlighted = ctx?.hoveredKey === sourceKey
-  const isDimmed = !!ctx?.hoveredKey && ctx.hoveredKey !== sourceKey
-
-  function open() {
+  function open(e) {
+    // Mobile Touch Handling: Scroll to footnote list on touch devices
+    if (window.matchMedia('(max-width: 768px)').matches) {
+      e.preventDefault()
+      document.getElementById('footnote-list')?.scrollIntoView({ behavior: 'smooth' })
+      return
+    }
     setShow(true)
     ctx?.setHoveredKey?.(sourceKey)
   }
+
   function close() {
     setShow(false)
     ctx?.setHoveredKey?.(null)
@@ -34,63 +37,26 @@ export default function SourceCitation({ sourceKey }) {
   if (!source) return null
 
   return (
-    <span
-      ref={wrapperRef}
-      className="relative inline-block ml-0.5 mr-0.5"
-      style={{ verticalAlign: 'super', lineHeight: 0 }}
-      onMouseEnter={open}
-      onMouseLeave={close}
-      onFocus={open}
-      onBlur={close}
-    >
-      <a
-        href={`#fn-${num}`}
-        aria-describedby={show ? tooltipId : undefined}
-        className={`inline-flex items-center justify-center font-mono text-xs font-semibold px-1.5 py-0.5 rounded transition-all duration-150 border ${
-          isDimmed
-            ? 'text-gray-400 bg-gray-50 border-gray-200'
-            : isHighlighted || show
-            ? 'text-sky-900 bg-sky-100 border-sky-400 shadow-sm'
-            : 'text-sky-800 bg-sky-50/80 hover:bg-sky-100 border-sky-200/90 hover:border-sky-300'
-        }`}
-        style={{ minHeight: '22px', minWidth: '22px' }}
-        title={source.title}
-        onClick={(e) => {
-          if (window.matchMedia('(pointer: coarse)').matches && !show) {
-            e.preventDefault()
-            open()
-          }
-        }}
+    <span ref={wrapperRef} className="relative inline-block ml-0.5">
+      <button
+        onClick={open}
+        onMouseEnter={() => !window.matchMedia('(max-width: 768px)').matches && open({ preventDefault: () => {} })}
+        onMouseLeave={close}
+        className="text-2xs font-mono font-bold text-sky-700 hover:text-sky-900 focus:outline-none"
       >
         [{num}]
-      </a>
+      </button>
 
       {show && (
-        <span
-          id={tooltipId}
-          role="tooltip"
-          className="absolute bottom-full left-1/2 z-50 pointer-events-none"
-          style={{
-            transform: 'translateX(-50%)',
-            marginBottom: '8px',
-            lineHeight: 1.4,
-            whiteSpace: 'normal',
-          }}
-        >
-          <span className="block w-64 max-w-[min(16rem,85vw)] bg-white border border-slate-300 rounded-lg shadow-lg p-3.5 text-left font-sans not-italic normal-case">
-            <span className="inline-block text-[11px] font-mono font-semibold uppercase text-sky-800 tracking-wider bg-sky-50 px-1.5 py-0.5 rounded mb-1.5 border border-sky-200">
-              Source [{num}]
-            </span>
-            <span className="block text-sm font-semibold text-slate-900 leading-snug">
-              {source.title}
-            </span>
-            {(source.publisher || source.date) && (
-              <span className="block text-xs font-mono text-slate-600 mt-2 border-t border-slate-100 pt-1.5 font-medium">
-                {[source.publisher, source.date].filter(Boolean).join(' · ')}
-              </span>
-            )}
-          </span>
-        </span>
+        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-1.5 w-64 p-2.5 bg-slate-900 text-slate-100 rounded-lg shadow-xl text-xs z-50 pointer-events-none">
+          <div className="font-bold text-sky-400">Source [{num}]</div>
+          <div className="font-semibold mt-0.5">{source.title}</div>
+          {(source.publisher || source.date) && (
+            <div className="text-2xs text-slate-400 mt-1">
+              {[source.publisher, source.date].filter(Boolean).join(' · ')}
+            </div>
+          )}
+        </div>
       )}
     </span>
   )
