@@ -1,12 +1,11 @@
 import { useState, useMemo } from 'react'
-import SourceCitation from '../ui/SourceCitation'
 
 export default function ParcelTable({ parcels, sourceKey = 'gisParcels2026' }) {
   const [search, setSearch] = useState('')
   const [sortField, setSortField] = useState('acres')
   const [sortOrder, setSortOrder] = useState('desc')
+  const [isExpanded, setIsExpanded] = useState(false)
 
-  // Filter and sort parcels in real time
   const filteredParcels = useMemo(() => {
     return (parcels || [])
       .filter(p => {
@@ -35,7 +34,10 @@ export default function ParcelTable({ parcels, sourceKey = 'gisParcels2026' }) {
     return filteredParcels.reduce((acc, p) => acc + (parseFloat(p.acres) || 0), 0).toFixed(2)
   }, [filteredParcels])
 
-  // Generate downloadable CSV file
+  const displayedParcels = (isExpanded || search.trim().length > 0)
+    ? filteredParcels
+    : filteredParcels.slice(0, 10)
+
   function handleExportCSV() {
     const headers = ['PIN', 'Acres', 'Recorded Sale Price', 'Recorded Date']
     const rows = filteredParcels.map(p => [
@@ -45,7 +47,6 @@ export default function ParcelTable({ parcels, sourceKey = 'gisParcels2026' }) {
       `"${p.date || '—'}"`,
     ])
     const csvContent = [headers.join(','), ...rows.map(r => r.join(','))].join('\n')
-
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' })
     const url = URL.createObjectURL(blob)
     const link = document.createElement('a')
@@ -57,54 +58,65 @@ export default function ParcelTable({ parcels, sourceKey = 'gisParcels2026' }) {
   }
 
   return (
-    <div className="newsroom-card p-6 my-6">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-5 border-b border-edge-soft">
+    <div className="border border-slate-200 rounded-xl bg-white shadow-sm overflow-hidden p-5 space-y-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-100">
         <div>
-          <div className="flex items-center gap-2 mb-1">
-            <span className="text-xs font-mono font-semibold uppercase text-sky-800 tracking-wider bg-sky-50 px-2 py-0.5 rounded border border-sky-200">
-              GIS TAX RECORD
-            </span>
-            <SourceCitation sourceKey={sourceKey} />
+          <div className="text-2xs font-mono font-semibold uppercase tracking-wider text-slate-500">
+            GIS Tax Record
           </div>
-          <h3 className="text-2xl font-display font-bold text-slate-900">
+          <h3 className="text-lg font-bold text-slate-900">
             Recorded Parcel Directory ({filteredParcels.length} Parcels)
           </h3>
-          <p className="text-sm font-mono text-slate-600 mt-1">
-            Total Filtered Area: <span className="font-bold text-slate-900">{totalAcres} Acres</span>
+          <p className="text-xs font-mono text-slate-500 mt-0.5">
+            Total Filtered Area: <span className="text-slate-800 font-semibold">{totalAcres} Acres</span>
           </p>
         </div>
 
-        <button
-          type="button"
-          onClick={handleExportCSV}
-          className="inline-flex items-center gap-2 text-sm font-mono font-semibold text-slate-800 bg-slate-100 hover:bg-slate-200 px-3.5 py-2 rounded-lg border border-slate-300 transition-colors shrink-0"
-        >
-          <svg className="w-4 h-4 text-slate-700" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.8">
-            <path d="M2.5 10v3.5a1 1 0 001 1h9a1 1 0 001-1V10M8 1.5v8.5M4.5 7L8 10.5 11.5 7" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-          Export CSV
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={handleExportCSV}
+            className="text-xs font-mono font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 px-3 py-2 rounded-lg transition-colors"
+          >
+            Export CSV
+          </button>
+          {filteredParcels.length > 10 && !search.trim() && (
+            <button
+              onClick={() => setIsExpanded(prev => !prev)}
+              className="text-xs font-mono font-semibold text-sky-800 bg-sky-50 hover:bg-sky-100 px-3 py-2 rounded-lg border border-sky-200 transition-colors"
+            >
+              {isExpanded ? 'Collapse Directory ▲' : `Show All ${filteredParcels.length} Parcels ▼`}
+            </button>
+          )}
+        </div>
       </div>
 
-      {/* Search Input */}
-      <div className="mb-4">
+      {/* Search Input with Clear Button */}
+      <div className="relative">
         <input
           type="text"
           value={search}
           onChange={e => setSearch(e.target.value)}
           placeholder="Filter by PIN, sale price, or date..."
-          className="w-full text-sm font-sans px-4 py-2.5 rounded-lg border border-slate-300 focus:border-sky-600 bg-white text-slate-900 placeholder:text-slate-400"
+          className="w-full text-sm font-sans px-4 py-2.5 pr-10 rounded-lg border border-slate-300 focus:border-sky-600 bg-white text-slate-900 placeholder:text-slate-400 focus:outline-none"
         />
+        {search && (
+          <button
+            onClick={() => setSearch('')}
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 font-bold text-sm"
+          >
+            ×
+          </button>
+        )}
       </div>
 
       {/* Parcel Table */}
       <div className="overflow-x-auto">
-        <table className="w-full text-left border-collapse">
+        <table className="w-full text-left border-collapse text-xs font-mono">
           <thead>
-            <tr className="border-b border-slate-200 text-xs font-mono uppercase text-slate-500 bg-slate-50/80">
-              <th className="py-2.5 px-3 font-semibold">PIN</th>
+            <tr className="border-b border-slate-200 bg-slate-50 text-slate-600 uppercase tracking-wider">
+              <th className="py-2.5 px-3">PIN</th>
               <th 
-                className="py-2.5 px-3 font-semibold cursor-pointer hover:text-slate-900"
+                className="py-2.5 px-3 cursor-pointer hover:text-slate-900"
                 onClick={() => {
                   setSortField('acres')
                   setSortOrder(prev => (prev === 'asc' ? 'desc' : 'asc'))
@@ -112,23 +124,23 @@ export default function ParcelTable({ parcels, sourceKey = 'gisParcels2026' }) {
               >
                 Acres {sortField === 'acres' && (sortOrder === 'asc' ? '↑' : '↓')}
               </th>
-              <th className="py-2.5 px-3 font-semibold">Recorded Sale Price</th>
-              <th className="py-2.5 px-3 font-semibold">Sale Date</th>
+              <th className="py-2.5 px-3">Recorded Sale Price</th>
+              <th className="py-2.5 px-3">Sale Date</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-100 text-sm font-sans">
-            {filteredParcels.length > 0 ? (
-              filteredParcels.map(p => (
-                <tr key={p.pin} className="hover:bg-slate-50/60 transition-colors">
-                  <td className="py-2.5 px-3 font-mono font-semibold text-slate-900">{p.pin}</td>
-                  <td className="py-2.5 px-3 font-mono text-slate-800 font-medium">{p.acres}</td>
-                  <td className="py-2.5 px-3 text-slate-700">{p.salePrice || '—'}</td>
-                  <td className="py-2.5 px-3 font-mono text-slate-600">{p.date || '—'}</td>
+          <tbody className="divide-y divide-slate-100 text-slate-800">
+            {displayedParcels.length > 0 ? (
+              displayedParcels.map(p => (
+                <tr key={p.pin} className="hover:bg-slate-50/80 transition-colors">
+                  <td className="py-2.5 px-3 font-bold text-slate-900">{p.pin}</td>
+                  <td className="py-2.5 px-3">{p.acres}</td>
+                  <td className="py-2.5 px-3">{p.salePrice || '—'}</td>
+                  <td className="py-2.5 px-3">{p.date || '—'}</td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan={4} className="py-6 text-center text-sm text-slate-500 font-mono">
+                <td colSpan={4} className="py-6 text-center text-slate-400">
                   No matching parcels found for "{search}"
                 </td>
               </tr>
@@ -136,6 +148,18 @@ export default function ParcelTable({ parcels, sourceKey = 'gisParcels2026' }) {
           </tbody>
         </table>
       </div>
+
+      {/* Footer Toggle */}
+      {filteredParcels.length > 10 && !search.trim() && (
+        <div className="pt-2 text-center border-t border-slate-100">
+          <button
+            onClick={() => setIsExpanded(prev => !prev)}
+            className="text-xs font-mono text-sky-800 hover:text-sky-900 font-semibold"
+          >
+            {isExpanded ? 'Collapse table ▲' : `Showing 10 of ${filteredParcels.length} parcels — Show all ▼`}
+          </button>
+        </div>
+      )}
     </div>
   )
 }
