@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { NAV_STORY, NAV_TOOLS, NAV_META } from '../../data/navLinks'
 
@@ -57,10 +57,36 @@ export default function Header() {
   const [scrolled, setScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
   const location = useLocation()
+  const toggleRef = useRef(null)
+  const menuRef = useRef(null)
 
   useEffect(() => {
     setMobileOpen(false)
   }, [location.pathname])
+
+  // The mobile menu had no Escape key and no focus return. On a phone, which
+  // is how most people open this, a keyboard or screen reader user opened it
+  // and tabbed straight past it into the page behind, unable to dismiss it.
+  useEffect(() => {
+    if (!mobileOpen) return
+    function onKeyDown(e) {
+      if (e.key === 'Escape') {
+        e.preventDefault()
+        setMobileOpen(false)
+        toggleRef.current?.focus()
+        return
+      }
+      if (e.key !== 'Tab') return
+      const focusable = [toggleRef.current, ...(menuRef.current?.querySelectorAll('a[href], button:not([disabled])') ?? [])].filter(Boolean)
+      if (focusable.length < 2) return
+      const first = focusable[0]
+      const last = focusable[focusable.length - 1]
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus() }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus() }
+    }
+    document.addEventListener('keydown', onKeyDown)
+    return () => document.removeEventListener('keydown', onKeyDown)
+  }, [mobileOpen])
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8)
@@ -100,8 +126,10 @@ export default function Header() {
 
         {/* Mobile Hamburger Button */}
         <button
+          ref={toggleRef}
           onClick={() => setMobileOpen(v => !v)}
           aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+          aria-expanded={mobileOpen}
           className="md:hidden flex items-center justify-center p-2 rounded-lg text-slate-700 hover:text-slate-900 hover:bg-slate-100 focus:outline-none shrink-0 min-h-[44px] min-w-[44px]"
         >
           {mobileOpen ? (
@@ -115,7 +143,7 @@ export default function Header() {
       </div>
 
       {mobileOpen && (
-        <div className="md:hidden bg-white border-b border-slate-200 px-4 py-3 space-y-1 shadow-lg max-h-[80vh] overflow-y-auto">
+        <div ref={menuRef} className="md:hidden bg-white border-b border-slate-200 px-4 py-3 space-y-1 shadow-lg max-h-[80vh] overflow-y-auto">
           {NAV_STORY.map(l => (
             <MobileNavLink key={l.to} to={l.to} label={l.label} end={l.end} onClick={() => setMobileOpen(false)} />
           ))}
