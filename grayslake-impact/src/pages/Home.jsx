@@ -161,6 +161,11 @@ export default function Home() {
         />
 
         <div className="max-w-5xl mx-auto px-4 sm:px-6">
+          // In src/pages/Home.jsx, add EnterpriseLeadBanner before FootnoteList:
+          import EnterpriseLeadBanner from '../components/ui/EnterpriseLeadBanner'
+
+          // Inside return():
+          <EnterpriseLeadBanner />
           <FootnoteList />
         </div>
       </div>
