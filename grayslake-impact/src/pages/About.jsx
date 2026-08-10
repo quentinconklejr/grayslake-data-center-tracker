@@ -21,7 +21,7 @@ export default function About() {
       <FadeIn className="mb-10">
         <div className="space-y-4 text-sm text-gray-600 leading-relaxed">
           <p>
-            I'm Quentin Conkle Jr., a sophomore at UIUC studying information sciences and data science. I grew up in Grayslake. When the T5 campus was announced, I found there was no single resource covering what was actually proposed, so I built one.
+            I'm Quentin Conkle Jr., a sophomore at UIUC pursuing Information Sciences and Data Science. I grew up in Grayslake. When the T5 campus was announced, I found there was no single resource covering what was actually proposed, so I built one.
           </p>
           <p>
             Public information on the project was scattered across village meeting minutes, trade coverage, and local reporting. A sourced answer to a basic question, like projected tax revenue or what the lawsuits claim, required reading across multiple documents.
