@@ -31,39 +31,12 @@ const GLANCE_GROUPS = [
   { id: 'water',    label: 'Water',             ids: ['water', 'water-flush'],                    cols: 'sm:grid-cols-2' },
 ]
 
+// In src/pages/Project.jsx, update the SECTIONS array (around line 35):
 const SECTIONS = [
-  { 
-    id: 'energy',  
-    label: 'Energy',  
-    Component: Energy,
-    figure: 'capacity-comed', 
-    blurb: 'Power demand estimates, grid upgrade liability, and unfiled regulatory documents from ComEd.',
-    accent: 'amber' 
-  },
-  { 
-    id: 'jobs',    
-    label: 'Jobs',    
-    Component: Jobs,
-    figure: 'jobs-permanent', 
-    blurb: 'Comparison of three official employment projections and the specific conditions attached to peak headcount figures.',
-    accent: 'emerald' 
-  },
-  { 
-    id: 'tax',     
-    label: 'Tax',     
-    Component: TaxImpact,
-    figure: 'investment',    
-    blurb: 'Developer fee allocations, revenue distribution across eight local taxing districts, and unprojected fiscal impacts.',
-    accent: 'blue' 
-  },
-  { 
-    id: 'schools', 
-    label: 'Schools', 
-    Component: Schools,
-    figure: 'investment', 
-    blurb: 'Lessons from previous Illinois data center developments, including DeKalb, for Community High School District 127.',
-    accent: 'violet' 
-  },
+  { id: 'energy', label: 'Energy', Component: Energy, figure: 'capacity-comed', blurb: 'Power demand estimates, grid upgrade liability, and unfiled regulatory documents from ComEd.', accent: 'amber' },
+  { id: 'jobs', label: 'Jobs', Component: Jobs, figure: 'jobs-permanent', blurb: 'Comparison of three official employment projections and the specific conditions attached to peak headcount figures.', accent: 'emerald' },
+  { id: 'tax', label: 'Tax', Component: TaxImpact, figure: 'investment', blurb: 'Developer fee allocations, revenue distribution across eight local taxing districts, and unprojected fiscal impacts.', accent: 'blue' },
+  { id: 'schools', label: 'Schools', Component: Schools, figure: 'school-funding', blurb: 'Lessons from previous Illinois data center developments, including DeKalb, for Community High School District 127.', accent: 'violet' },
 ]
 
 const IDS = SECTIONS.map(s => s.id)
