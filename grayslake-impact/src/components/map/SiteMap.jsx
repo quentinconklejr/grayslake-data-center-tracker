@@ -13,7 +13,7 @@ export default function SiteMap({ className = '' }) {
     if (map.current || !mapContainer.current) return
 
     try {
-      // Center coordinates over T5 Grayslake site (Peterson Rd & Rt 83)
+      // Center over T5 Grayslake site coordinates
       const m = L.map(mapContainer.current, {
         center: [42.312, -88.040],
         zoom: 14,
@@ -22,16 +22,16 @@ export default function SiteMap({ className = '' }) {
 
       map.current = m
 
-      // High-resolution Esri World Imagery (Satellite) — No token or API key required
-      L.tileLayer(
+      // Esri World Imagery (Satellite) — Free, high-res, no token required
+      const satelliteLayer = L.tileLayer(
         'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
         {
-          attribution: 'Tiles &copy; Esri &mdash; Source: Esri, USDA, USGS, Lake County GIS',
+          attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',
           maxZoom: 18,
         }
       ).addTo(m)
 
-      // Add Approved Campus Outline (Dashed Blue Line)
+      // Add Approved Campus Outline
       if (outlineGeoJSON) {
         L.geoJSON(outlineGeoJSON, {
           style: {
@@ -43,7 +43,7 @@ export default function SiteMap({ className = '' }) {
         }).addTo(m)
       }
 
-      // Add Recorded T5 Parcels (Emerald Polygons)
+      // Add Recorded T5 Parcels
       if (parcelsGeoJSON) {
         L.geoJSON(parcelsGeoJSON, {
           style: {
@@ -54,31 +54,23 @@ export default function SiteMap({ className = '' }) {
           },
           onEachFeature: (feature, layer) => {
             layer.on({
-              mouseover: (e) => {
+              mouseover: () => {
                 const props = feature.properties || {}
                 setHoveredParcel({
                   pin: props.pin || props.PIN || '—',
                   acres: props.acres || props.ACRES || '—',
                   price: props.saleAmount ? `$${Number(props.saleAmount).toLocaleString()}` : (props['Recorded sale'] || props.PRICE || '—'),
                 })
-                e.target.setStyle({
-                  fillOpacity: 0.6,
-                  weight: 2.5,
-                })
               },
-              mouseout: (e) => {
+              mouseout: () => {
                 setHoveredParcel(null)
-                e.target.setStyle({
-                  fillOpacity: 0.35,
-                  weight: 1.5,
-                })
               },
             })
           },
         }).addTo(m)
       }
 
-      // Force Leaflet to recalculate container dimensions after mount
+      // Ensure proper map sizing
       setTimeout(() => m.invalidateSize(), 250)
     } catch (err) {
       console.error('Leaflet map error:', err)
@@ -98,7 +90,7 @@ export default function SiteMap({ className = '' }) {
     <div className={`relative w-full rounded-xl overflow-hidden border border-edge shadow-sm bg-slate-900 ${className}`}>
       <div ref={mapContainer} className="w-full h-[450px] z-0" />
 
-      {/* Map Legend Overlay */}
+      {/* Map Legend */}
       <div className="absolute top-3 left-3 z-[400] flex flex-col gap-1 bg-slate-950/85 backdrop-blur-md px-3 py-2 rounded-lg border border-slate-700/60 text-xs font-mono text-slate-200 shadow-md">
         <div className="flex items-center gap-2">
           <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 border border-emerald-400"></span>
