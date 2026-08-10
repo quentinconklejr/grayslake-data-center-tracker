@@ -50,7 +50,7 @@ function CopyCitationButton({ text }) {
   return (
     <button
       onClick={handleCopy}
-      className="text-xs font-mono font-semibold text-sky-800 bg-sky-50 hover:bg-sky-100 px-3 py-1.5 rounded-lg border border-sky-200 transition-colors shrink-0"
+      className="text-xs font-mono font-semibold text-sky-800 bg-sky-50 hover:bg-sky-100 px-3 py-1.5 rounded-lg border border-sky-200 transition-colors shrink-0 min-h-[44px]"
     >
       {copied ? '✓ Copied AP Citation' : 'Copy AP Citation'}
     </button>

@@ -75,7 +75,7 @@ export default function TimelinePage() {
 
           <button
             onClick={handleExportCSV}
-            className="text-xs font-mono font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 px-3.5 py-2 rounded-lg transition-colors shrink-0 self-start sm:self-center"
+            className="text-xs font-mono font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 px-3.5 py-2 rounded-lg transition-colors shrink-0 self-start sm:self-center min-h-[44px]"
           >
             Export Timeline CSV
           </button>
@@ -85,7 +85,7 @@ export default function TimelinePage() {
         <div className="flex flex-wrap items-center gap-2">
           <button
             onClick={() => setActiveCategory('all')}
-            className={`px-3 py-1.5 rounded-lg text-xs font-mono font-semibold transition-colors ${
+            className={`px-3 py-1.5 rounded-lg text-xs font-mono font-semibold transition-colors min-h-[44px] ${
               activeCategory === 'all' 
                 ? 'bg-slate-800 text-white' 
                 : 'bg-slate-100 hover:bg-slate-200 text-slate-700'
@@ -100,7 +100,7 @@ export default function TimelinePage() {
               <button
                 key={key}
                 onClick={() => setActiveCategory(prev => prev === key ? 'all' : key)}
-                className={`px-3 py-1.5 rounded-lg text-xs font-mono font-semibold transition-colors ${
+                className={`px-3 py-1.5 rounded-lg text-xs font-mono font-semibold transition-colors min-h-[44px] ${
                   isActive 
                     ? 'bg-slate-800 text-white' 
                     : 'bg-slate-100 hover:bg-slate-200 text-slate-700'

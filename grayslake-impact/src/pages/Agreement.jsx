@@ -1,4 +1,4 @@
-﻿import PageTitle from '../components/ui/PageTitle'
+import PageTitle from '../components/ui/PageTitle'
 import { pageMeta } from '../data/pageMeta'
 import FadeIn from '../components/ui/FadeIn'
 import BackToTop from '../components/ui/BackToTop'
@@ -172,7 +172,7 @@ export default function Agreement() {
             The largest is five times the smallest. None can be checked, for the reason underneath.
           </p>
           <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse min-w-[32rem]">
+            <table className="w-full text-left border-collapse">
               <caption className="sr-only">
                 Public revenue claims for the T5 campus, with speaker and scope
               </caption>
@@ -186,7 +186,7 @@ export default function Agreement() {
               <tbody>
                 {REVENUE_CLAIMS.map(c => (
                   <tr key={c.figure + c.speaker} className="border-b border-edge-soft/50 last:border-0 align-top">
-                    <th scope="row" className="py-3 pr-4 text-sm font-display font-bold text-gray-900 whitespace-nowrap">
+                    <th scope="row" className="py-3 pr-3 text-sm font-display font-bold text-gray-900">
                       {c.figure}
                     </th>
                     <td className="py-3 pr-4 text-xs text-gray-700 leading-relaxed">{c.scope}</td>
