@@ -13,6 +13,7 @@ export const NAV_LINKS = [
   { to: '/questions', label: 'Questions',   end: false, group: 'story' },
 
   { to: '/map',       label: 'Map',         end: false, group: 'tools' },
+  { to: '/actions',   label: 'Actions',     end: false, group: 'tools' },
   { to: '/figures',   label: 'Key Figures', end: false, group: 'tools' },
   { to: '/documents', label: 'Documents',   end: false, group: 'tools' },
 
