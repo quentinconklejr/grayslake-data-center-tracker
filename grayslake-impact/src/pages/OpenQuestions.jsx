@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import PageTitle from '../components/ui/PageTitle'
 import { pageMeta } from '../data/pageMeta'
 import { questions } from '../data/questions'
@@ -6,34 +6,23 @@ import { LAST_VERIFIED } from '../data/siteConfig'
 import ItemCitations from '../components/ui/ItemCitations'
 import { FootnoteProvider, FootnoteList } from '../components/ui/FootnoteContext'
 
+const CATEGORIES = [
+  { id: 'all', label: 'All Questions' },
+  { id: 'water', label: 'Water Usage' },
+  { id: 'energy', label: 'Power & Grid' },
+  { id: 'scale', label: 'Campus Scale' },
+  { id: 'tax', label: 'Property Tax' },
+  { id: 'process', label: 'Zoning & Lawsuits' },
+  { id: 'jobs', label: 'Employment' },
+]
+
 export default function OpenQuestions() {
-  const [search, setSearch] = useState('')
-  const [openIds, setOpenIds] = useState([])
+  const [activeCategory, setActiveCategory] = useState('all')
+  const [openIds, setOpenIds] = useState(questions.map(q => q.id)) // Default open for easy scanning
 
-  // Auto-expand accordion if URL hash matches a question ID
-  useEffect(() => {
-    const hash = window.location.hash.replace('#', '')
-    if (hash && questions.some(q => q.id === hash)) {
-      setOpenIds(prev => (prev.includes(hash) ? prev : [...prev, hash]))
-      setTimeout(() => {
-        document.getElementById(hash)?.scrollIntoView({ behavior: 'smooth' })
-      }, 300)
-    }
-  }, [])
-
-  const filteredQuestions = (questions || []).filter(q => {
-    if (!q) return false
-    const query = search.toLowerCase().trim()
-    if (!query) return true
-    const questionText = q.question || ''
-    const plainText = q.plain || ''
-    const catText = q.category || ''
-    return (
-      questionText.toLowerCase().includes(query) ||
-      plainText.toLowerCase().includes(query) ||
-      catText.toLowerCase().includes(query)
-    )
-  })
+  const filteredQuestions = activeCategory === 'all'
+    ? questions
+    : questions.filter(q => q.category === activeCategory)
 
   function toggle(id) {
     setOpenIds(prev => (prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]))
@@ -43,127 +32,137 @@ export default function OpenQuestions() {
 
   return (
     <FootnoteProvider>
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-10 space-y-8">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 py-10 space-y-8">
         <PageTitle 
           title={pageMeta['/questions'].title} 
           description={pageMeta['/questions'].description} 
           ogImage={pageMeta['/questions'].ogImage} 
         />
 
-        <div>
-          <div className="text-2xs font-mono font-semibold uppercase tracking-widest text-sky-800 mb-1">
-            Community Research
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-slate-200 pb-6">
+          <div>
+            <div className="text-2xs font-mono font-semibold uppercase tracking-widest text-sky-800 mb-1">
+              Public Record Directory
+            </div>
+            <h1 className="text-3xl font-display font-bold text-slate-900 tracking-tight mb-2">
+              Frequently Asked Questions
+            </h1>
+            <p className="text-sm font-sans text-slate-600 max-w-2xl">
+              Resident inquiries regarding water draw, electrical capacity, property taxes, noise levels, and lawsuit status, answered with cited public records.
+            </p>
           </div>
-          <h1 className="text-3xl font-display font-bold text-slate-900 tracking-tight mb-2">
-            Frequently Asked Questions
-          </h1>
-          <p className="text-sm font-sans text-slate-600">
-            Resident questions on water consumption, electrical rates, noise levels, property taxes, and municipal approvals, answered with cited public sources.
-          </p>
-          <div className="text-xs font-mono text-slate-500 mt-2">
+          <div className="text-xs font-mono text-slate-500 shrink-0">
             Last verified {LAST_VERIFIED}
           </div>
         </div>
 
-        {/* Search & Global Toggle */}
-        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-          <div className="relative w-full">
-            <input
-              type="text"
-              value={search}
-              onChange={e => setSearch(e.target.value)}
-              placeholder="Search questions (e.g. water, noise, ComEd, taxes, jobs)..."
-              className="w-full text-sm font-sans px-4 py-2.5 pr-10 rounded-xl border border-slate-300 focus:border-sky-600 bg-white text-slate-900 placeholder:text-slate-400 shadow-sm focus:outline-none"
-            />
-            {search && (
-              <button
-                onClick={() => setSearch('')}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 font-bold text-sm"
-              >
-                ×
-              </button>
-            )}
+        {/* Category Filter Pills & Global Toggle */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="flex items-center gap-2 overflow-x-auto pb-1">
+            {CATEGORIES.map(cat => {
+              const isActive = activeCategory === cat.id
+              return (
+                <button
+                  key={cat.id}
+                  onClick={() => setActiveCategory(cat.id)}
+                  className={`px-3.5 py-1.5 rounded-lg text-xs font-mono font-semibold transition-colors shrink-0 ${
+                    isActive 
+                      ? 'bg-slate-900 text-white shadow-sm' 
+                      : 'bg-slate-100 hover:bg-slate-200 text-slate-700'
+                  }`}
+                >
+                  {cat.label}
+                </button>
+              )
+            })}
           </div>
+
           <button
             onClick={() => setOpenIds(allOpen ? [] : filteredQuestions.map(q => q.id))}
-            className="text-xs font-mono font-semibold text-sky-800 bg-sky-50 hover:bg-sky-100 px-4 py-2.5 rounded-xl border border-sky-200 transition-colors shrink-0"
+            className="text-xs font-mono font-semibold text-sky-800 bg-sky-50 hover:bg-sky-100 px-3.5 py-1.5 rounded-lg border border-sky-200 transition-colors shrink-0 self-start sm:self-auto"
           >
             {allOpen ? 'Collapse All ▲' : 'Expand All ▼'}
           </button>
         </div>
 
-        {/* Accordion Question List */}
+        {/* Question Cards */}
         <div className="space-y-4">
-          {filteredQuestions.length > 0 ? (
-            filteredQuestions.map(q => {
-              const isOpen = openIds.includes(q.id)
-              return (
-                <div id={q.id} key={q.id} className="border border-slate-200 rounded-xl bg-white shadow-sm overflow-hidden">
-                  <button
-                    onClick={() => toggle(q.id)}
-                    className="w-full text-left px-5 py-4 flex items-center justify-between gap-4 hover:bg-slate-50/80 transition-colors"
-                  >
-                    <h3 className="text-base font-semibold text-slate-900">{q.question}</h3>
-                    <span className="text-slate-400 font-mono text-sm shrink-0">{isOpen ? '−' : '+'}</span>
-                  </button>
+          {filteredQuestions.map(q => {
+            const isOpen = openIds.includes(q.id)
+            return (
+              <div key={q.id} className="border border-slate-200 rounded-xl bg-white shadow-sm overflow-hidden">
+                <button
+                  onClick={() => toggle(q.id)}
+                  className="w-full text-left px-6 py-4 flex items-center justify-between gap-4 hover:bg-slate-50/80 transition-colors"
+                >
+                  <h3 className="text-base sm:text-lg font-bold text-slate-900 leading-snug">{q.question}</h3>
+                  <span className="text-slate-400 font-mono text-sm shrink-0">{isOpen ? '−' : '+'}</span>
+                </button>
 
-                  {isOpen && (
-                    <div className="px-5 pb-5 pt-1 border-t border-slate-100 space-y-4 text-sm font-sans text-slate-700">
-                      {q.plain && (
-                        <div className="p-3.5 bg-slate-50 rounded-lg border border-slate-200/60 leading-relaxed text-slate-800">
-                          <strong className="block text-2xs font-mono uppercase tracking-wider text-slate-500 mb-1">In Plain Language</strong>
-                          {q.plain}
-                        </div>
-                      )}
+                {isOpen && (
+                  <div className="px-6 pb-6 pt-2 border-t border-slate-100 space-y-4 text-sm font-sans text-slate-700">
+                    {/* Plain Language Summary */}
+                    {q.plain && (
+                      <div className="p-4 bg-slate-50 rounded-xl border border-slate-200/80 leading-relaxed text-slate-800">
+                        <strong className="block text-2xs font-mono uppercase tracking-wider text-sky-900 mb-1 font-bold">
+                          Plain Language Summary
+                        </strong>
+                        {q.plain}
+                      </div>
+                    )}
 
-                      {q.stated && q.stated.length > 0 && (
-                        <div>
-                          <h4 className="text-2xs font-mono uppercase tracking-wider text-emerald-800 font-semibold mb-2">Stated Public Record</h4>
-                          <ul className="space-y-2 pl-4 list-disc marker:text-emerald-500">
-                            {q.stated.map((item, idx) => (
-                              <li key={idx} className="leading-relaxed">
-                                {item.text} <ItemCitations item={item} />
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
+                    {/* Stated Public Record */}
+                    {q.stated && q.stated.length > 0 && (
+                      <div>
+                        <h4 className="text-2xs font-mono uppercase tracking-wider text-emerald-800 font-bold mb-2">
+                          Stated Public Record & Official Filings
+                        </h4>
+                        <ul className="space-y-2.5 pl-4 list-disc marker:text-emerald-500">
+                          {q.stated.map((item, idx) => (
+                            <li key={idx} className="leading-relaxed">
+                              {item.text} <ItemCitations item={item} />
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
 
-                      {q.disputed && q.disputed.length > 0 && (
-                        <div>
-                          <h4 className="text-2xs font-mono uppercase tracking-wider text-amber-800 font-semibold mb-2">Contested / Disputed Points</h4>
-                          <ul className="space-y-2 pl-4 list-disc marker:text-amber-500">
-                            {q.disputed.map((item, idx) => (
-                              <li key={idx} className="leading-relaxed">
-                                {item.text} <ItemCitations item={item} />
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
+                    {/* Contested Points */}
+                    {q.disputed && q.disputed.length > 0 && (
+                      <div>
+                        <h4 className="text-2xs font-mono uppercase tracking-wider text-amber-800 font-bold mb-2">
+                          Contested / Disputed Claims
+                        </h4>
+                        <ul className="space-y-2.5 pl-4 list-disc marker:text-amber-500">
+                          {q.disputed.map((item, idx) => (
+                            <li key={idx} className="leading-relaxed">
+                              {item.text} <ItemCitations item={item} />
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
 
-                      {q.unknown && q.unknown.length > 0 && (
-                        <div>
-                          <h4 className="text-2xs font-mono uppercase tracking-wider text-slate-500 font-semibold mb-2">Unanswered in Public Filings</h4>
-                          <ul className="space-y-2 pl-4 list-disc marker:text-slate-400">
-                            {q.unknown.map((item, idx) => (
-                              <li key={idx} className="leading-relaxed text-slate-600">
-                                {item.text} <ItemCitations item={item} />
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
-                    </div>
-                  )}
-                </div>
-              )
-            })
-          ) : (
-            <div className="p-8 text-center text-slate-500 text-sm">
-              No questions match "{search}". <button onClick={() => setSearch('')} className="text-sky-700 underline font-medium">Clear search</button>
-            </div>
-          )}
+                    {/* Unanswered Points */}
+                    {q.unknown && q.unknown.length > 0 && (
+                      <div>
+                        <h4 className="text-2xs font-mono uppercase tracking-wider text-slate-500 font-bold mb-2">
+                          Unanswered in Public Filings
+                        </h4>
+                        <ul className="space-y-2 pl-4 list-disc marker:text-slate-400">
+                          {q.unknown.map((item, idx) => (
+                            <li key={idx} className="leading-relaxed text-slate-600">
+                              {item.text} <ItemCitations item={item} />
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+            )
+          })}
         </div>
 
         <FootnoteList />
