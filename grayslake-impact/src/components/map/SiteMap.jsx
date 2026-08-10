@@ -14,16 +14,17 @@ export default function SiteMap({ className = '' }) {
     if (map.current || !mapContainer.current) return
 
     try {
+      // Centered on Peterson Rd & Route 83, Grayslake, IL
       const m = L.map(mapContainer.current, {
         center: [42.312, -88.040],
         zoom: 14,
         zoomControl: true,
-        scrollWheelZoom: false, // Disables accidental page scroll zoom
+        scrollWheelZoom: false,
       })
 
       map.current = m
 
-      // Cooperative scroll gesture handling
+      // Cooperative gesture scroll handling
       const container = mapContainer.current
       const handleWheel = (e) => {
         if (e.ctrlKey || e.metaKey) {
@@ -35,10 +36,9 @@ export default function SiteMap({ className = '' }) {
           setTimeout(() => setShowScrollHint(false), 2000)
         }
       }
-
       container.addEventListener('wheel', handleWheel, { passive: true })
 
-      // Base Satellite Layer
+      // 1. Satellite Base Layer
       L.tileLayer(
         'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
         {
@@ -47,28 +47,29 @@ export default function SiteMap({ className = '' }) {
         }
       ).addTo(m)
 
-      // Road & Place Names Overlay
+      // 2. OpenStreetMap / CartoDB Road Name Overlay (Peterson Rd, Rt 83, Alleghany Rd)
       L.tileLayer(
-        'https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}',
+        'https://{s}.basemaps.cartocdn.com/rastertiles/voyager_only_labels/{z}/{x}/{y}{r}.png',
         {
+          attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
           maxZoom: 18,
           pane: 'overlayPane',
         }
       ).addTo(m)
 
-      // Approved Boundary Overlay
+      // 3. Approved Campus Boundary (Dashed Blue Line)
       if (outlineGeoJSON) {
         L.geoJSON(outlineGeoJSON, {
           style: {
             color: '#38bdf8',
-            weight: 2.5,
+            weight: 3,
             dashArray: '4, 4',
             fillOpacity: 0,
           },
         }).addTo(m)
       }
 
-      // Recorded T5 Parcels
+      // 4. Recorded T5 Parcels (Emerald Polygons)
       if (parcelsGeoJSON) {
         L.geoJSON(parcelsGeoJSON, {
           style: {
@@ -116,7 +117,6 @@ export default function SiteMap({ className = '' }) {
     <div className={`relative w-full rounded-xl overflow-hidden border border-edge shadow-sm bg-slate-900 ${className}`}>
       <div ref={mapContainer} className="w-full h-[450px] z-0" />
 
-      {/* Cooperative Gesture Scroll Hint Overlay */}
       {showScrollHint && (
         <div className="absolute inset-0 z-[500] bg-slate-950/70 backdrop-blur-sm flex items-center justify-center pointer-events-none transition-opacity">
           <div className="bg-slate-900 border border-slate-700 text-slate-100 text-xs font-mono px-4 py-2 rounded-lg shadow-xl">
@@ -125,7 +125,7 @@ export default function SiteMap({ className = '' }) {
         </div>
       )}
 
-      {/* Legend Overlay */}
+      {/* Map Legend */}
       <div className="absolute top-3 left-3 z-[400] flex flex-col gap-1 bg-slate-950/85 backdrop-blur-md px-3 py-2 rounded-lg border border-slate-700/60 text-xs font-mono text-slate-200 shadow-md">
         <div className="flex items-center gap-2">
           <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 border border-emerald-400"></span>
@@ -137,7 +137,6 @@ export default function SiteMap({ className = '' }) {
         </div>
       </div>
 
-      {/* Hover Info Tooltip */}
       {hoveredParcel && (
         <div className="absolute bottom-3 left-3 z-[400] bg-slate-950/90 backdrop-blur-md px-3.5 py-2 rounded-lg border border-slate-700 text-xs font-mono text-slate-100 shadow-lg">
           <span className="text-emerald-400 font-bold">PIN: {hoveredParcel.pin}</span> · {hoveredParcel.acres} Acres · {hoveredParcel.price}
