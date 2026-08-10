@@ -2,18 +2,16 @@ import { useState, useEffect } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { NAV_STORY, NAV_TOOLS, NAV_META } from '../../data/navLinks'
 
-function NavLink_({ to, label, end, tone = 'story' }) {
-  const idle =
-    tone === 'tool'
-      ? 'text-gray-600 border-transparent hover:text-gray-900 hover:border-gray-400 font-medium'
-      : 'text-gray-700 border-transparent hover:text-gray-900 hover:border-gray-400 font-semibold'
+function NavLink_({ to, label, end }) {
   return (
     <NavLink
       to={to}
       end={end}
       className={({ isActive }) =>
         `inline-flex items-center whitespace-nowrap transition-colors duration-150 py-1.5 border-b-2 text-sm ${
-          isActive ? 'text-blue-700 border-blue-600 font-bold' : idle
+          isActive 
+            ? 'text-sky-700 border-sky-600 font-bold' 
+            : 'text-slate-600 border-transparent hover:text-slate-900 hover:border-slate-300 font-medium'
         }`
       }
     >
@@ -22,14 +20,17 @@ function NavLink_({ to, label, end, tone = 'story' }) {
   )
 }
 
-function MobileNavLink({ to, label, end }) {
+function MobileNavLink({ to, label, end, onClick }) {
   return (
     <NavLink
       to={to}
       end={end}
+      onClick={onClick}
       className={({ isActive }) =>
-        `block py-3 text-sm border-b border-edge-soft/50 last:border-0 transition-colors duration-150 ${
-          isActive ? 'text-blue-700 font-bold' : 'text-gray-600 hover:text-gray-900 font-medium'
+        `block py-2.5 px-3 rounded-lg text-sm transition-colors ${
+          isActive
+            ? 'bg-sky-50 text-sky-800 font-bold'
+            : 'text-slate-700 hover:bg-slate-50 font-medium'
         }`
       }
     >
@@ -38,21 +39,22 @@ function MobileNavLink({ to, label, end }) {
   )
 }
 
-function TrackerIcon() {
+function TrackerLogo() {
   return (
-    <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center shrink-0 shadow-sm">
-      <svg viewBox="0 0 14 14" className="w-4.5 h-4.5" fill="none" aria-hidden="true">
-        <rect x="1.5" y="7.5" width="2.5" height="5" rx="0.5" fill="white"/>
-        <rect x="5.5" y="4.5" width="2.5" height="8" rx="0.5" fill="white"/>
-        <rect x="9.5" y="6" width="2.5" height="6.5" rx="0.5" fill="white"/>
-        <path d="M3 5.5L7 2.5L11 4" stroke="white" strokeWidth="0.9" strokeLinecap="round" strokeLinejoin="round" opacity="0.55"/>
+    <div className="w-8 h-8 rounded-lg bg-sky-950 border border-sky-800 flex items-center justify-center shrink-0 shadow-sm">
+      <svg className="w-5 h-5" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="6" y="16" width="4" height="10" rx="1" fill="#0284c7" />
+        <rect x="12" y="10" width="4" height="16" rx="1" fill="#38bdf8" />
+        <rect x="18" y="13" width="4" height="13" rx="1" fill="#0ea5e9" />
+        <rect x="24" y="18" width="2.5" height="8" rx="0.75" fill="#7dd3fc" />
+        <rect x="5" y="27" width="22" height="1" rx="0.5" fill="#475569" />
       </svg>
     </div>
   )
 }
 
 export default function Header() {
-  const [scrolled, setScrolled]     = useState(false)
+  const [scrolled, setScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
   const location = useLocation()
 
@@ -67,78 +69,78 @@ export default function Header() {
   }, [])
 
   return (
-    <header className={`sticky top-0 z-50 bg-white/98 backdrop-blur-md border-b transition-all duration-200 ${
-      scrolled ? 'border-edge-soft shadow-sm' : 'border-gray-100'
-    }`}>
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center py-3.5 gap-4 sm:gap-8 justify-between">
-
+    <header className={`sticky top-0 z-50 bg-white border-b border-slate-200 transition-shadow ${scrolled ? 'shadow-sm' : ''}`}>
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 flex items-center justify-between h-16 w-full overflow-hidden">
         {/* Brand Section */}
-        <Link to="/" className="flex items-center gap-3 shrink-0 group" aria-label="Grayslake Data Center Tracker, Home">
-          <TrackerIcon />
+        <Link to="/" className="flex items-center gap-2.5 min-w-0 pr-2">
+          <TrackerLogo />
           <div className="flex flex-col min-w-0">
-            <span className="text-xl sm:text-2xl font-display font-bold text-gray-900 group-hover:text-blue-700 transition-colors leading-tight whitespace-nowrap tracking-tight">
+            <span className="font-display font-bold text-slate-900 text-sm sm:text-base tracking-tight truncate">
               Grayslake Data Center Tracker
             </span>
-            <span className="hidden sm:block text-xs font-mono text-gray-600 leading-tight mt-0.5 whitespace-nowrap">
-              Not affiliated with T5 or the Village
+            <span className="text-2xs font-mono text-slate-500 truncate hidden sm:block">
+              Independent Civic Data Repository
             </span>
           </div>
         </Link>
 
         {/* Desktop Navigation */}
-        <nav
-          className="hidden lg:flex items-center gap-4 xl:gap-6 shrink-0"
-          aria-label="Main navigation"
-        >
-          {NAV_STORY.map(l => <NavLink_ key={l.to} {...l} />)}
-
-          <span className="w-px h-5 bg-edge-soft shrink-0" aria-hidden="true" />
-
-          {NAV_TOOLS.map(l => <NavLink_ key={l.to} {...l} tone="tool" />)}
-
-          <span className="w-px h-5 bg-edge-soft shrink-0" aria-hidden="true" />
-
-          {NAV_META.map(l => <NavLink_ key={l.to} {...l} tone="tool" />)}
+        <nav className="hidden md:flex items-center gap-5 shrink-0">
+          {NAV_STORY.map(l => (
+            <NavLink_ key={l.to} to={l.to} label={l.label} end={l.end} />
+          ))}
+          <span className="h-4 w-px bg-slate-200" />
+          {NAV_TOOLS.map(l => (
+            <NavLink_ key={l.to} to={l.to} label={l.label} end={l.end} />
+          ))}
+          <span className="h-4 w-px bg-slate-200" />
+          {NAV_META.map(l => (
+            <NavLink_ key={l.to} to={l.to} label={l.label} end={l.end} />
+          ))}
         </nav>
 
-        {/* Mobile Hamburger Button */}
+        {/* Mobile Hamburger Button (Pinned to Top Right) */}
         <button
-          className="lg:hidden ml-auto shrink-0 text-gray-600 hover:text-gray-900 transition-colors p-2.5 -mr-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg hover:bg-gray-100"
           onClick={() => setMobileOpen(v => !v)}
           aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
           aria-expanded={mobileOpen}
-          aria-controls="mobile-menu"
+          className="md:hidden flex items-center justify-center p-2 rounded-lg text-slate-700 hover:text-slate-900 hover:bg-slate-100 focus:outline-none shrink-0 min-h-[44px] min-w-[44px]"
         >
           {mobileOpen ? (
-            <svg className="w-5 h-5" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
-              <path d="M3 3l10 10M13 3L3 13" />
-            </svg>
+            <span className="text-xl font-bold font-mono">×</span>
           ) : (
-            <svg className="w-5 h-5" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
-              <path d="M2 4h12M2 8h12M2 12h12" />
+            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
             </svg>
           )}
         </button>
-
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile Nav Menu Drawer */}
       {mobileOpen && (
-        <div
-          id="mobile-menu"
-          className="lg:hidden border-t border-gray-100 bg-white/98 overflow-y-auto max-h-[calc(100dvh-5.5rem)]"
-        >
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-1 pb-3">
-            {[NAV_STORY, NAV_TOOLS, NAV_META].map((group, i) => (
-              <div key={i} className={i > 0 ? 'border-t border-edge-soft mt-1 pt-1' : undefined}>
-                {group.map(l => <MobileNavLink key={l.to} {...l} />)}
-              </div>
-            ))}
+        <div className="md:hidden bg-white border-b border-slate-200 px-4 py-3 space-y-1 shadow-lg max-h-[80vh] overflow-y-auto">
+          <div className="text-2xs font-mono font-bold uppercase tracking-wider text-slate-400 px-3 py-1">
+            Story & Background
           </div>
+          {NAV_STORY.map(l => (
+            <MobileNavLink key={l.to} to={l.to} label={l.label} end={l.end} onClick={() => setMobileOpen(false)} />
+          ))}
+
+          <div className="text-2xs font-mono font-bold uppercase tracking-wider text-slate-400 px-3 pt-2 py-1 border-t border-slate-100">
+            Reference & Tools
+          </div>
+          {NAV_TOOLS.map(l => (
+            <MobileNavLink key={l.to} to={l.to} label={l.label} end={l.end} onClick={() => setMobileOpen(false)} />
+          ))}
+
+          <div className="text-2xs font-mono font-bold uppercase tracking-wider text-slate-400 px-3 pt-2 py-1 border-t border-slate-100">
+            About
+          </div>
+          {NAV_META.map(l => (
+            <MobileNavLink key={l.to} to={l.to} label={l.label} end={l.end} onClick={() => setMobileOpen(false)} />
+          ))}
         </div>
       )}
-
     </header>
   )
 }
