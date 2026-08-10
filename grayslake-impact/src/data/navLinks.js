@@ -8,6 +8,7 @@
 // /questions and had to be removed.
 export const NAV_LINKS = [
   { to: '/project',   label: 'The Project', end: false, group: 'story' },
+  { to: '/agreement', label: 'The Deal',    end: false, group: 'story' },
   { to: '/timeline',  label: 'Timeline',    end: false, group: 'story' },
   { to: '/questions', label: 'Questions',   end: false, group: 'story' },
 

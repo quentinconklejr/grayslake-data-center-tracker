@@ -34,10 +34,10 @@ export default function Home() {
         {/* Hero Section */}
         <div className="space-y-4">
           <h1 className="text-3xl sm:text-5xl font-display font-extrabold text-slate-900 tracking-tight leading-none max-w-4xl">
-            T5 @ Chicago IV is an approved $8.5–18B hyperscale AI data center under construction in Grayslake, Illinois.
+            T5 @ Chicago IV is an approved hyperscale data center under construction in Grayslake, Illinois.
           </h1>
           <p className="text-base sm:text-lg font-sans text-sky-900 bg-sky-50 p-4 rounded-xl border border-sky-200 max-w-3xl leading-relaxed font-medium">
-            In plain language: a very large computing facility, one of the biggest proposed anywhere in the U.S.
+            In plain language: a very large computing facility. Two figures have been put on its cost: the mayor of Grayslake said $8.5B, T5 chief executive said up to $18B.
           </p>
           <p className="text-sm font-sans text-slate-600 max-w-2xl">
             This tracker collects public records and press coverage on the project and links every claim to its source.

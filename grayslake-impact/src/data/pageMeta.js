@@ -16,6 +16,12 @@ export const pageMeta = {
       'Tracking the T5 @ Chicago IV data center in Grayslake, Illinois. Jobs, taxes, energy, water and the pending litigation, with a source behind every figure.',
     ogImage: '/og/home.png',
   },
+  '/agreement': {
+    title: 'What the Village Agreed To',
+    description:
+      'The development agreement between Grayslake and T5: what officials have stated about it, four competing revenue claims, what has never been published, and how to request the document under Illinois FOIA.',
+    ogImage: '/og/project.png',
+  },
   '/project': {
     title: 'The Project',
     description:
