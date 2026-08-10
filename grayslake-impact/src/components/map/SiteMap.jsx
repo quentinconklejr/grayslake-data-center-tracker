@@ -13,16 +13,22 @@ export default function SiteMap({ className = '' }) {
     if (map.current || !mapContainer.current) return
 
     try {
-      // Center over Peterson Rd & Rt 83, Grayslake
       const m = L.map(mapContainer.current, {
         center: [42.312, -88.040],
         zoom: 14,
         zoomControl: true,
+        scrollWheelZoom: false, // Prevents accidental page-scroll zooming
+        wheelDebounceTime: 150, // Smooths trackpad/mousewheel sensitivity
+        wheelPxPerZoomLevel: 120,
       })
 
       map.current = m
 
-      // 1. Base Satellite Imagery Layer
+      // Enable scroll-zoom only when user clicks into the map
+      m.on('click', () => m.scrollWheelZoom.enable())
+      m.on('mouseout', () => m.scrollWheelZoom.disable())
+
+      // 1. Base Satellite Imagery
       L.tileLayer(
         'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
         {
@@ -31,7 +37,7 @@ export default function SiteMap({ className = '' }) {
         }
       ).addTo(m)
 
-      // 2. Street Names & Place Labels Overlay (Adds Peterson Rd, Rt 83, Alleghany Rd, etc.)
+      // 2. Street Names & Place Labels Overlay
       L.tileLayer(
         'https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}',
         {
@@ -40,7 +46,7 @@ export default function SiteMap({ className = '' }) {
         }
       ).addTo(m)
 
-      // 3. Approved Campus Outline (Dashed Blue)
+      // 3. Approved Campus Outline
       if (outlineGeoJSON) {
         L.geoJSON(outlineGeoJSON, {
           style: {
@@ -52,7 +58,7 @@ export default function SiteMap({ className = '' }) {
         }).addTo(m)
       }
 
-      // 4. Recorded T5 Parcels (Emerald Polygons)
+      // 4. Recorded T5 Parcels
       if (parcelsGeoJSON) {
         L.geoJSON(parcelsGeoJSON, {
           style: {
@@ -106,7 +112,7 @@ export default function SiteMap({ className = '' }) {
     <div className={`relative w-full rounded-xl overflow-hidden border border-edge shadow-sm bg-slate-900 ${className}`}>
       <div ref={mapContainer} className="w-full h-[450px] z-0" />
 
-      {/* Map Legend Overlay */}
+      {/* Legend Overlay */}
       <div className="absolute top-3 left-3 z-[400] flex flex-col gap-1 bg-slate-950/85 backdrop-blur-md px-3 py-2 rounded-lg border border-slate-700/60 text-xs font-mono text-slate-200 shadow-md">
         <div className="flex items-center gap-2">
           <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 border border-emerald-400"></span>
