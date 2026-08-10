@@ -71,20 +71,19 @@ export default function Header() {
   return (
     <header className={`sticky top-0 z-50 bg-white border-b border-slate-200 transition-shadow ${scrolled ? 'shadow-sm' : ''}`}>
       <div className="max-w-6xl mx-auto px-4 sm:px-6 flex items-center justify-between h-16 w-full overflow-hidden">
-        {/* Brand Section */}
         <Link to="/" className="flex items-center gap-2.5 min-w-0 pr-2">
           <TrackerLogo />
           <div className="flex flex-col min-w-0">
-            <span className="font-display font-bold text-slate-900 text-sm sm:text-base tracking-tight truncate">
+            <span className="font-display font-bold text-slate-900 text-base sm:text-lg tracking-tight truncate">
               Grayslake Data Center Tracker
             </span>
             <span className="text-2xs font-mono text-slate-500 truncate hidden sm:block">
-              Independent Civic Data Repository
+              Not affiliated with T5 or the Village
             </span>
           </div>
         </Link>
 
-        {/* Desktop Navigation */}
+        {/* Desktop Nav */}
         <nav className="hidden md:flex items-center gap-5 shrink-0">
           {NAV_STORY.map(l => (
             <NavLink_ key={l.to} to={l.to} label={l.label} end={l.end} />
@@ -99,11 +98,10 @@ export default function Header() {
           ))}
         </nav>
 
-        {/* Mobile Hamburger Button (Pinned to Top Right) */}
+        {/* Mobile Hamburger Button */}
         <button
           onClick={() => setMobileOpen(v => !v)}
           aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
-          aria-expanded={mobileOpen}
           className="md:hidden flex items-center justify-center p-2 rounded-lg text-slate-700 hover:text-slate-900 hover:bg-slate-100 focus:outline-none shrink-0 min-h-[44px] min-w-[44px]"
         >
           {mobileOpen ? (
@@ -116,26 +114,14 @@ export default function Header() {
         </button>
       </div>
 
-      {/* Mobile Nav Menu Drawer */}
       {mobileOpen && (
         <div className="md:hidden bg-white border-b border-slate-200 px-4 py-3 space-y-1 shadow-lg max-h-[80vh] overflow-y-auto">
-          <div className="text-2xs font-mono font-bold uppercase tracking-wider text-slate-400 px-3 py-1">
-            Story & Background
-          </div>
           {NAV_STORY.map(l => (
             <MobileNavLink key={l.to} to={l.to} label={l.label} end={l.end} onClick={() => setMobileOpen(false)} />
           ))}
-
-          <div className="text-2xs font-mono font-bold uppercase tracking-wider text-slate-400 px-3 pt-2 py-1 border-t border-slate-100">
-            Reference & Tools
-          </div>
           {NAV_TOOLS.map(l => (
             <MobileNavLink key={l.to} to={l.to} label={l.label} end={l.end} onClick={() => setMobileOpen(false)} />
           ))}
-
-          <div className="text-2xs font-mono font-bold uppercase tracking-wider text-slate-400 px-3 pt-2 py-1 border-t border-slate-100">
-            About
-          </div>
           {NAV_META.map(l => (
             <MobileNavLink key={l.to} to={l.to} label={l.label} end={l.end} onClick={() => setMobileOpen(false)} />
           ))}
