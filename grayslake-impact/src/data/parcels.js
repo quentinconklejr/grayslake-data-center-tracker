@@ -5,7 +5,7 @@ export const PARCELS_DATA = (parcelsGeoJSON?.features || []).map(f => {
   return {
     pin: props.pin || props.PIN || '—',
     acres: props.acres || props.ACRES || '—',
-    salePrice: props.salePrice || props['Recorded sale'] || props.PRICE || '—',
-    date: props.date || props.Date || props.DATE || '—',
+    salePrice: props.saleAmount ? `$${Number(props.saleAmount).toLocaleString()}` : (props['Recorded sale'] || props.salePrice || props.PRICE || '—'),
+    date: props.saleDate || props.date || props.Date || props.DATE || '—',
   }
 })
