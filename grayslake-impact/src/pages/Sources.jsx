@@ -1,137 +1,132 @@
+import { useState } from 'react'
 import PageTitle from '../components/ui/PageTitle'
 import { pageMeta } from '../data/pageMeta'
-import FadeIn from '../components/ui/FadeIn'
-import BackToTop from '../components/ui/BackToTop'
 import { sources } from '../data/sources'
 import { LAST_VERIFIED } from '../data/siteConfig'
 
-const SOURCE_CATEGORIES = [
-  { label: 'Government Records', desc: 'Village of Grayslake FAQs and meeting records, Village of Mundelein statement, Illinois DCEO program pages' },
-  { label: 'Press Coverage',     desc: 'Chicago Tribune, Capitol News Illinois, Daily Herald, Chronicle Media, Government Technology, Data Center Dynamics, Patch, Hoodline' },
+const CATEGORIES = [
+  { id: 'all', label: 'All Documents' },
+  { id: 'government', label: 'Village & Government' },
+  { id: 'press', label: 'Press Coverage' },
+  { id: 'utility', label: 'Utility & Water' },
+  { id: 'legal', label: 'Legal Filings' },
 ]
 
-const SOURCE_ENTRIES = Object.entries(sources)
-
 export default function Sources() {
+  const [category, setCategory] = useState('all')
+
+  const sourceEntries = Object.entries(sources).filter(([, source]) => {
+    if (category === 'government') {
+      return source.publisher?.toLowerCase().includes('village') || 
+             source.publisher?.toLowerCase().includes('county') || 
+             source.publisher?.toLowerCase().includes('dceo')
+    }
+    if (category === 'press') {
+      return source.tier === 'primary' || source.tier === 'aggregator' || source.tier === 'trade'
+    }
+    if (category === 'utility') {
+      return source.publisher?.toLowerCase().includes('water') || 
+             source.publisher?.toLowerCase().includes('cub') || 
+             source.publisher?.toLowerCase().includes('clcjawa')
+    }
+    if (category === 'legal') {
+      return source.title?.toLowerCase().includes('lawsuit') || 
+             source.note?.toLowerCase().includes('litigation')
+    }
+    return true
+  })
+
   return (
-    <div className="max-w-5xl mx-auto px-4 sm:px-6 py-12">
-      <PageTitle {...pageMeta['/documents']} />
+    <div className="max-w-5xl mx-auto px-4 sm:px-6 py-10 space-y-8">
+      <PageTitle 
+        title={pageMeta['/documents'].title} 
+        description={pageMeta['/documents'].description} 
+        ogImage={pageMeta['/documents'].ogImage} 
+      />
 
-      <FadeIn className="mb-10 pb-8 border-b border-edge-soft">
-        <p className="text-2xs font-mono text-blue-600/60 uppercase tracking-[0.18em] mb-4">Transparency</p>
-        <h1 className="text-4xl sm:text-5xl font-display font-bold text-gray-900 tracking-tight break-words mb-3">Documents &amp; Sources</h1>
-        <p className="text-lg text-gray-600 max-w-3xl leading-relaxed">
-          All figures in this tracker come from public documents and press coverage on file.
-          Estimated figures are labeled.
+      <div className="border-b border-slate-200 pb-6">
+        <div className="text-2xs font-mono font-semibold uppercase tracking-widest text-sky-800 mb-1">
+          Transparency & Sources
+        </div>
+        <h1 className="text-3xl font-display font-bold text-slate-900 tracking-tight mb-2">
+          Documents & Primary Sources
+        </h1>
+        <p className="text-sm font-sans text-slate-600 max-w-2xl">
+          All figures on this tracker originate from public filings, meeting records, and verified journalism.
         </p>
-        <p className="text-2xs font-mono text-gray-400 mt-3">Last verified {LAST_VERIFIED}</p>
-      </FadeIn>
+        <div className="text-xs font-mono text-slate-500 mt-2">
+          Last verified {LAST_VERIFIED}
+        </div>
+      </div>
 
-      <FadeIn className="space-y-1.5 mb-12">
-        {SOURCE_ENTRIES.map(([key, source], i) => (
-          <div
-            key={key}
-            className="group glass-card-hover px-5 py-4 flex gap-5"
+      {/* Category Filter Tabs */}
+      <div className="flex items-center gap-2 overflow-x-auto pb-1">
+        {CATEGORIES.map(cat => (
+          <button
+            key={cat.id}
+            onClick={() => setCategory(cat.id)}
+            className={`px-3.5 py-1.5 rounded-lg text-xs font-mono font-semibold transition-colors shrink-0 ${
+              category === cat.id 
+                ? 'bg-slate-900 text-white' 
+                : 'bg-slate-100 hover:bg-slate-200 text-slate-700'
+            }`}
           >
-            <span className="text-2xs font-mono text-gray-500 mt-0.5 w-6 shrink-0 group-hover:text-gray-700 transition-colors">
-              {String(i + 1).padStart(2, '0')}
-            </span>
-            <div className="min-w-0 flex-1">
+            {cat.label}
+          </button>
+        ))}
+      </div>
+
+      {/* Document Cards List */}
+      <div className="space-y-4">
+        {sourceEntries.map(([key, source], i) => (
+          <div key={key} className="p-5 border border-slate-200 rounded-xl bg-white shadow-sm space-y-2">
+            <div className="flex items-center justify-between gap-4">
+              <span className="text-xs font-mono text-slate-400 font-bold">
+                {String(i + 1).padStart(2, '0')}
+              </span>
+              {source.tier && (
+                <span className="text-2xs font-mono uppercase px-2 py-0.5 rounded bg-slate-100 text-slate-600 border border-slate-200">
+                  {source.tier}
+                </span>
+              )}
+            </div>
+
+            <h3 className="text-base font-semibold text-slate-900 leading-snug">
               {source.url && source.status !== 'dead' && source.status !== 'unverified' ? (
-                <a
-                  href={source.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-sm font-medium text-gray-900 hover:text-blue-700 leading-snug mb-0.5 inline-block transition-colors duration-150"
-                >
-                  {source.title}
+                <a href={source.url} target="_blank" rel="noopener noreferrer" className="hover:text-sky-700 underline decoration-sky-300 underline-offset-2">
+                  {source.title} ↗
                 </a>
               ) : (
-                <p className="text-sm font-medium text-gray-900 leading-snug mb-0.5">{source.title}</p>
+                source.title
               )}
-              {source.publisher && (
-                <p className="text-xs text-gray-500 mb-1 flex items-center gap-1.5">
-                  {source.publisher}
-                  {source.tier === 'primary' && (
-                    <span className="inline-flex items-center px-1.5 py-0.5 rounded text-2xs font-mono font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200 uppercase tracking-widest">
-                      Original reporting
-                    </span>
-                  )}
-                  {source.tier === 'aggregator' && (
-                    <span className="inline-flex items-center px-1.5 py-0.5 rounded text-2xs font-mono font-semibold bg-gray-100 text-gray-500 border border-edge uppercase tracking-widest">
-                      Aggregator
-                    </span>
-                  )}
-                </p>
-              )}
-              {source.note && (
-                <p className="text-xs text-amber-700/80 italic mb-1">{source.note}</p>
-              )}
-              {source.localCopy && (
-                <a
-                  href={source.localCopy}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 mt-1 mb-1 px-2.5 py-1.5 rounded border border-blue-200 bg-blue-50 text-xs font-mono text-blue-700 hover:bg-blue-100 hover:border-blue-300 transition-colors duration-150"
-                >
-                  <svg className="w-3 h-3 shrink-0" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.4" aria-hidden="true">
-                    <path d="M6 1.5v6M3.5 5.5L6 8l2.5-2.5M2 9.5h8" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                  Download PDF mirror
-                </a>
-              )}
-              {source.status === 'dead' ? (
-                <span className="text-2xs font-mono text-amber-800 line-through decoration-amber-400 break-all">
-                  {source.url}
-                </span>
-              ) : source.status === 'unverified' ? (
-                <span className="text-2xs font-mono text-amber-700 italic">link pending verification</span>
-              ) : source.url && (
-                <a
-                  href={source.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-2xs font-mono text-gray-400 hover:text-blue-600 inline-block transition-colors duration-150 truncate max-w-full"
-                >
-                  {source.url}
-                </a>
-              )}
+            </h3>
+
+            <div className="text-xs font-mono text-slate-500">
+              {[source.publisher, source.date].filter(Boolean).join(' · ')}
             </div>
-            <div className="shrink-0 flex flex-col items-end gap-1 self-start">
-              {source.verified && (
-                <span className="text-2xs font-mono text-gray-400">verified {source.verified}</span>
-              )}
-              {source.status === 'unverified' && (
-                <span className="text-2xs font-mono text-amber-700 uppercase tracking-widest">unverified</span>
-              )}
-              {source.status === 'dead' && (
-                <span className="text-2xs font-mono text-amber-800 bg-amber-50 border border-amber-300 rounded-sm px-1.5 py-0.5 uppercase tracking-widest whitespace-nowrap">
-                  link dead {source.deadCheckedAt}
-                </span>
-              )}
-              {source.status === 'background' && (
-                <span className="text-2xs font-mono text-gray-400 uppercase tracking-widest">background</span>
-              )}
-              <span className="text-2xs font-mono text-gray-500 uppercase tracking-widest">{key}</span>
-            </div>
+
+            {source.note && (
+              <p className="text-xs font-sans text-slate-600 leading-relaxed pt-1">
+                {source.note}
+              </p>
+            )}
+
+            {/* Local PDF Mirror Download Button */}
+            {source.localCopy && (
+              <div className="pt-2">
+                <a 
+                  href={source.localCopy} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="inline-flex items-center gap-1.5 text-xs font-mono text-sky-800 bg-sky-50 hover:bg-sky-100 px-3 py-1.5 rounded-lg border border-sky-200 transition-colors"
+                >
+                  Download PDF Mirror ↗
+                </a>
+              </div>
+            )}
           </div>
         ))}
-      </FadeIn>
-
-      <FadeIn>
-        <div className="bg-gray-50 border border-edge rounded-xl p-6">
-          <p className="text-2xs font-mono text-gray-400 uppercase tracking-[0.15em] mb-6">Source Categories</p>
-          <div className="grid md:grid-cols-2 gap-6">
-            {SOURCE_CATEGORIES.map(({ label, desc }) => (
-              <div key={label}>
-                <p className="text-xs font-display font-semibold text-gray-800 mb-1.5">{label}</p>
-                <p className="text-xs text-gray-500 leading-relaxed">{desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </FadeIn>
-      <BackToTop />
+      </div>
     </div>
   )
 }
