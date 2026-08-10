@@ -28,7 +28,7 @@ export const keyFigures = [
     value: '287.8 acres',
     qualifier: '57 parcels, four non-contiguous groups',
     detail:
-      'Deeds recorded to T5 entities in Grayslake, totalling $62,968,250 in recorded consideration through May 2025.',
+      'Deeds recorded to T5 entities in Grayslake. $62,968,250 in consideration is recorded through May 2025, covering 55 of the 57 parcels; two parcels totalling 64.0 acres carry no recorded sale in the county layer.',
     sourceKey: 'lakecountygis',
   },
   {

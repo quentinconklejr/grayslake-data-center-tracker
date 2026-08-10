@@ -5,7 +5,6 @@ import AnimatedNumber from '../components/ui/AnimatedNumber'
 import SiteMap from '../components/map/SiteMap'
 import ParcelTable from '../components/map/ParcelTable'
 import { PARCELS_DATA } from '../data/parcels'
-import EnterpriseLeadBanner from '../components/ui/EnterpriseLeadBanner'
 import { FootnoteProvider, FootnoteList } from '../components/ui/FootnoteContext'
 import { projections } from '../data/projections'
 import { figureById } from '../data/keyFigures'
@@ -106,9 +105,6 @@ export default function Home() {
           <SiteMap />
           <ParcelTable parcels={PARCELS_DATA} />
         </div>
-
-        {/* Research Email Subscription Banner */}
-        <EnterpriseLeadBanner />
 
         <FootnoteList />
       </div>

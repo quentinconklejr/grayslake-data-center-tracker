@@ -95,7 +95,7 @@ export function FootnoteList() {
                   </a>
                 )}
                 {source.note && (
-                  <span className="block text-amber-700/70 italic mt-0.5">{source.note}</span>
+                  <span className="block text-amber-800 italic mt-0.5">{source.note}</span>
                 )}
               </div>
             </li>

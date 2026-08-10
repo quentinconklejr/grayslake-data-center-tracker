@@ -12,7 +12,10 @@ import { figureById } from '../data/keyFigures'
 import { LAST_VERIFIED } from '../data/siteConfig'
 
 const { project, capacityFigures, capacityNote } = projections
-const buffer = project.securedPowerMW - project.totalCapacityMW
+// A "Power Buffer" stat used to be derived here. It subtracted two figures
+// of different scope, and which answer you got depended on whether you used
+// 1,600 or the 1,550 ComEd is elsewhere credited with. No source publishes a
+// headroom figure, so the site should not manufacture one.
 
 export default function Energy({ asSection = false }) {
   const Wrap = asSection ? Fragment : FootnoteProvider
@@ -35,11 +38,11 @@ export default function Energy({ asSection = false }) {
         <p className="text-xs font-mono text-gray-600 mt-3 font-medium">Last verified {LAST_VERIFIED}</p>
       </FadeIn>
 
-      <FadeIn className="grid grid-cols-2 lg:grid-cols-5 gap-6 mb-12">
+      <FadeIn className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
         <StatCard label="Secured Power"       value={`${project.securedPowerMW.toLocaleString()} MW`}  sub="Utility-contracted capacity"   accent="amber" sourceKey="dcdGW2026" />
         <StatCard label="IT Capacity"        value={`${project.totalCapacityMW.toLocaleString()} MW`} sub="Leasable at full buildout"      accent="blue"  sourceKey="dcdGW2026" />
         <StatCard label="Total ComEd Capacity" value={`${project.comEdCapacityGW} GW`}                sub="Secured from ComEd, per T5 CEO"  accent="amber" sourceKey="govtech2025" />
-        <StatCard label="Power Buffer"      value={`${buffer} MW`}                                sub="Calculated: 1,600 minus 1,200 MW" accent="amber" badge="Derived" />
++
         <StatCard label="PJM Zone"          value="COMED"                                             sub="ComEd transmission zone, PJM"  accent="blue"  sourceKey="clcjawa2026" />
       </FadeIn>
 

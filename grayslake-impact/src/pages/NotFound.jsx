@@ -10,7 +10,7 @@ export default function NotFound() {
           <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
         </svg>
       </div>
-      <p className="text-xs font-mono text-blue-600/60 tracking-widest uppercase mb-3">404</p>
+      <p className="text-xs font-mono text-blue-700 tracking-widest uppercase mb-3">404</p>
       <h1 className="text-2xl font-display font-semibold text-gray-900 mb-2">Page not found</h1>
       <p className="text-sm text-gray-500 max-w-xs mb-8">
         This page doesn't exist. Check the URL or head back to the tracker.

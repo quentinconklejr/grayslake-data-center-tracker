@@ -56,7 +56,11 @@ const GAP_THRESHOLD_PX = 80
 export default function Timeline({ events = [], proportional = false }) {
   if (!events.length) return <p className="text-gray-400 text-sm py-12 text-center">No events loaded.</p>
 
-  const timestamps = events.map(e => dateToMs(e.date))
+  // Sorted here rather than trusting the order of the data file, which had
+  // drifted: a June 26 entry sat above a June 9 one. The proportional view
+  // also computed a negative gap across that pair and silently clamped it.
+  const sorted = [...events].sort((a, b) => (dateToMs(a.date) ?? 0) - (dateToMs(b.date) ?? 0))
+  const timestamps = sorted.map(e => dateToMs(e.date))
   const firstTs = timestamps[0] ?? 0
   const lastTs = timestamps[timestamps.length - 1] ?? 0
   const totalMs = Math.max(lastTs - firstTs, 1)
@@ -71,7 +75,7 @@ export default function Timeline({ events = [], proportional = false }) {
       />
 
       <div>
-        {events.map((event, i) => {
+        {sorted.map((event, i) => {
           const cat = CAT[event.category] ?? CAT.default
           const projected = isProjected(event.date)
 
@@ -108,7 +112,7 @@ export default function Timeline({ events = [], proportional = false }) {
               )}
               <div
                 className={`relative flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-4 group py-4 pl-9 rounded-lg hover:bg-gray-50/60 transition-colors duration-100 ${
-                  !proportional && i < events.length - 1 ? 'border-b border-edge-soft/50' : ''
+                  !proportional && i < sorted.length - 1 ? 'border-b border-edge-soft/50' : ''
                 }`}
               >
                 {/* Dot on spine */}
