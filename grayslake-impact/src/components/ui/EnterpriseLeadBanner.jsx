@@ -1,55 +1,31 @@
-import { useState } from 'react'
-
 export default function EnterpriseLeadBanner() {
-  const [email, setEmail] = useState('')
-  const [submitted, setSubmitted] = useState(false)
-
-  function handleSubmit(e) {
-    e.preventDefault()
-    if (!email || !email.includes('@')) return
-    setSubmitted(true)
-  }
-
   return (
-    <div className="newsroom-card p-6 my-6 border-l-4 border-l-sky-600 bg-gradient-to-r from-sky-50/60 to-white">
-      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-        <div className="max-w-2xl">
-          <div className="flex items-center gap-2 mb-1.5">
-            <span className="text-[11px] font-mono font-semibold uppercase text-sky-800 tracking-wider bg-sky-100/80 px-2 py-0.5 rounded border border-sky-200">
-              ENTERPRISE & RESEARCH ACCESS
-            </span>
-          </div>
-          <h3 className="text-xl font-display font-bold text-slate-900">
-            Request PJM Grid Queue & Parcel Siting Analytics
-          </h3>
-          <p className="text-sm text-slate-600 leading-relaxed mt-1">
-            Get automated updates on new Lake County GIS deed recordings, PJM interconnection queue filings, and Village hearing logs.
-          </p>
-        </div>
+    <div className="p-6 border border-slate-200 rounded-xl bg-slate-50 space-y-3">
+      <div className="text-2xs font-mono font-bold uppercase tracking-wider text-sky-800">
+        RESEARCH ALERTS & RSS FEED
+      </div>
+      <h3 className="text-base font-bold text-slate-900">
+        Subscribe to Document Updates & Deed Records
+      </h3>
+      <p className="text-xs font-sans text-slate-600 leading-relaxed max-w-xl">
+        Get automated updates whenever new Lake County GIS parcel deeds, Village Board meeting transcripts, or court filings are published.
+      </p>
 
-        {submitted ? (
-          <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-3.5 text-center shrink-0 min-w-[280px]">
-            <p className="text-sm font-semibold text-emerald-900">Request Submitted</p>
-            <p className="text-xs text-emerald-700 mt-0.5">We will send dataset updates to {email}</p>
-          </div>
-        ) : (
-          <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-2 shrink-0 min-w-[280px]">
-            <input
-              type="email"
-              value={email}
-              onChange={e => setEmail(e.target.value)}
-              placeholder="Enter work email..."
-              required
-              className="text-sm font-sans px-3.5 py-2.5 rounded-lg border border-slate-300 focus:border-sky-600 bg-white text-slate-900 placeholder:text-slate-400 focus:outline-none"
-            />
-            <button
-              type="submit"
-              className="text-xs font-mono font-semibold text-white bg-sky-700 hover:bg-sky-800 px-4 py-2.5 rounded-lg transition-colors shadow-sm shrink-0"
-            >
-              Request Access
-            </button>
-          </form>
-        )}
+      <div className="flex flex-wrap items-center gap-3 pt-1">
+        <a
+          href="/feed.xml"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1.5 text-xs font-mono font-semibold text-white bg-sky-800 hover:bg-sky-900 px-3.5 py-2 rounded-lg transition-colors"
+        >
+          Subscribe via RSS Feed ↗
+        </a>
+        <a
+          href="mailto:qconkle2@illinois.edu?subject=Subscribe%20to%20Grayslake%20Data%20Center%20Updates"
+          className="text-xs font-mono font-semibold text-slate-700 bg-white hover:bg-slate-100 px-3.5 py-2 rounded-lg border border-slate-300 transition-colors"
+        >
+          Request Email Updates
+        </a>
       </div>
     </div>
   )
