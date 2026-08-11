@@ -43,10 +43,10 @@ export default function Schools({ asSection = false }) {
           <h1 className="text-4xl sm:text-5xl font-display font-bold text-gray-900 tracking-tight break-words mb-3">School Funding Impact</h1>
         )}
         <p className="text-base text-gray-600 max-w-2xl leading-relaxed">
-          Village officials have publicly cited projections ranging from approximately $300 million
-          to over $1 billion in property tax revenue across all taxing districts over the coming
-          decades. Those are official statements, not independently verified estimates. The Lake County Assessor
-          has not yet valued the campus. Actual revenue depends on that valuation and applicable levy rates.
+          Village officials have cited property tax projections ranging from $300 million to over
+          $1 billion across all taxing districts over the coming decades. Neither figure is
+          independently verified. The Lake County Assessor has not valued the campus. Actual
+          revenue depends on that valuation and applicable levy rates.
         </p>
         <p className="text-2xs font-mono text-gray-400 mt-3">Last verified {LAST_VERIFIED}</p>
       </FadeIn>
@@ -94,11 +94,11 @@ export default function Schools({ asSection = false }) {
             <div>
               <p className="text-sm font-display font-semibold text-blue-800 mb-1.5">Illinois comparison: DeKalb / Meta</p>
               <p className="text-base text-gray-600 leading-relaxed">
-                The data below comes from the Meta data center in DeKalb, IL. Two figures are cited:
-                the 2025 property tax bill for one Meta facility ($31.1M), and School District 428's
-                ~60.9% share of Meta's taxes across three DeKalb County properties averaged over 2021–2024.
-                These are from different datasets and cannot be combined into a per-district dollar figure.
-                Neither is directly applicable without a Lake County Assessor valuation of the T5 campus.
+                Meta's DeKalb facility paid $31.1 million in property taxes in 2025. School District
+                428 received roughly 60.9% of Meta's taxes across three DeKalb County properties,
+                averaged over 2021 to 2024. The two figures come from different datasets. They cannot
+                produce a per-district dollar amount for Grayslake without a Lake County Assessor
+                valuation.
               </p>
               <div className="mt-3"><SourceCitation sourceKey="capitolnews2026" /></div>
             </div>

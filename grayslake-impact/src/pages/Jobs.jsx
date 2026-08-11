@@ -72,7 +72,7 @@ export default function Jobs({ asSection = false }) {
           <h1 className="text-4xl sm:text-5xl font-display font-bold text-gray-900 tracking-tight break-words mb-3">Job Creation</h1>
         )}
         <p className="text-base text-gray-700 max-w-2xl leading-relaxed">
-          Official statements cite three differing permanent employment figures. Grayslake Mayor Elizabeth Davies reported {jobs.permanentDavies.toLocaleString()} jobs in October 2025, while T5 Chief Executive Pete Marin cited more than {jobs.permanentMarin.toLocaleString()} in July 2026. The Village of Grayslake FAQ projects up to {jobs.permanent.toLocaleString()} permanent positions based on a ratio of {jobs.permanentBasis}. This maximum figure assumes full construction of the permitted {jobs.permanentCondition}, which T5 has not formally guaranteed. Construction employment is listed separately as {jobs.constructionPhase} without a specific public headcount.
+          Three official sources cite different permanent employment figures. Grayslake Mayor Elizabeth Davies cited {jobs.permanentDavies.toLocaleString()} jobs in October 2025. T5 Chief Executive Pete Marin cited more than {jobs.permanentMarin.toLocaleString()} in July 2026. The Village FAQ projects up to {jobs.permanent.toLocaleString()} permanent positions, based on {jobs.permanentBasis}. That maximum assumes full construction of the permitted {jobs.permanentCondition}. T5 has not committed to full buildout. Construction employment is listed separately as {jobs.constructionPhase}, with no headcount published.
         </p>
         <p className="text-xs font-mono text-gray-600 mt-3 font-medium">Last verified {LAST_VERIFIED}</p>
       </FadeIn>
@@ -96,7 +96,7 @@ export default function Jobs({ asSection = false }) {
           </div>
         </div>
         <p className="text-base text-gray-700 mb-8 max-w-prose leading-relaxed">
-          Construction headcount is estimated at approximately 400 positions based on Village documents. Permanent operational headcount is listed as <Figure id="jobs-permanent" />.
+          Village documents estimate construction headcount at 400 positions. Permanent operational headcount is listed as <Figure id="jobs-permanent" />.
         </p>
         <JobsTimelineChart />
       </FadeIn>

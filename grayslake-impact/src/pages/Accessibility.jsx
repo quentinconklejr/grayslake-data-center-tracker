@@ -28,8 +28,8 @@ export default function Accessibility() {
           Using this site
         </h1>
         <p className="text-lg text-gray-700 max-w-3xl leading-relaxed">
-          This site aims to meet WCAG 2.1 Level AA. Here is what that means in practice, and how to
-          reach me if something gets in your way.
+          This site is built to WCAG 2.1 Level AA. Here is what that means and how to reach me if
+          something fails.
         </p>
         <p className="text-2xs font-mono text-gray-600 mt-4">Last reviewed {LAST_VERIFIED}</p>
       </FadeIn>
@@ -41,16 +41,14 @@ export default function Accessibility() {
           the 3:1 that applies to interface boundaries.
         </p>
         <p>
-          Charts are not left as pictures. Each one carries a description and a table of the values
-          behind it, because the proportions a bar shows are otherwise unreadable without sight of
-          it. The parcel map has the same arrangement: a table beneath it lists all 57 parcels with
-          their PIN, acreage and recorded sale, so nothing on that page exists only inside the map.
+          Charts carry a text description and data table so the values aren&rsquo;t locked inside
+          the visual. The parcel map lists all 57 parcels below it, with PIN, acreage, and recorded
+          sale.
         </p>
         <p>
-          Filters and toggles say whether they are on rather than only changing colour, and hitting
-          copy tells you it worked. Headings run in order, one h1 per page, so you can move through
-          a page by structure. There is a skip link. If your operating system asks for reduced
-          motion, the site stops animating.
+          Filters and toggles announce their state, not just their color. Copy buttons confirm when
+          they work. Headings run in order, one h1 per page. There is a skip link. Reduced motion
+          preference disables animations.
         </p>
       </Section>
 
@@ -58,9 +56,8 @@ export default function Accessibility() {
 
       <Section title="If something does not work">
         <p>
-          Tell me and I will fix it. Say which page you were on, what you were trying to do, and
-          what you use to browse, if you are comfortable sharing that. A rough description is
-          enough; I would rather hear about a problem imprecisely than not hear about it.
+          Tell me and I will fix it. Which page, what you were trying to do, and what you use to
+          browse. A rough description is enough.
         </p>
         <p>
           <a

@@ -51,7 +51,7 @@ const TERMS = [
       'Grayslake’s mayor described fees in the "tens of millions of dollars" if the campus is fully built out, split roughly 50% to major infrastructure, 25% to special community projects and 25% to resident cost-control measures.',
     sourceKey: 'govtech2025',
     caveat:
-      'Described as ballpark figures still under negotiation at the time, and conditional on full buildout, which T5 has not committed to.',
+      'Ballpark figures, subject to negotiation at the time. Conditional on full buildout. T5 has not committed to it.',
   },
   {
     term: 'Grid infrastructure paid by the developer',
@@ -196,8 +196,8 @@ export default function Agreement() {
           </h1>
           <p className="text-base sm:text-lg text-gray-700 max-w-3xl leading-relaxed">
             A development agreement exists between the Village of Grayslake and T5. It has not been
-            published, and this site does not have a copy. What follows is what officials have said
-            about it, kept separate from what the document itself would show.
+            published. This site does not have a copy. The page covers what officials have said
+            publicly. It is not derived from the document.
           </p>
           <p className="text-2xs font-mono text-gray-600 mt-4">Last verified {LAST_VERIFIED}</p>
         </FadeIn>
@@ -215,11 +215,9 @@ export default function Agreement() {
           <div className="bg-amber-50 border-l-4 border-amber-400 border-y border-r border-amber-200 rounded-r-xl px-5 sm:px-6 py-5 mb-12">
             <p className="text-2xs font-mono text-amber-800 uppercase tracking-widest mb-2">Read this first</p>
             <p className="text-base text-gray-800 leading-relaxed">
-              Everything on this page is what people have <em>said</em> about the agreement, not what
-              the agreement says. Nobody arguing about this deal in public, on either side, is arguing
-              from the text, because the text has never been released. The lawsuit filed on July 31
-              asks a court to void this agreement, which makes the distinction sharper, not less
-              important.
+              Everything on this page is what people have <em>said</em> about the agreement. Nobody
+              arguing this deal in public is arguing from the text. The text has never been released.
+              A lawsuit filed July 31 asks a court to void it.
             </p>
           </div>
         </FadeIn>
@@ -402,11 +400,11 @@ export default function Agreement() {
           </div>
 
           <p className="text-xs text-gray-700 leading-relaxed mt-4 max-w-prose border-t border-slate-200 pt-4">
-            These are not four estimates of one quantity and should not be averaged or presented as a
-            range. The two largest come from the developer, the two smaller from Village officials.
-            None has been independently verified, and none can be until the Lake County Assessor
-            values the campus, which has not happened. What any individual district actually receives
-            also depends on its own levy, which each district sets for itself.
+            These are four claims about different things. They cannot be averaged or treated as a
+            range. The two largest come from the developer. The two smaller ones come from Village
+            officials. None is independently verified. None can be verified until the Lake County
+            Assessor values the campus, which has not happened. What any district receives also
+            depends on its own levy.
           </p>
         </FadeIn>
 
@@ -417,8 +415,7 @@ export default function Agreement() {
             <h2 className="text-2xl font-display font-bold text-gray-900">What has not been published</h2>
           </div>
           <p className="text-sm text-gray-600 mb-5 max-w-prose">
-            These are not accusations that anything is being hidden. They are the questions a resident
-            might reasonably ask about the deal that no public document currently answers.
+            These are questions about the deal that no public document currently answers.
           </p>
           <ul className="grid sm:grid-cols-2 gap-2.5">
             {UNPUBLISHED.map(item => (
@@ -458,14 +455,12 @@ export default function Agreement() {
                 approving the planned unit development.
               </p>
               <p className="text-xs text-gray-700 leading-relaxed border-t border-blue-200 pt-3">
-                The Village said on June 5, 2026 that it cannot answer further questions about the
-                project because of pending litigation. That position concerns comment, not its
-                statutory FOIA obligations, which continue to apply, though litigation can affect
-                which exemptions it claims.
+                On June 5, 2026, the Village said it cannot answer further questions because of
+                pending litigation. That applies to comment, not FOIA. Statutory response obligations
+                continue. Litigation can affect which exemptions the Village claims.
               </p>
               <p className="text-sm text-gray-800 leading-relaxed mt-3 font-medium">
-                If you file a request and get the agreement, send it to me and I will publish it here
-                in full, so the record stops depending on any one person keeping a copy.
+                If you get the agreement, send it. I will publish it here in full.
               </p>
             </div>
           </div>

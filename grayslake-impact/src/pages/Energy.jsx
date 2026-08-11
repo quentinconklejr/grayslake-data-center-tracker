@@ -33,7 +33,7 @@ export default function Energy({ asSection = false }) {
           <h1 className="text-4xl sm:text-5xl font-display font-bold text-gray-900 tracking-tight break-words mb-3">Energy Draw</h1>
         )}
         <p className="text-base text-gray-700 max-w-2xl leading-relaxed">
-          Public records cite three distinct electrical capacity metrics for the Grayslake campus. These figures represent different technical aspects of the infrastructure rather than conflicting estimates: {project.totalCapacityMW.toLocaleString()} MW of leasable IT computing load, {project.securedPowerMW.toLocaleString()} MW of utility-contracted capacity, and {project.comEdCapacityGW} GW of overall ComEd grid connection capacity. Each figure is detailed below with its primary source.
+          Public records document three electrical capacity figures for the Grayslake campus: {project.totalCapacityMW.toLocaleString()} MW of leasable IT computing load, {project.securedPowerMW.toLocaleString()} MW of utility-contracted capacity, and {project.comEdCapacityGW} GW of ComEd substation capacity. They measure different things. Each is cited below with its source.
         </p>
         <p className="text-xs font-mono text-gray-600 mt-3 font-medium">Last verified {LAST_VERIFIED}</p>
       </FadeIn>
@@ -56,7 +56,7 @@ export default function Energy({ asSection = false }) {
           </div>
         </div>
         <p className="text-base text-gray-700 mb-8 max-w-prose leading-relaxed">
-          The figures charted below reflect T5&rsquo;s official disclosures. T5 originally announced the campus at 480 MW in 2024 and later expanded the leasable IT capacity target to 1,200 MW. The third metric, {project.comEdCapacityGW} GW of total ComEd capacity, describes the utility substation connection rather than the computing load.
+          T5 announced the campus at 480 MW in 2024 and later expanded the leasable IT capacity target to 1,200 MW. The {project.comEdCapacityGW} GW ComEd figure is the utility substation connection, not the computing load.
         </p>
         <EnergyDrawChart />
       </FadeIn>
@@ -127,13 +127,13 @@ export default function Energy({ asSection = false }) {
             <p>
               Per Village records, the developer funds the electrical supply infrastructure serving the campus, including an on-site substation.
               <SourceCitation sourceKey="villagefaq_archived" />
-              {' '}ComEd confirmed the construction of an on-site primary transmission substation supported by three dedicated T5 switchyards, designed with potential future capacity to support surrounding regional development.
+              {' '}ComEd confirmed an on-site primary transmission substation supported by three T5 switchyards, sized to accommodate additional regional load.
               <SourceCitation sourceKey="dailyherald_oct2025" />
             </p>
             <p>
-              T5 leasing representatives stated power procurement had been underway for 18 months prior to recent utility policy revisions.
+              T5 leasing representatives said power procurement had been underway for 18 months before recent utility policy revisions.
               <SourceCitation sourceKey="dailyherald_oct2025" />
-              {' '}T5&rsquo;s specific PJM interconnection queue position has not been publicly released, making independent verification of queue timeline status unavailable from public records.
+              {' '}T5&rsquo;s PJM interconnection queue position has not been released. The queue timeline cannot be independently verified.
             </p>
           </div>
         </FadeIn>

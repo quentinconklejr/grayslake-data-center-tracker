@@ -33,7 +33,7 @@ export default function TaxImpact({ asSection = false }) {
           <h1 className="text-4xl sm:text-5xl font-display font-bold text-slate-900 tracking-tight mb-3">Tax Impact</h1>
         )}
         <p className="text-base text-slate-700 max-w-2xl leading-relaxed">
-          Analysis of developer fee allocations, property tax assessment projections, and revenue distribution across eight local taxing bodies.
+          Developer fees, property tax projections, and revenue across eight local taxing bodies.
         </p>
         <p className="text-xs font-mono text-slate-600 mt-3 font-medium">Last verified {LAST_VERIFIED}</p>
       </FadeIn>
