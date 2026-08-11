@@ -2,11 +2,17 @@ export const SITE_TITLE = 'Grayslake Data Center Tracker'
 
 export const LAST_VERIFIED = 'Aug 10, 2026'
 
-// Email updates. Leave formspreeId null and the signup renders a mailto link,
-// which works with zero setup and never pretends to have stored anything.
-// Create a free form at formspree.io and paste its id here to get a real inline
-// form with real success and error states.
+// Email updates. The signup on the homepage always shows a normal email box
+// and a Subscribe button. It needs one credential to actually deliver, and
+// until it has one, submitting says so rather than pretending it worked.
 export const NEWSLETTER = {
+  // Paste the access key Web3Forms emails you. That is the whole setup:
+  // web3forms.com, type the address where submissions should land, they send a
+  // key, put it here. No account to create.
+  web3formsKey: null,
+
+  // Alternative if you would rather use Formspree: create a form and take the
+  // id out of its endpoint URL. Only one of these needs a value.
   formspreeId: null,
 }
 

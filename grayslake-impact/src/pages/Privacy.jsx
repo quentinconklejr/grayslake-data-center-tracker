@@ -47,8 +47,9 @@ export default function Privacy() {
           address on the About page, and you come off the list.
         </p>
         <p>
-          If no delivery service is configured, the button opens your mail app instead and I add the
-          address by hand, which means there is no list sitting in a third-party service at all.
+          Submissions are delivered to me through a form service, which sees the address in transit
+          and nothing else about you. If it is ever unavailable the form says so rather than
+          silently dropping what you typed.
         </p>
       </Section>
 
