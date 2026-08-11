@@ -2,9 +2,28 @@ import PageTitle from '../components/ui/PageTitle'
 import { pageMeta } from '../data/pageMeta'
 import FadeIn from '../components/ui/FadeIn'
 import BackToTop from '../components/ui/BackToTop'
-import { LAST_VERIFIED } from '../data/siteConfig'
+import { LAST_VERIFIED, SITE_CONTACT } from '../data/siteConfig'
 
-const CONTACT = 'walterjr.quentin@gmail.com'
+/**
+ * Privacy page.
+ *
+ * Rewritten because it had drifted out of true in four ways, and a privacy
+ * page that is wrong is worse than none:
+ *
+ *   1. It said the map is served by Mapbox. It is not. The map is Leaflet,
+ *      with satellite tiles from Esri and street labels from CARTO.
+ *   2. It said "I do not run a mailing list, and I will not add you to one",
+ *      three paragraphs below the section describing the mailing list.
+ *   3. It never mentioned Google Fonts, which every page loads, and which is
+ *      the one third-party request a reader cannot avoid.
+ *   4. The contact address was a personal gmail, while every other page used
+ *      the university address.
+ *
+ * The contact address is imported rather than hardcoded so it cannot drift
+ * again.
+ */
+
+const CONTACT = SITE_CONTACT.email
 
 function Section({ title, children }) {
   return (
@@ -26,30 +45,28 @@ export default function Privacy() {
           What this site collects
         </h1>
         <p className="text-lg text-gray-700 max-w-3xl leading-relaxed">
-          Almost nothing. No cookies, no accounts, nothing sold to anyone. I have no idea who you
-          are and no way to find out, which is how I would want it as a reader.
+          Almost nothing. No cookies, no accounts, no advertising, nothing sold to anyone. Unless you
+          type your email into the signup box, I have no idea who you are and no way to find out.
         </p>
         <p className="text-2xs font-mono text-gray-600 mt-4">Last reviewed {LAST_VERIFIED}</p>
       </FadeIn>
 
-      {/* An email list exists now, so it is disclosed here. The headline above
-          says no accounts and nothing sold; that stays true only if this
-          section exists and is accurate. */}
       <Section title="If you sign up for updates">
         <p>
-          The signup on the front page is optional and the site works identically without it. If you
-          use it, I keep your email address and nothing else. No name, no location, no record of
+          The signup on the front page is optional and every page works identically without it. If
+          you use it, I keep your email address and nothing else. No name, no location, no record of
           which pages you read, because none of that is collected in the first place.
         </p>
         <p>
           It is used to send occasional updates about this project and for nothing else. It is not
-          sold, not shared, and not used to advertise anything. Reply to any email, or write to the
-          address on the About page, and you come off the list.
+          sold, not shared, and not used to advertise anything. Reply to any email and you come off
+          the list.
         </p>
         <p>
-          Submissions are delivered to me through a form service, which sees the address in transit
-          and nothing else about you. If it is ever unavailable the form says so rather than
-          silently dropping what you typed.
+          Submissions are delivered through <strong>Web3Forms</strong>, which passes the address to
+          my inbox and holds a copy on their servers for thirty days before deleting it. They see the
+          address and nothing else about you. If the service is ever unreachable the form says so
+          rather than quietly dropping what you typed.
         </p>
       </Section>
 
@@ -67,25 +84,39 @@ export default function Privacy() {
         </p>
       </Section>
 
-      <Section title="Other services in the page">
+      <Section title="Other services that load in the page">
         <p>
-          The map is served by Mapbox, so loading the map page sends a request to Mapbox for the
-          satellite tiles. Their privacy terms apply to that request, not mine. Every other page
-          works without it.
+          <strong>Fonts.</strong> Every page loads two typefaces from Google Fonts, which means your
+          browser makes a request to Google on each visit and Google can see your IP address in doing
+          so. This is the one outside request you cannot avoid by staying off a particular page.
         </p>
         <p>
-          The site is hosted on Vercel, which keeps standard server logs the way any web host does.
-          Source documents link out to the Village of Grayslake, Lake County, the Internet Archive
-          and various news sites, and once you follow a link you are on their terms rather than
-          this page.
+          <strong>The map.</strong> The map is built with Leaflet, an open-source library that runs
+          in your browser. Its satellite imagery comes from Esri and its street labels from CARTO, so
+          opening the map or the front page requests image tiles from both. Their terms apply to
+          those requests rather than mine. The parcel data itself is a file served from this site,
+          not a live call to the county.
+        </p>
+        <p>
+          <strong>Hosting.</strong> The site is hosted on Vercel, which keeps standard server logs
+          the way any web host does.
+        </p>
+        <p>
+          <strong>Outbound links.</strong> Sources link out to the Village of Grayslake, Lake County,
+          the Internet Archive, the courts and various news sites. Once you follow a link you are on
+          their terms rather than this page.
         </p>
       </Section>
 
       <Section title="If you email me">
         <p>
-          Corrections and questions arrive in my personal inbox and stay there. I do not run a
-          mailing list, and I will not add you to one. If you send a correction and I publish a
-          fix, the fix goes up without your name unless you ask me to credit you.
+          Corrections and questions arrive in my inbox and stay there. Emailing me does not add you
+          to the updates list; if you want to be on it, use the signup box or say so and I will add
+          you by hand.
+        </p>
+        <p>
+          If you send a correction and I publish a fix, the fix goes up without your name unless you
+          ask me to credit you.
         </p>
       </Section>
 
