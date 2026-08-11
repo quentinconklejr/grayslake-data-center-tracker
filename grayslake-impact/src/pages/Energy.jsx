@@ -42,7 +42,6 @@ export default function Energy({ asSection = false }) {
         <StatCard label="Secured Power"       value={`${project.securedPowerMW.toLocaleString()} MW`}  sub="Utility-contracted capacity"   accent="amber" sourceKey="dcdGW2026" />
         <StatCard label="IT Capacity"        value={`${project.totalCapacityMW.toLocaleString()} MW`} sub="Leasable at full buildout"      accent="blue"  sourceKey="dcdGW2026" />
         <StatCard label="Total ComEd Capacity" value={`${project.comEdCapacityGW} GW`}                sub="Secured from ComEd, per T5 CEO"  accent="amber" sourceKey="govtech2025" />
-+
         <StatCard label="PJM Zone"          value="COMED"                                             sub="ComEd transmission zone, PJM"  accent="blue"  sourceKey="clcjawa2026" />
       </FadeIn>
 
