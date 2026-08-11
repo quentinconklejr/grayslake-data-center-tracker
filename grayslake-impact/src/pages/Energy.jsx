@@ -22,7 +22,7 @@ export default function Energy({ asSection = false }) {
 
   return (
     <Wrap>
-    <div className={`max-w-7xl mx-auto px-4 sm:px-6 ${asSection ? "pt-2 pb-10" : "py-12"}`}>
+    <div className={`${asSection ? "pt-1 pb-8" : "max-w-7xl mx-auto px-4 sm:px-6 py-12"}`}>
       {!asSection && <PageTitle {...pageMeta['/energy']} />}
 
       <FadeIn className="mb-10 pb-8 border-b border-edge-soft">
@@ -38,7 +38,7 @@ export default function Energy({ asSection = false }) {
         <p className="text-xs font-mono text-gray-600 mt-3 font-medium">Last verified {LAST_VERIFIED}</p>
       </FadeIn>
 
-      <FadeIn className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+      <FadeIn className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 mb-10 sm:mb-12">
         <StatCard label="Secured Power"       value={`${project.securedPowerMW.toLocaleString()} MW`}  sub="Utility-contracted capacity"   accent="amber" sourceKey="dcdGW2026" />
         <StatCard label="IT Capacity"        value={`${project.totalCapacityMW.toLocaleString()} MW`} sub="Leasable at full buildout"      accent="blue"  sourceKey="dcdGW2026" />
         <StatCard label="Total ComEd Capacity" value={`${project.comEdCapacityGW} GW`}                sub="Secured from ComEd, per T5 CEO"  accent="amber" sourceKey="govtech2025" />
