@@ -136,8 +136,8 @@ export default function Timeline({ events = [], proportional = false }) {
                   {fmtDate(event.date)}
                 </time>
 
-                {/* Category badge — fixed width so headline text aligns regardless of category length */}
-                <span className={`self-start shrink-0 inline-flex w-24 justify-center px-1.5 py-1 rounded-sm border text-2xs font-mono font-semibold uppercase tracking-widest ${cat.badge}`}>
+                {/* Category badge */}
+                <span className={`self-start shrink-0 inline-flex whitespace-nowrap justify-center px-1.5 py-1 rounded-sm border text-2xs font-mono font-semibold uppercase tracking-widest ${cat.badge}`}>
                   {event.category}
                 </span>
 
