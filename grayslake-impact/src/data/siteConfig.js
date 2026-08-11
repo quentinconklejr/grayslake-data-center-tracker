@@ -9,7 +9,7 @@ export const NEWSLETTER = {
   // Paste the access key Web3Forms emails you. That is the whole setup:
   // web3forms.com, type the address where submissions should land, they send a
   // key, put it here. No account to create.
-  web3formsKey: 'b59937db-71ed-41f0-9592-a26078230676',
+  web3formsKey: null,
 
   // Alternative if you would rather use Formspree: create a form and take the
   // id out of its endpoint URL. Only one of these needs a value.
