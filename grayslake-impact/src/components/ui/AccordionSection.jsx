@@ -77,7 +77,7 @@ export default function AccordionSection({
                 {value}
               </div>
               {qualifier && (
-                <div className="text-2xs font-mono text-slate-500 leading-tight mt-1 sm:max-w-[260px]">
+                <div className="text-2xs font-mono text-slate-500 leading-tight mt-1 sm:max-w-[19rem]">
                   {qualifier}
                 </div>
               )}
