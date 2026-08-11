@@ -1,33 +1,29 @@
 # =====================================================================
-#  Bring back the email signup - as a working one.
+#  Email signup: a real box, a real button.
 #
 #  Run with:
 #    powershell -ExecutionPolicy Bypass -File "C:\Users\Quentin\grayslake-data-center-tracker\UPLOAD\SIGNUP.ps1"
 #
 #  Run COMPLAINT.ps1 first if you have not. Safe to re-run.
 #
-#  WHAT IS DIFFERENT FROM THE ONE I DELETED
-#  ----------------------------------------
-#  EnterpriseLeadBanner took an address, discarded it, and displayed
-#  "Subscription request received". This one cannot do that. Success is set in
-#  exactly one place in the code, inside `if (res.ok)`, so it is only shown
-#  after a request actually succeeded. A failure says so and offers the
-#  fallback.
+#  YOU NEED ONE KEY, AND IT TAKES TWO MINUTES
+#  ------------------------------------------
+#  A form that stores an address needs somewhere to send it. There is no way
+#  around that, but the quickest option does not make you create an account:
 #
-#  Out of the box there is no text input at all: with no delivery service
-#  configured it renders a mailto button, which genuinely works today and puts
-#  no list in anyone else's hands. When you want the inline form, create a free
-#  form at formspree.io and put the id in siteConfig.js:
+#      1. Go to web3forms.com
+#      2. Type the email address where you want signups delivered
+#      3. They email you an access key
+#      4. Open grayslake-impact\src\data\siteConfig.js and set:
 #
-#      export const NEWSLETTER = { formspreeId: 'xyzabcde' }
+#           web3formsKey: 'the-key-they-emailed-you',
 #
-#  The copy also promises less. The old banner offered automatic alerts
-#  whenever new deeds, meeting transcripts or court filings were posted, which
-#  would mean monitoring three systems. This offers an occasional email, sent
-#  by hand, which is a thing one person can actually do.
+#      5. Run this script again (or just commit and push)
 #
-#  The Privacy page is updated in the same commit. It says "no accounts,
-#  nothing sold" at the top, and that only stays true if the list is disclosed.
+#  Until the key is set the box and the button still appear, because a visitor
+#  should see the same page either way, but pressing Subscribe says the signup
+#  is not connected yet instead of claiming it worked. That is the one thing
+#  the old EnterpriseLeadBanner did wrong and this will not repeat.
 # =====================================================================
 
 $ErrorActionPreference = 'Continue'
@@ -41,7 +37,7 @@ function Say($m, $c = 'Green') { Write-Host $m -ForegroundColor $c }
 
 Write-Host ''
 Say '=====================================================' 'Cyan'
-Say ' Email signup, working this time' 'Cyan'
+Say ' Email signup' 'Cyan'
 Say '=====================================================' 'Cyan'
 Write-Host ''
 
@@ -57,6 +53,20 @@ foreach ($k in $files.Keys) {
   if (-not (Test-Path (Join-Path $upload $k))) { Say "Missing $k in UPLOAD" 'Red'; Read-Host 'Enter'; exit 1 }
 }
 
+# Keep an existing key if one has already been pasted in, so re-running this
+# does not wipe the setup.
+$existingKey = $null
+$cfgPath = Join-Path $src 'data\siteConfig.js'
+if (Test-Path $cfgPath) {
+  $cfg = [IO.File]::ReadAllText($cfgPath)
+  $m = [regex]::Match($cfg, "web3formsKey:\s*'([^']+)'")
+  if ($m.Success) { $existingKey = $m.Groups[1].Value }
+  if (-not $existingKey) {
+    $m2 = [regex]::Match($cfg, "formspreeId:\s*'([^']+)'")
+    if ($m2.Success) { $existingKey = "formspree:" + $m2.Groups[1].Value }
+  }
+}
+
 $lock = Join-Path $repo '.git\index.lock'
 if (Test-Path $lock) { Remove-Item $lock -Force -ErrorAction SilentlyContinue }
 if ([string]::IsNullOrWhiteSpace((& git config user.name)))  { & git config user.name  'Quentin Conkle Jr' | Out-Null }
@@ -67,11 +77,23 @@ Say '[1/5] Up to date with GitHub'
 foreach ($k in $files.Keys) {
   Copy-Item (Join-Path $upload $k) (Join-Path $src $files[$k]) -Force
 }
-Say '[2/5] Installed the signup and its supporting changes'
-Say '      - UpdatesSignup.jsx  new component, mailto by default'
-Say '      - Home.jsx           mounted above the sources'
-Say '      - siteConfig.js      NEWSLETTER switch for formspree'
-Say '      - Privacy.jsx        the list is now disclosed'
+
+# Put the key back if there was one.
+if ($existingKey -and -not $existingKey.StartsWith('formspree:')) {
+  $cfg = [IO.File]::ReadAllText($cfgPath)
+  $cfg = $cfg -replace "web3formsKey:\s*null", "web3formsKey: '$existingKey'"
+  [IO.File]::WriteAllText($cfgPath, $cfg)
+  Say "[2/5] Installed the signup, and kept your existing key"
+} elseif ($existingKey) {
+  $id = $existingKey.Substring(10)
+  $cfg = [IO.File]::ReadAllText($cfgPath)
+  $cfg = $cfg -replace "formspreeId:\s*null", "formspreeId: '$id'"
+  [IO.File]::WriteAllText($cfgPath, $cfg)
+  Say "[2/5] Installed the signup, and kept your existing Formspree id"
+} else {
+  Say '[2/5] Installed the signup'
+  Say '      No delivery key set yet - see the setup note at the top of this file' 'Yellow'
+}
 
 # --- verify -------------------------------------------------------------
 Write-Host ''
@@ -82,18 +104,26 @@ function Expect($path, $needle, $what) {
   if (([IO.File]::ReadAllText($p)).Contains($needle)) { Say "      ok  $what" }
   else { Say "      !   $what - NOT FOUND" 'Red'; $script:fail = $true }
 }
-Expect 'components\ui\UpdatesSignup.jsx' 'if (res.ok)'       'success only after a real response'
-Expect 'components\ui\UpdatesSignup.jsx' 'mailto'            'mailto fallback present'
-Expect 'pages\Home.jsx'                  '<UpdatesSignup />' 'mounted on the homepage'
-Expect 'data\siteConfig.js'              'NEWSLETTER'        'config switch present'
-Expect 'pages\Privacy.jsx'               'If you sign up'    'privacy disclosure present'
 
-# The specific failure mode of the old component: a success state that could be
-# reached without a network call. There must be exactly one, guarded.
+Expect 'components\ui\UpdatesSignup.jsx' 'type="email"'        'email input renders'
+Expect 'components\ui\UpdatesSignup.jsx' 'Subscribe'           'subscribe button renders'
+Expect 'components\ui\UpdatesSignup.jsx' 'not connected yet'   'unconfigured submit is refused'
+Expect 'pages\Home.jsx'                  '<UpdatesSignup />'   'mounted on the homepage'
+Expect 'data\siteConfig.js'              'web3formsKey'        'config switch present'
+Expect 'pages\Privacy.jsx'               'If you sign up'      'privacy disclosure present'
+
+# The failure mode of the old banner: a success state reachable without a
+# response. There are two success paths now, one per provider, and both must
+# sit behind a response check.
 $sig = [IO.File]::ReadAllText((Join-Path $src 'components\ui\UpdatesSignup.jsx'))
-$doneCount = ([regex]::Matches($sig, [regex]::Escape("setState('done')"))).Count
-if ($doneCount -eq 1) { Say '      ok  exactly one success path, and it is guarded' }
-else { Say "      !   found $doneCount success paths, expected 1" 'Red'; $fail = $true }
+$done    = ([regex]::Matches($sig, [regex]::Escape("setState('done')"))).Count
+$guarded = ([regex]::Matches($sig, "if \(res\.ok")).Count
+if ($done -eq 2 -and $guarded -eq 2) {
+  Say '      ok  both success paths sit behind a response check'
+} else {
+  Say "      !   $done success path(s), $guarded guard(s) - expected 2 and 2" 'Red'
+  $fail = $true
+}
 
 if ($fail) {
   Write-Host ''; Say 'Verification failed. NOTHING committed.' 'Red'
@@ -116,8 +146,8 @@ Say '[4/5] Build OK'
 
 # --- commit and push ------------------------------------------------------
 & git add -A 2>&1 | Out-Null
-$subject = 'Bring back the email signup, as one that actually delivers'
-$body    = 'Replaces the removed EnterpriseLeadBanner, which took an address, discarded it and told the visitor a subscription had been created. The new component sets its success state in exactly one place, inside a check on the response, so it cannot report success without one; failures say so and offer the fallback. With no delivery service configured it renders a mailto button rather than a text input, so it works today and no list sits in a third party service. Setting NEWSLETTER.formspreeId in siteConfig turns on a real inline form. The copy promises an occasional email sent by hand rather than automatic alerts on three separate public systems, because that is what one person can deliver. Privacy page updated in the same commit, since the headline claim of no accounts and nothing sold only holds if the list is disclosed.'
+$subject = 'Add a working email signup to the homepage'
+$body    = 'Replaces the removed EnterpriseLeadBanner, which took an address, discarded it and told the visitor a subscription had been created. A visitor now types an address and presses Subscribe, as they would expect. The success message is set in two places, one per delivery provider, and both sit behind a check on the response, so it cannot be shown without one; Web3Forms in particular returns 200 with success false on a bad key, so the body is checked rather than the status alone. With no delivery key configured the box and button still render, because a visitor should see the same page either way, but submitting reports that the signup is not connected rather than claiming it worked. Privacy page discloses the list, since the headline claim of no accounts and nothing sold only holds if it does.'
 $commitOut = & git commit -m $subject -m $body 2>&1
 if ($LASTEXITCODE -eq 0) { Say '[5/5] Committed' }
 elseif ($commitOut -match 'nothing to commit|working tree clean') { Say '[5/5] Nothing new to commit' 'Yellow' }
@@ -135,14 +165,14 @@ if ($pushed -eq 0) {
   Say '====================================================='
   Say ' PUSHED.'
   Write-Host ''
-  Say ' Homepage, above the sources: Stay on the record.'
-  Say ' It shows a mailto button until you add a formspree id.'
-  Write-Host ''
-  Say ' To get the inline form:'
-  Write-Host '   1. formspree.io, free account, new form'      -ForegroundColor White
-  Write-Host '   2. copy the id from the endpoint URL'         -ForegroundColor White
-  Write-Host '   3. siteConfig.js: formspreeId: ''thatid'''    -ForegroundColor White
-  Write-Host '   4. commit and push'                           -ForegroundColor White
+  if ($existingKey) {
+    Say ' Key is set - the signup is live and delivering.'
+  } else {
+    Say ' NEXT, so it actually delivers:' 'Yellow'
+    Write-Host '   1. web3forms.com - type your email, they send a key' -ForegroundColor White
+    Write-Host '   2. siteConfig.js - web3formsKey: ''that-key'''       -ForegroundColor White
+    Write-Host '   3. run this script again'                            -ForegroundColor White
+  }
   Say '====================================================='
 } else {
   Say 'PUSH FAILED. Sign in to GitHub if prompted and re-run.' 'Red'
