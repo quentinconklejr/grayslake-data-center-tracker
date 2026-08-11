@@ -17,21 +17,28 @@ const TAX_DISTRICTS = [
   { district: 'Lake County Forest Preserve', share: '~1-2%', role: 'Regional Conservation' },
 ]
 
-export default function TaxImpact() {
+// asSection is how the other three impact pages render inside the /project
+// accordion. TaxImpact never accepted it, so inside a panel it rendered its
+// own h1 and its own PageTitle, which rewrote the browser tab to the Tax page.
+export default function TaxImpact({ asSection = false }) {
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
-      <PageTitle {...pageMeta['/tax-impact']} />
+    <div className={asSection ? 'pt-1 pb-8' : 'max-w-7xl mx-auto px-4 sm:px-6 py-12'}>
+      {!asSection && <PageTitle {...pageMeta['/tax-impact']} />}
 
       <FadeIn className="mb-10 pb-8 border-b border-edge-soft">
         <p className="text-xs font-mono font-semibold text-sky-800 uppercase tracking-[0.15em] mb-3">Fiscal Revenue</p>
-        <h1 className="text-4xl sm:text-5xl font-display font-bold text-slate-900 tracking-tight mb-3">Tax Impact</h1>
+        {asSection ? (
+          <h3 className="text-2xl sm:text-3xl font-display font-bold text-slate-900 tracking-tight mb-3">Tax Impact</h3>
+        ) : (
+          <h1 className="text-4xl sm:text-5xl font-display font-bold text-slate-900 tracking-tight mb-3">Tax Impact</h1>
+        )}
         <p className="text-base text-slate-700 max-w-2xl leading-relaxed">
           Analysis of developer fee allocations, property tax assessment projections, and revenue distribution across eight local taxing bodies.
         </p>
         <p className="text-xs font-mono text-slate-600 mt-3 font-medium">Last verified {LAST_VERIFIED}</p>
       </FadeIn>
 
-      <FadeIn className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+      <FadeIn className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 mb-10 sm:mb-12">
         <StatCard label="Total Investment" value={figureById['investment'].value} sub="Estimated campus cost" accent="blue" sourceKey="govtech2025" />
         <StatCard label="Taxing Districts" value="8 Districts" sub="Local revenue recipients" accent="blue" sourceKey="villagefaq_archived" />
         <StatCard label="Developer Fees" value="$7.5M+" sub="Permit & infrastructure fees" accent="green" sourceKey="villagefaq_archived" />

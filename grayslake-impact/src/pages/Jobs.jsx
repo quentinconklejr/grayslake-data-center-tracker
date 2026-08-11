@@ -61,7 +61,7 @@ export default function Jobs({ asSection = false }) {
 
   return (
     <Wrap>
-    <div className={`max-w-7xl mx-auto px-4 sm:px-6 ${asSection ? "pt-2 pb-10" : "py-12"}`}>
+    <div className={`${asSection ? "pt-1 pb-8" : "max-w-7xl mx-auto px-4 sm:px-6 py-12"}`}>
       {!asSection && <PageTitle {...pageMeta['/jobs']} />}
 
       <FadeIn className="mb-10 pb-8 border-b border-edge-soft">
@@ -77,7 +77,7 @@ export default function Jobs({ asSection = false }) {
         <p className="text-xs font-mono text-gray-600 mt-3 font-medium">Last verified {LAST_VERIFIED}</p>
       </FadeIn>
 
-      <FadeIn className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+      <FadeIn className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 mb-10 sm:mb-12">
         <StatCard label="Permanent Jobs"       value={figureById['jobs-permanent'].value} sub={figureById['jobs-permanent'].qualifier} accent="green" sourceKey="villagefaq_archived" />
         <StatCard label="Construction"         value="Hundreds"                         sub="Active 2025 to 2029 (est.)"  badge="Est." accent="amber" sourceKey="govtech2025" />
         <StatCard label="Phase 1 Online"       value={project.firstBuildingOnline}      sub="First building operational" accent="blue" sourceKey="dcd2026" />

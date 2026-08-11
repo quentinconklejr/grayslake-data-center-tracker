@@ -32,7 +32,7 @@ export default function Schools({ asSection = false }) {
 
   return (
     <Wrap>
-    <div className={`max-w-7xl mx-auto px-4 sm:px-6 ${asSection ? "pt-2 pb-10" : "py-12"}`}>
+    <div className={`${asSection ? "pt-1 pb-8" : "max-w-7xl mx-auto px-4 sm:px-6 py-12"}`}>
       {!asSection && <PageTitle {...pageMeta['/schools']} />}
 
       <FadeIn className="mb-10 pb-8 border-b border-edge-soft">
@@ -106,7 +106,7 @@ export default function Schools({ asSection = false }) {
         </div>
       </FadeIn>
 
-      <FadeIn className="grid grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+      <FadeIn className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-8 mb-10 sm:mb-12">
         <StatCard label="One Facility — 2025 Tax"   value={`$${meta.totalPropertyTaxBilled2025}M`} sub="Single facility, 2025 tax year"                                       accent="green" sourceKey="capitolnews2026" />
         <StatCard label="School District Share"     value={`${meta.percentToSchoolDistrict}%`}     sub="Avg. across three properties, 2021–2024"              accent="green" sourceKey="capitolnews2026" />
         <StatCard label="Other Taxing Bodies"       value={`${metaOtherPct}%`}                     sub={`Calculated: 100% − ${meta.percentToSchoolDistrict}%`} accent="blue" badge="Derived" />
