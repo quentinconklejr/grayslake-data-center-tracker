@@ -102,7 +102,7 @@ export default function Home() {
               287.8 acres across 57 parcels in Grayslake, IL. Approved campus boundary covers up to 472 acres.
             </p>
           </div>
-          <SiteMap />
+          <SiteMap showCaption={false} />
           <ParcelTable parcels={PARCELS_DATA} />
         </div>
 

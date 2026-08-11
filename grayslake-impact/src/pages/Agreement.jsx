@@ -5,6 +5,7 @@ import BackToTop from '../components/ui/BackToTop'
 import SourceCitation from '../components/ui/SourceCitation'
 import { FootnoteProvider, FootnoteList } from '../components/ui/FootnoteContext'
 import { LAST_VERIFIED } from '../data/siteConfig'
+import { sources } from '../data/sources'
 
 /**
  * "What did the village actually agree to?"
@@ -129,6 +130,43 @@ const UNPUBLISHED = [
   'The Lake County Assessor valuation, without which no tax figure can be checked',
 ]
 
+// Read from the file-stamped PDF, not from news coverage. The Aug 7-8 reports
+// described the counts loosely; these are the headings as they appear in the
+// filing. The case number was in neither report.
+const COMPLAINT = {
+  caseNumber: '2026CH00000171',
+  filed: 'July 31, 2026, 6:29 PM',
+  court: '19th Judicial Circuit, Lake County, Chancery Division',
+  plaintiffs: 'Preservation of Community Well-being Collective LLC and nine residents of Grayslake, Mundelein and Round Lake Park',
+  defendants: 'Village of Grayslake; T5 Data Centers, LLC; Alter Asset Management Company',
+  counsel: 'Law Office of Ronald D. Cummings',
+  counts: [
+    {
+      title: 'Ultra vires municipal action',
+      detail: 'That the Village acted beyond the authority its own ordinances give it, and a declaration to that effect.',
+    },
+    {
+      title: 'Substantive due process, Illinois Constitution',
+      detail: 'That the approvals departed from the Village\u2019s own planning framework in a way the state constitution does not permit.',
+    },
+    {
+      title: 'Procedural due process, Illinois Constitution',
+      detail: 'That the notice and hearing process denied affected residents a meaningful opportunity to be heard.',
+    },
+    {
+      title: 'Illinois Open Meetings Act',
+      detail: 'That Village business on this project was conducted outside properly noticed open meetings.',
+    },
+  ],
+  relief: [
+    'A declaration that the 2024\u20132025 approvals are invalid and unenforceable',
+    'A judgment vacating and setting aside those approvals',
+    'An order voiding the development agreement(s) between the Village and T5',
+    'A permanent injunction barring further permits issued in reliance on the approvals',
+    'Attorneys\u2019 fees and costs to the extent recoverable',
+  ],
+}
+
 const MAX_CLAIM = Math.max(...REVENUE_CLAIMS.map(c => c.amount))
 
 const SIDE = {
@@ -183,6 +221,93 @@ export default function Agreement() {
               asks a court to void this agreement, which makes the distinction sharper, not less
               important.
             </p>
+          </div>
+        </FadeIn>
+
+        {/* ── The complaint itself ──────────────────────────────────────
+            The agreement this page describes is what the lawsuit asks a court
+            to void, so the filing belongs here, and now it can be linked in
+            full rather than characterised. This is the primary document: a
+            file-stamped copy from the Clerk, mirrored on this site so the
+            record does not depend on a shared link staying alive. */}
+        <FadeIn className="mb-14">
+          <div className="border-2 border-slate-800 rounded-xl overflow-hidden">
+            <div className="bg-slate-900 px-5 sm:px-6 py-3.5">
+              <p className="text-2xs font-mono font-bold uppercase tracking-widest text-slate-300">
+                Primary document
+              </p>
+              <p className="text-lg sm:text-xl font-display font-bold text-white leading-snug mt-0.5">
+                The agreement is being challenged in court
+              </p>
+            </div>
+
+            <div className="px-5 sm:px-6 py-5 bg-white">
+              <dl className="grid sm:grid-cols-2 gap-x-8 gap-y-3 mb-5">
+                {[
+                  ['Case number', COMPLAINT.caseNumber],
+                  ['Filed', COMPLAINT.filed],
+                  ['Court', COMPLAINT.court],
+                  ['Plaintiffs', COMPLAINT.plaintiffs],
+                  ['Defendants', COMPLAINT.defendants],
+                  ['Counsel', COMPLAINT.counsel],
+                ].map(([k, v]) => (
+                  <div key={k} className="min-w-0">
+                    <dt className="text-2xs font-mono uppercase tracking-widest text-slate-500">{k}</dt>
+                    <dd className="text-sm text-slate-900 leading-snug mt-0.5">{v}</dd>
+                  </div>
+                ))}
+              </dl>
+
+              <p className="text-2xs font-mono uppercase tracking-widest text-slate-500 mb-2">
+                Four counts
+              </p>
+              <ol className="space-y-2 mb-5">
+                {COMPLAINT.counts.map((c, i) => (
+                  <li key={c.title} className="flex items-start gap-3">
+                    <span className="shrink-0 mt-0.5 w-7 h-7 rounded-lg bg-slate-100 border border-slate-300 text-slate-700 text-2xs font-mono font-bold flex items-center justify-center">
+                      {['I', 'II', 'III', 'IV'][i]}
+                    </span>
+                    <div className="min-w-0">
+                      <p className="text-sm font-semibold text-slate-900 leading-snug">{c.title}</p>
+                      <p className="text-xs text-slate-600 leading-relaxed mt-0.5">{c.detail}</p>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+
+              <p className="text-2xs font-mono uppercase tracking-widest text-slate-500 mb-2">
+                Relief sought
+              </p>
+              <ul className="space-y-1.5 mb-5">
+                {COMPLAINT.relief.map(r => (
+                  <li key={r} className="flex items-start gap-2.5 text-sm text-slate-700 leading-snug">
+                    <span aria-hidden="true" className="shrink-0 mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-400" />
+                    {r}
+                  </li>
+                ))}
+              </ul>
+
+              <div className="flex flex-col sm:flex-row gap-2.5">
+                <a
+                  href={sources.complaint2026?.localCopy ?? '/docs/t5-grayslake-complaint-2026ch00000171.pdf'}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-lg bg-slate-900 text-white text-sm font-semibold hover:bg-slate-800 transition-colors min-h-[44px]"
+                >
+                  Read the complaint (PDF, 37 pages)
+                  <span aria-hidden="true">&darr;</span>
+                </a>
+                <span className="inline-flex items-center text-xs text-slate-600 leading-snug">
+                  File-stamped copy, mirrored on this site.
+                </span>
+              </div>
+
+              <p className="text-xs text-amber-900 bg-amber-50 border border-amber-200 rounded-lg px-3.5 py-2.5 mt-4 leading-relaxed">
+                These are allegations in a complaint, not findings. No defendant had answered at the
+                time of writing and no court has ruled on any count. Read it and judge for yourself,
+                which is the point of putting it here.
+              </p>
+            </div>
           </div>
         </FadeIn>
 

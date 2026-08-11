@@ -1,4 +1,20 @@
 export const sources = {
+  // The filed complaint itself, file-stamped by the Clerk and mirrored here so
+  // the record does not depend on a shared Drive link staying alive. A copy was
+  // circulating in community Facebook groups; this one was checked against the
+  // stamp, the case number and the Clerk's name before being published.
+  complaint2026: {
+    title: "Preservation of Community Well-being Collective LLC et al. v. Village of Grayslake, T5 Data Centers LLC, and Alter Asset Management Company - Complaint for Declaratory and Injunctive Relief",
+    publisher: "Circuit Court of the 19th Judicial Circuit, Lake County, Illinois, Chancery Division",
+    date: "Filed July 31, 2026",
+    caseNumber: "2026CH00000171",
+    url: "/docs/t5-grayslake-complaint-2026ch00000171.pdf",
+    localCopy: "/docs/t5-grayslake-complaint-2026ch00000171.pdf",
+    localCopySha256: "db19911916483bc704d0ca85499bacea36e2f72ea8b91f2976ed9bccb55e1207",
+    note: "37 pages, file-stamped 7/31/2026 6:29 PM by Clerk Erin Cartwright Weinstein. Four counts: ultra vires municipal action, substantive due process, procedural due process, and the Illinois Open Meetings Act. Allegations, not findings.",
+    verified: "Aug 10, 2026",
+    tier: "primary",
+  },
   baxtel2026: {
     title: "T5: Grayslake, Illinois Data Center",
     publisher: "Baxtel",
