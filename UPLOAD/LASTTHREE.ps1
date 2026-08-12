@@ -1,5 +1,9 @@
 # =====================================================================
-#  The last three homepage fixes.
+#  The last four homepage fixes.
+#
+#  (Fix 4 was added after the first three; this script is whole-file
+#   replacement, so it is safe to run whether or not you already ran the
+#   earlier version. Running it twice changes nothing.)
 #
 #  Run with:
 #    powershell -ExecutionPolicy Bypass -File "C:\Users\Quentin\grayslake-data-center-tracker\UPLOAD\LASTTHREE.ps1"
@@ -42,6 +46,28 @@
 #     boxes, so the top of the page reads as two different layouts stacked.
 #     Down one step to lg:text-[2.75rem], measure out to max-w-5xl: two lines,
 #     right edge closer to the cards. Phone is untouched at text-3xl.
+#
+#  4. THE SUBHEAD
+#     -----------
+#     "Warehouses full of computers, rented out to other companies, on farm
+#     fields at Peterson and Alleghany roads."
+#
+#     Three jobs in one sentence: define a data center, explain the business
+#     model, give the location. The first two carried a voice. "Warehouses full
+#     of computers" is plain-spoken right up until a reporter hears it as a
+#     sneer - and on a site whose only asset is neutrality, that is a cost with
+#     no matching benefit. My fault: you asked for physical and I wrote a tone.
+#
+#     The definition was never needed. Anyone who lands here can work out what
+#     a data center is. The leasing model IS load-bearing - it is why nobody
+#     can name the tenant - but it belongs on The Project, where a reader has
+#     asked for detail, not in the first four seconds.
+#
+#     Now: "Farm fields at Peterson and Alleghany roads."
+#
+#     The location survives, in the form locals actually use. Nobody in
+#     Grayslake navigates by "Grayslake" - the headline already said that -
+#     they navigate by the crossroads.
 #
 #  Verified before this script was written: npm run build clean, eslint clean
 #  (the now-unused keyFigures import is removed - Vite would have shipped it,
@@ -105,7 +131,9 @@ foreach ($c in @(
   @{ n = 'lg:text-[2.75rem]';           want = $true;  label = 'headline stepped down on desktop' },
   @{ n = 'max-w-5xl';                   want = $true;  label = 'headline measure widened toward the cards' },
   @{ n = 'text-3xl';                    want = $true;  label = 'phone size unchanged' },
-  @{ n = 'Warehouses full of computers';want = $true;  label = 'subhead still there' },
+  @{ n = 'Warehouses full of computers';want = $false; label = 'the editorial subhead is gone' },
+  @{ n = 'rented out to other companies'; want = $false; label = 'business model moved to The Project' },
+  @{ n = 'Farm fields at Peterson and Alleghany roads.'; want = $true; label = 'subhead is now just the location' },
   @{ n = 'In plain language';           want = $false; label = 'still no "In plain language:" label' }
 )) {
   $has = $body.Contains($c.n)
@@ -147,7 +175,7 @@ Say '      Build and lint OK'
 & git add -A 2>&1 | Out-Null
 $msgFile = Join-Path $env:TEMP 'grayslake-commit-msg.txt'
 $msg = @'
-Split the fused investment range, fix the map caption, resize the headline
+Split the fused investment range, fix the map caption, cut the hero subhead
 
 The investment card printed $8.5-18B as a single number. keyFigures.js says of
 that entry: "two figures from two people, not a range anyone calculated." A
@@ -164,6 +192,15 @@ approved campus is larger and is not mapped.
 The headline was text-5xl in a max-w-4xl box above cards running the full
 max-w-6xl, which on a laptop set three short ragged lines above two wide boxes.
 Down one step with a wider measure; mobile unchanged.
+
+The subhead read "Warehouses full of computers, rented out to other companies,
+on farm fields at Peterson and Alleghany roads" - a definition, a business
+model and a location in one sentence, the first two of them in a voice. On a
+site whose only asset is neutrality, prose a reader can hear as a sneer costs
+more than plainness buys. The definition is unnecessary. The leasing model
+matters, because it is why no tenant can be named, and it stays on The Project.
+The hero keeps the location in the form locals use: "Farm fields at Peterson
+and Alleghany roads." The headline already said Grayslake.
 '@
 Set-Content -Path $msgFile -Value $msg -Encoding UTF8
 $commitOut = & git commit -F $msgFile 2>&1
@@ -183,6 +220,12 @@ Write-Host ''
 if ($LASTEXITCODE -eq 0) {
   Say '====================================================='
   Say ' PUSHED. Live in about two minutes.'
+  Write-Host ''
+  Write-Host '   T5 @ Chicago IV is an approved hyperscale'  -ForegroundColor White
+  Write-Host '   data center under construction in'          -ForegroundColor White
+  Write-Host '   Grayslake, Illinois.'                       -ForegroundColor White
+  Write-Host ''
+  Write-Host '   Farm fields at Peterson and Alleghany roads.' -ForegroundColor White
   Write-Host ''
   Write-Host '   TOTAL ESTIMATED INVESTMENT'          -ForegroundColor DarkGray
   Write-Host '   $8.5B  /  $18B'                      -ForegroundColor White
