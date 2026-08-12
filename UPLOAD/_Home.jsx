@@ -48,6 +48,22 @@ export default function Home() {
             SITE, not the project, so it folds into the verification stamp
             instead of taking a paragraph of its own.
 
+            The subhead used to read "Warehouses full of computers, rented out
+            to other companies, on farm fields at Peterson and Alleghany
+            roads." That was three jobs in one sentence - define a data centre,
+            explain the business model, give the location - and the first two
+            carried a voice. "Warehouses full of computers" is plain-spoken
+            right up until a reporter reads it as a sneer, and on a site whose
+            only asset is neutrality that is a cost with no matching benefit.
+            The definition was never needed; anyone here can work out what a
+            data centre is. The leasing model is a real and load-bearing fact,
+            because it is why no tenant can be named, but it belongs on The
+            Project where a reader has asked for it.
+
+            What survives is the location, in the form locals actually use.
+            Nobody in Grayslake navigates by "Grayslake" - the headline
+            already said that - they navigate by the crossroads.
+
             Sizing: the headline was text-5xl in a max-w-4xl box while the cards
             under it run the full max-w-6xl. On a laptop that set three short
             ragged lines above two wide cards, so the page looked like two
@@ -59,8 +75,7 @@ export default function Home() {
             T5 @ Chicago IV is an approved hyperscale data center under construction in Grayslake, Illinois.
           </h1>
           <p className="text-base sm:text-lg font-sans text-slate-700 max-w-4xl leading-relaxed">
-            Warehouses full of computers, rented out to other companies, on farm fields at Peterson
-            and Alleghany roads.
+            Farm fields at Peterson and Alleghany roads.
           </p>
           <div className="text-xs font-mono text-slate-500">
             Every claim linked to its source &middot; Last verified {LAST_VERIFIED}
