@@ -32,36 +32,32 @@ export default function Home() {
         />
 
         {/* Hero Section */}
-        <div className="space-y-4">
+        {/* Hero.
+            This was four stacked blocks of prose before a single number: the
+            headline, a bordered callout, a paragraph about what the tracker is,
+            and a verification date. Roughly ten lines to scroll past before the
+            first fact, on a page whose whole job is facts.
+
+            Cut to two. The callout lost its box - the border and tint were what
+            made it read as heavy, and a box promises more than one sentence can
+            pay off. The football-field comparison and the building count went
+            with it; both are on The Project, where a reader has asked for
+            detail. What is left is the one thing the cards below cannot say:
+            what the buildings physically are.
+
+            The line about the tracker collecting public records is about the
+            SITE, not the project, so it folds into the verification stamp
+            instead of taking a paragraph of its own. */}
+        <div className="space-y-3">
           <h1 className="text-3xl sm:text-5xl font-display font-extrabold text-slate-900 tracking-tight leading-none max-w-4xl">
             T5 @ Chicago IV is an approved hyperscale data center under construction in Grayslake, Illinois.
           </h1>
-          {/* This box used to read "In plain language: a very large computing
-              facility. Two figures have been put on its cost: ..." Four things
-              were wrong with it. Announcing that plain language is coming is
-              the tell - a person just writes plainly. "Very large" is a
-              non-measurement sitting among 1,200 MW and 287.8 acres. "Two
-              figures have been put on its cost" is passive with no actor, and
-              names the actors in the same breath anyway. And it repeated the
-              investment card 200px below it, so a highlighted box delivered a
-              definition plus a duplicate.
-
-              It now says the one thing nothing else above the fold says: what
-              the thing physically is and how big. Square footage is the
-              approval figure; the football-field number is that figure divided
-              by 57,600. The building count is deliberately attributed, because
-              the approval document does not give one. */}
-          <p className="text-base sm:text-lg font-sans text-sky-900 bg-sky-50 p-4 rounded-xl border border-sky-200 max-w-3xl leading-relaxed font-medium">
-            Warehouses full of computers, rented out to other companies. The approvals allow up to
-            10.1 million square feet of them on farm fields at Peterson and Alleghany roads, roughly
-            175 football fields of floor space. The approval document gives no building count;
-            reporting puts it at 18.
-          </p>
-          <p className="text-sm font-sans text-slate-600 max-w-2xl">
-            This tracker collects public records and press coverage on the project and links every claim to its source.
+          <p className="text-base sm:text-lg font-sans text-slate-700 max-w-3xl leading-relaxed">
+            Warehouses full of computers, rented out to other companies, on farm fields at Peterson
+            and Alleghany roads.
           </p>
           <div className="text-xs font-mono text-slate-500">
-            Last verified {LAST_VERIFIED}
+            Every claim linked to its source &middot; Last verified {LAST_VERIFIED}
           </div>
         </div>
 
