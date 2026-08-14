@@ -60,7 +60,8 @@ export default function Project() {
               The Project Overview
             </h1>
             <p className="text-sm font-sans text-slate-600 max-w-2xl mt-1">
-              An $8.5 billion to $18 billion hyperscale facility under construction in Grayslake, IL.
+              A hyperscale facility under construction in Grayslake, IL. The Village put the cost at
+              $8.5 billion; T5’s chief executive said up to $18 billion.
             </p>
           </div>
 
