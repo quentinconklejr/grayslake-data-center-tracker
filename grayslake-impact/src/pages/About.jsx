@@ -21,7 +21,7 @@ export default function About() {
       <FadeIn className="mb-10">
         <div className="space-y-4 text-sm text-gray-600 leading-relaxed">
           <p>
-            I'm Quentin Conkle Jr., a sophomore at University of Illinois Urbana-Champaign studying Information Sciences and Data Science. I grew up in Grayslake. When T5 was announced, public records on the project were scattered across village meeting minutes, trade coverage, and local reporting. A sourced answer to a basic question, like projected tax revenue or what the lawsuits claim, required reading across multiple documents. This site collects that record in one place.
+            I'm Quentin Conkle Jr., a sophomore at University of Illinois Urbana-Champaign pursuing Information Sciences and Data Science. I grew up in Grayslake. When T5 was announced, public records on the project were scattered across village meeting minutes, trade coverage, and local reporting. A sourced answer to a basic question, like projected tax revenue or what the lawsuits claim, required reading across multiple documents. This site collects that record in one place.
           </p>
           <p>
             I collect the public record: village approvals, tax filings, press coverage, legal developments. Every figure links to a source. I hold no position on the data center. If something is wrong or a document is missing, I want to know.
