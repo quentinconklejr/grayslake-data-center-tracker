@@ -185,4 +185,12 @@ export const sources = {
   url: "https://www.lakemchenryscanner.com/2026/08/08/project-of-unprecedented-scale-lake-county-residents-file-lawsuit-to-block-472-acre-data-center-campus-in-grayslake/",
   type: "PRESS",
 },
+  scannerCancellation2026: {
+  title: "Village of Grayslake announces special session for public to discuss data center, then cancels it citing social media threats",
+  publisher: "Lake & McHenry County Scanner",
+  author: "Sam Borcia",
+  date: "Aug 20, 2026",
+  url: "https://www.lakemchenryscanner.com/2026/08/20/village-of-grayslake-announces-special-session-for-public-to-discuss-data-center-then-cancels-it-citing-social-media-threats/",
+  type: "PRESS",
+},
 };

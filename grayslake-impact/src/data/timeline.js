@@ -139,4 +139,20 @@ export const timelineEvents = [
     category: "legal",
     sourceKeys: ["complaint2026", "scannerLawsuit2026"],
   },
+  {
+    date: "2026-08-08",
+    title: "Complaint specifics reported; initial status hearing set for Oct 30",
+    description:
+      "Reporting on the July 31 filing detailed the complaint's four counts. The plaintiffs allege that the Village authorized the data center despite Grayslake's zoning ordinance not listing data centers as an expressly permitted use; that Mayor Elizabeth Davies and Village Board trustees \u201croutinely conduct village business\u201d regarding T5 approvals through personal email accounts and personal devices, in claimed violation of the Illinois Open Meetings Act; that official notices referred to the project only by the \u201cT5@Chicago IV\u201d code name and did not disclose its hyperscale data center character until the final agenda; and that the 2024\u20132025 approvals violated substantive and procedural due process. An initial status hearing is set for October 30, 2026 at 9:00 a.m. in Lake County Courtroom 301. Allegations, not findings.",
+    category: "legal",
+    sourceKey: "scannerLawsuit2026",
+  },
+  {
+    date: "2026-08-19",
+    title: "Village cancels special public comment session, cites social media threats",
+    description:
+      "On Monday, August 17, 2026, the Village of Grayslake announced a special extended public comment session on the T5 project for Thursday evening, August 20, at the University Center of Lake County. On Wednesday, August 19, the Village canceled the session, stating that recent social media posts and other information over the previous 24 hours had raised safety concerns and that area law enforcement agencies had expressed similar concerns. The Village also announced new security measures for future board meetings, including pre-entry screening for attendees and a prohibition on bags, backpacks and similar items inside village hall.",
+    category: "policy",
+    sourceKey: "scannerCancellation2026",
+  },
 ];

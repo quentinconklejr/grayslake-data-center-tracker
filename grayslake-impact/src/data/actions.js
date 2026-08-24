@@ -144,10 +144,22 @@ export const actions = [
     actionType: "Legal Challenge",
     description:
       "Preservation of Community Well-being Collective LLC and nine residents of Grayslake, Mundelein and Round Lake Park filed a complaint for declaratory and injunctive relief against the Village of Grayslake, T5 Data Centers LLC and Alter Asset Management Company. Case No. 2026CH00000171, Chancery Division, file-stamped 6:29 PM. Four counts: ultra vires municipal action, substantive due process and procedural due process under the Illinois Constitution, and the Illinois Open Meetings Act. The complaint asks the court to declare the 2024\u20132025 approvals invalid, void the development agreement, and permanently bar further permits issued in reliance on them. These are allegations; no defendant had answered and no court had ruled.",
-    outcome: "Filed and pending. No ruling on any count.",
+    outcome: "Filed and pending. Initial status hearing set for October 30, 2026 at 9:00 a.m. in Lake County Courtroom 301. No ruling on any count.",
     sourceIds: ["complaint2026", "scannerLawsuit2026"],
     status: "pending",
-    lastVerified: "Aug 10, 2026",
+    lastVerified: "Aug 24, 2026",
+  },
+  {
+    id: "grayslake-special-session-canceled-2026",
+    date: "2026-08-19",
+    jurisdiction: "Village of Grayslake",
+    actionType: "Official Statement",
+    description:
+      "The Village of Grayslake announced on August 17, 2026 a special extended public comment session on the T5 project for the evening of August 20, 2026 at the University Center of Lake County. On August 19, 2026 the Village canceled the session, stating that recent social media posts and other information over the previous 24 hours had raised safety concerns and that area law enforcement agencies had expressed similar concerns. The Village said pre-entry screening for attendees and a prohibition on bags, backpacks and similar items inside village hall would be in place at future board meetings.",
+    outcome: "Session canceled before it was held. New security screening announced for future board meetings.",
+    sourceIds: ["scannerCancellation2026"],
+    status: "complete",
+    lastVerified: "Aug 24, 2026",
   },
   {
     id: "illinois-dceo-incentive-suspension-2026",
