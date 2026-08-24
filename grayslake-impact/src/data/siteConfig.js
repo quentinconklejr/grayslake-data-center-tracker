@@ -1,6 +1,6 @@
 export const SITE_TITLE = 'Grayslake Data Center Tracker'
 
-export const LAST_VERIFIED = 'Aug 10, 2026'
+export const LAST_VERIFIED = 'Aug 24, 2026'
 
 // Email updates. The signup on the homepage always shows a normal email box
 // and a Subscribe button. It needs one credential to actually deliver, and
