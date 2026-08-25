@@ -50,8 +50,8 @@ export function FootnoteList() {
   if (!order.length) return null
 
   return (
-    <div id="footnote-list" className="mt-10 pt-6 border-t border-edge-soft scroll-mt-24">
-      <p className="text-2xs font-mono text-gray-400 uppercase tracking-widest mb-5">Sources</p>
+    <div id="footnote-list" className="mt-12 pt-6 border-t border-rule scroll-mt-24">
+      <p className="text-xs font-display italic text-ink-500 tracking-wide mb-5">Sources</p>
       <ol className="space-y-3">
         {order.map((key, i) => {
           const source = sources[key]
@@ -63,39 +63,39 @@ export function FootnoteList() {
             <li
               key={key}
               id={`fn-${num}`}
-              className={`flex gap-3 scroll-mt-20 rounded-r transition-all duration-150 ${
+              className={`flex gap-3 scroll-mt-20 transition-all duration-150 ${
                 isHighlighted
-                  ? 'bg-blue-50/70 -mx-2 px-2 py-0.5'
+                  ? 'bg-accent-soft -mx-2 px-2 py-0.5'
                   : isDimmed
                   ? 'opacity-35'
                   : ''
               }`}
             >
-              <span className="text-xs font-mono text-gray-400 shrink-0 tabular-nums w-5 text-right pt-px">
+              <span className="text-xs font-mono text-ink-500 shrink-0 tabular-nums w-5 text-right pt-px">
                 {num}.
               </span>
-              <div className="text-xs text-gray-600 leading-relaxed min-w-0">
-                <span className={`font-medium ${isHighlighted ? 'text-gray-900 underline underline-offset-2 decoration-blue-300' : 'text-gray-800'}`}>
+              <div className="text-sm font-sans text-ink-700 leading-relaxed min-w-0">
+                <span className={`font-semibold ${isHighlighted ? 'text-ink-900 underline underline-offset-2 decoration-accent' : 'text-ink-800'}`}>
                   {source.title}
                 </span>
                 {source.publisher && (
-                  <span className="text-gray-500"> · {source.publisher}</span>
+                  <span className="text-ink-500"> · {source.publisher}</span>
                 )}
                 {source.date && (
-                  <span className="text-gray-500"> · {source.date}</span>
+                  <span className="text-ink-500 font-mono"> · {source.date}</span>
                 )}
                 {source.url && source.status !== 'unverified' && (
                   <a
                     href={source.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="ml-1.5 text-blue-600 hover:text-blue-700 transition-colors"
+                    className="ml-1.5 text-accent hover:text-accent-hover transition-colors"
                   >
                     ↗
                   </a>
                 )}
                 {source.note && (
-                  <span className="block text-amber-800 italic mt-0.5">{source.note}</span>
+                  <span className="block text-status-disputed italic mt-0.5">{source.note}</span>
                 )}
               </div>
             </li>
