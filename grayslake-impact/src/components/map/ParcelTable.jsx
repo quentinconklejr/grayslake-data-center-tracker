@@ -1,10 +1,27 @@
 import { useState, useMemo } from 'react'
+import parcelsGeoJSON from '../../data/parcels.geojson'
 
+/*
+ * Recorded parcel directory — presented as a public-records table, not a
+ * dashboard panel. Card wrapper, shadow, and rounded corners are gone;
+ * the table sits directly on the page ground with hairlines above and
+ * below.
+ *
+ * Source attribution has been pulled into the composition rather than
+ * relegated to the map legend. Where a parcel came from and when it was
+ * retrieved is a credibility statement, not chrome; the county source
+ * line reads like the top of a county assessor's printed export.
+ *
+ * Functional behaviour is untouched — filter, sort, Show All, Export
+ * CSV all preserved. Only the chrome around them has been retyped.
+ */
 export default function ParcelTable({ parcels }) {
   const [search, setSearch] = useState('')
   const [sortField, setSortField] = useState('acres')
   const [sortOrder, setSortOrder] = useState('desc')
   const [isExpanded, setIsExpanded] = useState(false)
+
+  const META = parcelsGeoJSON?.metadata ?? {}
 
   const filteredParcels = useMemo(() => {
     return (parcels || [])
@@ -58,97 +75,134 @@ export default function ParcelTable({ parcels }) {
   }
 
   return (
-    <div className="border border-slate-200 rounded-xl bg-white shadow-sm overflow-hidden p-5 space-y-4">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-100">
-        <div>
-          <div className="text-2xs font-mono font-semibold uppercase tracking-wider text-slate-500">
-            GIS Tax Record
-          </div>
-          <h3 className="text-lg font-bold text-slate-900">
-            Recorded Parcel Directory ({filteredParcels.length} Parcels)
+    <section aria-label="Recorded parcel directory" className="border-t border-rule pt-6">
+      {/* ── Table header ─────────────────────────────────────────────
+          Records-style caption: name, filtered totals, retrieval date. */}
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-4">
+        <div className="min-w-0">
+          <h3 className="text-2xl font-display text-ink-900 tracking-tight">
+            Recorded Parcel Directory
           </h3>
-          <p className="text-xs font-mono text-slate-500 mt-0.5">
-            Total Filtered Area: <span className="text-slate-800 font-semibold">{totalAcres} Acres</span>
+          <p className="mt-1 text-sm font-sans text-ink-600">
+            {filteredParcels.length} parcels &middot; <span className="font-mono text-ink-700">{totalAcres}</span> acres filtered
           </p>
         </div>
 
-        {/* Single Right-Aligned Action Bar */}
-        <div className="flex items-center gap-2 shrink-0">
+        <div className="flex items-center gap-5 shrink-0">
           <button
             onClick={handleExportCSV}
-            className="text-xs font-mono font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 px-3 py-2 rounded-lg transition-colors min-h-[44px]"
+            className="text-sm font-sans text-accent hover:text-accent-hover underline underline-offset-4 decoration-rule hover:decoration-accent min-h-[44px]"
           >
             Export CSV
           </button>
           {filteredParcels.length > 10 && !search.trim() && (
             <button
               onClick={() => setIsExpanded(prev => !prev)}
-              className="text-xs font-mono font-semibold text-sky-800 bg-sky-50 hover:bg-sky-100 px-3.5 py-2 rounded-lg border border-sky-200 transition-colors min-h-[44px]"
+              className="text-sm font-sans text-accent hover:text-accent-hover underline underline-offset-4 decoration-rule hover:decoration-accent min-h-[44px]"
             >
-              {isExpanded ? 'Collapse Directory ▲' : `Show All ${filteredParcels.length} Parcels ▼`}
+              {isExpanded ? 'Collapse directory' : `Show all ${filteredParcels.length} parcels`}
             </button>
           )}
         </div>
       </div>
 
-      {/* Search Input */}
-      <div className="relative">
+      {/* ── Search / filter ───────────────────────────────────────────
+          Quiet single-line input with a bottom rule that becomes the
+          accent when focused. No pill, no fill, no leading icon. */}
+      <div className="relative pb-4">
+        <label htmlFor="parcel-filter" className="sr-only">Filter parcels</label>
         <input
+          id="parcel-filter"
           type="text"
           value={search}
           onChange={e => setSearch(e.target.value)}
-          placeholder="Filter by PIN, sale price, or date..."
-          className="w-full text-sm font-sans px-4 py-2.5 pr-10 rounded-lg border border-slate-300 focus:border-sky-600 bg-white text-slate-900 placeholder:text-slate-400 focus:outline-none"
+          placeholder="Filter by PIN, sale price, or date"
+          className="w-full text-sm font-sans px-0 py-2 pr-8 bg-transparent border-0 border-b border-rule text-ink-900 placeholder:text-ink-400 focus:outline-none focus:border-accent focus:ring-0"
         />
         {search && (
           <button
             onClick={() => setSearch('')}
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 font-bold text-sm"
+            aria-label="Clear filter"
+            className="absolute right-0 top-1/2 -translate-y-[calc(50%+8px)] text-ink-400 hover:text-ink-700 font-mono text-base leading-none min-h-[44px] min-w-[44px]"
           >
             ×
           </button>
         )}
       </div>
 
-      {/* Table */}
-      <div className="overflow-x-auto">
-        <table className="w-full text-left border-collapse text-xs font-mono">
+      {/* ── Records table ─────────────────────────────────────────────
+          Full-bleed hairline rules, tabular numerals, PIN as the row
+          header. Zebra uses paper.sunk on the tint side rather than a
+          gray-50 fill, so it reads as tint on paper. */}
+      <div className="overflow-x-auto -mx-4 sm:mx-0">
+        <table className="w-full text-left border-collapse text-sm font-mono">
+          <caption className="sr-only">
+            Recorded parcels showing PIN, acres, recorded sale price, and recorded sale date.
+          </caption>
           <thead>
-            <tr className="border-b border-slate-200 bg-slate-50 text-slate-600 uppercase tracking-wider">
-              <th className="py-2.5 px-3">PIN</th>
-              <th 
-                className="py-2.5 px-3 cursor-pointer hover:text-slate-900"
+            <tr className="border-y border-rule text-ink-700 text-xs font-sans font-semibold uppercase tracking-wide">
+              <th scope="col" className="py-2.5 px-4 sm:px-3">PIN</th>
+              <th
+                scope="col"
+                className="py-2.5 px-4 sm:px-3 cursor-pointer hover:text-ink-900"
                 onClick={() => {
                   setSortField('acres')
                   setSortOrder(prev => (prev === 'asc' ? 'desc' : 'asc'))
                 }}
               >
-                Acres {sortField === 'acres' && (sortOrder === 'asc' ? '↑' : '↓')}
+                Acres <span aria-hidden="true">{sortField === 'acres' ? (sortOrder === 'asc' ? '↑' : '↓') : ''}</span>
               </th>
-              <th className="py-2.5 px-3">Recorded Sale Price</th>
-              <th className="py-2.5 px-3">Sale Date</th>
+              <th scope="col" className="py-2.5 px-4 sm:px-3">Recorded sale price</th>
+              <th scope="col" className="py-2.5 px-4 sm:px-3">Sale date</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-100 text-slate-800">
+          <tbody>
             {displayedParcels.length > 0 ? (
-              displayedParcels.map(p => (
-                <tr key={p.pin} className="hover:bg-slate-50/80 transition-colors">
-                  <td className="py-2.5 px-3 font-bold text-slate-900">{p.pin}</td>
-                  <td className="py-2.5 px-3">{p.acres}</td>
-                  <td className="py-2.5 px-3">{p.salePrice || '—'}</td>
-                  <td className="py-2.5 px-3">{p.date || '—'}</td>
+              displayedParcels.map((p, i) => (
+                <tr key={p.pin} className={i % 2 === 1 ? 'bg-paper-sunk/50' : ''}>
+                  <th scope="row" className="py-2 px-4 sm:px-3 font-mono font-semibold text-ink-900 text-left">
+                    {p.pin}
+                  </th>
+                  <td className="py-2 px-4 sm:px-3 text-ink-700">{p.acres}</td>
+                  <td className="py-2 px-4 sm:px-3 text-ink-700">{p.salePrice || '—'}</td>
+                  <td className="py-2 px-4 sm:px-3 text-ink-700">{p.date || '—'}</td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan={4} className="py-6 text-center text-slate-400">
-                  No matching parcels found for "{search}"
+                <td colSpan={4} className="py-6 text-center text-ink-500 font-sans">
+                  No matching parcels found for &ldquo;{search}&rdquo;
                 </td>
               </tr>
             )}
           </tbody>
         </table>
       </div>
-    </div>
+
+      {/* ── Source attribution ────────────────────────────────────────
+          Deliberately given more weight than in the old design. This is
+          the credibility line — reads like the footer of a county
+          records printout. */}
+      {META.source && (
+        <p className="mt-5 pt-4 border-t border-rule-soft text-sm font-sans text-ink-600 leading-relaxed">
+          <span className="font-semibold text-ink-800">Source: </span>
+          {META.sourceUrl ? (
+            <a href={META.sourceUrl} target="_blank" rel="noopener noreferrer" className="text-accent hover:text-accent-hover underline underline-offset-4 decoration-rule">
+              {META.source}
+            </a>
+          ) : (
+            META.source
+          )}
+          {META.retrieved && (
+            <>
+              . <span className="font-sans">Retrieved <span className="font-mono">{META.retrieved}</span>.</span>
+            </>
+          )}
+          {META.query && (
+            <> Query: <span className="font-mono text-ink-700">{META.query}</span>.</>
+          )}
+        </p>
+      )}
+    </section>
   )
 }
