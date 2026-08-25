@@ -38,13 +38,26 @@ body {
 }
 
 /*
- * Fraunces optical-size axis. Setting font-variation-settings only on the
- * headline face lets the browser interpolate the right optical size
- * automatically at each font-size, so display text stays punchy without
- * over-condensing at reading sizes.
+ * font-optical-sizing: auto is a no-op on the current static Source
+ * Serif 4 instances (they carry no opsz axis) but is retained as a
+ * hedge — if the display face is ever swapped to a variable version,
+ * the axis engages without a code change.
  */
 .font-display {
   font-optical-sizing: auto;
+}
+
+/*
+ * Display headings render at weight 600, not the browser default of 700.
+ * At 600 Source Serif 4 reads as an editorial display face; at 700 it
+ * shades into advocacy voice. Targets only heading elements, so other
+ * font-display uses (italic section labels, small display spans) keep
+ * their intended weight.
+ */
+h1.font-display,
+h2.font-display,
+h3.font-display {
+  font-weight: 600;
 }
 
 /* ── Custom scrollbar ─────────────────────────────────────────────── */
