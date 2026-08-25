@@ -4,10 +4,17 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        // Modern, sleek tech display stack (Inter / System UI)
-        display: ['"Inter"', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'sans-serif'],
-        sans:    ['"Inter"', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'sans-serif'],
-        mono:    ['"JetBrains Mono"', 'ui-monospace', 'Menlo', 'monospace'],
+        // Editorial headline face — variable Fraunces with opsz axis.
+        // Fallback to a system serif so the shape and colour of headlines
+        // approximates the loaded face before it arrives.
+        display: ['"Fraunces"', 'ui-serif', 'Georgia', 'Cambria', '"Times New Roman"', 'serif'],
+        // Workhorse text face. IBM Plex Sans reads as institutional but
+        // not corporate; the fallback stack is what most systems paint if
+        // the woff2 hasn't landed yet.
+        sans:    ['"IBM Plex Sans"', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', 'system-ui', 'sans-serif'],
+        // Data face. Reserved for parcel IDs, dates, coordinates, dollar
+        // figures — never for decorative labels.
+        mono:    ['"IBM Plex Mono"', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Consolas', 'monospace'],
       },
       colors: {
         paper: {
