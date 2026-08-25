@@ -38,7 +38,7 @@ export default function Sources() {
       </header>
 
       {/* Document list */}
-      <ol className="divide-y divide-rule-soft border-y border-rule">
+      <ol className="divide-y divide-rule-strong border-y border-rule">
         {sourceEntries.map(([key, source], i) => {
           const tierCls = TIER[source.tier] ?? TIER.default
           return (

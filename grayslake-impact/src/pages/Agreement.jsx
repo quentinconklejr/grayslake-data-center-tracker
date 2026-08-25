@@ -321,7 +321,7 @@ export default function Agreement() {
             figure is conditional or was described as unfinished, that is noted with it rather than
             below it.
           </p>
-          <div className="divide-y divide-rule-soft border-y border-rule">
+          <div className="divide-y divide-rule-strong border-y border-rule">
             {TERMS.map((t, i) => (
               <div key={t.term} className="py-5">
                 <div className="flex items-start gap-4">
@@ -365,7 +365,7 @@ export default function Agreement() {
             real one.
           </p>
 
-          <div className="divide-y divide-rule-soft border-y border-rule">
+          <div className="divide-y divide-rule-strong border-y border-rule">
             {REVENUE_CLAIMS.map(c => {
               const s = SIDE[c.side]
               return (
@@ -415,11 +415,11 @@ export default function Agreement() {
           <p className="text-base font-sans text-ink-700 mb-5 max-w-prose leading-relaxed">
             These are questions about the deal that no public document currently answers.
           </p>
-          <ul className="grid sm:grid-cols-2 gap-x-8 divide-y divide-rule-soft sm:divide-y-0 border-y border-rule sm:border-t sm:border-b">
+          <ul className="grid sm:grid-cols-2 gap-x-8 divide-y divide-rule-strong sm:divide-y-0 border-y border-rule sm:border-t sm:border-b">
             {UNPUBLISHED.map(item => (
               <li
                 key={item}
-                className="flex items-start gap-3 py-3 sm:border-b sm:border-rule-soft text-sm font-sans text-ink-700 leading-snug"
+                className="flex items-start gap-3 py-3 sm:border-b sm:border-rule-strong text-sm font-sans text-ink-700 leading-snug"
               >
                 <span
                   aria-hidden="true"

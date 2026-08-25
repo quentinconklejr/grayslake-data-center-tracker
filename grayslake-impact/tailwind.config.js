@@ -31,15 +31,71 @@
  *            for text/borders) and .soft (tint for backgrounds). Applied
  *            like a rubber stamp, not like a traffic light.
  *
- * The blue/emerald/amber/violet families defined below are legacy — they
- * exist so lingering utility-class references in un-refactored components
- * continue to render. The purge pass at the end of the refactor removes
- * every use, at which point these families can be deleted.
+ * `theme.colors` is set directly (not via extend), so Tailwind's default
+ * palette — red/orange/yellow/lime/green/teal/cyan/purple/pink/rose/etc.
+ * — is unavailable. Any utility that reaches for one will fail at build
+ * time; that's the point. Only the semantic tokens declared here are in
+ * scope.
  */
 
 export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
+    colors: {
+      // Structural non-colours needed by utilities like bg-transparent.
+      transparent: 'transparent',
+      current:     'currentColor',
+      inherit:     'inherit',
+      white:       '#ffffff',
+      black:       '#000000',
+
+      // Foreground text ─────────────────────────────────────────────
+      ink: {
+        DEFAULT: '#14110f', // 900 — headlines, key figures
+        900: '#14110f',
+        800: '#26221e',
+        700: '#3d372f', // default body text
+        600: '#55504a', // secondary text, block quotes
+        500: '#6b6660', // muted — captions, meta, source lines
+        400: '#9a9590', // subtle — labels, disabled
+      },
+
+      // Backgrounds ─────────────────────────────────────────────────
+      paper: {
+        DEFAULT: '#faf8f4', // warm off-white page ground
+        raised:  '#ffffff', // narrowly scoped elevation
+        sunk:    '#f0ecdf', // subtle tint — zebra, quiet callouts
+      },
+
+      // Hairlines ───────────────────────────────────────────────────
+      rule: {
+        DEFAULT: '#c8bfb0', // visible hairline (decorative section breaks)
+        soft:    '#e6dfd0', // barely-there separator, decorative only — 1.25:1 vs paper, WCAG 1.4.11 exempt as pure decoration
+        strong:  '#8a7f6f', // parsing-work separator: row/cell dividers in records tables, list separators, structural rules — 3.7:1 vs paper, meets WCAG 1.4.11
+      },
+
+      // Interactive accent ──────────────────────────────────────────
+      accent: {
+        DEFAULT: '#1e3a5f', // deep newsprint blue
+        hover:   '#142944', // darker for hover state
+        soft:    '#eaeef4', // tinted background (hover fill, chips)
+      },
+
+      // Status hues ─────────────────────────────────────────────────
+      // Text/border tone and matching soft background tint. Muted on
+      // purpose — they should read as classification, not alert.
+      status: {
+        stated:       { DEFAULT: '#2f6f4a', soft: '#e6f0e6' },
+        disputed:     { DEFAULT: '#8a5a1a', soft: '#f4ecd7' },
+        unknown:      { DEFAULT: '#6b6055', soft: '#ede7db' },
+        approval:     { DEFAULT: '#234b7a', soft: '#e2e9f2' },
+        construction: { DEFAULT: '#2f6f4a', soft: '#e6f0e6' },
+        opposition:   { DEFAULT: '#8a5a1a', soft: '#f4ecd7' },
+        legal:        { DEFAULT: '#8a2820', soft: '#f2dfdc' },
+        development:  { DEFAULT: '#2b5f6b', soft: '#dee9ec' },
+        policy:       { DEFAULT: '#7a5510', soft: '#f0e6cf' },
+      },
+    },
     extend: {
       fontFamily: {
         // Editorial headline face — variable Fraunces with opsz axis.
@@ -53,88 +109,6 @@ export default {
         // Data face. Reserved for parcel IDs, dates, coordinates, dollar
         // figures — never for decorative labels.
         mono:    ['"IBM Plex Mono"', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Consolas', 'monospace'],
-      },
-
-      colors: {
-        // Foreground text ─────────────────────────────────────────────
-        ink: {
-          DEFAULT: '#14110f', // 900 — headlines, key figures
-          900: '#14110f',
-          800: '#26221e',
-          700: '#3d372f', // default body text
-          600: '#55504a', // secondary text, block quotes
-          500: '#75706a', // muted — captions, meta, source lines
-          400: '#9a9590', // subtle — labels, disabled
-        },
-
-        // Backgrounds ─────────────────────────────────────────────────
-        paper: {
-          DEFAULT: '#faf8f4', // warm off-white page ground
-          raised:  '#ffffff', // narrowly scoped elevation
-          sunk:    '#f0ecdf', // subtle tint — zebra, quiet callouts
-        },
-
-        // Hairlines ───────────────────────────────────────────────────
-        rule: {
-          DEFAULT: '#c8bfb0', // visible hairline
-          soft:    '#e6dfd0', // barely-there separator
-          strong:  '#8a7f6f', // emphasized rule
-        },
-
-        // Interactive accent ──────────────────────────────────────────
-        accent: {
-          DEFAULT: '#1e3a5f', // deep newsprint blue
-          hover:   '#142944', // darker for hover state
-          soft:    '#eaeef4', // tinted background (hover fill, chips)
-        },
-
-        // Status hues ─────────────────────────────────────────────────
-        // Text/border tone and matching soft background tint. Muted on
-        // purpose — they should read as classification, not alert.
-        status: {
-          stated:       { DEFAULT: '#2f6f4a', soft: '#e6f0e6' },
-          disputed:     { DEFAULT: '#8a5a1a', soft: '#f4ecd7' },
-          unknown:      { DEFAULT: '#6b6055', soft: '#ede7db' },
-          approval:     { DEFAULT: '#234b7a', soft: '#e2e9f2' },
-          construction: { DEFAULT: '#2f6f4a', soft: '#e6f0e6' },
-          opposition:   { DEFAULT: '#8a5a1a', soft: '#f4ecd7' },
-          legal:        { DEFAULT: '#8a2820', soft: '#f2dfdc' },
-          development:  { DEFAULT: '#2b5f6b', soft: '#dee9ec' },
-          policy:       { DEFAULT: '#7a5510', soft: '#f0e6cf' },
-        },
-
-        // Legacy families — kept until every raw utility use is purged.
-        // Do not add new usages. paper/ink/rule/accent/status above are
-        // the tokens the design system speaks in.
-        edge: {
-          DEFAULT: '#c8bfb0',
-          soft:    '#e6dfd0',
-        },
-        blue: {
-          50:  '#eaeef4',
-          100: '#dbeafe',
-          600: '#1e3a5f',
-          700: '#142944',
-          800: '#0e1e33',
-        },
-        emerald: {
-          50:  '#e6f0e6',
-          100: '#d1fae5',
-          600: '#2f6f4a',
-          700: '#245a3b',
-        },
-        amber: {
-          50:  '#f4ecd7',
-          100: '#fef3c7',
-          600: '#8a5a1a',
-          700: '#6f4914',
-        },
-        violet: {
-          50:  '#eee6f0',
-          100: '#ede9fe',
-          600: '#5a3a7a',
-          700: '#48305f',
-        },
       },
 
       borderRadius: {

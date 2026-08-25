@@ -174,7 +174,7 @@ export default function Actions() {
         <p aria-live="polite" className="sr-only">
           {visible.length} of {actions.length} actions shown
         </p>
-        <div className="divide-y divide-rule-soft border-y border-rule">
+        <div className="divide-y divide-rule-strong border-y border-rule">
           {visible.length === 0 ? (
             <FadeIn>
               <p className="text-sm font-sans text-ink-500 py-12 text-center">No actions on file for this filter.</p>

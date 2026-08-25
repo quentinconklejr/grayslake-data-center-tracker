@@ -57,9 +57,9 @@ export default function TaxImpact({ asSection = false }) {
           </p>
         </div>
 
-        <ul className="grid sm:grid-cols-2 gap-x-10 divide-y divide-rule-soft sm:divide-y-0 border-y border-rule sm:border-t sm:border-b">
+        <ul className="grid sm:grid-cols-2 gap-x-10 divide-y divide-rule-strong sm:divide-y-0 border-y border-rule sm:border-t sm:border-b">
           {taxingDistricts.map(d => (
-            <li key={d.name} className="flex items-center gap-3 py-3 sm:border-b sm:border-rule-soft">
+            <li key={d.name} className="flex items-center gap-3 py-3 sm:border-b sm:border-rule-strong">
               <span
                 aria-hidden="true"
                 className={`shrink-0 w-2 h-2 rounded-full ${d.grayslake ? 'bg-status-approval' : 'bg-status-policy'}`}

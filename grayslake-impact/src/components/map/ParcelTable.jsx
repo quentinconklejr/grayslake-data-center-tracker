@@ -130,10 +130,8 @@ export default function ParcelTable({ parcels }) {
         )}
       </div>
 
-      {/* ── Records table ─────────────────────────────────────────────
-          Full-bleed hairline rules, tabular numerals, PIN as the row
-          header. Zebra uses paper.sunk on the tint side rather than a
-          gray-50 fill, so it reads as tint on paper. */}
+      {/* Records table — hairline rules, tabular numerals, PIN as the
+          row header, paper-sunk on zebra rows. */}
       <div className="overflow-x-auto -mx-4 sm:mx-0">
         <table className="w-full text-left border-collapse text-sm font-mono">
           <caption className="sr-only">
