@@ -127,7 +127,7 @@ export default function Schools({ asSection = false }) {
           </div>
           <p className="text-2xs font-mono text-ink-500 mb-4">Capitol News Illinois reporting · 2025</p>
 
-          <dl className="mb-5 divide-y divide-rule-soft border-y border-rule">
+          <dl className="mb-5 divide-y divide-rule-strong border-y border-rule">
             {[
               ['Facility',                meta.source],
               ['One-facility tax (2025)', `$${meta.totalPropertyTaxBilled2025}M billed`],

@@ -86,7 +86,7 @@ export default function Reporters() {
         </header>
 
         {/* Fact briefing list */}
-        <div className="divide-y divide-rule-soft border-y border-rule">
+        <div className="divide-y divide-rule-strong border-y border-rule">
           {PRESS_FACTS.map(({ topic, stat, citation }) => (
             <div key={topic} className="py-6">
               <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-3">

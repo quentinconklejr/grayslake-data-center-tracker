@@ -80,7 +80,7 @@ export default function KeyFigureList({ figures, variant = 'table', groups = nul
   }
 
   return (
-    <div className="divide-y divide-rule-soft border-t border-b border-rule">
+    <div className="divide-y divide-rule-strong border-t border-b border-rule">
       {figures.map(f => (
         <div key={f.id} className="grid sm:grid-cols-5 gap-2 sm:gap-8 py-5">
           <div className="sm:col-span-2">

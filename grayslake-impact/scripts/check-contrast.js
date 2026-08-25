@@ -44,7 +44,9 @@ const ratio = (a, b) => {
 const cfgPath = join(ROOT, 'tailwind.config.js')
 const cfgUrl  = 'file://' + cfgPath.replace(/\\/g, '/')
 const { default: cfg } = await import(cfgUrl)
-const COLORS = cfg.theme.extend.colors
+// Colours live at theme.colors (replacing Tailwind defaults), not
+// theme.extend.colors. Fall back to extend for backward compatibility.
+const COLORS = cfg.theme.colors ?? cfg.theme.extend?.colors ?? {}
 
 // Flatten: { 'ink-900': '#hex', 'ink': '#hex' (DEFAULT), 'status-stated-soft': '#hex' }
 const PALETTE = {}

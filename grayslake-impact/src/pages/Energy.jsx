@@ -63,7 +63,7 @@ export default function Energy({ asSection = false }) {
       <FadeIn className="mb-10 border-t border-rule pt-6">
         <p className="text-xs font-display italic text-ink-500 tracking-wide mb-2">Capacity Metric Definitions</p>
         <p className="text-base font-sans text-ink-700 mb-6 max-w-prose leading-relaxed">{capacityNote}</p>
-        <div className="divide-y divide-rule-soft border-y border-rule">
+        <div className="divide-y divide-rule-strong border-y border-rule">
           {capacityFigures.map(f => (
             <div key={f.key} className="py-4">
               <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1 mb-1.5">
@@ -134,7 +134,7 @@ export default function Energy({ asSection = false }) {
 
         <FadeIn delay={0.08} className="border-t border-rule pt-6">
           <p className="text-xs font-display italic text-ink-500 tracking-wide mb-4">Technical Infrastructure Specifications</p>
-          <dl className="divide-y divide-rule-soft">
+          <dl className="divide-y divide-rule-strong">
             {[
               ['Secured Power',            `${project.securedPowerMW.toLocaleString()} MW`,  'dcdGW2026'],
               ['Leasable IT Capacity',     `${project.totalCapacityMW.toLocaleString()} MW`, 'dcdGW2026'],

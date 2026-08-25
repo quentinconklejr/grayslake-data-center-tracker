@@ -112,7 +112,13 @@ export default function Home() {
               </p>
             </div>
             <div className="hidden sm:block self-stretch w-px bg-rule mx-auto" aria-hidden="true" />
-            <hr className="sm:hidden border-0 border-t border-rule-soft" aria-hidden="true" />
+            {/* Mobile separator between $8.5B and $18B. This rule carries the
+                "two competing estimates, not a range" reading when the two
+                figures stack. Must remain visible — rule-strong, not
+                rule-soft — or the two numbers read as one continuous stat
+                and the editorial point of the block collapses. Do not
+                degrade to hairline in any future sweep. */}
+            <hr className="sm:hidden border-0 border-t border-rule-strong" aria-hidden="true" />
             <div>
               <p className="text-5xl sm:text-6xl font-display text-ink-900 leading-none tracking-[-0.03em]">
                 $18B
@@ -132,14 +138,11 @@ export default function Home() {
           </p>
         </section>
 
-        {/* ── Secondary figures — records grid ─────────────────────────
-            Kill the five slate-50 tiles. Present as a five-column
-            records grid on wide screens, stacked with hairlines on
-            mobile. Label in the text face at reading size; figure in
-            the data face at display size for tabular alignment. Every
-            note string carried through unchanged. */}
+        {/* Five-column records grid on wide screens, stacked on mobile.
+            Every note string is passed through unchanged from
+            SECONDARY_STATS. */}
         <section aria-label="Project figures" className="border-t border-rule pt-8">
-          <dl className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 divide-y divide-rule-soft sm:divide-y-0 sm:divide-x sm:divide-rule-soft">
+          <dl className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 divide-y divide-rule-strong sm:divide-y-0 sm:divide-x sm:divide-rule-strong">
             {SECONDARY_STATS.map(({ label, numValue, suffix = '', value, note }, i) => (
               <div key={label} className={`py-5 ${i === 0 ? 'sm:pl-0' : 'sm:pl-5'} sm:pr-5`}>
                 <dt className="text-xs font-sans font-semibold text-ink-600">

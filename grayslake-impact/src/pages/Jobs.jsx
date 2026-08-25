@@ -129,7 +129,7 @@ export default function Jobs({ asSection = false }) {
       <div className="grid md:grid-cols-2 gap-x-10 gap-y-8">
         <FadeIn className="border-t border-rule pt-6">
           <p className="text-xs font-display italic text-ink-500 tracking-wide mb-4">Permanent Operational Roles</p>
-          <dl className="divide-y divide-rule-soft">
+          <dl className="divide-y divide-rule-strong">
             {PERM_ROLES.map(([role, desc]) => (
               <div key={role} className="py-3">
                 <dt className="text-base font-sans font-semibold text-ink-900">{role}</dt>

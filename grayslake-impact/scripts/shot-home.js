@@ -1,8 +1,6 @@
-/*
- * Full-page screenshots of the Home page at three viewport widths, for
- * visual verification during the design refactor. Not part of the normal
- * build; run manually from the repo root while the dev server is up.
- */
+// Produced the 375 / 768 / 1440 Home screenshots used at every step of
+// the refactor to verify layout, hero composition, and stat-grid
+// stacking as tokens changed. Run manually against the dev server.
 import { chromium } from 'playwright'
 import { mkdirSync } from 'fs'
 

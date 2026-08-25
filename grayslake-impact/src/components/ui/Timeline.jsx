@@ -137,7 +137,7 @@ export default function Timeline({ events = [], proportional = false }) {
               )}
               <div
                 className={`relative flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-4 group py-4 pl-9 hover:bg-paper-sunk/40 transition-colors duration-100 ${
-                  !proportional && i < sorted.length - 1 ? 'border-b border-rule-soft' : ''
+                  !proportional && i < sorted.length - 1 ? 'border-b border-rule-strong' : ''
                 }`}
               >
                 {/* Dot on spine */}

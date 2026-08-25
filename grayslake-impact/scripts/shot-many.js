@@ -1,7 +1,6 @@
-/*
- * Screenshot several routes at three widths for visual verification of
- * the design refactor. Not part of the normal build.
- */
+// Produced the whole-site screenshot sweep used to sign off the page
+// refactors — Project, Agreement, Questions, Timeline, Documents, Map,
+// About, Actions, Figures — at 375 and 1440.
 import { chromium } from 'playwright'
 import { mkdirSync } from 'fs'
 
