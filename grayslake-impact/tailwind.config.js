@@ -98,10 +98,12 @@ export default {
     },
     extend: {
       fontFamily: {
-        // Editorial headline face — variable Fraunces with opsz axis.
-        // Fallback to a system serif so the shape and colour of headlines
-        // approximates the loaded face before it arrives.
-        display: ['"Fraunces"', 'ui-serif', 'Georgia', 'Cambria', '"Times New Roman"', 'serif'],
+        // Editorial headline face — Source Serif 4, static 400 + 600.
+        // Adobe's editorial workhorse; sturdy at display sizes, quieter
+        // than Fraunces. Fallback to a system serif so the shape and
+        // colour of headlines approximates the loaded face before it
+        // arrives.
+        display: ['"Source Serif 4"', 'ui-serif', 'Georgia', 'Cambria', '"Times New Roman"', 'serif'],
         // Workhorse text face. IBM Plex Sans reads as institutional but
         // not corporate; the fallback stack is what most systems paint if
         // the woff2 hasn't landed yet.
