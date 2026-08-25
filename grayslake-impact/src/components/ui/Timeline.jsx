@@ -54,7 +54,7 @@ const PROP_HEIGHT = 700
 const GAP_THRESHOLD_PX = 80
 
 export default function Timeline({ events = [], proportional = false }) {
-  if (!events.length) return <p className="text-gray-400 text-sm py-12 text-center">No events loaded.</p>
+  if (!events.length) return <p className="text-ink-500 text-sm font-sans py-12 text-center">No events loaded.</p>
 
   // Sorted here rather than trusting the order of the data file, which had
   // drifted: a June 26 entry sat above a June 9 one. The proportional view

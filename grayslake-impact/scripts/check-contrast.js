@@ -1,16 +1,23 @@
 /**
- * WCAG 2.1 contrast audit computed directly from tailwind.config.js.
+ * WCAG 2.1 contrast audit for the semantic token layer.
  *
  *   npm run check-contrast
  *
- * No browser needed: contrast is pure arithmetic on the hex values, so this is
- * exact rather than sampled. Checks every text colour actually used in the
- * source against the background it sits on.
+ * Contrast is computed directly from the hex values declared in
+ * tailwind.config.js. No browser needed — the math is exact rather than
+ * sampled. Checks every text colour actually used in the source against
+ * every background it can land on.
  *
- * AA thresholds: 4.5:1 normal text, 3:1 large text (>=24px, or >=18.66px bold)
- * and non-text UI. The site's `2xs` scale is 10px, so everything at that size
- * is normal text and needs 4.5 — that is where citation and caption metadata
- * lives, which is exactly the text a reporter needs to read.
+ * AA thresholds: 4.5:1 normal text, 3:1 large text (>=24px, or >=18.66px
+ * bold) and non-text UI. The site's `2xs` scale is 12.5px, so everything
+ * at that size is normal text and needs 4.5 — that is where citation and
+ * caption metadata lives.
+ *
+ * Semantic tokens shape:
+ *   text-{family}                 (uses DEFAULT)
+ *   text-{family}-{shade}         (uses named shade, e.g. ink-500)
+ *   text-{family}-{sub}           (nested groups, e.g. status-stated)
+ *   text-{family}-{sub}-{shade}   (nested groups w/ shade, e.g. paper-sunk)
  */
 import { readFileSync, readdirSync, statSync } from 'node:fs'
 import { dirname, join, resolve } from 'node:path'
@@ -18,6 +25,7 @@ import { fileURLToPath } from 'node:url'
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 
+// ── Colour math ──────────────────────────────────────────────────────
 const srgb = c => { c /= 255; return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4 }
 const lum = hex => {
   const h = hex.replace('#', '')
@@ -30,33 +38,29 @@ const ratio = (a, b) => {
   return (x + 0.05) / (y + 0.05)
 }
 
-// Palette, parsed from the config rather than retyped
-const cfg = readFileSync(join(ROOT, 'tailwind.config.js'), 'utf8')
+// ── Parse the semantic palette from tailwind.config.js ───────────────
+// The config file is JS not JSON, so eval its default export in a
+// controlled way rather than trying to regex-match nested braces.
+const cfgPath = join(ROOT, 'tailwind.config.js')
+const cfgUrl  = 'file://' + cfgPath.replace(/\\/g, '/')
+const { default: cfg } = await import(cfgUrl)
+const COLORS = cfg.theme.extend.colors
+
+// Flatten: { 'ink-900': '#hex', 'ink': '#hex' (DEFAULT), 'status-stated-soft': '#hex' }
 const PALETTE = {}
-const FAMILIES = ['gray', 'blue', 'emerald', 'amber', 'red', 'violet', 'sky', 'cyan', 'purple', 'orange']
-for (const family of FAMILIES) {
-  // Anchor on the family key so the enclosing `colors: {` block is not itself
-  // read as a family, which silently dropped the entire grey ramp.
-  const block = cfg.match(new RegExp(`\\b${family}:\\s*\\{([\\s\\S]*?)\\n\\s*\\},`))
-  if (!block) continue
-  for (const [, shade, hex] of block[1].matchAll(/(\d+):\s*'(#[0-9a-fA-F]{3,6})'/g)) {
-    PALETTE[`${family}-${shade}`] = hex
+function flatten(obj, prefix) {
+  if (typeof obj === 'string') {
+    PALETTE[prefix] = obj
+    return
+  }
+  for (const [k, v] of Object.entries(obj)) {
+    if (k === 'DEFAULT') { PALETTE[prefix] = v; continue }
+    flatten(v, prefix ? `${prefix}-${k}` : k)
   }
 }
-const WHITE = '#ffffff'
+for (const [family, val] of Object.entries(COLORS)) flatten(val, family)
 
-// Backgrounds a text colour can land on in this design
-const BACKGROUNDS = Object.fromEntries(
-  Object.entries({
-    white: WHITE,
-    'gray-50': PALETTE['gray-50'],
-    'blue-50': PALETTE['blue-50'],
-    'amber-50': PALETTE['amber-50'],
-    'emerald-50': PALETTE['emerald-50'],
-  }).filter(([, hex]) => Boolean(hex)),
-)
-
-// Which text colours are actually used, and at what size
+// ── Walk source ──────────────────────────────────────────────────────
 function walk(dir, out = []) {
   for (const f of readdirSync(dir)) {
     const p = join(dir, f)
@@ -67,73 +71,87 @@ function walk(dir, out = []) {
 }
 const files = walk(join(ROOT, 'src'))
 
-// Files that paint onto a dark surface. Their text is checked against that
-// surface, not white, so light-on-dark stops reporting as a failure.
-const DARK_SURFACE = /className="[^"]*bg-(?:gray|slate)-(?:800|900|950)\b/
-const darkFiles = new Set(
-  files.filter(f => DARK_SURFACE.test(readFileSync(f, 'utf8'))).map(f => f.replace(ROOT + '/', '')),
-)
+// Tokens that describe a paper-coloured foreground painted on a dark
+// or coloured surface — text-paper on bg-accent, text-paper on bg-ink-900,
+// text-paper-sunk on bg-ink-900, etc. These are exempt from the paper-
+// background contrast check because the check would false-flag a light
+// text colour that is actually landing on a dark button or a dark bar.
+const PAPER_ON_DARK = new Set(['paper', 'paper-raised', 'paper-sunk'])
+
+// text-{token} usages. Token is any dash-joined string of word characters
+// following text- that resolves in PALETTE. aria-hidden and inline-annotated
+// decorative colours are exempt from contrast (WCAG 1.4.3).
+const TOKEN_RE = /\btext-([a-z][a-z0-9]*(?:-[a-z0-9]+)*)\b/g
+
 const usage = new Map() // token -> Set of files
 for (const f of files) {
   const src = readFileSync(f, 'utf8')
-  // Split on element boundaries so an aria-hidden attribute can be associated
-  // with the class list it sits beside. Decorative content is exempt from
-  // contrast (WCAG 1.4.3) but only if it is genuinely hidden from assistive
-  // technology, so that is what we test for rather than assuming.
-  // Lines explicitly annotated as decoration, for colours defined in config
-  // arrays away from the element that carries aria-hidden.
+
+  // Colours annotated as decoration elsewhere in the file (e.g. inside a
+  // config array away from the element that carries aria-hidden).
   const annotated = new Set()
   for (const line of src.split('\n')) {
     if (!/decorative \(aria-hidden\)/.test(line)) continue
-    for (const [, t] of line.matchAll(/\btext-((?:gray|blue|amber|emerald|red|violet|sky|cyan|purple|orange)-\d{2,3})\b/g)) annotated.add(t)
+    for (const [, t] of line.matchAll(TOKEN_RE)) annotated.add(t)
   }
+
   for (const el of src.split('<')) {
     const decorative = /aria-hidden=["{]?true/.test(el.slice(0, 400))
-    for (const [, token] of el.matchAll(/\btext-((?:gray|blue|amber|emerald|red|violet|sky|cyan|purple|orange)-\d{2,3})\b/g)) {
+    for (const [, token] of el.matchAll(TOKEN_RE)) {
+      if (!PALETTE[token]) continue
       if (decorative || annotated.has(token)) continue
       if (!usage.has(token)) usage.set(token, new Set())
-      usage.get(token).add(f.replace(ROOT + '/', ''))
+      usage.get(token).add(f.replace(ROOT + '/', '').replace(ROOT + '\\', ''))
     }
   }
 }
 
-// Small text (2xs/xs) demands 4.5 regardless of weight — 10px and 12px here
-const SMALL_TEXT_TOKENS = new Set()
-for (const f of files) {
-  const src = readFileSync(f, 'utf8')
-  for (const [, cls] of src.matchAll(/className="([^"]*text-2xs[^"]*)"/g)) {
-    for (const [, t] of cls.matchAll(/text-((?:gray|blue|amber|emerald)-\d{2,3})/g)) SMALL_TEXT_TOKENS.add(t)
-  }
+// ── Backgrounds text can land on ─────────────────────────────────────
+const BACKGROUNDS = {
+  'paper':         PALETTE['paper'],          // #faf8f4
+  'paper-raised':  PALETTE['paper-raised'],   // #ffffff
+  'paper-sunk':    PALETTE['paper-sunk'],     // #f0ecdf
+  'accent-soft':   PALETTE['accent-soft'],    // hover fill for links
+  // Status-hue soft backgrounds — evidence blocks, timeline chips, etc.
+  ...Object.fromEntries(
+    Object.entries(PALETTE)
+      .filter(([k]) => k.startsWith('status-') && k.endsWith('-soft'))
+  ),
 }
 
+// ── Compute pairs ────────────────────────────────────────────────────
+const rows  = []
 const fails = []
-const rows = []
 for (const [token, where] of [...usage].sort()) {
   const hex = PALETTE[token]
   if (!hex) continue
+  // paper-* tokens are always foregrounds on dark/coloured surfaces
+  // (buttons, dark bars, map overlays). They're never intended to land
+  // on paper — skip the paper-background contrast check for them.
+  const isPaperFg = PAPER_ON_DARK.has(token)
   for (const [bgName, bgHex] of Object.entries(BACKGROUNDS)) {
+    if (!bgHex) continue
     const r = ratio(hex, bgHex)
-    const small = SMALL_TEXT_TOKENS.has(token)
-    const need = 4.5 // all body/caption text on this site is < 24px
-    const pass = r >= need
-    rows.push({ token, hex, bg: bgName, r: +r.toFixed(2), need, pass, small, files: [...where].length })
-    const lightOnly = [...where].filter(w => !darkFiles.has(w))
-    if (!pass && (bgName === 'white' || bgName === 'gray-50') && lightOnly.length) {
-      fails.push({ token, hex, bg: bgName, r: +r.toFixed(2), small, where: lightOnly })
+    const pass = r >= 4.5
+    rows.push({ token, hex, bg: bgName, r: +r.toFixed(2), pass, files: [...where].length })
+    if (!pass && !isPaperFg && (bgName === 'paper' || bgName === 'paper-raised')) {
+      fails.push({ token, hex, bg: bgName, r: +r.toFixed(2), where: [...where] })
     }
   }
 }
 
-console.log('token          hex       vs white  vs gray-50   used in')
-console.log('-'.repeat(66))
+// ── Report ───────────────────────────────────────────────────────────
+console.log('token                     hex       vs paper  vs raised  vs sunk   used in')
+console.log('-'.repeat(88))
 const seen = new Set()
 for (const row of rows) {
-  if (row.bg !== 'white' || seen.has(row.token)) continue
+  if (row.bg !== 'paper' || seen.has(row.token)) continue
   seen.add(row.token)
-  const g50 = rows.find(x => x.token === row.token && x.bg === 'gray-50')
+  const raised = rows.find(x => x.token === row.token && x.bg === 'paper-raised')
+  const sunk   = rows.find(x => x.token === row.token && x.bg === 'paper-sunk')
   const mark = row.pass ? ' ' : '!'
   console.log(
-    `${mark} ${row.token.padEnd(12)} ${row.hex}  ${String(row.r).padStart(5)}     ${String(g50?.r ?? '-').padStart(5)}      ${row.files} file(s)`,
+    `${mark} ${row.token.padEnd(24)} ${row.hex}  ${String(row.r).padStart(5)}     ${String(raised?.r ?? '-').padStart(5)}      ${String(sunk?.r ?? '-').padStart(5)}     ${row.files} file(s)`,
   )
 }
 
@@ -146,4 +164,4 @@ if (fails.length) {
   }
   process.exit(1)
 }
-console.log('\nPASS — every text colour in use meets 4.5:1 on white and gray-50')
+console.log('\nPASS — every text colour in use meets 4.5:1 on paper and paper-raised')
