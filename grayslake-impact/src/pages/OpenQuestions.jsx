@@ -1,18 +1,18 @@
 import { useState } from 'react'
 import PageTitle from '../components/ui/PageTitle'
+import Container from '../components/layout/Container'
 import { pageMeta } from '../data/pageMeta'
 import { questions } from '../data/questions'
 import ItemCitations from '../components/ui/ItemCitations'
 import { FootnoteProvider, FootnoteList } from '../components/ui/FootnoteContext'
 
-const COLOR_ACCENTS = [
-  'border-l-sky-500 hover:border-sky-600',
-  'border-l-emerald-500 hover:border-emerald-600',
-  'border-l-amber-500 hover:border-amber-600',
-  'border-l-violet-500 hover:border-violet-600',
-  'border-l-indigo-500 hover:border-indigo-600',
-  'border-l-teal-500 hover:border-teal-600',
-]
+/*
+ * Frequently-asked questions, each collapsed into an accordion row on
+ * paper ground. The old design gave every row a colored left-rule chosen
+ * from a rotating 6-hue palette; the retype drops that decoration —
+ * questions are peers and don't need color-coding. A single hairline
+ * top-rule per row supplies the visual separation.
+ */
 
 export default function OpenQuestions() {
   const [openIds, setOpenIds] = useState([]) // All start collapsed
@@ -25,73 +25,70 @@ export default function OpenQuestions() {
 
   return (
     <FootnoteProvider>
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 py-10 space-y-8">
-        <PageTitle 
-          title={pageMeta['/questions']?.title || 'Open Questions'} 
-          description={pageMeta['/questions']?.description || ''} 
-          ogImage={pageMeta['/questions']?.ogImage || ''} 
+      <Container size="default" className="py-10 sm:py-14 space-y-10">
+        <PageTitle
+          title={pageMeta['/questions']?.title || 'Open Questions'}
+          description={pageMeta['/questions']?.description || ''}
+          ogImage={pageMeta['/questions']?.ogImage || ''}
         />
 
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-6">
-          <div>
-            <div className="text-2xs font-mono font-bold uppercase tracking-widest text-sky-800 mb-1">
-              Resident & Journalist Guide
-            </div>
-            <h1 className="text-3xl font-display font-extrabold text-slate-900 tracking-tight">
+        <header className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-rule pb-8">
+          <div className="max-w-2xl">
+            <p className="text-xs font-display italic text-ink-500 tracking-wide mb-2">
+              Resident &amp; Journalist Guide
+            </p>
+            <h1 className="text-4xl sm:text-5xl font-display text-ink-900 tracking-tight leading-[1.05]">
               Frequently Asked Questions
             </h1>
-            <p className="text-sm font-sans text-slate-600 max-w-2xl mt-1">
+            <p className="text-base font-sans text-ink-700 mt-3 leading-relaxed">
               Water draw, power capacity, noise, taxes, and zoning approvals answered with public records.
             </p>
           </div>
 
           <button
             onClick={() => setOpenIds(allOpen ? [] : questions.map(q => q.id))}
-            className="text-xs font-mono font-bold text-sky-800 bg-sky-50 hover:bg-sky-100 px-4 py-2.5 rounded-xl border border-sky-200 transition-colors shrink-0"
+            className="text-sm font-sans text-accent hover:text-accent-hover underline underline-offset-4 decoration-rule hover:decoration-accent shrink-0 min-h-[44px]"
           >
-            {allOpen ? 'Collapse All ▲' : 'Expand All ▼'}
+            {allOpen ? 'Collapse all' : 'Expand all'}
           </button>
-        </div>
+        </header>
 
-        {/* Questions Accordion List */}
-        <div className="space-y-4">
-          {questions.map((q, idx) => {
+        {/* Questions accordion list */}
+        <div>
+          {questions.map(q => {
             const isOpen = openIds.includes(q.id)
-            const accent = COLOR_ACCENTS[idx % COLOR_ACCENTS.length]
             return (
-              <div 
-                key={q.id} 
-                className={`border-l-4 border-y border-r border-slate-200 rounded-r-xl rounded-l-sm bg-white shadow-sm overflow-hidden transition-all ${accent}`}
-              >
+              <div key={q.id} className="border-t border-rule">
                 <button
                   onClick={() => toggle(q.id)}
-                  className="w-full text-left px-6 py-5 flex items-center justify-between gap-4 hover:bg-slate-50 transition-colors"
+                  aria-expanded={isOpen}
+                  className="w-full text-left py-5 sm:py-6 flex items-start justify-between gap-4 hover:bg-paper-sunk/40 transition-colors"
                 >
-                  <h2 className="text-lg sm:text-xl font-display font-extrabold text-slate-900 leading-snug">
+                  <h2 className="text-xl sm:text-2xl font-display text-ink-900 leading-snug">
                     {q.question}
                   </h2>
-                  <span className="text-slate-400 font-mono text-base font-bold shrink-0">
-                    {isOpen ? '▲' : '▼'}
+                  <span aria-hidden="true" className="text-ink-400 font-mono text-lg shrink-0 pt-1">
+                    {isOpen ? '−' : '+'}
                   </span>
                 </button>
 
                 {isOpen && (
-                  <div className="px-6 pb-6 pt-2 border-t border-slate-100 space-y-4 text-sm font-sans text-slate-700">
+                  <div className="pl-0 sm:pl-8 pb-6 pt-2 space-y-5 text-base font-sans text-ink-700">
                     {q.plain && (
-                      <div className="p-4 bg-slate-50 rounded-xl border border-slate-200/80 leading-relaxed text-slate-800">
-                        <strong className="block text-2xs font-mono uppercase tracking-wider text-sky-900 mb-1 font-bold">
+                      <aside className="border-l-[3px] border-status-approval bg-status-approval-soft pl-5 py-3 pr-4 leading-relaxed text-ink-800">
+                        <p className="text-xs font-display italic text-status-approval mb-1">
                           Plain Language Summary
-                        </strong>
+                        </p>
                         {q.plain}
-                      </div>
+                      </aside>
                     )}
 
                     {q.stated && q.stated.length > 0 && (
                       <div>
-                        <h4 className="text-2xs font-mono uppercase tracking-wider text-emerald-800 font-bold mb-2">
-                          Stated Public Record & Official Filings
-                        </h4>
-                        <ul className="space-y-2.5 pl-4 list-disc marker:text-emerald-500">
+                        <p className="text-xs font-display italic text-status-stated tracking-wide mb-2">
+                          Stated Public Record &amp; Official Filings
+                        </p>
+                        <ul className="space-y-2 pl-5 list-disc marker:text-status-stated">
                           {q.stated.map((item, i) => (
                             <li key={i} className="leading-relaxed">
                               {item.text} <ItemCitations item={item} />
@@ -103,13 +100,13 @@ export default function OpenQuestions() {
 
                     {q.disputed && q.disputed.length > 0 && (
                       <div>
-                        <h4 className="text-2xs font-mono uppercase tracking-wider text-amber-800 font-bold mb-2">
+                        <p className="text-xs font-display italic text-status-disputed tracking-wide mb-2">
                           Contested / Disputed Claims
-                        </h4>
-                        <ul className="space-y-2.5 pl-4 list-disc marker:text-amber-500">
+                        </p>
+                        <ul className="space-y-2 pl-5 list-disc marker:text-status-disputed">
                           {q.disputed.map((item, i) => (
                             <li key={i} className="leading-relaxed">
-                              {item.text} <ItemCitations item={i} />
+                              {item.text} <ItemCitations item={item} />
                             </li>
                           ))}
                         </ul>
@@ -118,13 +115,13 @@ export default function OpenQuestions() {
 
                     {q.unknown && q.unknown.length > 0 && (
                       <div>
-                        <h4 className="text-2xs font-mono uppercase tracking-wider text-slate-500 font-bold mb-2">
+                        <p className="text-xs font-display italic text-status-unknown tracking-wide mb-2">
                           Unanswered in Public Filings
-                        </h4>
-                        <ul className="space-y-2 pl-4 list-disc marker:text-slate-400">
+                        </p>
+                        <ul className="space-y-2 pl-5 list-disc marker:text-status-unknown">
                           {q.unknown.map((item, i) => (
-                            <li key={i} className="leading-relaxed text-slate-600">
-                              {item.text} <ItemCitations item={i} />
+                            <li key={i} className="leading-relaxed text-ink-600">
+                              {item.text} <ItemCitations item={item} />
                             </li>
                           ))}
                         </ul>
@@ -135,10 +132,11 @@ export default function OpenQuestions() {
               </div>
             )
           })}
+          <div className="border-t border-rule" />
         </div>
 
         <FootnoteList />
-      </div>
+      </Container>
     </FootnoteProvider>
   )
 }

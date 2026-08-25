@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import PageTitle from '../components/ui/PageTitle'
 import BackToTop from '../components/ui/BackToTop'
+import Container from '../components/layout/Container'
 import { pageMeta } from '../data/pageMeta'
 import FadeIn from '../components/ui/FadeIn'
 import SourceCitation from '../components/ui/SourceCitation'
@@ -9,8 +10,12 @@ import { FootnoteProvider, FootnoteList } from '../components/ui/FootnoteContext
 import { actions } from '../data/actions'
 import { LAST_VERIFIED } from '../data/siteConfig'
 
-// Jurisdiction filter options — all supported jurisdictions appear even if
-// no entries exist for them yet, so the filter communicates coverage scope.
+/*
+ * Jurisdictional actions record. Filter chips are the neutral variant of
+ * the site's segmented control (dark active / bordered inactive), so a
+ * dozen jurisdictions don't pull a dozen extra colours into the palette.
+ */
+
 const JURISDICTIONS = [
   'Village of Grayslake',
   '19th Judicial Circuit Court',
@@ -25,33 +30,6 @@ const JURISDICTIONS = [
 ]
 
 const ACTION_TYPES = [...new Set(actions.map(a => a.actionType))].sort()
-
-const JURI_COLORS = {
-  'Village of Grayslake':                  { active: 'text-blue-700 bg-blue-50 border-blue-300',    inactive: 'text-gray-500 border-edge-soft hover:text-blue-700 hover:border-blue-300' },
-  // Red for the court, matching the 'legal' colour the timeline already uses.
-  '19th Judicial Circuit Court':           { active: 'text-red-700 bg-red-50 border-red-300',      inactive: 'text-gray-500 border-edge-soft hover:text-red-700 hover:border-red-300' },
-  'Residents & Opposition Coalition':      { active: 'text-rose-700 bg-rose-50 border-rose-300',   inactive: 'text-gray-500 border-edge-soft hover:text-rose-700 hover:border-rose-300' },
-  'Lake County Board':                     { active: 'text-violet-700 bg-violet-50 border-violet-300', inactive: 'text-gray-500 border-edge-soft hover:text-violet-700 hover:border-violet-300' },
-  'Lake County Zoning Board of Appeals':   { active: 'text-purple-700 bg-purple-50 border-purple-300', inactive: 'text-gray-500 border-edge-soft hover:text-purple-700 hover:border-purple-300' },
-  'Lake County SMC':                       { active: 'text-cyan-700 bg-cyan-50 border-cyan-300',    inactive: 'text-gray-500 border-edge-soft hover:text-cyan-700 hover:border-cyan-300' },
-  'Avon Township':                         { active: 'text-amber-700 bg-amber-50 border-amber-300', inactive: 'text-gray-500 border-edge-soft hover:text-amber-700 hover:border-amber-300' },
-  'US Army Corps of Engineers':            { active: 'text-emerald-700 bg-emerald-50 border-emerald-300', inactive: 'text-gray-500 border-edge-soft hover:text-emerald-700 hover:border-emerald-300' },
-  'ComEd/PJM':                             { active: 'text-orange-700 bg-orange-50 border-orange-300', inactive: 'text-gray-500 border-edge-soft hover:text-orange-700 hover:border-orange-300' },
-  'State of Illinois':                     { active: 'text-gray-700 bg-gray-100 border-gray-400',  inactive: 'text-gray-500 border-edge-soft hover:text-gray-700 hover:border-gray-400' },
-}
-
-const JURI_BADGE = {
-  'Village of Grayslake':                'text-blue-700 bg-blue-50 border-blue-200',
-  '19th Judicial Circuit Court':         'text-red-700 bg-red-50 border-red-200',
-  'Residents & Opposition Coalition':    'text-rose-700 bg-rose-50 border-rose-200',
-  'Lake County Board':                   'text-violet-700 bg-violet-50 border-violet-200',
-  'Lake County Zoning Board of Appeals': 'text-purple-700 bg-purple-50 border-purple-200',
-  'Lake County SMC':                     'text-cyan-700 bg-cyan-50 border-cyan-200',
-  'Avon Township':                       'text-amber-700 bg-amber-50 border-amber-200',
-  'US Army Corps of Engineers':          'text-emerald-700 bg-emerald-50 border-emerald-200',
-  'ComEd/PJM':                           'text-orange-700 bg-orange-50 border-orange-200',
-  'State of Illinois':                   'text-gray-700 bg-gray-100 border-gray-300',
-}
 
 function fmtDate(raw) {
   if (!raw) return ''
@@ -73,50 +51,51 @@ for (const a of actions) {
   }
 }
 
+function chipClass(active) {
+  return `inline-flex items-center px-3 py-1.5 border text-xs font-sans font-semibold transition-colors duration-150 min-h-[44px] ${
+    active
+      ? 'bg-ink-900 text-paper border-ink-900'
+      : 'bg-transparent text-ink-600 border-rule hover:border-ink-700 hover:text-ink-900'
+  }`
+}
+
 function ActionCard({ action }) {
-  const juriBadge = JURI_BADGE[action.jurisdiction] ?? 'text-gray-600 bg-gray-100 border-edge-soft'
   const isPending = action.status === 'pending'
   return (
-    <div className="border border-edge rounded-xl bg-white overflow-hidden">
-      {/* Header row */}
-      <div className="flex flex-wrap items-center gap-2 px-5 pt-4 pb-3 border-b border-edge-soft/50">
-        <time className="text-2xs font-mono text-gray-400 shrink-0">{fmtDate(action.date)}</time>
-        <span aria-hidden="true" className="text-gray-200 text-2xs">·</span>
-        <span className={`inline-flex items-center px-1.5 py-0.5 rounded-sm border text-2xs font-mono font-semibold uppercase tracking-widest ${juriBadge}`}>
+    <article className="py-6">
+      <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1 mb-2">
+        <time className="text-xs font-mono text-ink-500 shrink-0">{fmtDate(action.date)}</time>
+        <span aria-hidden="true" className="text-ink-400">·</span>
+        <span className="text-2xs font-sans font-semibold uppercase tracking-wide text-ink-700">
           {action.jurisdiction}
         </span>
-        <span aria-hidden="true" className="text-gray-200 text-2xs">·</span>
-        <span className="text-2xs font-mono text-gray-500 uppercase tracking-widest">{action.actionType}</span>
+        <span aria-hidden="true" className="text-ink-400">·</span>
+        <span className="text-2xs font-sans font-semibold uppercase tracking-wide text-ink-500">{action.actionType}</span>
         <span className="ml-auto shrink-0">
           {isPending
-            ? <span className="inline-flex items-center gap-1 text-2xs font-mono text-amber-700 bg-amber-50 border border-amber-200 px-1.5 py-0.5 rounded-sm uppercase tracking-widest font-semibold">Pending</span>
-            : <span className="inline-flex items-center gap-1 text-2xs font-mono text-emerald-700 bg-emerald-50 border border-emerald-200 px-1.5 py-0.5 rounded-sm uppercase tracking-widest font-semibold">Complete</span>
+            ? <span className="text-2xs font-sans font-semibold uppercase tracking-wide text-status-disputed">Pending</span>
+            : <span className="text-2xs font-sans font-semibold uppercase tracking-wide text-status-stated">Complete</span>
           }
         </span>
       </div>
-      {/* Body */}
-      <div className="px-5 py-4 space-y-2.5">
-        <p className="text-sm text-gray-700 leading-relaxed">{action.description}</p>
-        <p className="text-xs text-gray-500 leading-relaxed">
-          <span className="font-medium text-gray-600">Outcome: </span>
-          {action.outcome}
-        </p>
-        <div className="flex flex-wrap items-center gap-1.5 pt-1">
-          <span className="text-2xs font-mono text-gray-400">
-            Last verified: {action.lastVerified}
-          </span>
-          {action.sourceIds.map(k => (
-            <SourceCitation key={k} sourceKey={k} />
-          ))}
-        </div>
+      <p className="text-base font-sans text-ink-800 leading-relaxed">{action.description}</p>
+      <p className="text-sm font-sans text-ink-600 leading-relaxed mt-2">
+        <span className="font-semibold text-ink-800">Outcome: </span>
+        {action.outcome}
+      </p>
+      <div className="flex flex-wrap items-center gap-1.5 mt-2">
+        <span className="text-2xs font-mono text-ink-500">
+          Last verified: {action.lastVerified}
+        </span>
+        {action.sourceIds.map(k => <SourceCitation key={k} sourceKey={k} />)}
       </div>
-    </div>
+    </article>
   )
 }
 
 export default function Actions() {
-  const [juriFilter, setJuriFilter]  = useState('all')
-  const [typeFilter, setTypeFilter]  = useState('all')
+  const [juriFilter, setJuriFilter] = useState('all')
+  const [typeFilter, setTypeFilter] = useState('all')
 
   const visible = actions.filter(a => {
     const juriMatch = juriFilter === 'all' || a.jurisdiction === juriFilter
@@ -126,128 +105,103 @@ export default function Actions() {
 
   return (
     <FootnoteProvider preload={PRELOAD_KEYS}>
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 py-12">
-      <PageTitle {...pageMeta['/actions']} />
+      <Container size="default" className="py-12 sm:py-16">
+        <PageTitle {...pageMeta['/actions']} />
 
-      <FadeIn className="mb-10 pb-8 border-b border-edge-soft">
-        <p className="text-2xs font-mono text-blue-700 uppercase tracking-[0.18em] mb-4">Regulatory actions</p>
-        <h1 className="text-4xl sm:text-5xl font-display font-bold text-gray-900 tracking-tight break-words mb-3">Jurisdictional Actions</h1>
-        <p className="text-lg text-gray-600 max-w-3xl leading-relaxed">
-          Approvals, permit applications, legal challenges, and policy actions across the municipal,
-          county, state and federal bodies with jurisdiction over T5 @ Chicago IV, plus the case now
-          before the 19th Judicial Circuit and the private parties bringing it.
-          All entries are sourced and cited. Verification dates appear on each entry.
-        </p>
-        <div className="flex items-center gap-4 mt-4">
-          <span className="text-2xs font-mono text-gray-400">{actions.length} actions on file</span>
-          <span aria-hidden="true" className="text-gray-300">·</span>
-          <span className="text-2xs font-mono text-gray-400">Last verified {LAST_VERIFIED}</span>
-        </div>
-      </FadeIn>
+        <FadeIn className="mb-10 pb-8 border-b border-rule">
+          <p className="text-xs font-display italic text-ink-500 tracking-wide mb-2">Regulatory actions</p>
+          <h1 className="text-4xl sm:text-5xl font-display text-ink-900 tracking-tight leading-[1.05] break-words mb-3">Jurisdictional Actions</h1>
+          <p className="text-lg font-sans text-ink-700 max-w-2xl leading-relaxed">
+            Approvals, permit applications, legal challenges, and policy actions across the municipal,
+            county, state and federal bodies with jurisdiction over T5 @ Chicago IV, plus the case now
+            before the 19th Judicial Circuit and the private parties bringing it.
+            All entries are sourced and cited. Verification dates appear on each entry.
+          </p>
+          <div className="flex items-center gap-4 mt-4">
+            <span className="text-2xs font-mono text-ink-500">{actions.length} actions on file</span>
+            <span aria-hidden="true" className="text-ink-400">·</span>
+            <span className="text-2xs font-mono text-ink-500">Last verified {LAST_VERIFIED}</span>
+          </div>
+        </FadeIn>
 
-      {/* Jurisdiction filter */}
-      <FadeIn className="mb-5">
-        <p id="juri-filter-label" className="text-2xs font-mono text-gray-600 uppercase tracking-widest mb-2.5">Filter by jurisdiction</p>
-        <div role="group" aria-labelledby="juri-filter-label" className="flex flex-wrap gap-2">
-          <button
-            type="button"
-            aria-pressed={juriFilter === 'all'}
-            onClick={() => setJuriFilter('all')}
-            className={`inline-flex items-center px-2.5 py-1.5 rounded-sm border text-2xs font-mono font-semibold uppercase tracking-widest transition-colors duration-150 ${
-              juriFilter === 'all'
-                ? 'text-gray-900 bg-gray-100 border-gray-300'
-                : 'text-gray-500 border-edge-soft hover:text-gray-800 hover:border-gray-300'
-            }`}
-          >
-            All
-          </button>
-          {JURISDICTIONS.map(j => {
-            const colors = JURI_COLORS[j] ?? JURI_COLORS['State of Illinois']
-            const count = actions.filter(a => a.jurisdiction === j).length
-            return (
-              <button
-                key={j}
-                type="button"
-                aria-pressed={juriFilter === j}
-                onClick={() => setJuriFilter(j)}
-                className={`inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-sm border text-2xs font-mono font-semibold uppercase tracking-widest transition-colors duration-150 ${
-                  juriFilter === j ? colors.active : colors.inactive
-                }`}
-              >
-                {j}
-                {count > 0 && <span className="opacity-60">({count})</span>}
-              </button>
-            )
-          })}
-        </div>
-      </FadeIn>
-
-      {/* Action type filter */}
-      <FadeIn className="mb-10">
-        <p id="type-filter-label" className="text-2xs font-mono text-gray-600 uppercase tracking-widest mb-2.5">Filter by action type</p>
-        <div role="group" aria-labelledby="type-filter-label" className="flex flex-wrap gap-2">
-          <button
-            type="button"
-            aria-pressed={typeFilter === 'all'}
-            onClick={() => setTypeFilter('all')}
-            className={`inline-flex items-center px-2.5 py-1.5 rounded-sm border text-2xs font-mono font-semibold uppercase tracking-widest transition-colors duration-150 ${
-              typeFilter === 'all'
-                ? 'text-gray-900 bg-gray-100 border-gray-300'
-                : 'text-gray-500 border-edge-soft hover:text-gray-800 hover:border-gray-300'
-            }`}
-          >
-            All types
-          </button>
-          {ACTION_TYPES.map(t => (
-            <button
-              key={t}
-              type="button"
-              aria-pressed={typeFilter === t}
-              onClick={() => setTypeFilter(t)}
-              className={`inline-flex items-center px-2.5 py-1.5 rounded-sm border text-2xs font-mono font-semibold uppercase tracking-widest transition-colors duration-150 ${
-                typeFilter === t
-                  ? 'text-gray-900 bg-gray-100 border-gray-300'
-                  : 'text-gray-500 border-edge-soft hover:text-gray-800 hover:border-gray-300'
-              }`}
-            >
-              {t}
+        {/* Jurisdiction filter */}
+        <FadeIn className="mb-6">
+          <p id="juri-filter-label" className="text-xs font-display italic text-ink-500 tracking-wide mb-3">Filter by jurisdiction</p>
+          <div role="group" aria-labelledby="juri-filter-label" className="flex flex-wrap gap-2">
+            <button type="button" aria-pressed={juriFilter === 'all'} onClick={() => setJuriFilter('all')} className={chipClass(juriFilter === 'all')}>
+              All
             </button>
-          ))}
-        </div>
-      </FadeIn>
+            {JURISDICTIONS.map(j => {
+              const count = actions.filter(a => a.jurisdiction === j).length
+              return (
+                <button
+                  key={j}
+                  type="button"
+                  aria-pressed={juriFilter === j}
+                  onClick={() => setJuriFilter(j)}
+                  className={chipClass(juriFilter === j)}
+                >
+                  {j}
+                  {count > 0 && <span className="opacity-70 ml-1">({count})</span>}
+                </button>
+              )
+            })}
+          </div>
+        </FadeIn>
 
-      {/* Entries */}
-      <p aria-live="polite" className="sr-only">
-        {visible.length} of {actions.length} actions shown
-      </p>
-      <div className="space-y-4">
-        {visible.length === 0 ? (
-          <FadeIn>
-            <p className="text-sm text-gray-400 py-12 text-center font-mono">No actions on file for this filter.</p>
-          </FadeIn>
-        ) : (
-          visible.map((action, i) => (
-            <FadeIn key={action.id} delay={i * 0.04}>
-              <ActionCard action={action} />
+        {/* Action type filter */}
+        <FadeIn className="mb-10">
+          <p id="type-filter-label" className="text-xs font-display italic text-ink-500 tracking-wide mb-3">Filter by action type</p>
+          <div role="group" aria-labelledby="type-filter-label" className="flex flex-wrap gap-2">
+            <button type="button" aria-pressed={typeFilter === 'all'} onClick={() => setTypeFilter('all')} className={chipClass(typeFilter === 'all')}>
+              All types
+            </button>
+            {ACTION_TYPES.map(t => (
+              <button
+                key={t}
+                type="button"
+                aria-pressed={typeFilter === t}
+                onClick={() => setTypeFilter(t)}
+                className={chipClass(typeFilter === t)}
+              >
+                {t}
+              </button>
+            ))}
+          </div>
+        </FadeIn>
+
+        {/* Entries */}
+        <p aria-live="polite" className="sr-only">
+          {visible.length} of {actions.length} actions shown
+        </p>
+        <div className="divide-y divide-rule-soft border-y border-rule">
+          {visible.length === 0 ? (
+            <FadeIn>
+              <p className="text-sm font-sans text-ink-500 py-12 text-center">No actions on file for this filter.</p>
             </FadeIn>
-          ))
-        )}
-      </div>
-
-      <FadeIn className="mt-12 border-t border-edge-soft pt-8">
-        <div className="flex flex-wrap gap-4 text-sm mb-6">
-          <Link to="/timeline" className="text-blue-600 hover:text-blue-700 transition-colors">
-            Full project timeline →
-          </Link>
-          <Link to="/documents" className="text-blue-600 hover:text-blue-700 transition-colors">
-            All documents and sources →
-          </Link>
+          ) : (
+            visible.map((action, i) => (
+              <FadeIn key={action.id} delay={i * 0.04}>
+                <ActionCard action={action} />
+              </FadeIn>
+            ))
+          )}
         </div>
-      </FadeIn>
 
-      <FootnoteList />
-      <BackToTop />
-    </div>
+        <FadeIn className="mt-12 border-t border-rule pt-8">
+          <div className="flex flex-wrap gap-6 text-sm font-sans">
+            <Link to="/timeline" className="text-accent hover:text-accent-hover underline underline-offset-4 decoration-rule hover:decoration-accent">
+              Full project timeline →
+            </Link>
+            <Link to="/documents" className="text-accent hover:text-accent-hover underline underline-offset-4 decoration-rule hover:decoration-accent">
+              All documents and sources →
+            </Link>
+          </div>
+        </FadeIn>
+
+        <FootnoteList />
+        <BackToTop />
+      </Container>
     </FootnoteProvider>
   )
 }
