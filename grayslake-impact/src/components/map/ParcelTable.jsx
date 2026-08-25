@@ -117,13 +117,13 @@ export default function ParcelTable({ parcels }) {
           value={search}
           onChange={e => setSearch(e.target.value)}
           placeholder="Filter by PIN, sale price, or date"
-          className="w-full text-sm font-sans px-0 py-2 pr-8 bg-transparent border-0 border-b border-rule text-ink-900 placeholder:text-ink-400 focus:outline-none focus:border-accent focus:ring-0"
+          className="w-full text-sm font-sans px-0 py-2 pr-8 bg-transparent border-0 border-b border-rule-strong text-ink-900 placeholder:text-ink-500 focus:outline-none focus:border-accent focus:ring-0"
         />
         {search && (
           <button
             onClick={() => setSearch('')}
             aria-label="Clear filter"
-            className="absolute right-0 top-1/2 -translate-y-[calc(50%+8px)] text-ink-400 hover:text-ink-700 font-mono text-base leading-none min-h-[44px] min-w-[44px]"
+            className="absolute right-0 top-1/2 -translate-y-[calc(50%+8px)] text-ink-500 hover:text-ink-800 font-mono text-base leading-none min-h-[44px] min-w-[44px]"
           >
             ×
           </button>

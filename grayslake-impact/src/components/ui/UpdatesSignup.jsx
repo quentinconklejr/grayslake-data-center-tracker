@@ -145,7 +145,7 @@ export default function UpdatesSignup() {
             value={email}
             onChange={e => { setEmail(e.target.value); if (state === 'error') setState('idle') }}
             placeholder="you@example.com"
-            className="flex-1 min-h-[44px] px-3 py-2.5 border-b border-rule bg-transparent text-base sm:text-sm text-ink-900 placeholder:text-ink-400 focus:outline-none focus:border-accent"
+            className="flex-1 min-h-[44px] px-3 py-2.5 border-b border-rule-strong bg-transparent text-base sm:text-sm text-ink-900 placeholder:text-ink-500 focus:outline-none focus:border-accent"
           />
           <button
             type="submit"
