@@ -42,17 +42,17 @@ export default function SourceCitation({ sourceKey }) {
         onClick={open}
         onMouseEnter={() => !window.matchMedia('(max-width: 768px)').matches && open({ preventDefault: () => {} })}
         onMouseLeave={close}
-        className="text-2xs font-mono font-bold text-sky-700 hover:text-sky-900 focus:outline-none"
+        className="text-2xs font-mono font-semibold text-accent hover:text-accent-hover focus:outline-none"
       >
         [{num}]
       </button>
 
       {show && (
-        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-1.5 w-64 p-2.5 bg-slate-900 text-slate-100 rounded-lg shadow-xl text-xs z-50 pointer-events-none">
-          <div className="font-bold text-sky-400">Source [{num}]</div>
-          <div className="font-semibold mt-0.5">{source.title}</div>
+        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-1.5 w-64 p-3 bg-ink-900 text-paper border border-ink-900 text-xs z-50 pointer-events-none">
+          <div className="font-mono font-semibold text-paper-sunk">Source [{num}]</div>
+          <div className="font-sans font-semibold mt-1">{source.title}</div>
           {(source.publisher || source.date) && (
-            <div className="text-2xs text-slate-400 mt-1">
+            <div className="text-2xs font-sans text-paper-sunk mt-1">
               {[source.publisher, source.date].filter(Boolean).join(' · ')}
             </div>
           )}

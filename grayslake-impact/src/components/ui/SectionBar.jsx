@@ -2,13 +2,18 @@ import { useState, useEffect } from 'react'
 import { useReducedMotion } from 'framer-motion'
 import { LAST_VERIFIED } from '../../data/siteConfig'
 
+/*
+ * Sticky sub-bar under the site header. Shows the current section title
+ * (from data-section attributes on the page) and the last-verified date
+ * once the reader has scrolled past the hero. Reads as a running head
+ * on long pages, not as chrome.
+ */
 export default function SectionBar() {
   const [current, setCurrent] = useState(null)
   const [visible, setVisible] = useState(false)
   const [headerH, setHeaderH] = useState(66)
   const shouldReduce = useReducedMotion()
 
-  // Track header height dynamically
   useEffect(() => {
     const hdr = document.querySelector('header')
     if (!hdr) return
@@ -18,7 +23,6 @@ export default function SectionBar() {
     return () => ro.disconnect()
   }, [])
 
-  // Track current section via scroll position
   useEffect(() => {
     const sections = [...document.querySelectorAll('[data-section]')]
     if (!sections.length) return
@@ -42,7 +46,7 @@ export default function SectionBar() {
 
   return (
     <div
-      className="sticky z-40 overflow-hidden bg-white/95 backdrop-blur-sm border-b border-edge-soft/50"
+      className="sticky z-40 overflow-hidden bg-paper border-b border-rule-soft"
       style={{
         top: headerH,
         maxHeight: visible && current ? 36 : 0,
@@ -51,8 +55,8 @@ export default function SectionBar() {
       aria-hidden={!visible || !current}
     >
       <div className="max-w-5xl mx-auto px-6 flex items-center justify-between h-9">
-        <span className="text-xs font-medium text-gray-600 truncate">{current}</span>
-        <span className="text-2xs font-mono text-gray-400 shrink-0 ml-4">
+        <span className="text-xs font-display italic text-ink-700 truncate">{current}</span>
+        <span className="text-2xs font-mono text-ink-500 shrink-0 ml-4">
           Last verified {LAST_VERIFIED}
         </span>
       </div>
