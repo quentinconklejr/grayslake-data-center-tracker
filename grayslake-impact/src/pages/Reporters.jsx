@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import PageTitle from '../components/ui/PageTitle'
+import Container from '../components/layout/Container'
 import { pageMeta } from '../data/pageMeta'
 import { figureById } from '../data/keyFigures'
 import { LAST_VERIFIED } from '../data/siteConfig'
@@ -50,7 +51,9 @@ function CopyCitationButton({ text }) {
   return (
     <button
       onClick={handleCopy}
-      className="text-xs font-mono font-semibold text-sky-800 bg-sky-50 hover:bg-sky-100 px-3 py-1.5 rounded-lg border border-sky-200 transition-colors shrink-0 min-h-[44px]"
+      className={`text-sm font-sans font-semibold underline underline-offset-4 decoration-rule hover:decoration-accent shrink-0 min-h-[44px] transition-colors ${
+        copied ? 'text-status-stated' : 'text-accent hover:text-accent-hover'
+      }`}
     >
       {copied ? '✓ Copied AP Citation' : 'Copy AP Citation'}
     </button>
@@ -60,45 +63,45 @@ function CopyCitationButton({ text }) {
 export default function Reporters() {
   return (
     <FootnoteProvider>
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 py-10 space-y-8">
-        <PageTitle 
-          title={pageMeta['/figures'].title} 
-          description={pageMeta['/figures'].description} 
-          ogImage={pageMeta['/figures'].ogImage} 
+      <Container size="default" className="py-10 sm:py-14 space-y-10">
+        <PageTitle
+          title={pageMeta['/figures'].title}
+          description={pageMeta['/figures'].description}
+          ogImage={pageMeta['/figures'].ogImage}
         />
 
-        <div className="border-b border-slate-200 pb-6">
-          <div className="text-2xs font-mono font-semibold uppercase tracking-widest text-sky-800 mb-1">
-            Media & Research Briefing
-          </div>
-          <h1 className="text-3xl font-display font-bold text-slate-900 tracking-tight mb-2">
-            Key Figures & AP Citations
+        <header className="border-b border-rule pb-8">
+          <p className="text-xs font-display italic text-ink-500 tracking-wide mb-2">
+            Media &amp; Research Briefing
+          </p>
+          <h1 className="text-4xl sm:text-5xl font-display text-ink-900 tracking-tight leading-[1.05] mb-3">
+            Key Figures &amp; AP Citations
           </h1>
-          <p className="text-sm font-sans text-slate-600 max-w-2xl">
+          <p className="text-base font-sans text-ink-700 max-w-2xl leading-relaxed">
             Pre-formatted AP-style citations and primary figures for newsrooms, researchers, and financial analysts.
           </p>
-          <div className="text-xs font-mono text-slate-500 mt-2">
+          <p className="text-2xs font-mono text-ink-500 mt-3">
             Last verified {LAST_VERIFIED}
-          </div>
-        </div>
+          </p>
+        </header>
 
-        {/* Fact Briefing Cards Grid */}
-        <div className="space-y-4">
+        {/* Fact briefing list */}
+        <div className="divide-y divide-rule-soft border-y border-rule">
           {PRESS_FACTS.map(({ topic, stat, citation }) => (
-            <div key={topic} className="p-6 border border-slate-200 rounded-xl bg-white shadow-sm space-y-3">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                <div>
-                  <div className="text-2xs font-mono font-bold uppercase tracking-wider text-slate-500">
+            <div key={topic} className="py-6">
+              <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-3">
+                <div className="min-w-0">
+                  <p className="text-xs font-sans font-semibold text-ink-600">
                     {topic}
-                  </div>
-                  <div className="text-xl sm:text-2xl font-display font-bold text-slate-900 mt-0.5">
+                  </p>
+                  <p className="text-2xl font-display text-ink-900 tracking-tight mt-1">
                     {stat}
-                  </div>
+                  </p>
                 </div>
                 <CopyCitationButton text={`${topic}: ${stat} — ${citation}`} />
               </div>
 
-              <p className="text-xs font-sans text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+              <p className="text-sm font-sans text-ink-700 leading-relaxed mt-4">
                 {citation}
               </p>
             </div>
@@ -106,7 +109,7 @@ export default function Reporters() {
         </div>
 
         <FootnoteList />
-      </div>
+      </Container>
     </FootnoteProvider>
   )
 }
