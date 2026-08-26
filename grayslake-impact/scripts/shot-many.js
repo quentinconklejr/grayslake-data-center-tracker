@@ -1,11 +1,19 @@
 // Produced the whole-site screenshot sweep used to sign off the page
 // refactors — Project, Agreement, Questions, Timeline, Documents, Map,
 // About, Actions, Figures — at 375 and 1440.
+//
+// Defensive pattern (try/finally + per-call timeouts): loops across
+// 27 route×viewport combinations, so any single navigation stall used to
+// hang the whole run. Now every await is bounded and browser.close() is
+// in finally.
 import { chromium } from 'playwright'
 import { mkdirSync } from 'fs'
 
 const BASE = 'http://localhost:5173'
 const OUT = 'screenshots'
+const NAV_TIMEOUT  = 20_000
+const WAIT_TIMEOUT = 15_000
+const SHOT_TIMEOUT = 30_000
 
 const VIEWPORTS = [
   { name: 'mobile',  width: 375,  height: 812 },
@@ -27,25 +35,29 @@ const ROUTES = [
 
 mkdirSync(OUT, { recursive: true })
 
-const browser = await chromium.launch()
+const browser = await chromium.launch({ timeout: 30_000 })
+try {
+  for (const vp of VIEWPORTS) {
+    const ctx = await browser.newContext({ viewport: { width: vp.width, height: vp.height } })
+    const page = await ctx.newPage()
+    page.setDefaultTimeout(WAIT_TIMEOUT)
+    page.setDefaultNavigationTimeout(NAV_TIMEOUT)
 
-for (const vp of VIEWPORTS) {
-  const ctx = await browser.newContext({ viewport: { width: vp.width, height: vp.height } })
-  const page = await ctx.newPage()
-  for (const [name, path] of ROUTES) {
-    await page.goto(`${BASE}${path}`, { waitUntil: 'networkidle', timeout: 20000 })
-    const h = await page.evaluate(() => document.body.scrollHeight)
-    for (let y = 0; y <= h; y += vp.height * 0.8) {
-      await page.evaluate(sy => window.scrollTo(0, sy), y)
-      await page.waitForTimeout(80)
+    for (const [name, path] of ROUTES) {
+      await page.goto(`${BASE}${path}`, { waitUntil: 'networkidle', timeout: NAV_TIMEOUT })
+      const h = await page.evaluate(() => document.body.scrollHeight)
+      for (let y = 0; y <= h; y += vp.height * 0.8) {
+        await page.evaluate(sy => window.scrollTo(0, sy), y)
+        await page.waitForTimeout(80)
+      }
+      await page.evaluate(() => window.scrollTo(0, 0))
+      await page.waitForTimeout(300)
+      const file = `${OUT}/${name}-${vp.name}.png`
+      await page.screenshot({ path: file, fullPage: true, timeout: SHOT_TIMEOUT })
+      console.log('✓', file)
     }
-    await page.evaluate(() => window.scrollTo(0, 0))
-    await page.waitForTimeout(300)
-    const file = `${OUT}/${name}-${vp.name}.png`
-    await page.screenshot({ path: file, fullPage: true })
-    console.log('✓', file)
+    await ctx.close()
   }
-  await ctx.close()
+} finally {
+  await browser.close()
 }
-
-await browser.close()

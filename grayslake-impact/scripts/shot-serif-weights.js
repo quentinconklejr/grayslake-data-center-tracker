@@ -3,13 +3,20 @@
 // 500, 600, and 700 at 1440px. 400/500 read as body-copy at display
 // size, 700 (browser h1 default) shades into advocacy voice. 600 is
 // the sweet spot; the rule lives in src/index.css.
+//
+// Defensive pattern (try/finally + per-call timeouts): standardises
+// with the other shot-* scripts so a hung font route intercept cannot
+// leave the browser open.
 import { chromium } from 'playwright'
 import { mkdirSync, readFileSync } from 'fs'
 
 const OUT = 'screenshots'
+const NAV_TIMEOUT  = 20_000
+const WAIT_TIMEOUT = 15_000
+const SHOT_TIMEOUT = 30_000
 mkdirSync(OUT, { recursive: true })
 
-const BROWSER = await chromium.launch()
+const BROWSER = await chromium.launch({ timeout: 30_000 })
 
 const HEADLINE = 'T5 @ Chicago IV is an approved hyperscale data center under construction in Grayslake, Illinois.'
 const SUBHEAD  = 'Farm fields at Peterson and Alleghany roads.'
@@ -81,21 +88,25 @@ const HTML = `
 <body>${rows}</body></html>
 `
 
-const ctx = await BROWSER.newContext({ viewport: { width: 1440, height: 1800 } })
-const page = await ctx.newPage()
+try {
+  const ctx = await BROWSER.newContext({ viewport: { width: 1440, height: 1800 } })
+  const page = await ctx.newPage()
+  page.setDefaultTimeout(WAIT_TIMEOUT)
+  page.setDefaultNavigationTimeout(NAV_TIMEOUT)
 
-await page.route('**/source-serif-4-latin-opsz-normal.woff2', r =>
-  r.fulfill({ body: readFileSync('node_modules/@fontsource-variable/source-serif-4/files/source-serif-4-latin-opsz-normal.woff2') })
-)
-await page.route('**/ibm-plex-sans-latin-400-normal.woff2', r =>
-  r.fulfill({ body: readFileSync('node_modules/@fontsource/ibm-plex-sans/files/ibm-plex-sans-latin-400-normal.woff2') })
-)
+  await page.route('**/source-serif-4-latin-opsz-normal.woff2', r =>
+    r.fulfill({ body: readFileSync('node_modules/@fontsource-variable/source-serif-4/files/source-serif-4-latin-opsz-normal.woff2') })
+  )
+  await page.route('**/ibm-plex-sans-latin-400-normal.woff2', r =>
+    r.fulfill({ body: readFileSync('node_modules/@fontsource/ibm-plex-sans/files/ibm-plex-sans-latin-400-normal.woff2') })
+  )
 
-await page.setContent(HTML, { waitUntil: 'networkidle' })
-await page.waitForTimeout(400)
+  await page.setContent(HTML, { waitUntil: 'networkidle', timeout: NAV_TIMEOUT })
+  await page.waitForTimeout(400)
 
-const file = `${OUT}/serif-weights.png`
-await page.screenshot({ path: file, fullPage: true })
-console.log('✓', file)
-
-await BROWSER.close()
+  const file = `${OUT}/serif-weights.png`
+  await page.screenshot({ path: file, fullPage: true, timeout: SHOT_TIMEOUT })
+  console.log('✓', file)
+} finally {
+  await BROWSER.close()
+}
