@@ -25,7 +25,7 @@ export default function PageNext({
       </p>
       <Link
         to={to}
-        className={`group block border-t border-ink-900 pt-5 sm:pt-6 hover:bg-paper-sunk/40 transition-colors ${
+        className={`group block border-t border-ink-900 pt-5 sm:pt-6 hover:bg-paper-sunk transition-colors ${
           prominent ? 'py-6 sm:py-8' : ''
         }`}
       >

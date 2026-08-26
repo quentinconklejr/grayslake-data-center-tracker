@@ -34,7 +34,7 @@ export default function SourceArtifact({ publisher, date, pageRef, url, excerpts
         )}
       </div>
 
-      <div className="px-4 py-3 space-y-3 bg-paper-sunk/50">
+      <div className="px-4 py-3 space-y-3 bg-paper-sunk">
         {excerpts.map((text, i) => (
           <blockquote
             key={i}

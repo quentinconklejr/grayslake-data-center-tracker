@@ -91,14 +91,14 @@ export default function ParcelTable({ parcels }) {
         <div className="flex items-center gap-5 shrink-0">
           <button
             onClick={handleExportCSV}
-            className="text-sm font-sans text-accent hover:text-accent-hover underline underline-offset-4 decoration-rule hover:decoration-accent min-h-[44px]"
+            className="text-sm font-sans text-accent hover:text-accent-hover underline underline-offset-4 decoration-accent min-h-[44px]"
           >
             Export CSV
           </button>
           {filteredParcels.length > 10 && !search.trim() && (
             <button
               onClick={() => setIsExpanded(prev => !prev)}
-              className="text-sm font-sans text-accent hover:text-accent-hover underline underline-offset-4 decoration-rule hover:decoration-accent min-h-[44px]"
+              className="text-sm font-sans text-accent hover:text-accent-hover underline underline-offset-4 decoration-accent min-h-[44px]"
             >
               {isExpanded ? 'Collapse directory' : `Show all ${filteredParcels.length} parcels`}
             </button>
@@ -154,10 +154,14 @@ export default function ParcelTable({ parcels }) {
               <th scope="col" className="py-2.5 px-4 sm:px-3">Sale date</th>
             </tr>
           </thead>
-          <tbody>
+          {/* Zebra tint (bg-paper-sunk/50) removed — carried a Tailwind
+              alpha utility on a structural boundary. Rows now separate
+              by a divide-y hairline in rule-strong, matching the
+              parsing-work convention used elsewhere on the site. */}
+          <tbody className="divide-y divide-rule-strong">
             {displayedParcels.length > 0 ? (
-              displayedParcels.map((p, i) => (
-                <tr key={p.pin} className={i % 2 === 1 ? 'bg-paper-sunk/50' : ''}>
+              displayedParcels.map(p => (
+                <tr key={p.pin}>
                   <th scope="row" className="py-2 px-4 sm:px-3 font-mono font-semibold text-ink-900 text-left">
                     {p.pin}
                   </th>
@@ -185,7 +189,7 @@ export default function ParcelTable({ parcels }) {
         <p className="mt-5 pt-4 border-t border-rule-soft text-sm font-sans text-ink-600 leading-relaxed">
           <span className="font-semibold text-ink-800">Source: </span>
           {META.sourceUrl ? (
-            <a href={META.sourceUrl} target="_blank" rel="noopener noreferrer" className="text-accent hover:text-accent-hover underline underline-offset-4 decoration-rule">
+            <a href={META.sourceUrl} target="_blank" rel="noopener noreferrer" className="text-accent hover:text-accent-hover underline underline-offset-4 decoration-accent">
               {META.source}
             </a>
           ) : (

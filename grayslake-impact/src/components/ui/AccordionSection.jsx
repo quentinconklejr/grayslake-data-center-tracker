@@ -43,7 +43,7 @@ export default function AccordionSection({
           onClick={onToggle}
           aria-expanded={open}
           aria-controls={panelId}
-          className="w-full text-left py-5 sm:py-6 flex flex-col sm:flex-row sm:items-start gap-4 sm:gap-8 hover:bg-paper-sunk/40 transition-colors"
+          className="w-full text-left py-5 sm:py-6 flex flex-col sm:flex-row sm:items-start gap-4 sm:gap-8 hover:bg-paper-sunk transition-colors"
         >
           {/* Title + description */}
           <div className="flex items-start gap-4 sm:gap-5 flex-1 min-w-0">

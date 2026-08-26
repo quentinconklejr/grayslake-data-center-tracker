@@ -47,7 +47,7 @@ export default function OpenQuestions() {
 
           <button
             onClick={() => setOpenIds(allOpen ? [] : questions.map(q => q.id))}
-            className="text-sm font-sans text-accent hover:text-accent-hover underline underline-offset-4 decoration-rule hover:decoration-accent shrink-0 min-h-[44px]"
+            className="text-sm font-sans text-accent hover:text-accent-hover underline underline-offset-4 decoration-accent shrink-0 min-h-[44px]"
           >
             {allOpen ? 'Collapse all' : 'Expand all'}
           </button>
@@ -62,7 +62,7 @@ export default function OpenQuestions() {
                 <button
                   onClick={() => toggle(q.id)}
                   aria-expanded={isOpen}
-                  className="w-full text-left py-5 sm:py-6 flex items-start justify-between gap-4 hover:bg-paper-sunk/40 transition-colors"
+                  className="w-full text-left py-5 sm:py-6 flex items-start justify-between gap-4 hover:bg-paper-sunk transition-colors"
                 >
                   <h2 className="text-xl sm:text-2xl font-display text-ink-900 leading-snug">
                     {q.question}

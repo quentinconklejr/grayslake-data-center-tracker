@@ -136,7 +136,7 @@ export default function Timeline({ events = [], proportional = false }) {
                 </div>
               )}
               <div
-                className={`relative flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-4 group py-4 pl-9 hover:bg-paper-sunk/40 transition-colors duration-100 ${
+                className={`relative flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-4 group py-4 pl-9 hover:bg-paper-sunk transition-colors duration-100 ${
                   !proportional && i < sorted.length - 1 ? 'border-b border-rule-strong' : ''
                 }`}
               >
@@ -167,7 +167,7 @@ export default function Timeline({ events = [], proportional = false }) {
                 </span>
 
                 {/* Content */}
-                <div className={`flex-1 min-w-0 sm:pt-px ${projected ? 'opacity-70' : ''}`}>
+                <div className="flex-1 min-w-0 sm:pt-px">
                   <p className="text-base font-display font-semibold text-ink-900 leading-snug">
                     {event.title}
                     {!event.description && (

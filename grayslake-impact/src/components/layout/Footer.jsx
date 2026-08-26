@@ -42,7 +42,7 @@ export default function Footer() {
           <p>
             <a
               href={`mailto:${SITE_CONTACT.email}`}
-              className="text-accent hover:text-accent-hover underline underline-offset-4 decoration-rule hover:decoration-accent"
+              className="text-accent hover:text-accent-hover underline underline-offset-4 decoration-accent"
             >
               {SITE_CONTACT.email}
             </a>
@@ -73,7 +73,7 @@ export default function Footer() {
               <li key={to}>
                 <Link
                   to={to}
-                  className="text-ink-700 hover:text-ink-900 underline underline-offset-4 decoration-rule hover:decoration-accent"
+                  className="text-ink-700 hover:text-ink-900 underline underline-offset-4 decoration-rule-strong hover:decoration-accent"
                 >
                   {label}
                 </Link>
@@ -86,17 +86,17 @@ export default function Footer() {
         <div className="mt-8 flex flex-wrap gap-x-5 gap-y-2 text-sm font-sans">
           <Link
             to="/accessibility"
-            className="text-ink-600 hover:text-ink-900 underline underline-offset-4 decoration-rule hover:decoration-accent"
+            className="text-ink-600 hover:text-ink-900 underline underline-offset-4 decoration-rule-strong hover:decoration-accent"
           >
             Accessibility
           </Link>
           <Link
             to="/privacy"
-            className="text-ink-600 hover:text-ink-900 underline underline-offset-4 decoration-rule hover:decoration-accent"
+            className="text-ink-600 hover:text-ink-900 underline underline-offset-4 decoration-rule-strong hover:decoration-accent"
           >
             Privacy
           </Link>
-          <ReportErrorLink className="text-ink-600 hover:text-ink-900 underline underline-offset-4 decoration-rule hover:decoration-accent" />
+          <ReportErrorLink className="text-ink-600 hover:text-ink-900 underline underline-offset-4 decoration-rule-strong hover:decoration-accent" />
         </div>
 
         {/* ── Affiliation disclaimer ──────────────────────────────── */}

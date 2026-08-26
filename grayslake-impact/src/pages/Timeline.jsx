@@ -8,13 +8,19 @@ import { timelineEvents } from '../data/timeline'
 import { LAST_VERIFIED } from '../data/siteConfig'
 import { FootnoteProvider, FootnoteList } from '../components/ui/FootnoteContext'
 
+// Filter chips use the same dark-inversion pattern as the Actions
+// jurisdiction/type chips (single site-wide convention for segmented
+// controls). The per-category status colour survives on the timeline
+// itself — dots and category badges inside TimelineUI — so a filtered
+// view still colour-codes its events; only the filter chip itself is
+// neutralised.
 const LEGEND = [
-  { key: 'approval',     label: 'Approval',     active: 'text-status-approval    bg-status-approval-soft    border-status-approval',    inactive: 'text-status-approval    bg-status-approval-soft/50    border-status-approval/50    opacity-60 hover:opacity-100' },
-  { key: 'construction', label: 'Construction', active: 'text-status-construction bg-status-construction-soft border-status-construction', inactive: 'text-status-construction bg-status-construction-soft/50 border-status-construction/50 opacity-60 hover:opacity-100' },
-  { key: 'opposition',   label: 'Opposition',   active: 'text-status-opposition  bg-status-opposition-soft  border-status-opposition',  inactive: 'text-status-opposition  bg-status-opposition-soft/50  border-status-opposition/50  opacity-60 hover:opacity-100' },
-  { key: 'legal',        label: 'Legal',        active: 'text-status-legal       bg-status-legal-soft       border-status-legal',       inactive: 'text-status-legal       bg-status-legal-soft/50       border-status-legal/50       opacity-60 hover:opacity-100' },
-  { key: 'development',  label: 'Development',  active: 'text-status-development bg-status-development-soft border-status-development', inactive: 'text-status-development bg-status-development-soft/50 border-status-development/50 opacity-60 hover:opacity-100' },
-  { key: 'policy',       label: 'Policy',       active: 'text-status-policy      bg-status-policy-soft      border-status-policy',      inactive: 'text-status-policy      bg-status-policy-soft/50      border-status-policy/50      opacity-60 hover:opacity-100' },
+  { key: 'approval',     label: 'Approval' },
+  { key: 'construction', label: 'Construction' },
+  { key: 'opposition',   label: 'Opposition' },
+  { key: 'legal',        label: 'Legal' },
+  { key: 'development',  label: 'Development' },
+  { key: 'policy',       label: 'Policy' },
 ]
 
 export default function TimelinePage() {
@@ -79,36 +85,44 @@ export default function TimelinePage() {
 
           <button
             onClick={handleExportCSV}
-            className="text-sm font-sans text-accent hover:text-accent-hover underline underline-offset-4 decoration-rule hover:decoration-accent shrink-0 self-start sm:self-end min-h-[44px]"
+            className="text-sm font-sans text-accent hover:text-accent-hover underline underline-offset-4 decoration-accent shrink-0 self-start sm:self-end min-h-[44px]"
           >
             Export Timeline CSV
           </button>
         </header>
 
-        {/* Category filters */}
-        <div className="flex flex-wrap items-center gap-2">
+        {/* Category filters. aria-pressed + role="group" matches the
+            same segmented-control convention used on Actions filters
+            and SiteMap's base-map toggle. */}
+        <div role="group" aria-label="Filter timeline by category" className="flex flex-wrap items-center gap-2">
           <button
+            type="button"
+            aria-pressed={activeCategory === 'all'}
             onClick={() => setActiveCategory('all')}
             className={`px-3 py-1.5 text-xs font-sans font-semibold border transition-colors min-h-[44px] ${
               activeCategory === 'all'
                 ? 'bg-ink-900 text-paper border-ink-900'
-                : 'bg-transparent border-rule text-ink-700 hover:border-ink-700'
+                : 'bg-transparent text-ink-700 border-rule-strong hover:border-ink-700 hover:text-ink-900'
             }`}
           >
-            All ({timelineEvents.length})
+            All <span className="ml-1 text-ink-500">({timelineEvents.length})</span>
           </button>
-          {LEGEND.map(({ key, label, active, inactive }) => {
+          {LEGEND.map(({ key, label }) => {
             const count = timelineEvents.filter(e => e.category === key).length
             const isActive = activeCategory === key
             return (
               <button
                 key={key}
+                type="button"
+                aria-pressed={isActive}
                 onClick={() => setActiveCategory(prev => prev === key ? 'all' : key)}
                 className={`px-3 py-1.5 text-xs font-sans font-semibold border transition-colors min-h-[44px] ${
-                  isActive ? active : inactive
+                  isActive
+                    ? 'bg-ink-900 text-paper border-ink-900'
+                    : 'bg-transparent text-ink-700 border-rule-strong hover:border-ink-700 hover:text-ink-900'
                 }`}
               >
-                {label} ({count})
+                {label} <span className={`ml-1 ${isActive ? 'text-paper-sunk' : 'text-ink-500'}`}>({count})</span>
               </button>
             )
           })}
@@ -123,7 +137,7 @@ export default function TimelinePage() {
         <div className="mt-10 pt-6 border-t border-rule">
           <Link
             to="/actions"
-            className="inline-flex items-center gap-2 text-base font-sans font-semibold text-accent hover:text-accent-hover underline underline-offset-4 decoration-rule hover:decoration-accent min-h-[44px]"
+            className="inline-flex items-center gap-2 text-base font-sans font-semibold text-accent hover:text-accent-hover underline underline-offset-4 decoration-accent min-h-[44px]"
           >
             See the same events by jurisdiction, with verification dates
             <span aria-hidden="true">→</span>

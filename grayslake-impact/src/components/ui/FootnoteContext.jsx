@@ -58,17 +58,16 @@ export function FootnoteList() {
           if (!source) return null
           const num = i + 1
           const isHighlighted = hoveredKey === key
-          const isDimmed = hoveredKey && hoveredKey !== key
+          // The "dim non-hovered" state used opacity-35, which composited
+          // ink text to ~1.46:1 against paper — a WCAG body-text failure.
+          // Dropped in favour of highlighting the hovered source only;
+          // other sources render at full contrast at all times.
           return (
             <li
               key={key}
               id={`fn-${num}`}
               className={`flex gap-3 scroll-mt-20 transition-all duration-150 ${
-                isHighlighted
-                  ? 'bg-accent-soft -mx-2 px-2 py-0.5'
-                  : isDimmed
-                  ? 'opacity-35'
-                  : ''
+                isHighlighted ? 'bg-accent-soft -mx-2 px-2 py-0.5' : ''
               }`}
             >
               <span className="text-xs font-mono text-ink-500 shrink-0 tabular-nums w-5 text-right pt-px">

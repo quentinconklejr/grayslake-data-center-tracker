@@ -57,29 +57,25 @@ export default function TaxImpact({ asSection = false }) {
           </p>
         </div>
 
+        {/* Row treatment carries the Grayslake/Outside distinction as a
+            visible text tag on every row — the previous colour-coded
+            dot was aria-hidden and failed WCAG 1.4.1 for sighted users
+            with colour-vision deficiency. Text is now the primary
+            channel; the earlier decorative legend below the list is
+            redundant and has been removed. */}
         <ul className="grid sm:grid-cols-2 gap-x-10 divide-y divide-rule-strong sm:divide-y-0 border-y border-rule sm:border-t sm:border-b">
           {taxingDistricts.map(d => (
-            <li key={d.name} className="flex items-center gap-3 py-3 sm:border-b sm:border-rule-strong">
-              <span
-                aria-hidden="true"
-                className={`shrink-0 w-2 h-2 rounded-full ${d.grayslake ? 'bg-status-approval' : 'bg-status-policy'}`}
-              />
-              <span className="text-sm font-sans text-ink-800 leading-snug">{d.name}</span>
+            <li key={d.name} className="flex items-baseline gap-3 py-3 sm:border-b sm:border-rule-strong">
+              <span className="text-sm font-sans text-ink-800 leading-snug flex-1 min-w-0">{d.name}</span>
+              <span className="shrink-0 text-2xs font-sans font-semibold uppercase tracking-wide text-ink-500">
+                {d.grayslake ? 'Grayslake' : 'Outside'}
+              </span>
               {d.school && (
-                <span className="ml-auto shrink-0 text-2xs font-sans font-semibold uppercase tracking-wide text-ink-500">School</span>
+                <span className="shrink-0 text-2xs font-sans font-semibold uppercase tracking-wide text-ink-500">School</span>
               )}
             </li>
           ))}
         </ul>
-
-        <div className="flex flex-wrap gap-x-5 gap-y-1 mt-4">
-          <span className="inline-flex items-center gap-1.5 text-xs font-sans text-ink-600">
-            <span aria-hidden="true" className="w-2 h-2 rounded-full bg-status-approval" /> Grayslake district
-          </span>
-          <span className="inline-flex items-center gap-1.5 text-xs font-sans text-ink-600">
-            <span aria-hidden="true" className="w-2 h-2 rounded-full bg-status-policy" /> Outside Grayslake
-          </span>
-        </div>
 
         <p className="text-sm font-sans text-ink-600 leading-relaxed mt-6 pt-4 border-t border-rule-soft max-w-prose">
           No per-district share has been published. What each district actually receives depends on the

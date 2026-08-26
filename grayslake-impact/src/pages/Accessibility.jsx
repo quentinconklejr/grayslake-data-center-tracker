@@ -61,7 +61,7 @@ export default function Accessibility() {
         <p>
           <a
             href={`mailto:${CONTACT}?subject=${encodeURIComponent('Accessibility problem on grayslakedatacentertracker.org')}`}
-            className="text-accent hover:text-accent-hover underline underline-offset-4 decoration-rule hover:decoration-accent font-semibold"
+            className="text-accent hover:text-accent-hover underline underline-offset-4 decoration-accent font-semibold"
           >
             {CONTACT}
           </a>

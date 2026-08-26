@@ -47,7 +47,7 @@ export default function SchoolFundingChart() {
               transition={{ delay: 0.1, duration: 0.9, ease: [0.25, 0.46, 0.45, 0.94] }}
             />
             <motion.div
-              className="h-full bg-ink-400/50"
+              className="h-full bg-ink-500"
               initial={{ width: 0 }}
               animate={inView ? { width: `${OTHER_PCT}%` } : { width: 0 }}
               transition={{ delay: 0.65, duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
@@ -61,7 +61,7 @@ export default function SchoolFundingChart() {
               {SCHOOL_PCT}% Schools
             </span>
             <span className="flex items-center gap-2 text-xs font-sans text-ink-600">
-              <span aria-hidden="true" className="w-3 h-3 bg-ink-400/50" />
+              <span aria-hidden="true" className="w-3 h-3 bg-ink-500" />
               {OTHER_PCT}% Other
             </span>
           </div>
