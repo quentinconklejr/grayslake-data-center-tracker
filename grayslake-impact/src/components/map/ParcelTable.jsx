@@ -139,10 +139,10 @@ export default function ParcelTable({ parcels }) {
           </caption>
           <thead>
             <tr className="border-y border-rule text-ink-700 text-xs font-sans font-semibold uppercase tracking-wide">
-              <th scope="col" className="py-2.5 px-4 sm:px-3">PIN</th>
+              <th scope="col" className="py-2.5 px-4 sm:px-3 text-left">PIN</th>
               <th
                 scope="col"
-                className="py-2.5 px-4 sm:px-3 cursor-pointer hover:text-ink-900"
+                className="py-2.5 px-4 sm:px-3 cursor-pointer hover:text-ink-900 text-right"
                 onClick={() => {
                   setSortField('acres')
                   setSortOrder(prev => (prev === 'asc' ? 'desc' : 'asc'))
@@ -150,8 +150,8 @@ export default function ParcelTable({ parcels }) {
               >
                 Acres <span aria-hidden="true">{sortField === 'acres' ? (sortOrder === 'asc' ? '↑' : '↓') : ''}</span>
               </th>
-              <th scope="col" className="py-2.5 px-4 sm:px-3">Recorded sale price</th>
-              <th scope="col" className="py-2.5 px-4 sm:px-3">Sale date</th>
+              <th scope="col" className="py-2.5 px-4 sm:px-3 text-right">Recorded sale price</th>
+              <th scope="col" className="py-2.5 px-4 sm:px-3 text-left">Sale date</th>
             </tr>
           </thead>
           {/* Zebra tint (bg-paper-sunk/50) removed — carried a Tailwind
@@ -165,9 +165,13 @@ export default function ParcelTable({ parcels }) {
                   <th scope="row" className="py-2 px-4 sm:px-3 font-mono font-semibold text-ink-900 text-left">
                     {p.pin}
                   </th>
-                  <td className="py-2 px-4 sm:px-3 text-ink-700">{p.acres}</td>
-                  <td className="py-2 px-4 sm:px-3 text-ink-700">{p.salePrice || '—'}</td>
-                  <td className="py-2 px-4 sm:px-3 text-ink-700">{p.date || '—'}</td>
+                  <td className="py-2 px-4 sm:px-3 text-ink-700 text-right tabular-nums">{p.acres}</td>
+                  <td className={`py-2 px-4 sm:px-3 text-ink-700 tabular-nums ${p.salePrice ? 'text-right' : 'text-center'}`}>
+                    {p.salePrice || '—'}
+                  </td>
+                  <td className={`py-2 px-4 sm:px-3 text-ink-700 ${p.date ? 'text-left' : 'text-center'}`}>
+                    {p.date || '—'}
+                  </td>
                 </tr>
               ))
             ) : (

@@ -36,20 +36,28 @@ export default function SourceCitation({ sourceKey }) {
 
   if (!source) return null
 
+  // The reference sits inline as a small superscript, not a bracketed
+  // markdown-looking token. A transparent 44×44 hit target overlays the
+  // visible mark so touch users get WCAG 2.5.5 AAA without inflating the
+  // typographic footprint. aria-label announces "Source N" so SR does not
+  // read the visual glyph out as "one".
   return (
-    <span ref={wrapperRef} className="relative inline-block ml-0.5">
+    <span ref={wrapperRef} className="relative inline align-baseline ml-0.5">
       <button
+        type="button"
         onClick={open}
         onMouseEnter={() => !window.matchMedia('(max-width: 768px)').matches && open({ preventDefault: () => {} })}
         onMouseLeave={close}
-        className="text-2xs font-mono font-semibold text-accent hover:text-accent-hover focus:outline-none"
+        aria-label={`Source ${num}`}
+        aria-expanded={show}
+        className="relative align-super text-2xs font-mono font-semibold text-accent hover:text-accent-hover after:absolute after:content-[''] after:left-1/2 after:top-1/2 after:-translate-x-1/2 after:-translate-y-1/2 after:w-11 after:h-11"
       >
-        [{num}]
+        <span aria-hidden="true">{num}</span>
       </button>
 
       {show && (
-        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-1.5 w-64 p-3 bg-ink-900 text-paper border border-ink-900 text-xs z-50 pointer-events-none">
-          <div className="font-mono font-semibold text-paper-sunk">Source [{num}]</div>
+        <div role="tooltip" className="absolute bottom-full left-1/2 -translate-x-1/2 mb-1.5 w-64 p-3 bg-ink-900 text-paper border border-ink-900 text-xs z-50 pointer-events-none">
+          <div className="font-mono font-semibold text-paper-sunk">Source {num}</div>
           <div className="font-sans font-semibold mt-1">{source.title}</div>
           {(source.publisher || source.date) && (
             <div className="text-2xs font-sans text-paper-sunk mt-1">

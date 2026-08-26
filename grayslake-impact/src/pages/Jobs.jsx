@@ -64,17 +64,17 @@ export default function Jobs({ asSection = false }) {
     <>
       {!asSection && <PageTitle {...pageMeta['/jobs']} />}
 
-      <FadeIn className="mb-10 pb-8 border-b border-rule">
-        <p className="text-xs font-display italic text-ink-500 tracking-wide mb-2">Employment</p>
-        {asSection ? (
-          <h3 className="text-3xl font-display text-ink-900 tracking-tight leading-tight mb-3">Job Creation</h3>
-        ) : (
-          <h1 className="text-4xl sm:text-5xl font-display text-ink-900 tracking-tight leading-[1.05] break-words mb-3">Job Creation</h1>
+      <FadeIn className={asSection ? 'mb-8' : 'mb-10 pb-8 border-b border-rule'}>
+        {!asSection && (
+          <>
+            <p className="text-xs font-display italic text-ink-500 tracking-wide mb-2">Employment</p>
+            <h1 className="text-4xl sm:text-5xl font-display text-ink-900 tracking-tight leading-[1.05] break-words mb-3">Job Creation</h1>
+          </>
         )}
         <p className="text-base font-sans text-ink-700 max-w-2xl leading-relaxed">
           Three official sources cite different permanent employment figures. Grayslake Mayor Elizabeth Davies cited {jobs.permanentDavies.toLocaleString()} jobs in October 2025. T5 Chief Executive Pete Marin cited more than {jobs.permanentMarin.toLocaleString()} in July 2026. The Village FAQ projects up to {jobs.permanent.toLocaleString()} permanent positions, based on {jobs.permanentBasis}. That maximum assumes full construction of the permitted {jobs.permanentCondition}. T5 has not committed to full buildout. Construction employment is listed separately as {jobs.constructionPhase}, with no headcount published.
         </p>
-        <p className="text-2xs font-mono text-ink-500 mt-3">Last verified {LAST_VERIFIED}</p>
+        {!asSection && <p className="text-2xs font-mono text-ink-500 mt-3">Last verified {LAST_VERIFIED}</p>}
       </FadeIn>
 
       <FadeIn className="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 mb-12">

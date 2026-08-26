@@ -54,10 +54,14 @@ export default function AnimatedNumber({
     return () => { clearTimeout(timer); stop?.() }
   }, [inView, value, duration, delay, sessionKey])
 
+  // Single span so DOM text isn't duplicated. Previously an aria-hidden
+  // visual span + an sr-only span both contributed text, which produced
+  // "1,680 1,680" in copy-paste and double announcements in some screen
+  // readers. Animation runs for ~0.6-0.8s; SR that reads mid-animation
+  // gets a partial value, but by rest the correct value is in the DOM.
   return (
     <span ref={ref} className={className}>
-      <span aria-hidden="true">{prefix}{format(display)}{suffix}</span>
-      <span className="sr-only">{prefix}{format(value)}{suffix}</span>
+      {prefix}{format(display)}{suffix}
     </span>
   )
 }

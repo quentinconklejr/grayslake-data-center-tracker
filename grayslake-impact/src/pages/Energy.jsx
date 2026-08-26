@@ -26,17 +26,17 @@ export default function Energy({ asSection = false }) {
     <>
       {!asSection && <PageTitle {...pageMeta['/energy']} />}
 
-      <FadeIn className="mb-10 pb-8 border-b border-rule">
-        <p className="text-xs font-display italic text-ink-500 tracking-wide mb-2">Grid Impact</p>
-        {asSection ? (
-          <h3 className="text-3xl font-display text-ink-900 tracking-tight leading-tight mb-3">Energy Draw</h3>
-        ) : (
-          <h1 className="text-4xl sm:text-5xl font-display text-ink-900 tracking-tight leading-[1.05] break-words mb-3">Energy Draw</h1>
+      <FadeIn className={asSection ? 'mb-8' : 'mb-10 pb-8 border-b border-rule'}>
+        {!asSection && (
+          <>
+            <p className="text-xs font-display italic text-ink-500 tracking-wide mb-2">Grid Impact</p>
+            <h1 className="text-4xl sm:text-5xl font-display text-ink-900 tracking-tight leading-[1.05] break-words mb-3">Energy Draw</h1>
+          </>
         )}
         <p className="text-base font-sans text-ink-700 max-w-2xl leading-relaxed">
           Public records document three electrical capacity figures for the Grayslake campus: {project.totalCapacityMW.toLocaleString()} MW of leasable IT computing load, {project.securedPowerMW.toLocaleString()} MW of utility-contracted capacity, and {project.comEdCapacityGW} GW of ComEd substation capacity. They measure different things. Each is cited below with its source.
         </p>
-        <p className="text-2xs font-mono text-ink-500 mt-3">Last verified {LAST_VERIFIED}</p>
+        {!asSection && <p className="text-2xs font-mono text-ink-500 mt-3">Last verified {LAST_VERIFIED}</p>}
       </FadeIn>
 
       <FadeIn className="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 mb-12">
