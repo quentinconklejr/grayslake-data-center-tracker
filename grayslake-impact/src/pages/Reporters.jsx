@@ -48,15 +48,29 @@ function CopyCitationButton({ text }) {
     setTimeout(() => setCopied(false), 2000)
   }
 
+  // Quiet utility button — small bordered chip, not a dashboard CTA.
+  // The visible label changes on copy; the aria-live=polite region beside
+  // it announces "Citation copied to clipboard" once the state flips so
+  // screen readers get the confirmation the sighted user gets from the
+  // visual flash.
   return (
-    <button
-      onClick={handleCopy}
-      className={`text-sm font-sans font-semibold underline underline-offset-4 decoration-accent shrink-0 min-h-[44px] transition-colors ${
-        copied ? 'text-status-stated' : 'text-accent hover:text-accent-hover'
-      }`}
-    >
-      {copied ? '✓ Copied AP Citation' : 'Copy AP Citation'}
-    </button>
+    <span className="inline-flex items-center gap-3 shrink-0">
+      <button
+        type="button"
+        onClick={handleCopy}
+        className={`inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-sans font-semibold border transition-colors min-h-[44px] ${
+          copied
+            ? 'bg-status-stated-soft text-status-stated border-status-stated'
+            : 'bg-transparent text-ink-700 border-rule-strong hover:border-ink-700 hover:text-ink-900'
+        }`}
+      >
+        <span aria-hidden="true">{copied ? '✓' : '⧉'}</span>
+        {copied ? 'Copied' : 'Copy AP citation'}
+      </button>
+      <span role="status" aria-live="polite" className="sr-only">
+        {copied ? 'Citation copied to clipboard' : ''}
+      </span>
+    </span>
   )
 }
 

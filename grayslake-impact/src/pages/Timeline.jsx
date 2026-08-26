@@ -67,65 +67,67 @@ export default function TimelinePage() {
           ogImage={pageMeta['/timeline'].ogImage}
         />
 
-        <header className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-rule pb-8">
-          <div className="max-w-2xl">
-            <p className="text-xs font-display italic text-ink-500 tracking-wide mb-2">
-              Project History
-            </p>
-            <h1 className="text-4xl sm:text-5xl font-display text-ink-900 tracking-tight leading-[1.05] mb-3">
-              Timeline of Events
-            </h1>
-            <p className="text-base font-sans text-ink-700 leading-relaxed">
-              Chronological record of village approvals, legal filings, opposition actions, and state policy updates.
-            </p>
-            <p className="text-2xs font-mono text-ink-500 mt-3">
-              Last verified {LAST_VERIFIED}
-            </p>
+        <header className="border-b border-rule pb-6">
+          <p className="text-xs font-display italic text-ink-500 tracking-wide mb-2">
+            Project History
+          </p>
+          <h1 className="text-4xl sm:text-5xl font-display text-ink-900 tracking-tight leading-[1.05] mb-3">
+            Timeline of Events
+          </h1>
+          <p className="text-base font-sans text-ink-700 leading-relaxed max-w-2xl">
+            Chronological record of village approvals, legal filings, opposition actions, and state policy updates.
+          </p>
+          <p className="text-2xs font-mono text-ink-500 mt-3">
+            Last verified {LAST_VERIFIED}
+          </p>
+        </header>
+
+        {/* Filter chips + export live on one row so the reader can filter
+            and export from the same visual band. Wraps gracefully at 375
+            (export drops below chips) rather than overflowing. Chips use
+            the same segmented convention as Actions filters and SiteMap's
+            base-map toggle. */}
+        <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-3">
+          <div role="group" aria-label="Filter timeline by category" className="flex flex-wrap items-center gap-2">
+            <button
+              type="button"
+              aria-pressed={activeCategory === 'all'}
+              onClick={() => setActiveCategory('all')}
+              className={`px-3 py-1.5 text-xs font-sans font-semibold border transition-colors min-h-[44px] ${
+                activeCategory === 'all'
+                  ? 'bg-ink-900 text-paper border-ink-900'
+                  : 'bg-transparent text-ink-700 border-rule-strong hover:border-ink-700 hover:text-ink-900'
+              }`}
+            >
+              All <span className="ml-1 text-ink-500">({timelineEvents.length})</span>
+            </button>
+            {LEGEND.map(({ key, label }) => {
+              const count = timelineEvents.filter(e => e.category === key).length
+              const isActive = activeCategory === key
+              return (
+                <button
+                  key={key}
+                  type="button"
+                  aria-pressed={isActive}
+                  onClick={() => setActiveCategory(prev => prev === key ? 'all' : key)}
+                  className={`px-3 py-1.5 text-xs font-sans font-semibold border transition-colors min-h-[44px] ${
+                    isActive
+                      ? 'bg-ink-900 text-paper border-ink-900'
+                      : 'bg-transparent text-ink-700 border-rule-strong hover:border-ink-700 hover:text-ink-900'
+                  }`}
+                >
+                  {label} <span className={`ml-1 ${isActive ? 'text-paper-sunk' : 'text-ink-500'}`}>({count})</span>
+                </button>
+              )
+            })}
           </div>
 
           <button
             onClick={handleExportCSV}
-            className="text-sm font-sans text-accent hover:text-accent-hover underline underline-offset-4 decoration-accent shrink-0 self-start sm:self-end min-h-[44px]"
+            className="text-sm font-sans text-accent hover:text-accent-hover underline underline-offset-4 decoration-accent shrink-0 min-h-[44px]"
           >
             Export Timeline CSV
           </button>
-        </header>
-
-        {/* Category filters. aria-pressed + role="group" matches the
-            same segmented-control convention used on Actions filters
-            and SiteMap's base-map toggle. */}
-        <div role="group" aria-label="Filter timeline by category" className="flex flex-wrap items-center gap-2">
-          <button
-            type="button"
-            aria-pressed={activeCategory === 'all'}
-            onClick={() => setActiveCategory('all')}
-            className={`px-3 py-1.5 text-xs font-sans font-semibold border transition-colors min-h-[44px] ${
-              activeCategory === 'all'
-                ? 'bg-ink-900 text-paper border-ink-900'
-                : 'bg-transparent text-ink-700 border-rule-strong hover:border-ink-700 hover:text-ink-900'
-            }`}
-          >
-            All <span className="ml-1 text-ink-500">({timelineEvents.length})</span>
-          </button>
-          {LEGEND.map(({ key, label }) => {
-            const count = timelineEvents.filter(e => e.category === key).length
-            const isActive = activeCategory === key
-            return (
-              <button
-                key={key}
-                type="button"
-                aria-pressed={isActive}
-                onClick={() => setActiveCategory(prev => prev === key ? 'all' : key)}
-                className={`px-3 py-1.5 text-xs font-sans font-semibold border transition-colors min-h-[44px] ${
-                  isActive
-                    ? 'bg-ink-900 text-paper border-ink-900'
-                    : 'bg-transparent text-ink-700 border-rule-strong hover:border-ink-700 hover:text-ink-900'
-                }`}
-              >
-                {label} <span className={`ml-1 ${isActive ? 'text-paper-sunk' : 'text-ink-500'}`}>({count})</span>
-              </button>
-            )
-          })}
         </div>
 
         {/* Timeline */}
