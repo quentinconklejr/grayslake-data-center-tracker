@@ -229,28 +229,28 @@ export default function SiteMap({ className = '', showCaption = true }) {
       )}
 
       {/* ── Basemap toggle + summary ────────────────────────────────
-          Quiet text-toggle. Underline on the active choice reads as a
-          selection cue without turning the control into a chip button.
-          Kept aria-pressed / role=group for screen readers. */}
-      <div className="flex flex-wrap items-baseline justify-between gap-3 pb-3 border-b border-rule">
-        <div className="inline-flex items-baseline gap-1" role="group" aria-label="Base map style">
-          <span className="text-xs font-sans font-semibold text-ink-600 mr-2">Base map</span>
-          {[['satellite', 'Satellite'], ['plain', 'Plain']].map(([k, lbl], i) => (
-            <span key={k} className="inline-flex items-baseline">
-              {i > 0 && <span aria-hidden="true" className="text-ink-400 mx-2">/</span>}
-              <button
-                type="button"
-                onClick={() => switchBase(k)}
-                aria-pressed={base === k}
-                className={`text-sm font-sans transition-colors min-h-[44px] py-2 ${
-                  base === k
-                    ? 'text-ink-900 font-semibold underline underline-offset-[6px] decoration-2 decoration-accent'
-                    : 'text-ink-600 hover:text-ink-900'
-                }`}
-              >
-                {lbl}
-              </button>
-            </span>
+          Segmented dark-inversion chip pair — same treatment as the
+          Actions jurisdiction / type filters and the Timeline category
+          filters, so the site has one segmented-control convention
+          rather than two. role="group" + aria-pressed preserved for
+          screen readers. */}
+      <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-rule">
+        <div className="inline-flex items-center gap-2" role="group" aria-label="Base map style">
+          <span className="text-xs font-sans font-semibold text-ink-600 mr-1">Base map</span>
+          {[['satellite', 'Satellite'], ['plain', 'Plain']].map(([k, lbl]) => (
+            <button
+              key={k}
+              type="button"
+              onClick={() => switchBase(k)}
+              aria-pressed={base === k}
+              className={`inline-flex items-center px-3 py-1.5 border text-xs font-sans font-semibold transition-colors min-h-[44px] ${
+                base === k
+                  ? 'bg-ink-900 text-paper border-ink-900'
+                  : 'bg-transparent text-ink-700 border-rule-strong hover:border-ink-700 hover:text-ink-900'
+              }`}
+            >
+              {lbl}
+            </button>
           ))}
         </div>
         <span className="text-xs font-mono text-ink-500">
@@ -315,7 +315,7 @@ export default function SiteMap({ className = '', showCaption = true }) {
           they read the map. */}
       <aside
         aria-label="Editor's note"
-        className="mt-6 border-l-[3px] border-ink-900 pl-5 sm:pl-6 py-1 max-w-2xl"
+        className="mt-6 border-l-[3px] border-ink-900 bg-paper-sunk pl-5 sm:pl-6 pr-5 py-4 max-w-2xl"
       >
         <p className="text-2xs font-display font-semibold text-ink-800 uppercase tracking-[0.14em] mb-2">
           Editor&rsquo;s note

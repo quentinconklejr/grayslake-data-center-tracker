@@ -48,27 +48,29 @@ export default function Sources() {
                   {String(i + 1).padStart(2, '0')}.
                 </span>
                 <div className="min-w-0 flex-1">
-                  <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1 mb-1">
-                    <h3 className="text-lg font-display font-semibold text-ink-900 leading-snug">
-                      {source.url && source.status !== 'dead' && source.status !== 'unverified' ? (
-                        <a
-                          href={source.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="hover:text-accent underline underline-offset-4 decoration-rule-strong hover:decoration-accent"
-                        >
-                          {source.title} <span aria-hidden="true">↗</span>
-                        </a>
-                      ) : (
-                        source.title
-                      )}
-                    </h3>
-                    {source.tier && (
-                      <span className={`text-2xs font-sans font-semibold uppercase tracking-wide ${tierCls}`}>
-                        {source.tier}
-                      </span>
+                  {/* Tier tag lives on its own metadata row above the title
+                      so a long title cannot displace it mid-line and cause
+                      wrap jitter. Also keeps the h3 measure predictable
+                      when scanning the list. */}
+                  {source.tier && (
+                    <p className={`text-2xs font-sans font-semibold uppercase tracking-wide mb-1.5 ${tierCls}`}>
+                      {source.tier}
+                    </p>
+                  )}
+                  <h3 className="text-lg font-display font-semibold text-ink-900 leading-snug mb-1">
+                    {source.url && source.status !== 'dead' && source.status !== 'unverified' ? (
+                      <a
+                        href={source.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hover:text-accent underline underline-offset-4 decoration-rule-strong hover:decoration-accent"
+                      >
+                        {source.title} <span aria-hidden="true">↗</span>
+                      </a>
+                    ) : (
+                      source.title
                     )}
-                  </div>
+                  </h3>
 
                   <div className="text-sm font-sans text-ink-600">
                     <span className="font-mono text-ink-500">
@@ -84,13 +86,17 @@ export default function Sources() {
 
                   {source.localCopy && (
                     <p className="mt-3">
+                      {/* Quiet utility button — bordered chip, not a dashboard CTA.
+                          Same treatment as Copy AP citation on /figures so the
+                          two record-adjacent actions read as a matched pair. */}
                       <a
                         href={source.localCopy}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-sm font-sans font-semibold text-accent hover:text-accent-hover underline underline-offset-4 decoration-accent"
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-sans font-semibold border border-rule-strong text-ink-700 hover:border-ink-700 hover:text-ink-900 transition-colors min-h-[44px]"
                       >
-                        Download PDF mirror <span aria-hidden="true">↗</span>
+                        <span aria-hidden="true">↓</span>
+                        Download PDF mirror
                       </a>
                     </p>
                   )}

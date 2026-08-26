@@ -68,12 +68,15 @@ export default function OpenQuestions() {
                 <button
                   onClick={() => toggle(q.id)}
                   aria-expanded={isOpen}
-                  className="w-full text-left py-5 sm:py-6 flex items-start justify-between gap-4 hover:bg-paper-sunk transition-colors"
+                  className="group w-full text-left py-5 sm:py-6 flex items-center justify-between gap-4 hover:bg-paper-sunk transition-colors"
                 >
                   <h2 className="text-xl sm:text-2xl font-display text-ink-900 leading-snug">
                     {q.question}
                   </h2>
-                  <span aria-hidden="true" className="text-ink-400 font-mono text-lg shrink-0 pt-1">
+                  <span
+                    aria-hidden="true"
+                    className="shrink-0 inline-flex items-center justify-center w-11 h-11 rounded-full border border-rule-strong text-ink-600 font-mono text-lg leading-none group-hover:border-accent group-hover:text-accent transition-colors"
+                  >
                     {isOpen ? '−' : '+'}
                   </span>
                 </button>

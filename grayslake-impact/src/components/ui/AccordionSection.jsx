@@ -43,7 +43,7 @@ export default function AccordionSection({
           onClick={onToggle}
           aria-expanded={open}
           aria-controls={panelId}
-          className="w-full text-left py-5 sm:py-6 flex flex-col sm:flex-row sm:items-start gap-4 sm:gap-8 hover:bg-paper-sunk transition-colors"
+          className="group w-full text-left py-5 sm:py-6 flex flex-col sm:flex-row sm:items-start gap-4 sm:gap-8 hover:bg-paper-sunk transition-colors"
         >
           {/* Title + description */}
           <div className="flex items-start gap-4 sm:gap-5 flex-1 min-w-0">
@@ -59,7 +59,7 @@ export default function AccordionSection({
           </div>
 
           {/* Headline figure */}
-          <div className="flex items-baseline justify-between gap-4 w-full sm:w-auto sm:justify-start shrink-0 pl-5 sm:pl-0 sm:text-right">
+          <div className="flex items-center justify-between gap-4 w-full sm:w-auto sm:justify-start shrink-0 pl-5 sm:pl-0 sm:text-right">
             <div className="min-w-0">
               <div className="text-2xl sm:text-[26px] font-display text-ink-900 tracking-tight leading-tight break-words">
                 {value}
@@ -70,7 +70,15 @@ export default function AccordionSection({
                 </div>
               )}
             </div>
-            <span aria-hidden="true" className="text-ink-400 font-mono text-sm shrink-0 sm:ml-4">
+            {/* +/- indicator styled as a 44x44 circular affordance. It is
+                a span not a nested button so we keep the whole-row button
+                pattern (nested buttons are invalid HTML). Hover styling
+                is driven by the parent button's hover via group- utilities;
+                keyboard focus lives on the parent button. */}
+            <span
+              aria-hidden="true"
+              className="shrink-0 sm:ml-4 inline-flex items-center justify-center w-11 h-11 rounded-full border border-rule-strong text-ink-600 font-mono text-lg leading-none group-hover:border-accent group-hover:text-accent transition-colors"
+            >
               {open ? '−' : '+'}
             </span>
           </div>
