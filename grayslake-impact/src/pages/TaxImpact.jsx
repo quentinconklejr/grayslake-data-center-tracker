@@ -26,17 +26,17 @@ export default function TaxImpact({ asSection = false }) {
     <>
       {!asSection && <PageTitle {...pageMeta['/tax-impact']} />}
 
-      <FadeIn className="mb-10 pb-8 border-b border-rule">
-        <p className="text-xs font-display italic text-ink-500 tracking-wide mb-2">Fiscal Revenue</p>
-        {asSection ? (
-          <h3 className="text-3xl font-display text-ink-900 tracking-tight leading-tight mb-3">Tax Impact</h3>
-        ) : (
-          <h1 className="text-4xl sm:text-5xl font-display text-ink-900 tracking-tight leading-[1.05] mb-3">Tax Impact</h1>
+      <FadeIn className={asSection ? 'mb-8' : 'mb-10 pb-8 border-b border-rule'}>
+        {!asSection && (
+          <>
+            <p className="text-xs font-display italic text-ink-500 tracking-wide mb-2">Fiscal Revenue</p>
+            <h1 className="text-4xl sm:text-5xl font-display text-ink-900 tracking-tight leading-[1.05] mb-3">Tax Impact</h1>
+          </>
         )}
         <p className="text-base font-sans text-ink-700 max-w-2xl leading-relaxed">
           Developer fees, property tax projections, and revenue across eight local taxing bodies.
         </p>
-        <p className="text-2xs font-mono text-ink-500 mt-3">Last verified {LAST_VERIFIED}</p>
+        {!asSection && <p className="text-2xs font-mono text-ink-500 mt-3">Last verified {LAST_VERIFIED}</p>}
       </FadeIn>
 
       <FadeIn className="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 mb-12">

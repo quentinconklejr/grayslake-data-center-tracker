@@ -33,12 +33,12 @@ export default function Schools({ asSection = false }) {
     <>
       {!asSection && <PageTitle {...pageMeta['/schools']} />}
 
-      <FadeIn className="mb-10 pb-8 border-b border-rule">
-        <p className="text-xs font-display italic text-ink-500 tracking-wide mb-2">Education</p>
-        {asSection ? (
-          <h3 className="text-3xl font-display text-ink-900 tracking-tight leading-tight mb-3">School Funding Impact</h3>
-        ) : (
-          <h1 className="text-4xl sm:text-5xl font-display text-ink-900 tracking-tight leading-[1.05] break-words mb-3">School Funding Impact</h1>
+      <FadeIn className={asSection ? 'mb-8' : 'mb-10 pb-8 border-b border-rule'}>
+        {!asSection && (
+          <>
+            <p className="text-xs font-display italic text-ink-500 tracking-wide mb-2">Education</p>
+            <h1 className="text-4xl sm:text-5xl font-display text-ink-900 tracking-tight leading-[1.05] break-words mb-3">School Funding Impact</h1>
+          </>
         )}
         <p className="text-base font-sans text-ink-700 max-w-2xl leading-relaxed">
           Village officials have cited property tax projections ranging from $300 million to over
@@ -46,7 +46,7 @@ export default function Schools({ asSection = false }) {
           independently verified. The Lake County Assessor has not valued the campus. Actual
           revenue depends on that valuation and applicable levy rates.
         </p>
-        <p className="text-2xs font-mono text-ink-500 mt-3">Last verified {LAST_VERIFIED}</p>
+        {!asSection && <p className="text-2xs font-mono text-ink-500 mt-3">Last verified {LAST_VERIFIED}</p>}
       </FadeIn>
 
       <FadeIn className="mb-10">
