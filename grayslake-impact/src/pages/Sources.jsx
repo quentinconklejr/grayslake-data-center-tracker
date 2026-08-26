@@ -55,7 +55,7 @@ export default function Sources() {
                           href={source.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="hover:text-accent underline underline-offset-4 decoration-rule hover:decoration-accent"
+                          className="hover:text-accent underline underline-offset-4 decoration-rule-strong hover:decoration-accent"
                         >
                           {source.title} <span aria-hidden="true">↗</span>
                         </a>
@@ -88,7 +88,7 @@ export default function Sources() {
                         href={source.localCopy}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-sm font-sans font-semibold text-accent hover:text-accent-hover underline underline-offset-4 decoration-rule hover:decoration-accent"
+                        className="text-sm font-sans font-semibold text-accent hover:text-accent-hover underline underline-offset-4 decoration-accent"
                       >
                         Download PDF mirror <span aria-hidden="true">↗</span>
                       </a>

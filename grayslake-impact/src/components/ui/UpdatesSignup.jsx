@@ -172,7 +172,7 @@ export default function UpdatesSignup() {
 
       <p className="text-xs font-sans text-ink-500 mt-3">
         No tracking, no sharing, no other mail. See{' '}
-        <a href="/privacy" className="underline underline-offset-4 decoration-rule hover:decoration-accent hover:text-ink-700">
+        <a href="/privacy" className="underline underline-offset-4 decoration-rule-strong hover:decoration-accent hover:text-ink-700">
           Privacy
         </a>
         .

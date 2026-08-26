@@ -69,7 +69,7 @@ export default function Project() {
           <div className="shrink-0">
             <button
               onClick={() => setOpen(allOpen ? [] : IDS)}
-              className="text-sm font-sans text-accent hover:text-accent-hover underline underline-offset-4 decoration-rule hover:decoration-accent min-h-[44px]"
+              className="text-sm font-sans text-accent hover:text-accent-hover underline underline-offset-4 decoration-accent min-h-[44px]"
             >
               {allOpen ? 'Collapse all impact areas' : 'Expand all impact areas'}
             </button>

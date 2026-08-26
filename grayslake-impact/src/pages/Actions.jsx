@@ -55,7 +55,7 @@ function chipClass(active) {
   return `inline-flex items-center px-3 py-1.5 border text-xs font-sans font-semibold transition-colors duration-150 min-h-[44px] ${
     active
       ? 'bg-ink-900 text-paper border-ink-900'
-      : 'bg-transparent text-ink-600 border-rule hover:border-ink-700 hover:text-ink-900'
+      : 'bg-transparent text-ink-700 border-rule-strong hover:border-ink-700 hover:text-ink-900'
   }`
 }
 
@@ -142,7 +142,7 @@ export default function Actions() {
                   className={chipClass(juriFilter === j)}
                 >
                   {j}
-                  {count > 0 && <span className="opacity-70 ml-1">({count})</span>}
+                  {count > 0 && <span className="ml-1 text-ink-500">({count})</span>}
                 </button>
               )
             })}
@@ -190,10 +190,10 @@ export default function Actions() {
 
         <FadeIn className="mt-12 border-t border-rule pt-8">
           <div className="flex flex-wrap gap-6 text-sm font-sans">
-            <Link to="/timeline" className="text-accent hover:text-accent-hover underline underline-offset-4 decoration-rule hover:decoration-accent">
+            <Link to="/timeline" className="text-accent hover:text-accent-hover underline underline-offset-4 decoration-accent">
               Full project timeline →
             </Link>
-            <Link to="/documents" className="text-accent hover:text-accent-hover underline underline-offset-4 decoration-rule hover:decoration-accent">
+            <Link to="/documents" className="text-accent hover:text-accent-hover underline underline-offset-4 decoration-accent">
               All documents and sources →
             </Link>
           </div>

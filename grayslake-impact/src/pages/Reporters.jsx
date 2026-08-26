@@ -51,7 +51,7 @@ function CopyCitationButton({ text }) {
   return (
     <button
       onClick={handleCopy}
-      className={`text-sm font-sans font-semibold underline underline-offset-4 decoration-rule hover:decoration-accent shrink-0 min-h-[44px] transition-colors ${
+      className={`text-sm font-sans font-semibold underline underline-offset-4 decoration-accent shrink-0 min-h-[44px] transition-colors ${
         copied ? 'text-status-stated' : 'text-accent hover:text-accent-hover'
       }`}
     >

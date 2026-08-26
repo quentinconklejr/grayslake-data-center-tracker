@@ -127,7 +127,7 @@ export default function Privacy() {
           the top moves. Questions about any of it can go to{' '}
           <a
             href={`mailto:${CONTACT}?subject=${encodeURIComponent('Privacy question about grayslakedatacentertracker.org')}`}
-            className="text-accent hover:text-accent-hover underline underline-offset-4 decoration-rule hover:decoration-accent font-semibold"
+            className="text-accent hover:text-accent-hover underline underline-offset-4 decoration-accent font-semibold"
           >
             {CONTACT}
           </a>.

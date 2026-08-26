@@ -44,7 +44,7 @@ export default function EnergyDrawChart() {
           <div className="text-right">
             <p className="text-xs font-sans font-semibold text-ink-600 mb-1">IT Capacity (Leasable)</p>
             <p className="text-3xl font-display text-accent tracking-tight">
-              1,200 <span className="text-lg text-accent/60">MW</span>
+              1,200 <span className="text-lg text-ink-500">MW</span>
             </p>
           </div>
         </div>
@@ -60,7 +60,7 @@ export default function EnergyDrawChart() {
               transition={{ delay: 0.1, duration: 0.9, ease: [0.25, 0.46, 0.45, 0.94] }}
             />
             <motion.div
-              className="h-full bg-status-policy/70"
+              className="h-full bg-status-policy"
               initial={{ width: 0 }}
               animate={inView ? { width: `${bufPct}%` } : { width: 0 }}
               transition={{ delay: 0.55, duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
@@ -74,7 +74,7 @@ export default function EnergyDrawChart() {
               {capPct.toFixed(0)}% IT capacity
             </span>
             <span className="flex items-center gap-2 text-xs font-sans text-ink-700">
-              <span aria-hidden="true" className="w-3 h-3 bg-status-policy/70" />
+              <span aria-hidden="true" className="w-3 h-3 bg-status-policy" />
               {bufPct.toFixed(0)}% buffer
             </span>
           </div>

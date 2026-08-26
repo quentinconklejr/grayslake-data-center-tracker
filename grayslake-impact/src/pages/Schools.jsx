@@ -186,7 +186,7 @@ export default function Schools({ asSection = false }) {
                  className="text-xs font-sans font-semibold text-accent hover:text-accent-hover">PDF mirror</a>
             </div>
           </div>
-          <div className="px-4 py-3 bg-paper-sunk/50 space-y-2">
+          <div className="px-4 py-3 bg-paper-sunk space-y-2">
             <p className="text-sm font-sans text-ink-700 leading-relaxed">
               Per page 2 of the Village FAQ, eight taxing bodies will receive property tax revenue from the T5 campus:
               Fremont Elementary District 79, Grayslake Community High School District 127, Mundelein High School District 120,
