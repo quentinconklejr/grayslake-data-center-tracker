@@ -105,80 +105,78 @@ export default function UpdatesSignup() {
   }
 
   return (
-    <section className="border border-slate-300 rounded-xl bg-slate-50 overflow-hidden my-8">
-      <div className="px-5 sm:px-6 py-5">
-        <p className="text-2xs font-mono font-bold uppercase tracking-widest text-sky-800 mb-1">
-          Stay on the record
+    <section aria-label="Email updates" className="border-t border-rule pt-8 my-8">
+      <p className="text-xs font-display italic text-ink-500 tracking-wide mb-2">
+        Stay on the record
+      </p>
+      <h2 className="text-2xl font-display text-ink-900 tracking-tight leading-snug">
+        Get an email when something changes
+      </h2>
+      <p className="text-base font-sans text-ink-700 leading-relaxed mt-2 max-w-2xl">
+        {/* Was "Sent when there is something worth sending, which is not
+            often." Litotes - saying "not often" instead of "rarely" - and
+            the one place on the site doing it. It reads as arch rather than
+            plain, which is the wrong register for the only box on the page
+            asking a stranger for their email address. "Some months there is
+            nothing to send" says the same thing as a fact about the record
+            rather than a wry aside about the newsletter, and it promises a
+            frequency that can actually be kept. */}
+        New filings, new documents, corrections to figures already published. Some months there is
+        nothing to send. Your address is used for this and nothing else, and one line in reply
+        takes you off the list.
+      </p>
+
+      {state === 'done' ? (
+        <p
+          role="status"
+          className="mt-5 text-sm font-sans text-status-stated border-l-[3px] border-status-stated bg-status-stated-soft px-4 py-3"
+        >
+          You&rsquo;re on the list. <strong className="font-semibold">{email}</strong> will get
+          updates when the record changes.
         </p>
-        <h2 className="text-lg sm:text-xl font-display font-bold text-slate-900 leading-snug">
-          Get an email when something changes
-        </h2>
-        <p className="text-sm text-slate-700 leading-relaxed mt-1.5 max-w-2xl">
-          {/* Was "Sent when there is something worth sending, which is not
-              often." Litotes - saying "not often" instead of "rarely" - and
-              the one place on the site doing it. It reads as arch rather than
-              plain, which is the wrong register for the only box on the page
-              asking a stranger for their email address. "Some months there is
-              nothing to send" says the same thing as a fact about the record
-              rather than a wry aside about the newsletter, and it promises a
-              frequency that can actually be kept. */}
-          New filings, new documents, corrections to figures already published. Some months there is
-          nothing to send. Your address is used for this and nothing else, and one line in reply
-          takes you off the list.
-        </p>
-
-        {state === 'done' ? (
-          <p
-            role="status"
-            className="mt-4 text-sm text-emerald-900 bg-emerald-50 border border-emerald-300 rounded-lg px-3.5 py-3"
+      ) : (
+        <form onSubmit={handleSubmit} className="mt-5 flex flex-col sm:flex-row gap-3 max-w-lg">
+          <label htmlFor="updates-email" className="sr-only">Email address</label>
+          <input
+            id="updates-email"
+            type="email"
+            required
+            autoComplete="email"
+            value={email}
+            onChange={e => { setEmail(e.target.value); if (state === 'error') setState('idle') }}
+            placeholder="you@example.com"
+            className="flex-1 min-h-[44px] px-3 py-2.5 border-b border-rule-strong bg-transparent text-base sm:text-sm text-ink-900 placeholder:text-ink-500 focus:outline-none focus:border-accent"
+          />
+          <button
+            type="submit"
+            disabled={state === 'sending'}
+            className="min-h-[44px] px-6 py-2.5 bg-accent text-paper-raised text-sm font-sans font-semibold hover:bg-accent-hover disabled:opacity-60 transition-colors shrink-0"
           >
-            You&rsquo;re on the list. <strong className="font-semibold">{email}</strong> will get
-            updates when the record changes.
-          </p>
-        ) : (
-          <form onSubmit={handleSubmit} className="mt-4 flex flex-col sm:flex-row gap-2.5 max-w-lg">
-            <label htmlFor="updates-email" className="sr-only">Email address</label>
-            <input
-              id="updates-email"
-              type="email"
-              required
-              autoComplete="email"
-              value={email}
-              onChange={e => { setEmail(e.target.value); if (state === 'error') setState('idle') }}
-              placeholder="you@example.com"
-              className="flex-1 min-h-[44px] px-3.5 py-2.5 rounded-lg border border-slate-300 bg-white text-base sm:text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-sky-600 focus:ring-1 focus:ring-sky-600"
-            />
-            <button
-              type="submit"
-              disabled={state === 'sending'}
-              className="min-h-[44px] px-6 py-2.5 rounded-lg bg-sky-800 text-white text-sm font-semibold hover:bg-sky-900 disabled:opacity-60 transition-colors shrink-0"
-            >
-              {state === 'sending' ? 'Adding…' : 'Subscribe'}
-            </button>
-          </form>
-        )}
+            {state === 'sending' ? 'Adding…' : 'Subscribe'}
+          </button>
+        </form>
+      )}
 
-        {state === 'error' && (
-          <p
-            role="alert"
-            className="mt-3 text-sm text-red-900 bg-red-50 border border-red-300 rounded-lg px-3.5 py-2.5"
-          >
-            {error}{' '}
-            <a href={mailto} className="underline underline-offset-2 font-medium">
-              Email me and I&rsquo;ll add you
-            </a>
-            .
-          </p>
-        )}
-
-        <p className="text-2xs text-slate-500 mt-3">
-          No tracking, no sharing, no other mail. See{' '}
-          <a href="/privacy" className="underline underline-offset-2 hover:text-slate-700">
-            Privacy
+      {state === 'error' && (
+        <p
+          role="alert"
+          className="mt-3 text-sm font-sans text-status-legal border-l-[3px] border-status-legal bg-status-legal-soft px-4 py-3"
+        >
+          {error}{' '}
+          <a href={mailto} className="underline underline-offset-4 font-semibold">
+            Email me and I&rsquo;ll add you
           </a>
           .
         </p>
-      </div>
+      )}
+
+      <p className="text-xs font-sans text-ink-500 mt-3">
+        No tracking, no sharing, no other mail. See{' '}
+        <a href="/privacy" className="underline underline-offset-4 decoration-rule-strong hover:decoration-accent hover:text-ink-700">
+          Privacy
+        </a>
+        .
+      </p>
     </section>
   )
 }

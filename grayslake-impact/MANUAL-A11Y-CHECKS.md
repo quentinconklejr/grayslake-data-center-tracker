@@ -65,9 +65,8 @@ Things only a human can decide.
 
 ## 6. Known gaps
 
-- **Mapbox internals.** The canvas gets `role="img"` with a description and a
-  text equivalent beside it. The map's own pan and zoom controls come from
-  Mapbox GL and are not fully keyboard-operable. The mitigation is that no
+- **Leaflet internals.** The map's own pan and zoom controls come from
+  Leaflet and are not fully keyboard-operable. The mitigation is that no
   information is map-only — everything the map shows is in the parcel table.
   If that stops being true, the map becomes an AA failure.
 - **Colour-coded chart bars.** Hidden from assistive tech because the adjacent

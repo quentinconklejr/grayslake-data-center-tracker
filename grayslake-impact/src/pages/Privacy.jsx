@@ -1,4 +1,5 @@
 import PageTitle from '../components/ui/PageTitle'
+import Container from '../components/layout/Container'
 import { pageMeta } from '../data/pageMeta'
 import FadeIn from '../components/ui/FadeIn'
 import BackToTop from '../components/ui/BackToTop'
@@ -7,48 +8,45 @@ import { LAST_VERIFIED, SITE_CONTACT } from '../data/siteConfig'
 /**
  * Privacy page.
  *
- * Rewritten because it had drifted out of true in four ways, and a privacy
- * page that is wrong is worse than none:
+ * The claims below describe what actually leaves the reader's browser.
+ * A false claim on this page is worse than none: it's disclosure, not
+ * marketing, and readers rely on it to decide whether to visit. Every
+ * bullet in the "Other services that load in the page" section should
+ * be re-verified against index.html and the running app whenever a
+ * third-party dependency is added, removed, or changed. Previous drifts
+ * that this file has had to correct include a mis-named map library, a
+ * mailing-list contradiction, and a font-hosting misstatement.
  *
- *   1. It said the map is served by Mapbox. It is not. The map is Leaflet,
- *      with satellite tiles from Esri and street labels from CARTO.
- *   2. It said "I do not run a mailing list, and I will not add you to one",
- *      three paragraphs below the section describing the mailing list.
- *   3. It never mentioned Google Fonts, which every page loads, and which is
- *      the one third-party request a reader cannot avoid.
- *   4. The contact address was a personal gmail, while every other page used
- *      the university address.
- *
- * The contact address is imported rather than hardcoded so it cannot drift
- * again.
+ * The contact address is imported from siteConfig rather than hardcoded
+ * so it cannot drift out of sync with the About page.
  */
 
 const CONTACT = SITE_CONTACT.email
 
 function Section({ title, children }) {
   return (
-    <FadeIn className="border-t border-edge-soft pt-8 pb-9">
-      <h2 className="text-2xl font-display font-bold text-gray-900 mb-4">{title}</h2>
-      <div className="space-y-4 text-base text-gray-700 leading-relaxed max-w-3xl">{children}</div>
+    <FadeIn className="border-t border-rule pt-8 pb-2">
+      <h2 className="text-2xl font-display text-ink-900 tracking-tight mb-4">{title}</h2>
+      <div className="space-y-4 text-base font-sans text-ink-700 leading-relaxed">{children}</div>
     </FadeIn>
   )
 }
 
 export default function Privacy() {
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 py-12">
+    <Container size="prose" className="py-12 sm:py-16">
       <PageTitle {...pageMeta['/privacy']} />
 
-      <FadeIn className="mb-10 pb-8 border-b border-edge-soft">
-        <p className="text-2xs font-mono text-blue-700 uppercase tracking-[0.15em] mb-4">Privacy</p>
-        <h1 className="text-4xl sm:text-5xl font-display font-bold text-gray-900 tracking-tight break-words mb-4">
+      <FadeIn className="mb-12 pb-8 border-b border-rule">
+        <p className="text-xs font-display italic text-ink-500 tracking-wide mb-2">Privacy</p>
+        <h1 className="text-4xl sm:text-5xl font-display text-ink-900 tracking-tight leading-[1.05] break-words mb-4">
           What this site collects
         </h1>
-        <p className="text-lg text-gray-700 max-w-3xl leading-relaxed">
+        <p className="text-lg font-sans text-ink-700 leading-relaxed">
           Almost nothing. No cookies, no accounts, no advertising, nothing sold to anyone. Unless you
           type your email into the signup box, I have no idea who you are and no way to find out.
         </p>
-        <p className="text-2xs font-mono text-gray-600 mt-4">Last reviewed {LAST_VERIFIED}</p>
+        <p className="text-2xs font-mono text-ink-500 mt-4">Last reviewed {LAST_VERIFIED}</p>
       </FadeIn>
 
       <Section title="If you sign up for updates">
@@ -126,7 +124,7 @@ export default function Privacy() {
           the top moves. Questions about any of it can go to{' '}
           <a
             href={`mailto:${CONTACT}?subject=${encodeURIComponent('Privacy question about grayslakedatacentertracker.org')}`}
-            className="text-blue-700 hover:text-blue-800 underline underline-offset-2 font-medium"
+            className="text-accent hover:text-accent-hover underline underline-offset-4 decoration-accent font-semibold"
           >
             {CONTACT}
           </a>.
@@ -134,6 +132,6 @@ export default function Privacy() {
       </Section>
 
       <BackToTop />
-    </div>
+    </Container>
   )
 }

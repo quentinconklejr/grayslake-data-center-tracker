@@ -3,6 +3,7 @@ import { pageMeta } from '../data/pageMeta'
 import FadeIn from '../components/ui/FadeIn'
 import BackToTop from '../components/ui/BackToTop'
 import SourceCitation from '../components/ui/SourceCitation'
+import Container from '../components/layout/Container'
 import { FootnoteProvider, FootnoteList } from '../components/ui/FootnoteContext'
 import { LAST_VERIFIED } from '../data/siteConfig'
 import { sources } from '../data/sources'
@@ -147,7 +148,7 @@ const COMPLAINT = {
     },
     {
       title: 'Substantive due process, Illinois Constitution',
-      detail: 'That the approvals departed from the Village\u2019s own planning framework in a way the state constitution does not permit.',
+      detail: 'That the approvals departed from the Village’s own planning framework in a way the state constitution does not permit.',
     },
     {
       title: 'Procedural due process, Illinois Constitution',
@@ -159,26 +160,26 @@ const COMPLAINT = {
     },
   ],
   relief: [
-    'A declaration that the 2024\u20132025 approvals are invalid and unenforceable',
+    'A declaration that the 2024–2025 approvals are invalid and unenforceable',
     'A judgment vacating and setting aside those approvals',
     'An order voiding the development agreement(s) between the Village and T5',
     'A permanent injunction barring further permits issued in reliance on the approvals',
-    'Attorneys\u2019 fees and costs to the extent recoverable',
+    'Attorneys’ fees and costs to the extent recoverable',
   ],
 }
 
 const MAX_CLAIM = Math.max(...REVENUE_CLAIMS.map(c => c.amount))
 
 const SIDE = {
-  village:   { bar: 'bg-sky-600',    chip: 'text-sky-800 bg-sky-50 border-sky-200',       label: 'Village' },
-  developer: { bar: 'bg-amber-500',  chip: 'text-amber-900 bg-amber-50 border-amber-200', label: 'Developer' },
+  village:   { bar: 'bg-status-approval', chip: 'text-status-approval', label: 'Village' },
+  developer: { bar: 'bg-status-policy',   chip: 'text-status-policy',   label: 'Developer' },
 }
 
-function Counter({ n, label, tone }) {
+function Counter({ n, label, tone, textCls }) {
   return (
-    <div className={`flex-1 min-w-[8.5rem] rounded-xl border px-4 py-3.5 ${tone}`}>
-      <div className="text-3xl font-display font-bold leading-none tracking-tight">{n}</div>
-      <div className="text-xs leading-snug mt-1.5">{label}</div>
+    <div className={`flex-1 min-w-[9rem] border-t-2 ${tone} pt-3`}>
+      <div className={`text-3xl font-display leading-none tracking-tight ${textCls ?? 'text-ink-900'}`}>{n}</div>
+      <div className="text-sm font-sans text-ink-700 leading-snug mt-1.5">{label}</div>
     </div>
   )
 }
@@ -186,121 +187,121 @@ function Counter({ n, label, tone }) {
 export default function Agreement() {
   return (
     <FootnoteProvider>
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-10 sm:py-12">
+      <Container size="default" className="py-10 sm:py-14">
         <PageTitle {...pageMeta['/agreement']} />
 
-        <FadeIn className="mb-8">
-          <p className="text-2xs font-mono text-blue-700 uppercase tracking-[0.15em] mb-3">The Deal</p>
-          <h1 className="text-3xl sm:text-5xl font-display font-bold text-gray-900 tracking-tight break-words mb-4">
+        <FadeIn className="mb-10">
+          <p className="text-xs font-display italic text-ink-500 tracking-wide mb-2">The Deal</p>
+          <h1 className="text-4xl sm:text-5xl font-display text-ink-900 tracking-tight leading-[1.05] break-words mb-4">
             What the Village agreed to
           </h1>
-          <p className="text-base sm:text-lg text-gray-700 max-w-3xl leading-relaxed">
+          <p className="text-lg font-sans text-ink-700 max-w-2xl leading-relaxed">
             A development agreement exists between the Village of Grayslake and T5. It has not been
             published. This site does not have a copy. The page covers what officials have said
             publicly. It is not derived from the document.
           </p>
-          <p className="text-2xs font-mono text-gray-600 mt-4">Last verified {LAST_VERIFIED}</p>
+          <p className="text-2xs font-mono text-ink-500 mt-4">Last verified {LAST_VERIFIED}</p>
         </FadeIn>
 
         {/* The shape of the answer, before the detail. */}
-        <FadeIn className="mb-8">
-          <div className="flex flex-wrap gap-3">
-            <Counter n={TERMS.length} label="terms on the public record" tone="border-emerald-200 bg-emerald-50 text-emerald-900" />
-            <Counter n={REVENUE_CLAIMS.length} label="revenue claims, none verified" tone="border-amber-200 bg-amber-50 text-amber-900" />
-            <Counter n={UNPUBLISHED.length} label="questions with no public answer" tone="border-slate-300 bg-slate-50 text-slate-800" />
+        <FadeIn className="mb-10">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-x-8 gap-y-4">
+            <Counter n={TERMS.length} label="terms on the public record" tone="border-status-construction" textCls="text-status-construction" />
+            <Counter n={REVENUE_CLAIMS.length} label="revenue claims, none verified" tone="border-status-disputed" textCls="text-status-disputed" />
+            <Counter n={UNPUBLISHED.length} label="questions with no public answer" tone="border-ink-500" />
           </div>
         </FadeIn>
 
         <FadeIn>
-          <div className="bg-amber-50 border-l-4 border-amber-400 border-y border-r border-amber-200 rounded-r-xl px-5 sm:px-6 py-5 mb-12">
-            <p className="text-2xs font-mono text-amber-800 uppercase tracking-widest mb-2">Read this first</p>
-            <p className="text-base text-gray-800 leading-relaxed">
+          <aside className="border-l-[3px] border-status-disputed bg-status-disputed-soft pl-5 pr-4 py-4 mb-14 max-w-2xl">
+            <p className="text-xs font-display italic text-status-disputed mb-2">Read this first</p>
+            <p className="text-base font-sans text-ink-800 leading-relaxed">
               Everything on this page is what people have <em>said</em> about the agreement. Nobody
               arguing this deal in public is arguing from the text. The text has never been released.
               A lawsuit filed July 31 asks a court to void it.
             </p>
-          </div>
+          </aside>
         </FadeIn>
 
         {/* ── The complaint itself ──────────────────────────────────────
-            The agreement this page describes is what the lawsuit asks a court
-            to void, so the filing belongs here, and now it can be linked in
-            full rather than characterised. This is the primary document: a
-            file-stamped copy from the Clerk, mirrored on this site so the
-            record does not depend on a shared link staying alive. */}
+            Deliberate exception to the "no dark surfaces" rule of the new
+            design. This block is a document facsimile: a real court filing,
+            presented with the visual weight of a document, with a dark
+            title bar reading like a docket header. It is the only elevated
+            surface in the app, and it's earned. */}
         <FadeIn className="mb-14">
-          <div className="border-2 border-slate-800 rounded-xl overflow-hidden">
-            <div className="bg-slate-900 px-5 sm:px-6 py-3.5">
-              <p className="text-2xs font-mono font-bold uppercase tracking-widest text-slate-300">
+          <div className="border-2 border-ink-900 overflow-hidden">
+            <div className="bg-ink-900 px-5 sm:px-6 py-4">
+              <p className="text-2xs font-sans font-semibold uppercase tracking-wide text-paper-sunk">
                 Primary document
               </p>
-              <p className="text-lg sm:text-xl font-display font-bold text-white leading-snug mt-0.5">
+              <p className="text-xl sm:text-2xl font-display text-paper leading-tight mt-1">
                 The agreement is being challenged in court
               </p>
             </div>
 
-            <div className="px-5 sm:px-6 py-5 bg-white">
-              <dl className="grid sm:grid-cols-2 gap-x-8 gap-y-3 mb-5">
+            <div className="px-5 sm:px-6 py-5 bg-paper-raised">
+              <dl className="grid sm:grid-cols-2 gap-x-8 gap-y-3 mb-6">
                 {[
                   ['Case number', COMPLAINT.caseNumber],
-                  ['Filed', COMPLAINT.filed],
-                  ['Court', COMPLAINT.court],
-                  ['Plaintiffs', COMPLAINT.plaintiffs],
-                  ['Defendants', COMPLAINT.defendants],
-                  ['Counsel', COMPLAINT.counsel],
+                  ['Filed',       COMPLAINT.filed],
+                  ['Court',       COMPLAINT.court],
+                  ['Plaintiffs',  COMPLAINT.plaintiffs],
+                  ['Defendants',  COMPLAINT.defendants],
+                  ['Counsel',     COMPLAINT.counsel],
                 ].map(([k, v]) => (
                   <div key={k} className="min-w-0">
-                    <dt className="text-2xs font-mono uppercase tracking-widest text-slate-500">{k}</dt>
-                    <dd className="text-sm text-slate-900 leading-snug mt-0.5">{v}</dd>
+                    <dt className="text-2xs font-sans font-semibold uppercase tracking-wide text-ink-500">{k}</dt>
+                    <dd className="text-sm font-sans text-ink-900 leading-snug mt-0.5">{v}</dd>
                   </div>
                 ))}
               </dl>
 
-              <p className="text-2xs font-mono uppercase tracking-widest text-slate-500 mb-2">
+              <p className="text-xs font-display italic text-ink-500 tracking-wide mb-2">
                 Four counts
               </p>
               <ol className="space-y-2 mb-5">
                 {COMPLAINT.counts.map((c, i) => (
                   <li key={c.title} className="flex items-start gap-3">
-                    <span className="shrink-0 mt-0.5 w-7 h-7 rounded-lg bg-slate-100 border border-slate-300 text-slate-700 text-2xs font-mono font-bold flex items-center justify-center">
+                    <span className="shrink-0 mt-0.5 w-7 h-7 border border-ink-900 text-ink-900 text-2xs font-mono font-semibold flex items-center justify-center">
                       {['I', 'II', 'III', 'IV'][i]}
                     </span>
                     <div className="min-w-0">
-                      <p className="text-sm font-semibold text-slate-900 leading-snug">{c.title}</p>
-                      <p className="text-xs text-slate-600 leading-relaxed mt-0.5">{c.detail}</p>
+                      <p className="text-base font-display font-semibold text-ink-900 leading-snug">{c.title}</p>
+                      <p className="text-sm font-sans text-ink-700 leading-relaxed mt-0.5">{c.detail}</p>
                     </div>
                   </li>
                 ))}
               </ol>
 
-              <p className="text-2xs font-mono uppercase tracking-widest text-slate-500 mb-2">
+              <p className="text-xs font-display italic text-ink-500 tracking-wide mb-2">
                 Relief sought
               </p>
               <ul className="space-y-1.5 mb-5">
                 {COMPLAINT.relief.map(r => (
-                  <li key={r} className="flex items-start gap-2.5 text-sm text-slate-700 leading-snug">
-                    <span aria-hidden="true" className="shrink-0 mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-400" />
+                  <li key={r} className="flex items-start gap-2.5 text-sm font-sans text-ink-700 leading-snug">
+                    <span aria-hidden="true" className="shrink-0 mt-1.5 w-1.5 h-1.5 rounded-full bg-ink-400" />
                     {r}
                   </li>
                 ))}
               </ul>
 
-              <div className="flex flex-col sm:flex-row gap-2.5">
+              <div className="flex flex-col sm:flex-row gap-3 items-start">
                 <a
                   href={sources.complaint2026?.localCopy ?? '/docs/t5-grayslake-complaint-2026ch00000171.pdf'}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-lg bg-slate-900 text-white text-sm font-semibold hover:bg-slate-800 transition-colors min-h-[44px]"
+                  className="inline-flex items-center justify-center gap-2 px-5 py-3 bg-ink-900 text-paper text-sm font-sans font-semibold hover:bg-ink-800 transition-colors min-h-[44px]"
                 >
                   Read the complaint (PDF, 37 pages)
-                  <span aria-hidden="true">&darr;</span>
+                  <span aria-hidden="true">↓</span>
                 </a>
-                <span className="inline-flex items-center text-xs text-slate-600 leading-snug">
+                <span className="inline-flex items-center text-sm font-sans text-ink-600 leading-snug pt-1">
                   File-stamped copy, mirrored on this site.
                 </span>
               </div>
 
-              <p className="text-xs text-amber-900 bg-amber-50 border border-amber-200 rounded-lg px-3.5 py-2.5 mt-4 leading-relaxed">
+              <p className="text-sm font-sans text-status-disputed border-l-[3px] border-status-disputed pl-3 py-1 mt-5 leading-relaxed">
                 These are allegations in a complaint, not findings. No defendant had answered at the
                 time of writing and no court has ruled on any count. Read it and judge for yourself,
                 which is the point of putting it here.
@@ -311,40 +312,37 @@ export default function Agreement() {
 
         {/* ── 1. On the record ──────────────────────────────────────────── */}
         <FadeIn className="mb-14">
-          <div className="flex items-baseline gap-3 mb-1">
-            <span className="text-2xs font-mono font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 rounded px-1.5 py-0.5">01</span>
-            <h2 className="text-2xl font-display font-bold text-gray-900">What is on the record</h2>
+          <div className="flex items-baseline gap-3 mb-2 border-t border-rule pt-4">
+            <span className="text-2xs font-mono font-semibold text-status-construction">01</span>
+            <h2 className="text-3xl font-display text-ink-900 tracking-tight">What is on the record</h2>
           </div>
-          <p className="text-sm text-gray-600 mb-6 max-w-prose">
+          <p className="text-base font-sans text-ink-700 mb-6 max-w-prose leading-relaxed">
             Terms stated by the Village or its officials in documents that can be cited. Where a
             figure is conditional or was described as unfinished, that is noted with it rather than
             below it.
           </p>
-          <div className="space-y-3">
+          <div className="divide-y divide-rule-strong border-y border-rule">
             {TERMS.map((t, i) => (
-              <div
-                key={t.term}
-                className="border border-slate-200 rounded-xl bg-white overflow-hidden hover:border-slate-300 transition-colors"
-              >
-                <div className="flex items-start gap-3 px-4 sm:px-5 py-4">
-                  <span className="shrink-0 mt-0.5 w-7 h-7 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-mono font-bold flex items-center justify-center">
-                    {i + 1}
+              <div key={t.term} className="py-5">
+                <div className="flex items-start gap-4">
+                  <span className="shrink-0 text-xs font-mono text-status-construction tabular-nums w-6 text-right pt-0.5">
+                    {String(i + 1).padStart(2, '0')}
                   </span>
                   <div className="min-w-0">
-                    <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1 mb-1">
-                      <p className="text-base font-display font-semibold text-gray-900 leading-snug">
+                    <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1 mb-1">
+                      <p className="text-lg font-display font-semibold text-ink-900 leading-snug">
                         {t.term}
                       </p>
-                      <span className="text-2xs font-mono uppercase tracking-wider text-slate-600 bg-slate-100 border border-slate-200 rounded px-1.5 py-0.5">
+                      <span className="text-2xs font-sans font-semibold uppercase tracking-wide text-ink-500">
                         {t.who}
                       </span>
                     </div>
-                    <p className="text-sm text-gray-700 leading-relaxed">
+                    <p className="text-base font-sans text-ink-700 leading-relaxed">
                       {t.detail}
                       <SourceCitation sourceKey={t.sourceKey} />
                     </p>
                     {t.caveat && (
-                      <p className="text-xs text-amber-900 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2 mt-2.5 leading-relaxed">
+                      <p className="text-sm font-sans text-status-disputed border-l-[3px] border-status-disputed pl-3 py-1 mt-3 leading-relaxed">
                         {t.caveat}
                       </p>
                     )}
@@ -357,40 +355,40 @@ export default function Agreement() {
 
         {/* ── 2. Revenue claims, drawn to scale ─────────────────────────── */}
         <FadeIn className="mb-14">
-          <div className="flex items-baseline gap-3 mb-1">
-            <span className="text-2xs font-mono font-bold text-amber-700 bg-amber-50 border border-amber-200 rounded px-1.5 py-0.5">02</span>
-            <h2 className="text-2xl font-display font-bold text-gray-900">What the community is told it gets</h2>
+          <div className="flex items-baseline gap-3 mb-2 border-t border-rule pt-4">
+            <span className="text-2xs font-mono font-semibold text-status-disputed">02</span>
+            <h2 className="text-3xl font-display text-ink-900 tracking-tight">What the community is told it gets</h2>
           </div>
-          <p className="text-sm text-gray-600 mb-6 max-w-prose">
+          <p className="text-base font-sans text-ink-700 mb-6 max-w-prose leading-relaxed">
             Four public revenue claims, from four speakers, over four different scopes and periods.
             The largest is five times the smallest. Bars are drawn to the figures, so the gap is the
             real one.
           </p>
 
-          <div className="space-y-3">
+          <div className="divide-y divide-rule-strong border-y border-rule">
             {REVENUE_CLAIMS.map(c => {
               const s = SIDE[c.side]
               return (
-                <div key={c.figure + c.speaker} className="border border-slate-200 rounded-xl bg-white px-4 sm:px-5 py-4">
+                <div key={c.figure + c.speaker} className="py-5">
                   <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 mb-2">
-                    <p className="text-xl sm:text-2xl font-display font-bold text-gray-900 tracking-tight">
+                    <p className="text-2xl font-display text-ink-900 tracking-tight">
                       {c.figure}
                     </p>
-                    <span className={`text-2xs font-mono uppercase tracking-wider border rounded px-1.5 py-0.5 ${s.chip}`}>
+                    <span className={`text-2xs font-sans font-semibold uppercase tracking-wide ${s.chip}`}>
                       {s.label}
                     </span>
                   </div>
 
-                  <div className="h-2.5 w-full rounded-full bg-slate-100 overflow-hidden mb-2.5">
+                  <div className="h-2 w-full bg-paper-sunk overflow-hidden mb-3">
                     <div
-                      className={`h-full rounded-full ${s.bar}`}
-                      style={{ width: `${(c.amount / MAX_CLAIM) * 100}%` }}
                       aria-hidden="true"
+                      className={`h-full ${s.bar}`}
+                      style={{ width: `${(c.amount / MAX_CLAIM) * 100}%` }}
                     />
                   </div>
 
-                  <p className="text-xs text-gray-700 leading-relaxed">{c.scope}</p>
-                  <p className="text-xs text-gray-600 leading-relaxed mt-1">
+                  <p className="text-sm font-sans text-ink-700 leading-relaxed">{c.scope}</p>
+                  <p className="text-sm font-sans text-ink-600 leading-relaxed mt-1">
                     {c.speaker}
                     <SourceCitation sourceKey={c.sourceKey} />
                   </p>
@@ -399,7 +397,7 @@ export default function Agreement() {
             })}
           </div>
 
-          <p className="text-xs text-gray-700 leading-relaxed mt-4 max-w-prose border-t border-slate-200 pt-4">
+          <p className="text-sm font-sans text-ink-700 leading-relaxed mt-4 max-w-prose pt-4">
             These are four claims about different things. They cannot be averaged or treated as a
             range. The two largest come from the developer. The two smaller ones come from Village
             officials. None is independently verified. None can be verified until the Lake County
@@ -410,22 +408,22 @@ export default function Agreement() {
 
         {/* ── 3. The gaps ───────────────────────────────────────────────── */}
         <FadeIn className="mb-14">
-          <div className="flex items-baseline gap-3 mb-1">
-            <span className="text-2xs font-mono font-bold text-slate-600 bg-slate-100 border border-slate-300 rounded px-1.5 py-0.5">03</span>
-            <h2 className="text-2xl font-display font-bold text-gray-900">What has not been published</h2>
+          <div className="flex items-baseline gap-3 mb-2 border-t border-rule pt-4">
+            <span className="text-2xs font-mono font-semibold text-ink-600">03</span>
+            <h2 className="text-3xl font-display text-ink-900 tracking-tight">What has not been published</h2>
           </div>
-          <p className="text-sm text-gray-600 mb-5 max-w-prose">
+          <p className="text-base font-sans text-ink-700 mb-5 max-w-prose leading-relaxed">
             These are questions about the deal that no public document currently answers.
           </p>
-          <ul className="grid sm:grid-cols-2 gap-2.5">
+          <ul className="grid sm:grid-cols-2 gap-x-8 divide-y divide-rule-strong sm:divide-y-0 border-y border-rule sm:border-t sm:border-b">
             {UNPUBLISHED.map(item => (
               <li
                 key={item}
-                className="flex items-start gap-2.5 rounded-lg border border-slate-200 bg-slate-50/70 px-3.5 py-3 text-sm text-slate-700 leading-snug"
+                className="flex items-start gap-3 py-3 sm:border-b sm:border-rule-strong text-sm font-sans text-ink-700 leading-snug"
               >
                 <span
-                  className="shrink-0 mt-0.5 w-4 h-4 rounded border-2 border-dashed border-slate-400"
                   aria-hidden="true"
+                  className="shrink-0 mt-1 w-3 h-3 border border-dashed border-ink-500"
                 />
                 {item}
               </li>
@@ -435,40 +433,39 @@ export default function Agreement() {
 
         {/* ── 4. Go get it ──────────────────────────────────────────────── */}
         <FadeIn>
-          <div className="border border-blue-200 bg-blue-50/60 rounded-xl overflow-hidden">
-            <div className="px-5 sm:px-6 py-3 border-b border-blue-200 bg-blue-100/50">
-              <p className="text-2xs font-mono font-bold text-blue-800 uppercase tracking-widest">
-                Get the document yourself
-              </p>
-            </div>
-            <div className="px-5 sm:px-6 py-5">
-              <p className="text-base text-gray-800 leading-relaxed mb-3">
-                The development agreement, the approving ordinances and the staff reports are public
-                records of the Village of Grayslake. You do not need anyone&rsquo;s permission to read
-                them.
-              </p>
-              <p className="text-sm text-gray-700 leading-relaxed mb-3">
-                Under the Illinois Freedom of Information Act (5 ILCS 140) the Village must respond
-                within five business days, extendable by five more. Requests go to the Village&rsquo;s
-                FOIA officer through villageofgrayslake.com. Ask for the executed development agreement
-                between the Village and T5 Data Centers and any amendments to it, plus the ordinances
-                approving the planned unit development.
-              </p>
-              <p className="text-xs text-gray-700 leading-relaxed border-t border-blue-200 pt-3">
-                On June 5, 2026, the Village said it cannot answer further questions because of
-                pending litigation. That applies to comment, not FOIA. Statutory response obligations
-                continue. Litigation can affect which exemptions the Village claims.
-              </p>
-              <p className="text-sm text-gray-800 leading-relaxed mt-3 font-medium">
-                If you get the agreement, send it. I will publish it here in full.
-              </p>
-            </div>
+          <div className="border-t border-rule pt-6">
+            <p className="text-xs font-display italic text-accent tracking-wide mb-2">
+              Get the document yourself
+            </p>
+            <h2 className="text-2xl font-display text-ink-900 tracking-tight mb-4">
+              Public records, not private property
+            </h2>
+            <p className="text-base font-sans text-ink-800 leading-relaxed mb-3">
+              The development agreement, the approving ordinances and the staff reports are public
+              records of the Village of Grayslake. You do not need anyone&rsquo;s permission to read
+              them.
+            </p>
+            <p className="text-base font-sans text-ink-700 leading-relaxed mb-3">
+              Under the Illinois Freedom of Information Act (5 ILCS 140) the Village must respond
+              within five business days, extendable by five more. Requests go to the Village&rsquo;s
+              FOIA officer through villageofgrayslake.com. Ask for the executed development agreement
+              between the Village and T5 Data Centers and any amendments to it, plus the ordinances
+              approving the planned unit development.
+            </p>
+            <p className="text-sm font-sans text-ink-700 leading-relaxed border-t border-rule-soft pt-3">
+              On June 5, 2026, the Village said it cannot answer further questions because of
+              pending litigation. That applies to comment, not FOIA. Statutory response obligations
+              continue. Litigation can affect which exemptions the Village claims.
+            </p>
+            <p className="text-base font-sans text-ink-800 leading-relaxed mt-4 font-semibold">
+              If you get the agreement, send it. I will publish it here in full.
+            </p>
           </div>
         </FadeIn>
 
         <FootnoteList />
         <BackToTop />
-      </div>
+      </Container>
     </FootnoteProvider>
   )
 }

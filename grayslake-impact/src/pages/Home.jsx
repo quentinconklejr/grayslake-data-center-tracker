@@ -5,6 +5,7 @@ import AnimatedNumber from '../components/ui/AnimatedNumber'
 import SiteMap from '../components/map/SiteMap'
 import UpdatesSignup from '../components/ui/UpdatesSignup'
 import ParcelTable from '../components/map/ParcelTable'
+import Container from '../components/layout/Container'
 import { PARCELS_DATA } from '../data/parcels'
 import { FootnoteProvider, FootnoteList } from '../components/ui/FootnoteContext'
 import { projections } from '../data/projections'
@@ -12,159 +13,172 @@ import { LAST_VERIFIED } from '../data/siteConfig'
 
 const { project } = projections
 
+/*
+ * Five secondary figures rendered as a records grid below the two hero
+ * numbers. Kept in this order deliberately: capacity numbers first (the
+ * three GW/MW figures cluster naturally), then timeline, then acreage.
+ * Every value/note string is passed through unchanged.
+ */
 const SECONDARY_STATS = [
-  { label: 'IT Capacity', numValue: project.totalCapacityMW, suffix: ' MW', note: 'Leasable at full buildout' },
-  { label: 'Secured Power', numValue: project.securedPowerMW, suffix: ' MW', note: 'Utility-contracted capacity' },
-  { label: 'ComEd Capacity', value: `${project.comEdCapacityGW} GW`, note: 'Secured from ComEd, per T5 CEO' },
-  { label: 'Phase 1 Online', value: project.firstBuildingOnline, note: 'Under construction now' },
-  { label: 'Approved Max', numValue: project.totalAcres, suffix: ' ac', note: 'Approved campus maximum' },
+  { label: 'IT Capacity',    numValue: project.totalCapacityMW, suffix: ' MW', note: 'Leasable at full buildout' },
+  { label: 'Secured Power',  numValue: project.securedPowerMW,  suffix: ' MW', note: 'Utility-contracted capacity' },
+  { label: 'ComEd Capacity', value: `${project.comEdCapacityGW} GW`,           note: 'Secured from ComEd, per T5 CEO' },
+  { label: 'Phase 1 Online', value: project.firstBuildingOnline,               note: 'Under construction now' },
+  { label: 'Approved Max',   numValue: project.totalAcres,      suffix: ' ac', note: 'Approved campus maximum' },
 ]
 
 export default function Home() {
   return (
     <FootnoteProvider>
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-10 space-y-12">
+      <Container size="wide" className="py-12 sm:py-16 space-y-14 sm:space-y-16">
         <PageTitle
           title={pageMeta['/'].title}
           description={pageMeta['/'].description}
           ogImage={pageMeta['/'].ogImage}
         />
 
-        {/* Hero Section */}
-        {/* Hero.
-            This was four stacked blocks of prose before a single number: the
-            headline, a bordered callout, a paragraph about what the tracker is,
-            and a verification date. Roughly ten lines to scroll past before the
-            first fact, on a page whose whole job is facts.
-
-            Cut to two. The callout lost its box - the border and tint were what
-            made it read as heavy, and a box promises more than one sentence can
-            pay off. The football-field comparison and the building count went
-            with it; both are on The Project, where a reader has asked for
-            detail. What is left is the one thing the cards below cannot say:
-            what the buildings physically are.
-
-            The line about the tracker collecting public records is about the
-            SITE, not the project, so it folds into the verification stamp
-            instead of taking a paragraph of its own.
-
-            The subhead used to read "Warehouses full of computers, rented out
-            to other companies, on farm fields at Peterson and Alleghany
-            roads." That was three jobs in one sentence - define a data centre,
-            explain the business model, give the location - and the first two
-            carried a voice. "Warehouses full of computers" is plain-spoken
-            right up until a reporter reads it as a sneer, and on a site whose
-            only asset is neutrality that is a cost with no matching benefit.
-            The definition was never needed; anyone here can work out what a
-            data centre is. The leasing model is a real and load-bearing fact,
-            because it is why no tenant can be named, but it belongs on The
-            Project where a reader has asked for it.
-
-            What survives is the location, in the form locals actually use.
-            Nobody in Grayslake navigates by "Grayslake" - the headline
-            already said that - they navigate by the crossroads.
-
-            Sizing: the headline was text-5xl in a max-w-4xl box while the cards
-            under it run the full max-w-6xl. On a laptop that set three short
-            ragged lines above two wide cards, so the page looked like two
-            different layouts stacked. It is now a step smaller with a slightly
-            wider measure, which puts it on two lines and lines its right edge
-            up nearer the cards. Mobile is untouched at text-3xl. */}
-        <div className="space-y-3">
-          <h1 className="text-3xl sm:text-4xl lg:text-[2.75rem] font-display font-extrabold text-slate-900 tracking-tight leading-[1.08] max-w-5xl">
+        {/* ── Hero ─────────────────────────────────────────────────────
+            One h1, one subhead of one sentence, one verified-line. The
+            editorial choice is size and face — Fraunces at 4xl/5xl in a
+            reading measure, not extrabold Inter stretched across the
+            page. The verified-line stays in the data face so the date
+            reads as a stamp, not as prose. */}
+        <header className="space-y-4 max-w-4xl">
+          <h1 className="text-4xl sm:text-5xl font-display text-ink-900 leading-[1.05] tracking-[-0.02em]">
             T5 @ Chicago IV is an approved hyperscale data center under construction in Grayslake, Illinois.
           </h1>
-          <p className="text-base sm:text-lg font-sans text-slate-700 max-w-4xl leading-relaxed">
+          <p className="text-lg sm:text-xl font-sans text-ink-700 leading-snug">
             Farm fields at Peterson and Alleghany roads.
           </p>
-          <div className="text-xs font-mono text-slate-500">
+          <p className="text-2xs font-mono text-ink-500 pt-1">
             Every claim linked to its source &middot; Last verified {LAST_VERIFIED}
-          </div>
-        </div>
+          </p>
+        </header>
 
-        {/* Hero Big Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="p-6 sm:p-8 border border-slate-200 rounded-2xl bg-white shadow-sm space-y-3">
-            <div className="text-2xs font-mono font-bold uppercase tracking-wider text-slate-500">
-              PERMANENT JOBS (ESTIMATED MAX)
-            </div>
-            <div className="text-4xl sm:text-5xl font-display font-extrabold text-slate-900 flex items-baseline gap-2">
-              <span className="text-xl sm:text-2xl text-slate-500 font-semibold">up to</span>
-              <AnimatedNumber value={1680} duration={0.8} />
-            </div>
-            <p className="text-xs sm:text-sm font-sans text-slate-600 leading-relaxed">
-              Village FAQ estimate, conditional on all 10 million sq ft being built. Excludes construction jobs. Grayslake Mayor Elizabeth Davies cited 1,500 (Oct. 2025); T5 chief executive Pete Marin cited “over 1,600” (Jul. 2026).
-            </p>
-            <Link to="/project#jobs" className="inline-flex items-center text-xs font-mono font-bold text-sky-800 hover:text-sky-900 pt-1">
+        {/* ── Permanent-jobs figure ────────────────────────────────────
+            The old design put this behind rounded-2xl + shadow-sm. The
+            editorial move is a rule above and below, a size-driven
+            figure, and the qualifier as ordinary prose beneath — so the
+            reader sees "up to 1,680" and the condition attached to it in
+            the same glance. Drop font-extrabold; Fraunces at this size
+            has plenty of weight on its own. */}
+        <section aria-labelledby="jobs-figure" className="border-t border-rule pt-8 sm:pt-10">
+          <p id="jobs-figure" className="text-sm font-sans font-semibold text-ink-900">
+            Permanent jobs (estimated max)
+          </p>
+          <p className="mt-6 flex flex-wrap items-baseline gap-x-4 gap-y-2 leading-none">
+            <span className="text-xl sm:text-2xl font-sans text-ink-500">up to</span>
+            <AnimatedNumber
+              value={1680}
+              duration={0.8}
+              className="text-6xl sm:text-7xl font-display text-ink-900 tracking-[-0.03em]"
+            />
+          </p>
+          <p className="mt-5 text-base font-sans text-ink-700 leading-relaxed max-w-2xl">
+            Village FAQ estimate, conditional on all 10 million sq ft being built. Excludes construction jobs. Grayslake Mayor Elizabeth Davies cited 1,500 (Oct. 2025); T5 chief executive Pete Marin cited &ldquo;over 1,600&rdquo; (Jul. 2026).
+          </p>
+          <p className="mt-4">
+            <Link to="/project#jobs" className="inline-flex items-center text-sm font-sans font-semibold text-accent hover:text-accent-hover">
               Full range on The Project →
             </Link>
+          </p>
+        </section>
+
+        {/* ── Investment figure — two contested numbers ────────────────
+            The most editorially sensitive block on the site. The whole
+            point is that $8.5B and $18B are two different people making
+            two different claims, not a range anyone calculated. The old
+            design fused them with a slate slash; this treatment gives
+            each figure its own column, separates them with a real
+            vertical rule on wide screens, and keeps the disambiguating
+            paragraph as part of the composition rather than a small
+            gray afterthought beneath. On mobile the rule becomes a
+            horizontal separator so the two-things quality survives when
+            the columns stack.
+
+            Copy is untouched — the paragraph beneath is the same
+            sentence the old design carried, with speaker names intact. */}
+        <section aria-labelledby="investment-figure" className="border-t border-b border-rule py-8 sm:py-10">
+          <p id="investment-figure" className="text-sm font-sans font-semibold text-ink-900">
+            Total estimated investment
+          </p>
+          <div className="mt-8 grid grid-cols-1 sm:grid-cols-[1fr_auto_1fr] sm:items-baseline gap-x-8 gap-y-6">
+            <div className="sm:text-right">
+              <p className="text-5xl sm:text-6xl font-display text-ink-900 leading-none tracking-[-0.03em]">
+                $8.5B
+              </p>
+              <p className="mt-3 text-sm font-sans font-semibold text-ink-600">
+                Grayslake&rsquo;s mayor
+              </p>
+            </div>
+            <div className="hidden sm:block self-stretch w-px bg-rule mx-auto" aria-hidden="true" />
+            {/* Mobile separator between $8.5B and $18B. This rule carries the
+                "two competing estimates, not a range" reading when the two
+                figures stack. Must remain visible — rule-strong, not
+                rule-soft — or the two numbers read as one continuous stat
+                and the editorial point of the block collapses. Do not
+                degrade to hairline in any future sweep. */}
+            <hr className="sm:hidden border-0 border-t border-rule-strong" aria-hidden="true" />
+            <div>
+              <p className="text-5xl sm:text-6xl font-display text-ink-900 leading-none tracking-[-0.03em]">
+                $18B
+              </p>
+              <p className="mt-3 text-sm font-sans font-semibold text-ink-600">
+                T5&rsquo;s chief executive
+              </p>
+            </div>
           </div>
-
-          <div className="p-6 sm:p-8 border border-slate-200 rounded-2xl bg-white shadow-sm space-y-3">
-            <div className="text-2xs font-mono font-bold uppercase tracking-wider text-slate-500">
-              TOTAL ESTIMATED INVESTMENT
-            </div>
-            {/* This was one fused number, $8.5-18B, pulled from keyFigures.js -
-                a file whose own note on that entry reads "two figures from two
-                people, not a range anyone calculated". Printing it as a single
-                span is exactly the thing the data layer warns against: an en
-                dash between two numbers means every value in between was
-                considered, and nobody considered them. The headline stopped
-                doing this earlier; this card was the last place on the site
-                that still did, and the last open item from the first audit.
-
-                Two numbers, a separator, and the speakers named. */}
-            <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-              <span className="text-4xl sm:text-5xl font-display font-extrabold text-slate-900">$8.5B</span>
-              <span className="text-2xl sm:text-3xl font-display font-bold text-slate-400">/</span>
-              <span className="text-4xl sm:text-5xl font-display font-extrabold text-slate-900">$18B</span>
-            </div>
-            <p className="text-xs sm:text-sm font-sans text-slate-600 leading-relaxed">
-              Two estimates, not a range. Grayslake’s mayor said $8.5B; T5’s chief executive said up to
-              $18B. Nobody has published a figure in between, and no independent valuation exists.
-            </p>
-            <Link to="/project#tax" className="inline-flex items-center text-xs font-mono font-bold text-sky-800 hover:text-sky-900 pt-1">
+          <p className="mt-8 text-base font-sans text-ink-700 leading-relaxed max-w-2xl">
+            Two estimates, not a range. Grayslake&rsquo;s mayor said $8.5B; T5&rsquo;s chief executive said up to $18B. Nobody has published a figure in between, and no independent valuation exists.
+          </p>
+          <p className="mt-4">
+            <Link to="/project#tax" className="inline-flex items-center text-sm font-sans font-semibold text-accent hover:text-accent-hover">
               Fiscal range on The Project →
             </Link>
-          </div>
-        </div>
+          </p>
+        </section>
 
-        {/* Secondary Stats Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
-          {SECONDARY_STATS.map(({ label, numValue, suffix = '', value, note }) => (
-            <div key={label} className="p-4 border border-slate-200 rounded-xl bg-slate-50 space-y-1">
-              <div className="text-2xs font-mono font-bold text-slate-500 uppercase">{label}</div>
-              <div className="text-xl font-display font-bold text-slate-900">
-                {numValue != null ? <AnimatedNumber value={numValue} suffix={suffix} /> : value}
+        {/* Five-column records grid on wide screens, stacked on mobile.
+            Every note string is passed through unchanged from
+            SECONDARY_STATS. */}
+        <section aria-label="Project figures" className="border-t border-rule pt-8">
+          <dl className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 divide-y divide-rule-strong sm:divide-y-0 sm:divide-x sm:divide-rule-strong">
+            {SECONDARY_STATS.map(({ label, numValue, suffix = '', value, note }, i) => (
+              <div key={label} className={`py-5 ${i === 0 ? 'sm:pl-0' : 'sm:pl-5'} sm:pr-5`}>
+                <dt className="text-xs font-sans font-semibold text-ink-600">
+                  {label}
+                </dt>
+                <dd className="mt-2 text-2xl font-display text-ink-900 tracking-tight">
+                  {numValue != null ? <AnimatedNumber value={numValue} suffix={suffix} /> : value}
+                </dd>
+                <p className="mt-1.5 text-xs font-sans text-ink-600 leading-snug">{note}</p>
               </div>
-              <div className="text-2xs font-sans text-slate-500">{note}</div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </dl>
+        </section>
 
-        {/* Map & Parcel Directory */}
-        <div className="space-y-4">
-          <div>
-            <div className="text-2xs font-mono font-bold uppercase tracking-wider text-sky-800">LAND OWNERSHIP</div>
-            <h2 className="text-2xl font-display font-bold text-slate-900">Land Recorded to T5</h2>
-            {/* The caption used to read "Approved campus boundary covers up to
-                472 acres" directly under a map, which invites the reader to
-                assume the 472 acres are the shape they are looking at. They are
-                not. The map draws 57 recorded deeds; parcelsOutline.geojson
-                says so in its own metadata. The sentence now states plainly
-                that the approved campus is bigger and is not on the map. */}
-            <p className="text-xs font-sans text-slate-600 mt-0.5">
+        {/* ── Land ownership / map / parcels ────────────────────────────
+            The eyebrow-mono LAND OWNERSHIP kicker is gone. The heading
+            and caption stand on their own. Copy is unchanged; the map
+            chrome and parcel-table chrome are refactored in their own
+            commits. */}
+        <section aria-labelledby="land-ownership" className="space-y-5">
+          <div className="max-w-3xl">
+            <h2 id="land-ownership" className="text-3xl font-display text-ink-900 tracking-tight">
+              Land Recorded to T5
+            </h2>
+            <p className="mt-2 text-base font-sans text-ink-700 leading-relaxed">
               287.8 acres across 57 parcels in Grayslake, IL. The approved campus is larger, up to 472 acres, and is not mapped.
             </p>
           </div>
           <SiteMap showCaption={false} />
           <ParcelTable parcels={PARCELS_DATA} />
-        </div>
+        </section>
 
         <UpdatesSignup />
 
         <FootnoteList />
-      </div>
+      </Container>
     </FootnoteProvider>
   )
 }

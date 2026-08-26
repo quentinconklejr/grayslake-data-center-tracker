@@ -5,7 +5,7 @@ export default function UnverifiedTag({ note = 'Source unreachable, pending re-v
   return (
     <span
       title={note}
-      className="ml-1.5 inline-flex items-center align-middle gap-1 text-2xs font-mono uppercase tracking-widest text-amber-800 bg-amber-50 border border-amber-300 rounded-sm px-1.5 py-0.5"
+      className="ml-1.5 inline-flex items-center align-middle gap-1 text-2xs font-sans font-semibold uppercase tracking-wide text-status-disputed bg-status-disputed-soft border border-status-disputed px-1.5 py-0.5"
     >
       <svg className="w-2.5 h-2.5" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true">
         <path d="M6 3.5v3M6 8.75v.25" strokeLinecap="round" />

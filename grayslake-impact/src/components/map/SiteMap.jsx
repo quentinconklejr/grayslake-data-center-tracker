@@ -165,10 +165,10 @@ export default function SiteMap({ className = '', showCaption = true }) {
               iconSize: [120, 40],
               iconAnchor: [60, 20],
               html:
-                `<div style="width:120px;text-align:center;font-family:ui-monospace,Menlo,monospace;
+                `<div style="width:120px;text-align:center;font-family:'IBM Plex Mono',ui-monospace,Menlo,monospace;
                    text-shadow:0 1px 4px rgba(0,0,0,.95),0 0 10px rgba(0,0,0,.8);pointer-events:none;">
-                   <div style="color:#fff;font-size:15px;font-weight:800;letter-spacing:-.01em;line-height:1.1;">${g.acres} ac</div>
-                   <div style="color:#fde047;font-size:10px;font-weight:700;letter-spacing:.06em;margin-top:1px;">${g.parcels} PARCEL${g.parcels === 1 ? '' : 'S'}</div>
+                   <div style="color:#fff;font-size:15px;font-weight:500;letter-spacing:-.01em;line-height:1.1;">${g.acres} ac</div>
+                   <div style="color:#fde047;font-size:10px;font-weight:500;letter-spacing:.06em;margin-top:1px;">${g.parcels} PARCEL${g.parcels === 1 ? '' : 'S'}</div>
                  </div>`,
             }),
           }).addTo(m)
@@ -183,7 +183,7 @@ export default function SiteMap({ className = '', showCaption = true }) {
               iconAnchor: [70, 8],
               html:
                 `<div style="width:140px;text-align:center;white-space:nowrap;
-                   font-family:ui-monospace,Menlo,monospace;font-size:10px;font-weight:700;
+                   font-family:'IBM Plex Mono',ui-monospace,Menlo,monospace;font-size:10px;font-weight:500;
                    letter-spacing:.1em;text-transform:uppercase;color:#e0f2fe;
                    text-shadow:0 1px 4px rgba(0,0,0,.95),0 0 8px rgba(0,0,0,.85);">${text}</div>`,
             }),
@@ -221,63 +221,67 @@ export default function SiteMap({ className = '', showCaption = true }) {
       {/* Suppressed on the homepage, which already has its own heading and
           would otherwise stack two captions on top of each other. */}
       {showCaption && (
-        <p className="text-sm text-slate-700 leading-snug mb-3 max-w-3xl">
+        <p className="text-base font-sans text-ink-700 leading-relaxed mb-4 max-w-3xl">
           North of Peterson Road and east of Alleghany Road, about a mile and a half west of Route 83.
           Green shapes are the parcels whose deeds are recorded to a T5 entity; each group is labelled
           with its acreage. Tap or hover a parcel for its PIN and recorded sale.
         </p>
       )}
 
-      <div className="flex items-center justify-between gap-3 mb-2">
-        <div
-          className="inline-flex rounded-lg border border-slate-300 overflow-hidden shrink-0"
-          role="group"
-          aria-label="Base map style"
-        >
-          {[['satellite', 'Satellite'], ['plain', 'Plain map']].map(([k, lbl]) => (
-            <button
-              key={k}
-              type="button"
-              onClick={() => switchBase(k)}
-              aria-pressed={base === k}
-              className={`px-3.5 py-2 text-xs font-mono font-semibold transition-colors min-h-[44px] ${
-                base === k
-                  ? 'bg-slate-800 text-white'
-                  : 'bg-white text-slate-600 hover:bg-slate-50'
-              }`}
-            >
-              {lbl}
-            </button>
+      {/* ── Basemap toggle + summary ────────────────────────────────
+          Quiet text-toggle. Underline on the active choice reads as a
+          selection cue without turning the control into a chip button.
+          Kept aria-pressed / role=group for screen readers. */}
+      <div className="flex flex-wrap items-baseline justify-between gap-3 pb-3 border-b border-rule">
+        <div className="inline-flex items-baseline gap-1" role="group" aria-label="Base map style">
+          <span className="text-xs font-sans font-semibold text-ink-600 mr-2">Base map</span>
+          {[['satellite', 'Satellite'], ['plain', 'Plain']].map(([k, lbl], i) => (
+            <span key={k} className="inline-flex items-baseline">
+              {i > 0 && <span aria-hidden="true" className="text-ink-400 mx-2">/</span>}
+              <button
+                type="button"
+                onClick={() => switchBase(k)}
+                aria-pressed={base === k}
+                className={`text-sm font-sans transition-colors min-h-[44px] py-2 ${
+                  base === k
+                    ? 'text-ink-900 font-semibold underline underline-offset-[6px] decoration-2 decoration-accent'
+                    : 'text-ink-600 hover:text-ink-900'
+                }`}
+              >
+                {lbl}
+              </button>
+            </span>
           ))}
         </div>
-        <span className="text-2xs font-mono text-slate-500 text-right leading-tight hidden sm:block">
+        <span className="text-xs font-mono text-ink-500">
           {parcelCount} parcels &middot; {acres} acres
         </span>
       </div>
 
-      <div className="relative w-full rounded-xl overflow-hidden border border-slate-300 shadow-sm bg-slate-900">
+      {/* ── Map surface ───────────────────────────────────────────── */}
+      <div className="relative w-full mt-3 border border-rule bg-ink-900 overflow-hidden">
         <div ref={mapContainer} className="w-full h-[340px] sm:h-[460px] lg:h-[540px] z-0" />
 
         <div
-          className="absolute top-3 right-3 z-[400] w-9 h-9 rounded-full bg-slate-950/80 border border-slate-600 flex flex-col items-center justify-center text-slate-100 pointer-events-none"
+          className="absolute top-3 right-3 z-[400] w-9 h-9 border border-rule flex flex-col items-center justify-center bg-ink-900/85 text-paper pointer-events-none"
           aria-hidden="true"
         >
           <span className="text-[10px] leading-none">&#9650;</span>
-          <span className="text-[10px] font-mono font-bold leading-none mt-0.5">N</span>
+          <span className="text-[10px] font-mono font-medium leading-none mt-0.5">N</span>
         </div>
 
         {hint && (
           <div className="absolute inset-x-0 top-3 z-[500] flex justify-center pointer-events-none px-3">
-            <div className="bg-slate-900/95 border border-slate-700 text-slate-100 text-xs font-mono px-3.5 py-2 rounded-lg shadow-xl">
+            <div className="bg-ink-900/95 border border-rule text-paper text-xs font-mono px-3.5 py-2">
               {hint}
             </div>
           </div>
         )}
 
         {selected && (
-          <div className="absolute bottom-3 right-3 z-[400] max-w-[calc(100%-1.5rem)] bg-slate-950/92 backdrop-blur-md px-3.5 py-2.5 rounded-lg border border-slate-700 text-xs font-mono text-slate-100 shadow-lg">
-            <div className="text-lime-300 font-bold">PIN {selected.pin}</div>
-            <div className="mt-0.5 text-slate-300">
+          <div className="absolute bottom-3 right-3 z-[400] max-w-[calc(100%-1.5rem)] bg-ink-900/95 backdrop-blur-md px-3.5 py-2.5 border border-rule text-xs font-mono text-paper">
+            <div className="font-semibold text-status-stated" style={{ color: '#a3e28a' }}>PIN {selected.pin}</div>
+            <div className="mt-0.5 text-paper-sunk">
               {selected.acres} acres &middot; {selected.price}
               {selected.date && <> &middot; {selected.date}</>}
             </div>
@@ -285,59 +289,47 @@ export default function SiteMap({ className = '', showCaption = true }) {
         )}
       </div>
 
-      <div className="mt-3 border border-slate-300 rounded-xl bg-white overflow-hidden">
-        <div className="px-4 py-2.5 border-b border-slate-200 bg-slate-50">
-          <p className="text-2xs font-mono font-bold uppercase tracking-widest text-slate-600">
-            What you are looking at
-          </p>
-        </div>
+      {/* ── Legend (typeset, not boxed) ───────────────────────────── */}
+      <p className="mt-4 text-sm font-sans text-ink-700 leading-relaxed max-w-3xl">
+        <span
+          className="inline-block align-middle mr-2 w-3.5 h-3.5"
+          style={{ backgroundColor: 'rgba(34,197,94,0.42)', border: '2px solid #facc15' }}
+          aria-hidden="true"
+        />
+        <span className="font-semibold text-ink-900">Land recorded to T5.</span>{' '}
+        {acres} acres across {parcelCount} parcels, in {groups.length} groups
+        {groups.length ? ` of ${groups.map(g => `${g.acres}`).join(', ')} acres` : ''}. Each group
+        is labelled on the map with its own acreage and parcel count.
+      </p>
+      <p className="mt-1 text-xs font-sans text-ink-500 leading-relaxed max-w-3xl">
+        Acreage is the county&rsquo;s own field, not measured from the shapes.
+      </p>
 
-        <div className="px-4 py-3.5 space-y-3">
-          <div className="flex items-start gap-3">
-            <span
-              className="mt-0.5 w-5 h-5 rounded shrink-0 border-2"
-              style={{ backgroundColor: 'rgba(34,197,94,0.42)', borderColor: '#facc15' }}
-              aria-hidden="true"
-            />
-            <div className="min-w-0">
-              <p className="text-sm font-semibold text-slate-900 leading-snug">Land recorded to T5</p>
-              <p className="text-xs text-slate-600 leading-relaxed mt-0.5">
-                {acres} acres across {parcelCount} parcels, in {groups.length} groups
-                {groups.length ? ` of ${groups.map(g => `${g.acres}`).join(', ')} acres` : ''}. Each group
-                is labelled on the map with its own acreage and parcel count.
-              </p>
-            </div>
-          </div>
-
-          <div className="flex items-start gap-3 pt-3 border-t border-slate-200">
-            <span
-              className="mt-0.5 w-5 h-5 rounded shrink-0 border-2 border-dashed border-slate-400 bg-slate-100 flex items-center justify-center text-slate-500 text-xs font-bold"
-              aria-hidden="true"
-            >
-              ?
-            </span>
-            <div className="min-w-0">
-              <p className="text-sm font-semibold text-slate-900 leading-snug">
-                The approved campus is not drawn
-              </p>
-              <p className="text-xs text-slate-600 leading-relaxed mt-0.5">
-                Village approvals permit development on up to <strong>472 acres</strong>, a larger area
-                than T5 currently owns. The Village has never published that boundary as a mappable
-                shape, so nothing here represents it. Anyone showing you a 472-acre outline is showing
-                you an estimate.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div className="px-4 py-2.5 border-t border-slate-200 bg-slate-50">
-          <p className="text-2xs font-mono text-slate-600 leading-relaxed">
-            Source: Lake County GIS tax parcel layer
-            {META.retrieved ? `, retrieved ${META.retrieved}` : ''}. Acreage is the county&rsquo;s own
-            field, not measured from the shapes.
-          </p>
-        </div>
-      </div>
+      {/* ── Editor's note — the 472-acre callout ─────────────────────
+          The single most consequential sentence on the site. Village
+          approvals cover a larger area than T5 owns; the Village has
+          never released that boundary as data; anyone drawing one is
+          drawing an estimate. Given the visual weight of a real pull
+          quote — heavy left rule, small caps label in the display
+          face, larger body text — so a scanning reader reads it before
+          they read the map. */}
+      <aside
+        aria-label="Editor's note"
+        className="mt-6 border-l-[3px] border-ink-900 pl-5 sm:pl-6 py-1 max-w-2xl"
+      >
+        <p className="text-2xs font-display font-semibold text-ink-800 uppercase tracking-[0.14em] mb-2">
+          Editor&rsquo;s note
+        </p>
+        <p className="text-lg sm:text-xl font-display text-ink-900 leading-snug mb-3">
+          The approved campus is not drawn.
+        </p>
+        <p className="text-base font-sans text-ink-700 leading-relaxed">
+          Village approvals permit development on up to <span className="font-mono text-ink-900">472 acres</span>, a larger area
+          than T5 currently owns. The Village has never published that boundary as a mappable
+          shape, so nothing here represents it. Anyone showing you a 472-acre outline is showing
+          you an estimate.
+        </p>
+      </aside>
     </div>
   )
 }

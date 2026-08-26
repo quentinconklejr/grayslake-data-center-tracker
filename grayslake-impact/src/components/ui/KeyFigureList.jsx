@@ -20,31 +20,28 @@ export default function KeyFigureList({ figures, variant = 'table', groups = nul
 
   if (variant === 'grouped' && groups) {
     return (
-      <div className="space-y-8">
+      <div className="space-y-10">
         {groups.map(group => (
           <div key={group.id}>
             {group.label && (
-              <h3 className="text-sm font-mono uppercase tracking-widest text-gray-700 mb-3 pb-2 border-b border-edge-soft/50">
+              <h3 className="text-xl font-display text-ink-900 tracking-tight mb-4 pb-2 border-b border-rule">
                 {group.label}
               </h3>
             )}
-            <div className={`grid gap-4 ${group.cols}`}>
+            <div className={`grid gap-x-8 gap-y-6 ${group.cols}`}>
               {group.ids.map(id => {
                 const f = byId[id]
                 if (!f) return null
                 return (
-                  <div
-                    key={f.id}
-                    className={`border border-edge rounded-xl bg-white ${group.hero ? 'px-5 py-5' : 'px-4 py-4'}`}
-                  >
-                    <p className="text-xs font-mono uppercase tracking-widest text-gray-600 mb-1">{f.label}</p>
-                    <p className={`font-display font-bold text-gray-900 leading-tight ${group.hero ? 'text-2xl mt-0.5' : 'text-lg'}`}>
+                  <div key={f.id} className={`border-t border-rule-soft pt-3 ${group.hero ? '' : ''}`}>
+                    <p className="text-xs font-sans font-semibold text-ink-600">{f.label}</p>
+                    <p className={`font-display text-ink-900 leading-tight tracking-tight ${group.hero ? 'text-3xl mt-1' : 'text-xl mt-1'}`}>
                       {f.value}
                     </p>
-                    <p className={`text-gray-700 mt-1 leading-snug ${group.hero ? 'text-base' : 'text-sm'}`}>
+                    <p className={`font-sans text-ink-700 mt-1 leading-snug ${group.hero ? 'text-base' : 'text-sm'}`}>
                       {f.qualifier}
                     </p>
-                    <p className="text-sm text-gray-600 mt-2 leading-relaxed">
+                    <p className="text-sm font-sans text-ink-600 mt-2 leading-relaxed">
                       {f.detail}
                       {[f.sourceKey, ...(f.sourceKeys ?? [])].filter(Boolean).map(k => (
                         <SourceCitation key={k} sourceKey={k} />
@@ -63,13 +60,13 @@ export default function KeyFigureList({ figures, variant = 'table', groups = nul
 
   if (variant === 'cards') {
     return (
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-8">
         {figures.map(f => (
-          <div key={f.id} className="border border-edge rounded-xl bg-white px-6 py-5">
-            <p className="text-xs font-mono uppercase tracking-widest text-gray-600 mb-1">{f.label}</p>
-            <p className="text-2xl font-display font-bold text-gray-900 leading-tight">{f.value}</p>
-            <p className="text-sm text-gray-700 mt-0.5 leading-snug">{f.qualifier}</p>
-            <p className="text-xs text-gray-500 mt-2 leading-relaxed">
+          <div key={f.id} className="border-t border-rule pt-4">
+            <p className="text-xs font-sans font-semibold text-ink-600">{f.label}</p>
+            <p className="text-2xl font-display text-ink-900 leading-tight tracking-tight mt-1">{f.value}</p>
+            <p className="text-sm font-sans text-ink-700 mt-1 leading-snug">{f.qualifier}</p>
+            <p className="text-sm font-sans text-ink-600 mt-2 leading-relaxed">
               {f.detail}
               {[f.sourceKey, ...(f.sourceKeys ?? [])].filter(Boolean).map(k => (
                 <SourceCitation key={k} sourceKey={k} />
@@ -83,21 +80,21 @@ export default function KeyFigureList({ figures, variant = 'table', groups = nul
   }
 
   return (
-    <div className="divide-y divide-edge-soft/60 border border-edge rounded-xl overflow-hidden bg-white">
+    <div className="divide-y divide-rule-strong border-t border-b border-rule">
       {figures.map(f => (
-        <div key={f.id} className="grid sm:grid-cols-5 gap-2 sm:gap-5 px-6 py-5">
+        <div key={f.id} className="grid sm:grid-cols-5 gap-2 sm:gap-8 py-5">
           <div className="sm:col-span-2">
-            <p className="text-2xs font-mono text-gray-600 uppercase tracking-widest leading-tight">{f.label}</p>
+            <p className="text-xs font-sans font-semibold text-ink-600 leading-tight">{f.label}</p>
           </div>
           <div className="sm:col-span-3">
-            <p className="text-sm font-display font-semibold text-gray-900 leading-snug">
+            <p className="text-base font-display font-semibold text-ink-900 leading-snug">
               {f.value}
-              <span className="font-normal text-gray-600"> — {f.qualifier}</span>
+              <span className="font-sans font-normal text-ink-700"> — {f.qualifier}</span>
               {[f.sourceKey, ...(f.sourceKeys ?? [])].filter(Boolean).map(k => (
                 <SourceCitation key={k} sourceKey={k} />
               ))}
             </p>
-            {f.detail && <p className="text-xs text-gray-600 mt-1 leading-snug">{f.detail}</p>}
+            {f.detail && <p className="text-sm font-sans text-ink-600 mt-1 leading-snug">{f.detail}</p>}
             {copyable && <CopyKPIButton copyText={figureCopyText(f.id)} />}
           </div>
         </div>

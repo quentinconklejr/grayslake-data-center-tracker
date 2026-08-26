@@ -18,7 +18,7 @@ export default function Figure({ id, qualifier = true, className = '' }) {
   return (
     <span className={className}>
       <strong className="font-semibold">{f.value}</strong>
-      {qualifier && <span className="font-normal text-gray-600"> ({f.qualifier})</span>}
+      {qualifier && <span className="font-normal text-ink-600"> ({f.qualifier})</span>}
       {keys.map(k => <SourceCitation key={k} sourceKey={k} />)}
     </span>
   )
