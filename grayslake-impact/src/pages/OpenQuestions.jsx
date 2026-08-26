@@ -25,7 +25,7 @@ export default function OpenQuestions() {
 
   return (
     <FootnoteProvider>
-      <Container size="wide" className="py-8 sm:py-10 space-y-8">
+      <Container size="default" className="py-8 sm:py-10 space-y-8">
         <PageTitle
           title={pageMeta['/questions']?.title || 'Open Questions'}
           description={pageMeta['/questions']?.description || ''}
@@ -53,18 +53,15 @@ export default function OpenQuestions() {
           </button>
         </header>
 
-        {/* Desktop layout: jump nav (sticky) on the right, questions
-            list on the left, capped to a readable measure. Under lg the
-            jump nav disappears (accordion titles serve the same purpose
-            in a single-column stack). */}
-        <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_16rem] lg:gap-12 xl:gap-16">
-
-        {/* Questions accordion list */}
-        <div className="max-w-3xl">
+        {/* Questions accordion list. Six questions do not warrant a
+            jump nav; the accordion titles themselves are the index.
+            Container reverted to the default measure so the titles
+            do not stretch. */}
+        <div>
           {questions.map(q => {
             const isOpen = openIds.includes(q.id)
             return (
-              <div key={q.id} id={q.id} className="border-t border-rule scroll-mt-24">
+              <div key={q.id} className="border-t border-rule">
                 <button
                   onClick={() => toggle(q.id)}
                   aria-expanded={isOpen}
@@ -142,29 +139,6 @@ export default function OpenQuestions() {
             )
           })}
           <div className="border-t border-rule" />
-        </div>
-
-        <nav aria-label="Jump to question" className="hidden lg:block lg:sticky lg:top-24 lg:self-start">
-          <p className="text-2xs font-sans font-semibold uppercase tracking-wide text-ink-500 mb-3">
-            Jump to
-          </p>
-          <ol className="space-y-2 border-l border-rule pl-4">
-            {questions.map((q, i) => (
-              <li key={q.id}>
-                <a
-                  href={`#${q.id}`}
-                  onClick={() => {
-                    if (!openIds.includes(q.id)) setOpenIds(prev => [...prev, q.id])
-                  }}
-                  className="block text-sm font-sans text-ink-700 hover:text-accent leading-snug underline underline-offset-4 decoration-transparent hover:decoration-accent transition-colors"
-                >
-                  <span aria-hidden="true" className="font-mono text-ink-500 mr-2 tabular-nums">{String(i + 1).padStart(2, '0')}</span>
-                  {q.question}
-                </a>
-              </li>
-            ))}
-          </ol>
-        </nav>
         </div>
 
         <FootnoteList />
