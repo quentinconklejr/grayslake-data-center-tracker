@@ -2,10 +2,17 @@
 // static 400 + 600 instances rather than the variable-opsz file.
 // Compares the two renderings at the sizes actually used on the site
 // (60px H1, 22px subhead) at 1440px width.
+//
+// Defensive pattern (try/finally + per-call timeouts): standardises
+// with the other shot-* scripts so a hung font route intercept cannot
+// leave the browser open.
 import { chromium } from 'playwright'
 import { mkdirSync, readFileSync } from 'fs'
 
 const OUT = 'screenshots'
+const NAV_TIMEOUT  = 20_000
+const WAIT_TIMEOUT = 15_000
+const SHOT_TIMEOUT = 30_000
 mkdirSync(OUT, { recursive: true })
 
 const HEADLINE = 'T5 @ Chicago IV is an approved hyperscale data center under construction in Grayslake, Illinois.'
@@ -122,29 +129,33 @@ const HTML = `
 </body></html>
 `
 
-const browser = await chromium.launch()
-const ctx = await browser.newContext({ viewport: { width: 1440, height: 1000 } })
-const page = await ctx.newPage()
+const browser = await chromium.launch({ timeout: 30_000 })
+try {
+  const ctx = await browser.newContext({ viewport: { width: 1440, height: 1000 } })
+  const page = await ctx.newPage()
+  page.setDefaultTimeout(WAIT_TIMEOUT)
+  page.setDefaultNavigationTimeout(NAV_TIMEOUT)
 
-const files = {
-  '/source-serif-4-latin-400-normal.woff2':
-    'node_modules/@fontsource/source-serif-4/files/source-serif-4-latin-400-normal.woff2',
-  '/source-serif-4-latin-600-normal.woff2':
-    'node_modules/@fontsource/source-serif-4/files/source-serif-4-latin-600-normal.woff2',
-  '/source-serif-4-latin-opsz-normal.woff2':
-    'node_modules/@fontsource-variable/source-serif-4/files/source-serif-4-latin-opsz-normal.woff2',
-  '/ibm-plex-sans-latin-400-normal.woff2':
-    'node_modules/@fontsource/ibm-plex-sans/files/ibm-plex-sans-latin-400-normal.woff2',
+  const files = {
+    '/source-serif-4-latin-400-normal.woff2':
+      'node_modules/@fontsource/source-serif-4/files/source-serif-4-latin-400-normal.woff2',
+    '/source-serif-4-latin-600-normal.woff2':
+      'node_modules/@fontsource/source-serif-4/files/source-serif-4-latin-600-normal.woff2',
+    '/source-serif-4-latin-opsz-normal.woff2':
+      'node_modules/@fontsource-variable/source-serif-4/files/source-serif-4-latin-opsz-normal.woff2',
+    '/ibm-plex-sans-latin-400-normal.woff2':
+      'node_modules/@fontsource/ibm-plex-sans/files/ibm-plex-sans-latin-400-normal.woff2',
+  }
+  for (const [route, path] of Object.entries(files)) {
+    await page.route(`**${route}`, r => r.fulfill({ body: readFileSync(path) }))
+  }
+
+  await page.setContent(HTML, { waitUntil: 'networkidle', timeout: NAV_TIMEOUT })
+  await page.waitForTimeout(500)
+
+  const file = `${OUT}/serif-static-vs-variable-1440.png`
+  await page.screenshot({ path: file, fullPage: true, timeout: SHOT_TIMEOUT })
+  console.log('✓', file)
+} finally {
+  await browser.close()
 }
-for (const [route, path] of Object.entries(files)) {
-  await page.route(`**${route}`, r => r.fulfill({ body: readFileSync(path) }))
-}
-
-await page.setContent(HTML, { waitUntil: 'networkidle' })
-await page.waitForTimeout(500)
-
-const file = `${OUT}/serif-static-vs-variable-1440.png`
-await page.screenshot({ path: file, fullPage: true })
-console.log('✓', file)
-
-await browser.close()

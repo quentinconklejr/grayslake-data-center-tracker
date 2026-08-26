@@ -3,13 +3,21 @@
 // both faces so we could compare letterforms, colour on the page, and
 // register. Result: swapped to Source Serif 4. Retained for reference
 // if the display face is ever re-evaluated.
+//
+// Defensive pattern (try/finally + per-call timeouts): a slow font
+// route interception used to leave the browser open forever if the
+// woff2 fetch never resolved. Now every wait is bounded and
+// browser.close() is in finally.
 import { chromium } from 'playwright'
 import { mkdirSync } from 'fs'
 
 const OUT = 'screenshots'
+const NAV_TIMEOUT  = 20_000
+const WAIT_TIMEOUT = 15_000
+const SHOT_TIMEOUT = 30_000
 mkdirSync(OUT, { recursive: true })
 
-const BROWSER = await chromium.launch()
+const BROWSER = await chromium.launch({ timeout: 30_000 })
 
 const HEADLINE = 'T5 @ Chicago IV is an approved hyperscale data center under construction in Grayslake, Illinois.'
 const SUBHEAD  = 'Farm fields at Peterson and Alleghany roads.'
@@ -108,32 +116,36 @@ const HTML = `
 </body></html>
 `
 
-const ctx = await BROWSER.newContext({ viewport: { width: 1440, height: 1400 } })
-const page = await ctx.newPage()
+try {
+  const ctx = await BROWSER.newContext({ viewport: { width: 1440, height: 1400 } })
+  const page = await ctx.newPage()
+  page.setDefaultTimeout(WAIT_TIMEOUT)
+  page.setDefaultNavigationTimeout(NAV_TIMEOUT)
 
-// Serve fonts from node_modules over routes
-await page.route('**/fraunces-latin-opsz-normal.woff2', async r => {
-  const { readFileSync } = await import('fs')
-  r.fulfill({ body: readFileSync('node_modules/@fontsource-variable/fraunces/files/fraunces-latin-opsz-normal.woff2') })
-})
-await page.route('**/source-serif-4-latin-opsz-normal.woff2', async r => {
-  const { readFileSync } = await import('fs')
-  r.fulfill({ body: readFileSync('node_modules/@fontsource-variable/source-serif-4/files/source-serif-4-latin-opsz-normal.woff2') })
-})
-await page.route('**/ibm-plex-sans-latin-400-normal.woff2', async r => {
-  const { readFileSync } = await import('fs')
-  r.fulfill({ body: readFileSync('node_modules/@fontsource/ibm-plex-sans/files/ibm-plex-sans-latin-400-normal.woff2') })
-})
-await page.route('**/ibm-plex-mono-latin-500-normal.woff2', async r => {
-  const { readFileSync } = await import('fs')
-  r.fulfill({ body: readFileSync('node_modules/@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-500-normal.woff2') })
-})
+  // Serve fonts from node_modules over routes
+  await page.route('**/fraunces-latin-opsz-normal.woff2', async r => {
+    const { readFileSync } = await import('fs')
+    r.fulfill({ body: readFileSync('node_modules/@fontsource-variable/fraunces/files/fraunces-latin-opsz-normal.woff2') })
+  })
+  await page.route('**/source-serif-4-latin-opsz-normal.woff2', async r => {
+    const { readFileSync } = await import('fs')
+    r.fulfill({ body: readFileSync('node_modules/@fontsource-variable/source-serif-4/files/source-serif-4-latin-opsz-normal.woff2') })
+  })
+  await page.route('**/ibm-plex-sans-latin-400-normal.woff2', async r => {
+    const { readFileSync } = await import('fs')
+    r.fulfill({ body: readFileSync('node_modules/@fontsource/ibm-plex-sans/files/ibm-plex-sans-latin-400-normal.woff2') })
+  })
+  await page.route('**/ibm-plex-mono-latin-500-normal.woff2', async r => {
+    const { readFileSync } = await import('fs')
+    r.fulfill({ body: readFileSync('node_modules/@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-500-normal.woff2') })
+  })
 
-await page.setContent(HTML, { waitUntil: 'networkidle' })
-await page.waitForTimeout(500)
+  await page.setContent(HTML, { waitUntil: 'networkidle', timeout: NAV_TIMEOUT })
+  await page.waitForTimeout(500)
 
-const file = `${OUT}/font-compare-1440.png`
-await page.screenshot({ path: file, fullPage: true })
-console.log('✓', file)
-
-await BROWSER.close()
+  const file = `${OUT}/font-compare-1440.png`
+  await page.screenshot({ path: file, fullPage: true, timeout: SHOT_TIMEOUT })
+  console.log('✓', file)
+} finally {
+  await BROWSER.close()
+}
