@@ -119,17 +119,24 @@ export default function SiteMap({ className = '', showCaption = true }) {
       container.addEventListener('touchstart', onTouchStart, { passive: true })
       container.addEventListener('touchend', onTouchEnd, { passive: true })
 
+      // Tile sources are all keyless Esri endpoints. CARTO's basemaps
+      // are now gated behind an API key (they serve "API KEY REQUIRED"
+      // placeholder tiles otherwise), so both the old Plain base and the
+      // old satellite labels overlay were silently broken in production.
+      // Esri's Light Gray Canvas reads closest to our paper ground for
+      // the Plain view; Reference/World_Boundaries_and_Places supplies
+      // labels for both bases without a second provider dependency.
       const satellite = L.tileLayer(
         'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
-        { attribution: 'Tiles &copy; Esri &mdash; Esri, USDA, USGS, Lake County GIS', maxZoom: 18 },
+        { attribution: 'Imagery &copy; Esri, Maxar, Earthstar Geographics', maxZoom: 18 },
       )
       const plain = L.tileLayer(
-        'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
-        { attribution: '&copy; OpenStreetMap contributors &copy; CARTO', maxZoom: 19 },
+        'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}',
+        { attribution: 'Tiles &copy; Esri &mdash; Esri, HERE, Garmin, &copy; OpenStreetMap contributors', maxZoom: 16 },
       )
       const labels = L.tileLayer(
-        'https://{s}.basemaps.cartocdn.com/rastertiles/voyager_only_labels/{z}/{x}/{y}{r}.png',
-        { maxZoom: 19, pane: 'overlayPane' },
+        'https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}',
+        { attribution: 'Labels &copy; Esri, HERE, Garmin', maxZoom: 18, pane: 'overlayPane' },
       )
       layersRef.current = { satellite, plain, labels }
       satellite.addTo(m)
@@ -259,7 +266,10 @@ export default function SiteMap({ className = '', showCaption = true }) {
       </div>
 
       {/* ── Map surface ───────────────────────────────────────────── */}
-      <div className="relative w-full mt-3 border border-rule bg-ink-900 overflow-hidden">
+      {/* Tile canvas ground is paper, not ink — matches the page paint
+          so the map does not read as a foreign rectangle while tiles
+          load or between raster gaps. */}
+      <div className="relative w-full mt-3 border border-rule bg-paper overflow-hidden">
         <div ref={mapContainer} className="w-full h-[340px] sm:h-[460px] lg:h-[540px] z-0" />
 
         <div
@@ -280,7 +290,12 @@ export default function SiteMap({ className = '', showCaption = true }) {
 
         {selected && (
           <div className="absolute bottom-3 right-3 z-[400] max-w-[calc(100%-1.5rem)] bg-ink-900/95 backdrop-blur-md px-3.5 py-2.5 border border-rule text-xs font-mono text-paper">
-            <div className="font-semibold text-status-stated" style={{ color: '#a3e28a' }}>PIN {selected.pin}</div>
+            {/* Popup sits on ink-900. status-stated (#2f6f4a) fails
+                contrast on dark, and the previous inline #a3e28a override
+                was not a token. The PIN is an identifier, not a status
+                cue — distinguish it by weight, not by a new dark-mode
+                colour that would require its own token. */}
+            <div className="font-semibold text-paper">PIN {selected.pin}</div>
             <div className="mt-0.5 text-paper-sunk">
               {selected.acres} acres &middot; {selected.price}
               {selected.date && <> &middot; {selected.date}</>}
