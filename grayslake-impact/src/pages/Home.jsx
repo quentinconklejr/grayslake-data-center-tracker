@@ -30,7 +30,7 @@ const SECONDARY_STATS = [
 export default function Home() {
   return (
     <FootnoteProvider>
-      <Container size="wide" className="py-12 sm:py-16 space-y-14 sm:space-y-16">
+      <Container size="wide" className="py-8 sm:py-10 space-y-10 sm:space-y-12">
         <PageTitle
           title={pageMeta['/'].title}
           description={pageMeta['/'].description}
@@ -62,11 +62,11 @@ export default function Home() {
             reader sees "up to 1,680" and the condition attached to it in
             the same glance. Drop font-extrabold; Fraunces at this size
             has plenty of weight on its own. */}
-        <section aria-labelledby="jobs-figure" className="border-t border-rule pt-8 sm:pt-10">
+        <section aria-labelledby="jobs-figure" className="border-t border-rule pt-6 sm:pt-8">
           <p id="jobs-figure" className="text-sm font-sans font-semibold text-ink-900">
             Permanent jobs (estimated max)
           </p>
-          <p className="mt-6 flex flex-wrap items-baseline gap-x-4 gap-y-2 leading-none">
+          <p className="mt-4 flex flex-wrap items-baseline gap-x-4 gap-y-2 leading-none">
             <span className="text-xl sm:text-2xl font-sans text-ink-500">up to</span>
             <AnimatedNumber
               value={1680}
@@ -98,11 +98,11 @@ export default function Home() {
 
             Copy is untouched — the paragraph beneath is the same
             sentence the old design carried, with speaker names intact. */}
-        <section aria-labelledby="investment-figure" className="border-t border-b border-rule py-8 sm:py-10">
+        <section aria-labelledby="investment-figure" className="border-t border-b border-rule py-6 sm:py-8">
           <p id="investment-figure" className="text-sm font-sans font-semibold text-ink-900">
             Total estimated investment
           </p>
-          <div className="mt-8 grid grid-cols-1 sm:grid-cols-[1fr_auto_1fr] sm:items-baseline gap-x-8 gap-y-6">
+          <div className="mt-6 grid grid-cols-1 sm:grid-cols-[1fr_auto_1fr] sm:items-baseline gap-x-8 gap-y-6">
             <div className="sm:text-right">
               <p className="text-5xl sm:text-6xl font-display text-ink-900 leading-none tracking-[-0.03em]">
                 $8.5B
@@ -128,7 +128,7 @@ export default function Home() {
               </p>
             </div>
           </div>
-          <p className="mt-8 text-base font-sans text-ink-700 leading-relaxed max-w-2xl">
+          <p className="mt-6 text-base font-sans text-ink-700 leading-relaxed max-w-2xl">
             Two estimates, not a range. Grayslake&rsquo;s mayor said $8.5B; T5&rsquo;s chief executive said up to $18B. Nobody has published a figure in between, and no independent valuation exists.
           </p>
           <p className="mt-4">

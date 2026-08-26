@@ -63,7 +63,7 @@ function CopyCitationButton({ text }) {
 export default function Reporters() {
   return (
     <FootnoteProvider>
-      <Container size="default" className="py-10 sm:py-14 space-y-10">
+      <Container size="wide" className="py-10 sm:py-14 space-y-10">
         <PageTitle
           title={pageMeta['/figures'].title}
           description={pageMeta['/figures'].description}
@@ -85,23 +85,27 @@ export default function Reporters() {
           </p>
         </header>
 
-        {/* Fact briefing list */}
-        <div className="divide-y divide-rule-strong border-y border-rule">
+        {/* Fact briefing grid. Single column at mobile stays the reading
+            rhythm; on lg+ the same records become a two-up card grid so
+            newsrooms scanning for a quote don't have to scroll a single
+            56rem column. Rule dividers become border boxes on the grid
+            so each card reads as a discrete records unit. */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
           {PRESS_FACTS.map(({ topic, stat, citation }) => (
-            <div key={topic} className="py-6">
+            <div key={topic} className="flex flex-col border border-rule-strong p-6">
               <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-3">
                 <div className="min-w-0">
                   <p className="text-xs font-sans font-semibold text-ink-600">
                     {topic}
                   </p>
-                  <p className="text-2xl font-display text-ink-900 tracking-tight mt-1">
+                  <p className="text-2xl font-display text-ink-900 tracking-tight mt-1 leading-tight">
                     {stat}
                   </p>
                 </div>
                 <CopyCitationButton text={`${topic}: ${stat} — ${citation}`} />
               </div>
 
-              <p className="text-sm font-sans text-ink-700 leading-relaxed mt-4">
+              <p className="text-sm font-sans text-ink-700 leading-relaxed mt-4 flex-1">
                 {citation}
               </p>
             </div>
