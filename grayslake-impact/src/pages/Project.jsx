@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import PageTitle from '../components/ui/PageTitle'
 import AccordionSection from '../components/ui/AccordionSection'
+import Container from '../components/layout/Container'
 import { FootnoteProvider, FootnoteList } from '../components/ui/FootnoteContext'
 import { figureById } from '../data/keyFigures'
 import { pageMeta } from '../data/pageMeta'
@@ -44,39 +45,39 @@ export default function Project() {
 
   return (
     <FootnoteProvider>
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-10 space-y-6 sm:space-y-8">
-        <PageTitle 
-          title={pageMeta['/project'].title} 
-          description={pageMeta['/project'].description} 
-          ogImage={pageMeta['/project'].ogImage} 
+      <Container size="wide" className="py-10 sm:py-14 space-y-8">
+        <PageTitle
+          title={pageMeta['/project'].title}
+          description={pageMeta['/project'].description}
+          ogImage={pageMeta['/project'].ogImage}
         />
 
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-6">
-          <div>
-            <div className="text-2xs font-mono font-bold uppercase tracking-widest text-sky-800 mb-1">
+        <header className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-8 border-b border-rule">
+          <div className="max-w-2xl">
+            <p className="text-xs font-display italic text-ink-500 tracking-wide mb-2">
               T5 @ Chicago IV
-            </div>
-            <h1 className="text-3xl font-display font-extrabold text-slate-900 tracking-tight">
+            </p>
+            <h1 className="text-4xl sm:text-5xl font-display text-ink-900 tracking-tight leading-[1.05]">
               The Project Overview
             </h1>
-            <p className="text-sm font-sans text-slate-600 max-w-2xl mt-1">
+            <p className="mt-3 text-base font-sans text-ink-700 leading-relaxed">
               A hyperscale facility under construction in Grayslake, IL. The Village put the cost at
-              $8.5 billion; T5’s chief executive said up to $18 billion.
+              $8.5 billion; T5&rsquo;s chief executive said up to $18 billion.
             </p>
           </div>
 
-          <div className="flex items-center gap-3 shrink-0">
+          <div className="shrink-0">
             <button
               onClick={() => setOpen(allOpen ? [] : IDS)}
-              className="text-xs font-mono font-bold text-sky-800 bg-sky-50 hover:bg-sky-100 px-4 py-2.5 rounded-xl border border-sky-200 transition-colors"
+              className="text-sm font-sans text-accent hover:text-accent-hover underline underline-offset-4 decoration-accent min-h-[44px]"
             >
-              {allOpen ? 'Collapse All Impact Areas ▲' : 'Expand All Impact Areas ▼'}
+              {allOpen ? 'Collapse all impact areas' : 'Expand all impact areas'}
             </button>
           </div>
-        </div>
+        </header>
 
-        {/* Four Core Impact Areas */}
-        <div className="space-y-6">
+        {/* Four core impact areas */}
+        <div>
           {SECTIONS.map(({ id, label, figure, blurb, accent, Component }) => {
             const isSectionOpen = open.includes(id)
             return (
@@ -99,7 +100,7 @@ export default function Project() {
         </div>
 
         <FootnoteList />
-      </div>
+      </Container>
     </FootnoteProvider>
   )
 }

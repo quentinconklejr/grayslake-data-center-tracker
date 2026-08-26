@@ -16,8 +16,8 @@ export default function CopyKPIButton({ copyText }) {
       type="button"
       onClick={handleCopy}
       title={copied ? 'Copied!' : `Copy: ${copyText}`}
-      className={`mt-2 inline-flex items-center gap-1.5 text-xs font-mono transition-colors duration-150 min-h-[44px] px-2 -ml-2 ${
-        copied ? 'text-emerald-700' : 'text-gray-500 hover:text-gray-700'
+      className={`mt-2 inline-flex items-center gap-1.5 text-xs font-sans transition-colors duration-150 min-h-[44px] px-2 -ml-2 ${
+        copied ? 'text-status-stated' : 'text-ink-500 hover:text-ink-800'
       }`}
     >
       {copied ? (

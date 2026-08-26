@@ -1,4 +1,5 @@
 import PageTitle from '../components/ui/PageTitle'
+import Container from '../components/layout/Container'
 import { pageMeta } from '../data/pageMeta'
 import SiteMap from '../components/map/SiteMap'
 import ParcelTable from '../components/map/ParcelTable'
@@ -9,36 +10,33 @@ import { LAST_VERIFIED } from '../data/siteConfig'
 export default function MapPage() {
   return (
     <FootnoteProvider>
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-10 space-y-10">
-        <PageTitle 
-          title={pageMeta['/map'].title} 
-          description={pageMeta['/map'].description} 
-          ogImage={pageMeta['/map'].ogImage} 
+      <Container size="wide" className="py-12 sm:py-16 space-y-12">
+        <PageTitle
+          title={pageMeta['/map'].title}
+          description={pageMeta['/map'].description}
+          ogImage={pageMeta['/map'].ogImage}
         />
 
-        <div>
-          <div className="text-2xs font-mono font-semibold uppercase tracking-widest text-sky-800 mb-1">
+        <header className="max-w-3xl">
+          <p className="text-xs font-display italic text-ink-500 tracking-wide mb-2">
             GIS Parcel Layer
-          </div>
-          <h1 className="text-3xl font-display font-bold text-slate-900 tracking-tight mb-2">
-            Land Ownership Map & Parcel Directory
+          </p>
+          <h1 className="text-4xl sm:text-5xl font-display text-ink-900 tracking-tight leading-[1.05] mb-3">
+            Land Ownership Map &amp; Parcel Directory
           </h1>
-          <p className="text-sm font-sans text-slate-600 max-w-2xl">
+          <p className="text-base font-sans text-ink-700 leading-relaxed">
             Interactive satellite map and searchable tax directory displaying the 57 recorded Lake County tax parcels associated with T5 Data Centers in Grayslake, Illinois.
           </p>
-          <div className="text-xs font-mono text-slate-500 mt-2">
+          <p className="text-2xs font-mono text-ink-500 mt-3">
             Last verified {LAST_VERIFIED}
-          </div>
-        </div>
+          </p>
+        </header>
 
-        {/* Interactive Satellite Map */}
         <SiteMap />
-
-        {/* Searchable Parcel Directory */}
         <ParcelTable parcels={PARCELS_DATA} />
 
         <FootnoteList />
-      </div>
+      </Container>
     </FootnoteProvider>
   )
 }

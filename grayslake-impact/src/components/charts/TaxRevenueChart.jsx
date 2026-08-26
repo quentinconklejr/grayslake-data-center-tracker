@@ -2,73 +2,29 @@ import ChartFigure from '../ui/ChartFigure'
 import { useRef, useState, useLayoutEffect } from 'react'
 import { motion } from 'framer-motion'
 
+/*
+ * Simple proportion-bar chart for developer-fee allocation. Each row
+ * has a flat fill color mapped to the status token palette rather than
+ * the old glass gradients.
+ */
 const DEFAULT_DATA = [
-  { name: 'Major infrastructure projects', pct: 50, color: '#d97706', bg: 'rgba(217,119,6,0.09)', label: '50%' },
-  { name: 'Special community projects',    pct: 25, color: '#0284c7', bg: 'rgba(2,132,199,0.09)', label: '25%' },
-  { name: 'Resident cost-control',         pct: 25, color: '#059669', bg: 'rgba(5,150,105,0.09)', label: '25%' },
+  { name: 'Major infrastructure projects', pct: 50, fillCls: 'bg-status-policy',       textCls: 'text-status-policy',       label: '50%' },
+  { name: 'Special community projects',    pct: 25, fillCls: 'bg-status-approval',     textCls: 'text-status-approval',     label: '25%' },
+  { name: 'Resident cost-control',         pct: 25, fillCls: 'bg-status-construction', textCls: 'text-status-construction', label: '25%' },
 ]
 
-// Maps base color hex → gradient + glow so external callers don't need updating
-const COLOR_META = {
-  '#d97706': {
-    gradient: 'linear-gradient(180deg, rgba(245,158,11,0.95) 0%, rgba(180,83,9,0.88) 100%)',
-    glow:     '0 4px 14px rgba(217,119,6,0.55), 0 1px 5px rgba(217,119,6,0.30)',
-  },
-  '#0284c7': {
-    gradient: 'linear-gradient(180deg, rgba(59,130,246,0.95) 0%, rgba(29,78,216,0.88) 100%)',
-    glow:     '0 4px 14px rgba(2,132,199,0.55), 0 1px 5px rgba(2,132,199,0.30)',
-  },
-  '#059669': {
-    gradient: 'linear-gradient(180deg, rgba(16,185,129,0.95) 0%, rgba(4,120,87,0.88) 100%)',
-    glow:     '0 4px 14px rgba(5,150,105,0.55), 0 1px 5px rgba(5,150,105,0.30)',
-  },
-}
-
-// Diagonal streak in top third — simulates angled glass reflection
-const SHINE = {
-  position:      'absolute',
-  inset:         0,
-  background:    'linear-gradient(160deg, rgba(255,255,255,0.0) 10%, rgba(255,255,255,0.52) 30%, rgba(255,255,255,0.18) 50%, transparent 68%)',
-  pointerEvents: 'none',
-}
-
-// Lighter rim at the rounded tip — gives the 3-D glass-capsule feel
-const TIP_HIGHLIGHT = {
-  position:      'absolute',
-  right:         0,
-  top:           0,
-  bottom:        0,
-  width:         '20px',
-  background:    'linear-gradient(90deg, transparent, rgba(255,255,255,0.26))',
-  borderRadius:  '0 9999px 9999px 0',
-  pointerEvents: 'none',
-}
-
-const TRACK_SHADOW = {
-  background:    'rgba(229,231,235,0.50)',
-  backdropFilter: 'blur(4px)',
-  boxShadow:     'inset 0 1.5px 4px rgba(15,23,42,0.14), inset 0 0 0 1px rgba(255,255,255,0.20)',
-}
-
 function ProportionBar({ item, index, inView }) {
-  const meta = COLOR_META[item.color] ?? { gradient: item.color, glow: 'none' }
   return (
     <div className="space-y-1.5">
       <div className="flex items-center justify-between gap-4">
-        <span className="text-xs text-gray-600 leading-tight">{item.name}</span>
-        <span className="font-mono text-sm font-semibold shrink-0" style={{ color: item.color }}>
+        <span className="text-sm font-sans text-ink-700 leading-tight">{item.name}</span>
+        <span className={`font-mono text-sm font-semibold shrink-0 ${item.textCls}`}>
           {item.label}
         </span>
       </div>
-      <div className="h-3 w-full rounded-full overflow-hidden" style={TRACK_SHADOW}>
+      <div className="h-3 w-full overflow-hidden border border-rule">
         <motion.div
-          className="h-full rounded-full"
-          style={{
-            background: meta.gradient,
-            boxShadow: meta.glow,
-            position:  'relative',
-            overflow:  'hidden',
-          }}
+          className={`h-full ${item.fillCls}`}
           initial={{ width: 0 }}
           animate={inView ? { width: `${item.pct}%` } : { width: 0 }}
           transition={{
@@ -76,10 +32,7 @@ function ProportionBar({ item, index, inView }) {
             duration: 0.7,
             ease:     [0.25, 0.46, 0.45, 0.94],
           }}
-        >
-          <div aria-hidden="true" style={SHINE} />
-          <div aria-hidden="true" style={TIP_HIGHLIGHT} />
-        </motion.div>
+        />
       </div>
     </div>
   )

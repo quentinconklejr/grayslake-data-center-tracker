@@ -1,27 +1,35 @@
 import SourceCitation from './SourceCitation'
 
+/*
+ * Small labelled figure used across pages for secondary metrics.
+ *
+ * Previously a bg-white + rounded-xl + border-t-4-colored-accent + shadow
+ * card with a mono-uppercase kicker; now a rule-only records block
+ * whose accent lives in the label and a thin top rule.
+ */
+
 const ACCENT = {
-  blue:   { top: 'border-t-blue-500',    label: 'text-blue-600'    },
-  green:  { top: 'border-t-emerald-500', label: 'text-emerald-700' },
-  amber:  { top: 'border-t-amber-500',   label: 'text-amber-700'   },
-  red:    { top: 'border-t-red-500',     label: 'text-red-700'     },
-  violet: { top: 'border-t-violet-500',  label: 'text-violet-600'  },
+  blue:   'text-status-approval    border-status-approval',
+  green:  'text-status-construction border-status-construction',
+  amber:  'text-status-policy      border-status-policy',
+  red:    'text-status-legal       border-status-legal',
+  violet: 'text-status-development border-status-development',
 }
 
 export default function StatCard({ label, value, sub, badge, accent = 'blue', sourceKey }) {
-  const a = ACCENT[accent] ?? ACCENT.blue
+  const [labelCls, borderCls] = (ACCENT[accent] ?? ACCENT.blue).split(/\s+/)
 
   return (
-    <div className={`bg-white border border-edge border-t-4 ${a.top} rounded-xl px-3.5 sm:px-4 pt-3.5 sm:pt-4 pb-3.5 sm:pb-4 flex flex-col shadow-glass hover:shadow-glass-hover transition-shadow duration-150`}>
-      <p className={`text-2xs font-mono uppercase tracking-[0.18em] mb-3 ${a.label}`}>
+    <div className={`pt-3 pb-4 border-t-2 ${borderCls}`}>
+      <p className={`text-xs font-sans font-semibold ${labelCls}`}>
         {label}
       </p>
-      <p className="text-2xl sm:text-3xl lg:text-4xl font-display font-bold leading-tight tracking-tight mb-2 text-gray-900 break-words">
+      <p className="mt-2 text-2xl sm:text-3xl font-display leading-tight tracking-tight text-ink-900 break-words">
         {value}{sourceKey && <SourceCitation sourceKey={sourceKey} />}
       </p>
-      {sub && <p className="text-xs text-gray-600 leading-relaxed flex-1">{sub}</p>}
+      {sub && <p className="mt-1.5 text-sm font-sans text-ink-600 leading-snug">{sub}</p>}
       {badge && (
-        <span className="mt-3 self-start text-2xs font-mono font-semibold px-1.5 py-0.5 rounded-sm border border-gray-300 text-gray-500 uppercase tracking-widest">
+        <span className="mt-2 inline-block text-2xs font-sans font-semibold text-ink-500 uppercase tracking-wide">
           {badge}
         </span>
       )}

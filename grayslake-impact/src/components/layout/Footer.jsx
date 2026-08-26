@@ -1,109 +1,109 @@
 import { Link } from 'react-router-dom'
 import ReportErrorLink from '../ui/ReportErrorLink'
-import { SITE_CONTACT } from '../../data/siteConfig'
+import Container from './Container'
+import { SITE_CONTACT, LAST_VERIFIED } from '../../data/siteConfig'
 import { NAV_LINKS } from '../../data/navLinks'
 
 const NAV = NAV_LINKS.filter(l => l.to !== '/')
 
-const FOOTER_LINKS = [
-  { to: '/about',                         label: 'About',   external: false },
-  { to: `mailto:${SITE_CONTACT.email}`,  label: 'Contact', external: true  },
-]
-
+/*
+ * Colophon. What replaces the old dark three-column-plus-pill-badge
+ * footer.
+ *
+ * A civic-records site should end the way a printed report ends —
+ * masthead, imprint, sources, and a disclaimer — set in text on the
+ * same paper ground as the body, separated by a rule. No dark surface,
+ * no chip badge, no mono-uppercase kickers. The reading order is
+ * top-to-bottom (title → description → maintainer → methodology →
+ * index → utility links → affiliation disclaimer), so a screen reader
+ * receives the same order the eye does.
+ *
+ * Every string of copy from the old footer is preserved unchanged.
+ */
 export default function Footer() {
   return (
-    <footer className="border-t border-slate-800 mt-24 bg-slate-950 text-slate-300">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
-
-        <div className="grid md:grid-cols-3 gap-10 mb-10">
-          <div>
-            <div className="flex items-center gap-2.5 mb-4">
-              <div className="w-7 h-7 rounded-lg bg-blue-600 flex items-center justify-center shrink-0">
-                <svg viewBox="0 0 14 14" className="w-4 h-4" fill="none" aria-hidden="true">
-                  <rect x="1.5" y="7.5" width="2.5" height="5" rx="0.5" fill="white"/>
-                  <rect x="5.5" y="4.5" width="2.5" height="8" rx="0.5" fill="white"/>
-                  <rect x="9.5" y="6" width="2.5" height="6.5" rx="0.5" fill="white"/>
-                  <path d="M3 5.5L7 2.5L11 4" stroke="white" strokeWidth="0.9" strokeLinecap="round" strokeLinejoin="round" opacity="0.55"/>
-                </svg>
-              </div>
-              <span className="text-base font-bold text-white tracking-tight">Grayslake Data Center Tracker</span>
-            </div>
-            <p className="text-sm text-slate-300 leading-relaxed mb-4">
-              An independent civic data repository collecting public records, land deeds, and municipal hearing logs on T5 @ Chicago IV in Grayslake, Illinois.
-            </p>
-            <div className="inline-flex items-center gap-2 text-xs font-mono text-emerald-400 bg-emerald-950/60 px-2.5 py-1 rounded border border-emerald-800/80">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-              INDEPENDENT CIVIC REPORTING
-            </div>
-          </div>
-
-          <div>
-            <p className="text-xs font-mono text-slate-400 uppercase tracking-widest font-semibold mb-3">Pages</p>
-            <div className="grid grid-cols-2 gap-1.5">
-              {NAV.map(({ to, label }) => (
-                <Link
-                  key={to}
-                  to={to}
-                  className="inline-flex items-center text-sm text-slate-300 hover:text-white transition-colors duration-150 py-1.5 font-medium"
-                >
-                  {label}
-                </Link>
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <p className="text-xs font-mono text-slate-400 uppercase tracking-widest font-semibold mb-3">Methodology</p>
-            <p className="text-sm text-slate-300 leading-relaxed mb-5">
-              All figures are verified against primary filings from Lake County GIS, ComEd utility records, and Village meeting archives. Conditional projections are explicitly labeled.
-            </p>
-
-            <div className="flex flex-wrap gap-x-5 gap-y-2">
-              <Link to="/accessibility" className="text-sm text-slate-300 hover:text-white underline underline-offset-4 transition-colors font-medium">
-                Accessibility
-              </Link>
-              <Link to="/privacy" className="text-sm text-slate-300 hover:text-white underline underline-offset-4 transition-colors font-medium">
-                Privacy
-              </Link>
-              <ReportErrorLink className="text-sm text-slate-300 hover:text-white underline underline-offset-4 transition-colors font-medium" />
-            </div>
-          </div>
-        </div>
-
-        <div className="border-t border-slate-800 pt-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
-          <p className="text-xs font-mono text-slate-400 font-medium">
-            Compiled and maintained by Quentin Conkle Jr. · Peterson Rd &amp; Route 83, Grayslake, IL 60030
+    <footer className="mt-24 border-t-2 border-ink-900 bg-paper text-ink-700">
+      <Container size="wide" className="py-12 sm:py-14">
+        {/* ── Masthead ─────────────────────────────────────────────── */}
+        <div className="max-w-2xl">
+          <p className="text-2xl font-display text-ink-900 tracking-tight leading-tight">
+            Grayslake Data Center Tracker
           </p>
-          <div className="flex items-center gap-4">
-            {FOOTER_LINKS.map(({ to, label, external }) =>
-              external ? (
-                <a
-                  key={to}
-                  href={to}
-                  className="text-sm font-mono font-medium text-slate-300 hover:text-white transition-colors duration-150"
-                >
-                  {label}
-                </a>
-              ) : (
+          <p className="mt-3 text-base font-sans text-ink-700 leading-relaxed">
+            An independent civic data repository collecting public records, land deeds, and municipal hearing logs on T5 @ Chicago IV in Grayslake, Illinois.
+          </p>
+        </div>
+
+        {/* ── Imprint ─────────────────────────────────────────────── */}
+        <div className="mt-8 max-w-2xl space-y-1 text-sm font-sans text-ink-700 leading-relaxed">
+          <p>
+            Compiled and maintained by <span className="font-semibold text-ink-900">Quentin Conkle Jr.</span> &middot; Peterson Rd &amp; Route 83, Grayslake, IL 60030
+          </p>
+          <p>
+            <a
+              href={`mailto:${SITE_CONTACT.email}`}
+              className="text-accent hover:text-accent-hover underline underline-offset-4 decoration-accent"
+            >
+              {SITE_CONTACT.email}
+            </a>
+            <span className="text-ink-500"> &middot; Last verified <span className="font-mono">{LAST_VERIFIED}</span></span>
+          </p>
+          <p className="pt-1 text-xs font-display italic text-ink-500 tracking-wide">
+            Independent civic reporting.
+          </p>
+        </div>
+
+        {/* ── Methodology ─────────────────────────────────────────── */}
+        <div className="mt-10 max-w-2xl">
+          <p className="text-xs font-display italic text-ink-500 tracking-wide mb-2">
+            Methodology
+          </p>
+          <p className="text-sm font-sans text-ink-700 leading-relaxed">
+            All figures are verified against primary filings from Lake County GIS, ComEd utility records, and Village meeting archives. Conditional projections are explicitly labeled.
+          </p>
+        </div>
+
+        {/* ── Index of pages ──────────────────────────────────────── */}
+        <div className="mt-10">
+          <p className="text-xs font-display italic text-ink-500 tracking-wide mb-3">
+            Pages
+          </p>
+          <ul className="flex flex-wrap gap-x-6 gap-y-2 text-sm font-sans">
+            {NAV.map(({ to, label }) => (
+              <li key={to}>
                 <Link
-                  key={to}
                   to={to}
-                  className="text-sm font-mono font-medium text-slate-300 hover:text-white transition-colors duration-150"
+                  className="text-ink-700 hover:text-ink-900 underline underline-offset-4 decoration-rule-strong hover:decoration-accent"
                 >
                   {label}
                 </Link>
-              )
-            )}
-          </div>
+              </li>
+            ))}
+          </ul>
         </div>
 
-      </div>
+        {/* ── Utility links ───────────────────────────────────────── */}
+        <div className="mt-8 flex flex-wrap gap-x-5 gap-y-2 text-sm font-sans">
+          <Link
+            to="/accessibility"
+            className="text-ink-600 hover:text-ink-900 underline underline-offset-4 decoration-rule-strong hover:decoration-accent"
+          >
+            Accessibility
+          </Link>
+          <Link
+            to="/privacy"
+            className="text-ink-600 hover:text-ink-900 underline underline-offset-4 decoration-rule-strong hover:decoration-accent"
+          >
+            Privacy
+          </Link>
+          <ReportErrorLink className="text-ink-600 hover:text-ink-900 underline underline-offset-4 decoration-rule-strong hover:decoration-accent" />
+        </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 pb-8">
-        <p className="text-xs text-slate-400 leading-relaxed border-t border-slate-800/80 pt-6">
+        {/* ── Affiliation disclaimer ──────────────────────────────── */}
+        <p className="mt-10 pt-6 border-t border-rule-soft text-xs font-sans text-ink-500 leading-relaxed max-w-3xl">
           This project is an independent resident initiative and is not affiliated with T5 Data Centers, LLC or the Village of Grayslake. Every claim links to an archived public record or primary document. If a figure requires correction or a document is missing, please submit an update via the About page.
         </p>
-      </div>
+      </Container>
     </footer>
   )
 }

@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
+import Container from './Container'
 import { NAV_STORY, NAV_TOOLS, NAV_META } from '../../data/navLinks'
 
 function NavLink_({ to, label, end }) {
@@ -8,10 +9,10 @@ function NavLink_({ to, label, end }) {
       to={to}
       end={end}
       className={({ isActive }) =>
-        `inline-flex items-center whitespace-nowrap transition-colors duration-150 py-1.5 border-b-2 text-sm ${
-          isActive 
-            ? 'text-sky-700 border-sky-600 font-bold' 
-            : 'text-slate-600 border-transparent hover:text-slate-900 hover:border-slate-300 font-medium'
+        `inline-flex items-center whitespace-nowrap py-1.5 border-b-2 text-sm font-sans transition-colors duration-150 ${
+          isActive
+            ? 'text-ink-900 border-accent font-semibold'
+            : 'text-ink-700 border-transparent hover:text-ink-900 hover:border-rule'
         }`
       }
     >
@@ -27,10 +28,10 @@ function MobileNavLink({ to, label, end, onClick }) {
       end={end}
       onClick={onClick}
       className={({ isActive }) =>
-        `block py-2.5 px-3 rounded-lg text-sm transition-colors ${
+        `block py-2.5 px-3 text-sm font-sans transition-colors ${
           isActive
-            ? 'bg-sky-50 text-sky-800 font-bold'
-            : 'text-slate-700 hover:bg-slate-50 font-medium'
+            ? 'text-ink-900 font-semibold bg-accent-soft'
+            : 'text-ink-700 hover:bg-paper-sunk'
         }`
       }
     >
@@ -39,22 +40,26 @@ function MobileNavLink({ to, label, end, onClick }) {
   )
 }
 
+/*
+ * Small masthead mark. Simple bar chart in the accent hue rather than
+ * the old sky-gradient tile — reads as a records mark, not a product
+ * icon.
+ */
 function TrackerLogo() {
   return (
-    <div className="w-8 h-8 rounded-lg bg-sky-950 border border-sky-800 flex items-center justify-center shrink-0 shadow-sm">
-      <svg className="w-5 h-5" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect x="6" y="16" width="4" height="10" rx="1" fill="#0284c7" />
-        <rect x="12" y="10" width="4" height="16" rx="1" fill="#38bdf8" />
-        <rect x="18" y="13" width="4" height="13" rx="1" fill="#0ea5e9" />
-        <rect x="24" y="18" width="2.5" height="8" rx="0.75" fill="#7dd3fc" />
-        <rect x="5" y="27" width="22" height="1" rx="0.5" fill="#475569" />
+    <div className="w-7 h-7 flex items-center justify-center shrink-0" aria-hidden="true">
+      <svg viewBox="0 0 24 24" className="w-6 h-6" fill="none">
+        <rect x="3"  y="14" width="3" height="7"  fill="#1e3a5f" />
+        <rect x="8"  y="9"  width="3" height="12" fill="#1e3a5f" />
+        <rect x="13" y="11" width="3" height="10" fill="#1e3a5f" />
+        <rect x="18" y="6"  width="3" height="15" fill="#1e3a5f" />
+        <line x1="2" y1="21.5" x2="22" y2="21.5" stroke="#14110f" strokeWidth="1" />
       </svg>
     </div>
   )
 }
 
 export default function Header() {
-  const [scrolled, setScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
   const location = useLocation()
   const toggleRef = useRef(null)
@@ -88,62 +93,56 @@ export default function Header() {
     return () => document.removeEventListener('keydown', onKeyDown)
   }, [mobileOpen])
 
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8)
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
-
   return (
-    <header className={`sticky top-0 z-50 bg-white border-b border-slate-200 transition-shadow ${scrolled ? 'shadow-sm' : ''}`}>
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 flex items-center justify-between h-16 w-full overflow-hidden">
+    <header className="sticky top-0 z-50 bg-paper border-b border-rule">
+      <Container size="wide" className="flex items-center justify-between h-16 overflow-hidden">
         <Link to="/" className="flex items-center gap-2.5 min-w-0 pr-2">
           <TrackerLogo />
           <div className="flex flex-col min-w-0">
-            <span className="font-display font-bold text-slate-900 text-base sm:text-lg tracking-tight truncate">
+            <span className="font-display text-ink-900 text-base sm:text-lg leading-tight tracking-tight truncate">
               Grayslake Data Center Tracker
             </span>
-            <span className="text-2xs font-mono text-slate-500 truncate hidden sm:block">
+            <span className="text-2xs font-sans italic text-ink-500 truncate hidden sm:block">
               Not affiliated with T5 or the Village
             </span>
           </div>
         </Link>
 
         {/* Desktop Nav */}
-        <nav className="hidden lg:flex items-center gap-4 xl:gap-5 shrink-0">
+        <nav className="hidden lg:flex items-center gap-4 xl:gap-5 shrink-0" aria-label="Primary">
           {NAV_STORY.map(l => (
             <NavLink_ key={l.to} to={l.to} label={l.label} end={l.end} />
           ))}
-          <span className="h-4 w-px bg-slate-200" />
+          <span aria-hidden="true" className="h-4 w-px bg-rule" />
           {NAV_TOOLS.map(l => (
             <NavLink_ key={l.to} to={l.to} label={l.label} end={l.end} />
           ))}
-          <span className="h-4 w-px bg-slate-200" />
+          <span aria-hidden="true" className="h-4 w-px bg-rule" />
           {NAV_META.map(l => (
             <NavLink_ key={l.to} to={l.to} label={l.label} end={l.end} />
           ))}
         </nav>
 
-        {/* Mobile Hamburger Button */}
+        {/* Mobile hamburger */}
         <button
           ref={toggleRef}
           onClick={() => setMobileOpen(v => !v)}
           aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
           aria-expanded={mobileOpen}
-          className="lg:hidden flex items-center justify-center p-2 rounded-lg text-slate-700 hover:text-slate-900 hover:bg-slate-100 focus:outline-none shrink-0 min-h-[44px] min-w-[44px]"
+          className="lg:hidden flex items-center justify-center p-2 text-ink-700 hover:text-ink-900 hover:bg-paper-sunk shrink-0 min-h-[44px] min-w-[44px]"
         >
           {mobileOpen ? (
-            <span className="text-xl font-bold font-mono">×</span>
+            <span aria-hidden="true" className="text-xl font-mono">×</span>
           ) : (
-            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <svg aria-hidden="true" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
             </svg>
           )}
         </button>
-      </div>
+      </Container>
 
       {mobileOpen && (
-        <div ref={menuRef} className="lg:hidden bg-white border-b border-slate-200 px-4 py-3 space-y-1 shadow-lg max-h-[80vh] overflow-y-auto">
+        <div ref={menuRef} className="lg:hidden bg-paper border-b border-rule px-4 py-3 space-y-1 max-h-[80vh] overflow-y-auto">
           {NAV_STORY.map(l => (
             <MobileNavLink key={l.to} to={l.to} label={l.label} end={l.end} onClick={() => setMobileOpen(false)} />
           ))}

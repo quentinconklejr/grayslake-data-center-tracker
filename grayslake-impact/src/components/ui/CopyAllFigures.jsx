@@ -36,10 +36,10 @@ export default function CopyAllFigures() {
     <button
       type="button"
       onClick={handleCopy}
-      className={`inline-flex items-center gap-2 rounded-lg border-2 px-4 py-3 text-sm font-medium transition-colors min-h-[44px] ${
+      className={`inline-flex items-center gap-2 border px-4 py-3 text-sm font-sans font-semibold transition-colors min-h-[44px] ${
         copied
-          ? 'border-emerald-500 text-emerald-700 bg-emerald-50'
-          : 'border-edge text-gray-700 bg-white hover:border-blue-400 hover:text-gray-900'
+          ? 'border-status-stated text-status-stated bg-status-stated-soft'
+          : 'border-ink-900 text-ink-800 bg-paper hover:bg-paper-sunk'
       }`}
     >
       {copied ? (
