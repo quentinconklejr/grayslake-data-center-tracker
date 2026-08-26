@@ -77,7 +77,7 @@ export default function JobsTimelineChart() {
 
             <div className="h-4 w-full overflow-hidden border border-rule">
               <motion.div
-                className={`h-full ${item.fillCls}`}
+                className={`h-full ${item.sourced ? item.fillCls : 'bg-ink-500'}`}
                 initial={{ width: 0 }}
                 animate={inView ? { width: `${(item.value / item.max) * 100}%` } : { width: 0 }}
                 transition={{ delay: 0.15 + i * 0.15, duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}

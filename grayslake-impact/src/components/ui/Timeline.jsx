@@ -166,9 +166,14 @@ export default function Timeline({ events = [], proportional = false }) {
                   {event.category}
                 </span>
 
-                {/* Content */}
+                {/* Content — projected events render in the muted ink
+                    range (ink-500) against confirmed events in ink-900 /
+                    ink-600. The "hasn't happened yet" distinction is
+                    editorially load-bearing for this site's credibility,
+                    so the visual de-emphasis is a token choice rather
+                    than an opacity utility. */}
                 <div className="flex-1 min-w-0 sm:pt-px">
-                  <p className="text-base font-display font-semibold text-ink-900 leading-snug">
+                  <p className={`text-base font-display font-semibold leading-snug ${projected ? 'text-ink-500' : 'text-ink-900'}`}>
                     {event.title}
                     {!event.description && (
                       event.sourceKeys
@@ -177,7 +182,7 @@ export default function Timeline({ events = [], proportional = false }) {
                     )}
                   </p>
                   {event.description && (
-                    <p className="text-sm font-sans text-ink-600 leading-relaxed mt-1">
+                    <p className={`text-sm font-sans leading-relaxed mt-1 ${projected ? 'text-ink-500' : 'text-ink-600'}`}>
                       {event.description}
                       {event.sourceKeys
                         ? event.sourceKeys.map(k => <SourceCitation key={k} sourceKey={k} />)

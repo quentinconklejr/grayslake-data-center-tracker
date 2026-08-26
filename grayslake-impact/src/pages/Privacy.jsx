@@ -8,20 +8,17 @@ import { LAST_VERIFIED, SITE_CONTACT } from '../data/siteConfig'
 /**
  * Privacy page.
  *
- * Rewritten because it had drifted out of true in four ways, and a privacy
- * page that is wrong is worse than none:
+ * The claims below describe what actually leaves the reader's browser.
+ * A false claim on this page is worse than none: it's disclosure, not
+ * marketing, and readers rely on it to decide whether to visit. Every
+ * bullet in the "Other services that load in the page" section should
+ * be re-verified against index.html and the running app whenever a
+ * third-party dependency is added, removed, or changed. Previous drifts
+ * that this file has had to correct include a mis-named map library, a
+ * mailing-list contradiction, and a font-hosting misstatement.
  *
- *   1. It said the map is served by Mapbox. It is not. The map is Leaflet,
- *      with satellite tiles from Esri and street labels from CARTO.
- *   2. It said "I do not run a mailing list, and I will not add you to one",
- *      three paragraphs below the section describing the mailing list.
- *   3. It never mentioned Google Fonts, which every page loads, and which is
- *      the one third-party request a reader cannot avoid.
- *   4. The contact address was a personal gmail, while every other page used
- *      the university address.
- *
- * The contact address is imported rather than hardcoded so it cannot drift
- * again.
+ * The contact address is imported from siteConfig rather than hardcoded
+ * so it cannot drift out of sync with the About page.
  */
 
 const CONTACT = SITE_CONTACT.email
