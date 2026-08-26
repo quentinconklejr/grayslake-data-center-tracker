@@ -301,7 +301,7 @@ export default function Agreement() {
                 </span>
               </div>
 
-              <p className="text-sm font-sans text-status-disputed border-l-[3px] border-status-disputed pl-3 py-1 mt-5 leading-relaxed">
+              <p className="text-sm font-sans text-status-disputed border-l-[3px] border-status-disputed bg-status-disputed-soft pl-4 pr-4 py-2.5 mt-5 leading-relaxed">
                 These are allegations in a complaint, not findings. No defendant had answered at the
                 time of writing and no court has ruled on any count. Read it and judge for yourself,
                 which is the point of putting it here.
@@ -342,7 +342,7 @@ export default function Agreement() {
                       <SourceCitation sourceKey={t.sourceKey} />
                     </p>
                     {t.caveat && (
-                      <p className="text-sm font-sans text-status-disputed border-l-[3px] border-status-disputed pl-3 py-1 mt-3 leading-relaxed">
+                      <p className="text-sm font-sans text-status-disputed border-l-[3px] border-status-disputed bg-status-disputed-soft pl-4 pr-4 py-2.5 mt-3 leading-relaxed">
                         {t.caveat}
                       </p>
                     )}
