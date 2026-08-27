@@ -24,23 +24,25 @@ export default function ChartFigure({ caption, description, rows, children }) {
       {children}
 
       {rows && (
-        <table id={`${id}-tbl`} className="sr-only">
-          <caption>Underlying values for: {caption}</caption>
-          <thead>
-            <tr>
-              <th scope="col">Measure</th>
-              <th scope="col">Value</th>
-            </tr>
-          </thead>
-          <tbody>
-            {rows.map(([label, value]) => (
-              <tr key={label}>
-                <th scope="row">{label}</th>
-                <td>{value}</td>
+        <div className="sr-only">
+          <table id={`${id}-tbl`}>
+            <caption>Underlying values for: {caption}</caption>
+            <thead>
+              <tr>
+                <th scope="col">Measure</th>
+                <th scope="col">Value</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {rows.map(([label, value]) => (
+                <tr key={label}>
+                  <th scope="row">{label}</th>
+                  <td>{value}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
     </figure>
   )
