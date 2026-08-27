@@ -37,10 +37,14 @@ export default function SourceCitation({ sourceKey }) {
   if (!source) return null
 
   // The reference sits inline as a small superscript, not a bracketed
-  // markdown-looking token. A transparent 44×44 hit target overlays the
-  // visible mark so touch users get WCAG 2.5.5 AAA without inflating the
-  // typographic footprint. aria-label announces "Source N" so SR does not
-  // read the visual glyph out as "one".
+  // markdown-looking token. A transparent 44×44 ::after hit target overlays
+  // the visible mark so touch users get WCAG 2.5.5 AAA without inflating
+  // the typographic footprint. `contain: layout` on the button prevents
+  // that 44×44 rect from bleeding ~18px into ancestor scrollWidth (which
+  // otherwise adds up across multiple markers to a horizontal scrollbar
+  // at 375px). Paint + hit-testing still extend to the full 44×44.
+  // aria-label announces "Source N" so SR does not read the visual glyph
+  // out as "one".
   return (
     <span ref={wrapperRef} className="relative inline align-baseline ml-0.5">
       <button
@@ -50,7 +54,7 @@ export default function SourceCitation({ sourceKey }) {
         onMouseLeave={close}
         aria-label={`Source ${num}`}
         aria-expanded={show}
-        className="relative align-super text-2xs font-mono font-semibold text-accent hover:text-accent-hover after:absolute after:content-[''] after:left-1/2 after:top-1/2 after:-translate-x-1/2 after:-translate-y-1/2 after:w-11 after:h-11"
+        className="relative align-super text-2xs font-mono font-semibold text-accent hover:text-accent-hover [contain:layout] after:absolute after:content-[''] after:left-1/2 after:top-1/2 after:-translate-x-1/2 after:-translate-y-1/2 after:w-11 after:h-11"
       >
         <span aria-hidden="true">{num}</span>
       </button>
