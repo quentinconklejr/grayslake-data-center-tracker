@@ -90,10 +90,10 @@ export default function Privacy() {
         </p>
         <p>
           <strong>The map.</strong> The map is built with Leaflet, an open-source library that runs
-          in your browser. Its satellite imagery comes from Esri and its street labels from CARTO, so
-          opening the map or the front page requests image tiles from both. Their terms apply to
-          those requests rather than mine. The parcel data itself is a file served from this site,
-          not a live call to the county.
+          in your browser. Its satellite imagery, plain basemap, and street labels all come from
+          Esri, so opening the map or the front page requests image tiles from Esri. Their terms
+          apply to those requests rather than mine. The parcel data itself is a file served from
+          this site, not a live call to the county.
         </p>
         <p>
           <strong>Hosting.</strong> The site is hosted on Vercel, which keeps standard server logs
