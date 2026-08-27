@@ -84,11 +84,6 @@ export default function Privacy() {
 
       <Section title="Other services that load in the page">
         <p>
-          <strong>Fonts.</strong> Every page loads two typefaces from Google Fonts, which means your
-          browser makes a request to Google on each visit and Google can see your IP address in doing
-          so. This is the one outside request you cannot avoid by staying off a particular page.
-        </p>
-        <p>
           <strong>The map.</strong> The map is built with Leaflet, an open-source library that runs
           in your browser. Its satellite imagery, plain basemap, and street labels all come from
           Esri, so opening the map or the front page requests image tiles from Esri. Their terms
