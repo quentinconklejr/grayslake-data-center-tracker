@@ -105,7 +105,7 @@ export default function UpdatesSignup() {
   }
 
   return (
-    <section aria-label="Email updates" className="border-t border-rule pt-8 my-8">
+    <section aria-label="Email updates" className="border-t border-rule pt-8">
       <p className="text-xs font-display italic text-ink-500 tracking-wide mb-2">
         Stay on the record
       </p>
@@ -135,7 +135,7 @@ export default function UpdatesSignup() {
           updates when the record changes.
         </p>
       ) : (
-        <form onSubmit={handleSubmit} className="mt-5 flex flex-col sm:flex-row gap-3 max-w-lg">
+        <form onSubmit={handleSubmit} className="mt-5 flex flex-col sm:flex-row gap-3 max-w-2xl">
           <label htmlFor="updates-email" className="sr-only">Email address</label>
           <input
             id="updates-email"

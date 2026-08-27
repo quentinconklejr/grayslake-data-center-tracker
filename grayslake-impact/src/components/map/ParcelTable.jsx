@@ -188,26 +188,38 @@ export default function ParcelTable({ parcels }) {
       {/* ── Source attribution ────────────────────────────────────────
           Deliberately given more weight than in the old design. This is
           the credibility line — reads like the footer of a county
-          records printout. */}
+          records printout. The ArcGIS query lives on its own row in a
+          horizontally scrollable mono block: a reporter can reproduce
+          the parcel list from it, and at 375px it must not wrap
+          mid-token, so whitespace-pre + overflow-x-auto rather than
+          letting it break across lines in the middle of an identifier
+          or a quoted string. */}
       {META.source && (
-        <p className="mt-5 pt-4 border-t border-rule-soft text-sm font-sans text-ink-600 leading-relaxed">
-          <span className="font-semibold text-ink-800">Source: </span>
-          {META.sourceUrl ? (
-            <a href={META.sourceUrl} target="_blank" rel="noopener noreferrer" className="text-accent hover:text-accent-hover underline underline-offset-4 decoration-accent">
-              {META.source}
-            </a>
-          ) : (
-            META.source
-          )}
-          {META.retrieved && (
-            <>
-              . <span className="font-sans">Retrieved <span className="font-mono">{META.retrieved}</span>.</span>
-            </>
-          )}
+        <div className="mt-5 pt-4 border-t border-rule-soft text-sm font-sans text-ink-600 leading-relaxed">
+          <p>
+            <span className="font-semibold text-ink-800">Source: </span>
+            {META.sourceUrl ? (
+              <a href={META.sourceUrl} target="_blank" rel="noopener noreferrer" className="text-accent hover:text-accent-hover underline underline-offset-4 decoration-accent">
+                {META.source}
+              </a>
+            ) : (
+              META.source
+            )}
+            {META.retrieved && (
+              <>. Retrieved <span className="font-mono">{META.retrieved}</span>.</>
+            )}
+          </p>
           {META.query && (
-            <> Query: <span className="font-mono text-ink-700">{META.query}</span>.</>
+            <div className="mt-2">
+              <p className="text-2xs font-sans font-semibold uppercase tracking-wide text-ink-600">
+                Reproducing query
+              </p>
+              <pre className="mt-1 font-mono text-xs text-ink-700 overflow-x-auto whitespace-pre max-w-full leading-relaxed">
+                <code>{META.query}</code>
+              </pre>
+            </div>
           )}
-        </p>
+        </div>
       )}
     </section>
   )
