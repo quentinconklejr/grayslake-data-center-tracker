@@ -30,7 +30,7 @@ const SECONDARY_STATS = [
 export default function Home() {
   return (
     <FootnoteProvider>
-      <Container size="wide" className="py-8 sm:py-10 space-y-10 sm:space-y-12">
+      <Container size="wide" className="pt-8 sm:pt-10 space-y-10 sm:space-y-12">
         <PageTitle
           title={pageMeta['/'].title}
           description={pageMeta['/'].description}
