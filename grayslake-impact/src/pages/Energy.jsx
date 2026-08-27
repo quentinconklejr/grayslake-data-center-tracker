@@ -39,9 +39,15 @@ export default function Energy({ asSection = false }) {
         {!asSection && <p className="text-2xs font-mono text-ink-500 mt-3">Last verified {LAST_VERIFIED}</p>}
       </FadeIn>
 
-      <FadeIn className="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 mb-12">
-        <StatCard label="Secured Power"        value={`${project.securedPowerMW.toLocaleString()} MW`}  sub="Utility-contracted capacity"   accent="amber" sourceKey="dcdGW2026" />
-        <StatCard label="IT Capacity"          value={`${project.totalCapacityMW.toLocaleString()} MW`} sub="Leasable at full buildout"     accent="blue"  sourceKey="dcdGW2026" />
+      {/* Secured Power (1,600 MW) and IT Capacity (1,200 MW) used to
+          appear as their own StatCards above the chart; both are already
+          the headline figures in EnergyDrawChart (primary-figures header
+          and the three-column footer), so pulling them out avoids the
+          reader seeing the same two numbers twice on the same panel.
+          The remaining two — ComEd substation capacity in GW and the
+          PJM transmission zone — are context the chart does not carry
+          and stay in the metric row. */}
+      <FadeIn className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 mb-12">
         <StatCard label="Total ComEd Capacity" value={`${project.comEdCapacityGW} GW`}                  sub="Secured from ComEd, per T5 CEO" accent="amber" sourceKey="govtech2025" />
         <StatCard label="PJM Zone"             value="COMED"                                            sub="ComEd transmission zone, PJM"  accent="blue"  sourceKey="clcjawa2026" />
       </FadeIn>
