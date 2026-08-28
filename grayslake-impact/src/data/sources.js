@@ -76,7 +76,10 @@ export const sources = {
   dceo2026: {
     title: "Data Center Investment Tax Exemptions and Credits",
     publisher: "Illinois DCEO",
+    date: "Retrieved Aug 28, 2026",
     url: "https://dceo.illinois.gov/expandrelocate/incentives/datacenters.html",
+    note: "The page carries no publication or revision date. As retrieved it states: \u201cPer the Governor\u2019s directive on June 5, 2026, DCEO will no longer process applications for the data center incentive program as of July 1, 2026.\u201d No end date or duration for the suspension appears on the page.",
+    verified: "Aug 28, 2026",
   },
   villageoffaq: {
     title: "Approved T5 Data Center Campus FAQs",
@@ -105,6 +108,16 @@ export const sources = {
     publisher: "Chicago Tribune",
     date: "June 5, 2026",
     url: "https://www.chicagotribune.com/2026/06/05/grayslake-data-center-3/",
+    tier: "primary",
+  },
+  chitrib_jul2026: {
+    title: "Grayslake data center opponents call for wetlands protection: 'Wetlands are incredibly important'",
+    publisher: "Chicago Tribune, via Illinois Environmental Council",
+    author: "Joseph States",
+    date: "July 2, 2026",
+    url: "https://ilenviro.org/grayslake-data-center-opponents-call-for-wetlands-protection-wetlands-are-incredibly-important/",
+    note: "Chicago Tribune reporting, republished in full by the Illinois Environmental Council on July 7, 2026; cited to the republication because it is reachable without a subscription. Primary source for the 15.75-acre wetland fill application and for the September 2025 Lake County Stormwater Management Commission letter finding that at least some on-site wetlands likely fall under US Army Corps of Engineers jurisdiction.",
+    verified: "Aug 28, 2026",
     tier: "primary",
   },
   chronicle2026: {

@@ -151,11 +151,11 @@
     disputed: [
       {
         text: "The opposition lawsuit argues that public hearings were inadequate: that residents had no meaningful opportunity for cross-examination of expert witnesses, that the Village commissioned no independent third-party environmental or water studies before approval, and that the process did not comply with applicable procedural requirements.",
-        sourceKey: 'dailyherald2026',
+        sourceKey: 'complaint2026',
       },
       {
         text: "T5's application to fill approximately 15.75 acres of wetlands raises a separate federal adequacy question: a September 2025 Stormwater Management Commission letter reportedly indicates some of those wetlands may fall under US Army Corps of Engineers jurisdiction, which would require a federal Section 404 permit not obtained through the village approval process. Avon Township's board adopted a resolution calling for greater transparency and community engagement regarding the development.",
-        sourceKey: 'chitrib_june2026',
+        sourceKeys: ['chitrib_jul2026', 'chronicle2026'],
       },
     ],
     unknown: [
