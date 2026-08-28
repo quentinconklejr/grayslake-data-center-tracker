@@ -28,7 +28,7 @@
         sourceKey: 'alliancegreatlakes',
       },
       {
-        text: 'The Citizens Utility Board projected that the Meta data center in DeKalb would contribute to a local water deficit by 2030 under current draw rates. The DeKalb/Meta campus is the closest Illinois precedent at this scale.',
+        text: 'The Citizens Utility Board, citing reporting by WBEZ, has noted an estimate that the Meta data center in DeKalb will be in a water deficit by 2030. DeKalb is the largest comparable Illinois data center campus for which any public water analysis exists.',
         sourceKey: 'cub2026',
       },
     ],
@@ -135,7 +135,7 @@
 
   {
     id: 'approval-process',
-    plain: "The Village approved the project over roughly eight months between September 2024 and May 2025, after public hearings and board meetings, and says T5 received every land-use and zoning approval required. Residents challenging it argue the hearings were inadequate, that objectors could not meaningfully cross-examine, and that the Village commissioned no independent studies. That dispute is headed for court; no complaint had been filed as of the most recent reporting.",
+    plain: "The Village approved the project over roughly eight months between September 2024 and May 2025, after public hearings and board meetings, and says T5 received every land-use and zoning approval required. Residents challenging it argue the hearings were inadequate, that objectors could not meaningfully cross-examine, and that the Village commissioned no independent studies. That dispute is now in court: a complaint was filed in Lake County Circuit Court on July 31, 2026, and no ruling has been issued.",
     question: 'Was the approval process adequate?',
     category: 'process',
     stated: [
@@ -150,12 +150,12 @@
     ],
     disputed: [
       {
-        text: "The opposition lawsuit argues that public hearings were inadequate: that residents had no meaningful opportunity for cross-examination of expert witnesses, that the Village commissioned no independent third-party environmental or water studies before approval, and that the process did not comply with applicable procedural requirements.",
+        text: "The opposition lawsuit argues that public hearings were inadequate: that objectors were denied a meaningful opportunity to cross-examine the developer's witnesses, that the Village commissioned no independent third-party environmental or water studies before approval, and that the process did not comply with applicable procedural requirements.",
         sourceKey: 'complaint2026',
       },
       {
-        text: "T5's application to fill approximately 15.75 acres of wetlands raises a separate federal adequacy question: a September 2025 Stormwater Management Commission letter reportedly indicates some of those wetlands may fall under US Army Corps of Engineers jurisdiction, which would require a federal Section 404 permit not obtained through the village approval process. Avon Township's board adopted a resolution calling for greater transparency and community engagement regarding the development.",
-        sourceKeys: ['chitrib_jul2026', 'chronicle2026'],
+        text: "T5's application to fill approximately 15.75 acres of wetlands raised a separate federal adequacy question: a September 2025 Stormwater Management Commission letter found that at least some of those wetlands likely fall under US Army Corps of Engineers jurisdiction, which would require a federal Section 404 permit the village approval process did not cover. T5 suspended that application on July 31, 2026; the jurisdictional question behind it remains unresolved. Avon Township's board separately adopted a resolution in early June 2026 supporting transparency, public information and community engagement regarding the development.",
+        sourceKeys: ['chitrib_jul2026', 'dailyherald_jul2026', 'chronicle2026'],
       },
     ],
     unknown: [
