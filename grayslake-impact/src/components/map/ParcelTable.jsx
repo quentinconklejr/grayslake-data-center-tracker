@@ -133,7 +133,7 @@ export default function ParcelTable({ parcels }) {
       {/* Records table — hairline rules, tabular numerals, PIN as the
           row header, paper-sunk on zebra rows. */}
       <div className="overflow-x-auto -mx-4 sm:mx-0">
-        <table className="w-full text-left border-collapse text-sm font-mono">
+        <table className="w-full min-w-max text-left border-collapse text-sm font-mono">
           <caption className="sr-only">
             Recorded parcels showing PIN, acres, recorded sale price, and recorded sale date.
           </caption>
