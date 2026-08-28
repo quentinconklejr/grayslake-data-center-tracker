@@ -13,8 +13,10 @@
  *            Project overview, and the standalone Map — anything that
  *            needs to fit the parcel table or the map surface at width
  *
- * All three carry the same horizontal padding, so switching sizes on a
- * page does not shift the gutter.
+ * All three carry the same horizontal padding. They are centred, so
+ * switching size between pages does shift the visible left edge of the
+ * text against the fixed header and footer measure; that is the tradeoff
+ * for keeping each kind of content at its own comfortable width.
  */
 export default function Container({
   as: Tag = 'div',
