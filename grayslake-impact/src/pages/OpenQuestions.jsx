@@ -3,6 +3,7 @@ import PageTitle from '../components/ui/PageTitle'
 import Container from '../components/layout/Container'
 import { pageMeta } from '../data/pageMeta'
 import { questions } from '../data/questions'
+import { questionStatus, STATUS_META } from '../data/questionStatus'
 import ItemCitations from '../components/ui/ItemCitations'
 import { FootnoteProvider, FootnoteList } from '../components/ui/FootnoteContext'
 
@@ -60,6 +61,10 @@ export default function OpenQuestions() {
         <div>
           {questions.map(q => {
             const isOpen = openIds.includes(q.id)
+            // Status is per-question metadata edited in questionStatus.js.
+            // Missing / unknown keys fall back to 'unanswered' so an
+            // unreviewed question shows up honestly rather than crashing.
+            const status = STATUS_META[questionStatus[q.id]] ?? STATUS_META.unanswered
             return (
               <div key={q.id} className="border-t border-rule">
                 <button
@@ -67,9 +72,21 @@ export default function OpenQuestions() {
                   aria-expanded={isOpen}
                   className="group w-full text-left py-5 sm:py-6 flex items-center justify-between gap-4 hover:bg-paper-sunk transition-colors"
                 >
-                  <h2 className="text-xl sm:text-2xl font-display text-ink-900 leading-snug">
-                    {q.question}
-                  </h2>
+                  <div className="min-w-0 flex-1">
+                    {/* Status label sits on its own metadata row above
+                        the question — same small-caps sans treatment as
+                        the tier tags on /documents and the italic status
+                        labels inside each expanded block. Colour tokens
+                        (status-stated/disputed/unknown) map to the
+                        answered/partial/unanswered semantics. Not a
+                        pill, not a badge. */}
+                    <p className={`text-2xs font-sans font-semibold uppercase tracking-wide mb-1.5 ${status.cls}`}>
+                      {status.label}
+                    </p>
+                    <h2 className="text-xl sm:text-2xl font-display text-ink-900 leading-snug">
+                      {q.question}
+                    </h2>
+                  </div>
                   <span
                     aria-hidden="true"
                     className="shrink-0 inline-flex items-center justify-center w-11 h-11 rounded-full border border-rule-strong text-ink-600 font-mono text-lg leading-none group-hover:border-accent group-hover:text-accent transition-colors"
