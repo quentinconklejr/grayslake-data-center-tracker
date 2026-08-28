@@ -2,6 +2,7 @@ import PageTitle from '../components/ui/PageTitle'
 import Container from '../components/layout/Container'
 import { pageMeta } from '../data/pageMeta'
 import { sources } from '../data/sources'
+import { docMeta } from '../data/docMeta'
 import { LAST_VERIFIED } from '../data/siteConfig'
 
 const TIER = {
@@ -9,6 +10,14 @@ const TIER = {
   aggregator: 'text-status-disputed',
   trade:      'text-status-approval',
   default:    'text-ink-500',
+}
+
+// Bytes → "154 KB" / "1.2 MB". Kept alongside the render because the
+// unit shows up in exactly one place; a util file would be premature.
+function fmtSize(bytes) {
+  if (!bytes) return null
+  const kb = bytes / 1024
+  return kb < 1024 ? `${Math.round(kb)} KB` : `${(kb / 1024).toFixed(1)} MB`
 }
 
 export default function Sources() {
@@ -41,6 +50,13 @@ export default function Sources() {
       <ol className="divide-y divide-rule-strong border-y border-rule">
         {sourceEntries.map(([key, source], i) => {
           const tierCls = TIER[source.tier] ?? TIER.default
+          // Real, read-from-file metadata for mirrored PDFs only. An
+          // external-link source (no localCopy) gets no page/size fields
+          // because we can't inspect the file — better to omit than guess.
+          const meta = source.localCopy ? docMeta[source.localCopy] : null
+          const fileMeta = meta
+            ? [meta.pages ? `${meta.pages} pages` : null, fmtSize(meta.sizeBytes)].filter(Boolean).join(' · ')
+            : null
           return (
             <li key={key} className="py-6">
               <div className="flex items-baseline gap-4">
@@ -51,11 +67,23 @@ export default function Sources() {
                   {/* Tier tag lives on its own metadata row above the title
                       so a long title cannot displace it mid-line and cause
                       wrap jitter. Also keeps the h3 measure predictable
-                      when scanning the list. */}
-                  {source.tier && (
-                    <p className={`text-2xs font-sans font-semibold uppercase tracking-wide mb-1.5 ${tierCls}`}>
-                      {source.tier}
-                    </p>
+                      when scanning the list. Page count + file size ride
+                      on the same row (mirror-only, read from the actual
+                      PDF at build time) — same row treatment, no new
+                      badge style. */}
+                  {(source.tier || fileMeta) && (
+                    <div className="flex items-baseline justify-between gap-3 mb-1.5">
+                      {source.tier ? (
+                        <p className={`text-2xs font-sans font-semibold uppercase tracking-wide ${tierCls}`}>
+                          {source.tier}
+                        </p>
+                      ) : <span aria-hidden="true" />}
+                      {fileMeta && (
+                        <p className="text-2xs font-mono text-ink-500 tabular-nums shrink-0">
+                          {fileMeta}
+                        </p>
+                      )}
+                    </div>
                   )}
                   <h3 className="text-lg font-display font-semibold text-ink-900 leading-snug mb-1">
                     {source.url && source.status !== 'dead' && source.status !== 'unverified' ? (
