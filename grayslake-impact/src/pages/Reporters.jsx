@@ -10,13 +10,13 @@ const PRESS_FACTS = [
   {
     topic: 'Total Estimated Investment',
     stat: figureById['investment']?.value || '$8.5B / $18B',
-    citation: 'Village of Grayslake estimates total investment at $8.5 billion; T5 Data Centers chief executive Pete Marin cited up to $18 billion. (Village of Grayslake FAQ, June 2026; Government Technology, Oct. 2025).',
+    citation: 'Grayslake Mayor Elizabeth Davies cited total investment of $8.5 billion; T5 Data Centers chief executive Pete Marin cited up to $18 billion. Two figures from two people, not a published range. (Government Technology, Oct. 2025).',
     src: 'govtech2025',
   },
   {
     topic: 'Permanent Operational Jobs',
     stat: 'Up to 1,680 jobs',
-    citation: 'Village FAQ estimates up to 1,680 permanent operational jobs assuming full 10M sq ft buildout (1 job per 6,000 sq ft). Grayslake Mayor Elizabeth Davies cited 1,500 jobs; T5 CEO cited over 1,600. Excludes construction labor. (Village FAQ, June 2026).',
+    citation: 'The Village FAQ estimates up to 1,680 permanent operational jobs assuming the full 10 million sq ft is built (50 jobs per 300,000 sq ft), and hedges that the estimate may change. Grayslake Mayor Elizabeth Davies cited 1,500 jobs (Oct. 2025); T5 chief executive Pete Marin cited over 1,600 (Jul. 2026). Excludes construction labor. (Approved T5 Data Center Campus FAQs, updated June 5, 2026 - archived snapshot; the Village\'s live copy is no longer reachable).',
     src: 'villagefaq_archived',
   },
   {
@@ -28,13 +28,13 @@ const PRESS_FACTS = [
   {
     topic: 'Land Ownership & Site Area',
     stat: '287.8 Acres Recorded / 472 Approved',
-    citation: 'Lake County GIS records confirm 287.82 acres recorded across 57 parcels to T5 Data Centers. Village approvals permit development on up to 472 acres in Cornerstone Business Park. (Lake County GIS, Aug. 2026).',
+    citation: 'Lake County GIS records confirm 287.82 acres recorded across 57 parcels to T5 Data Centers (Lake County GIS Tax Parcel layer, retrieved Aug. 5, 2026). Village approvals separately permit development on up to 472 acres in Cornerstone Business Park (Approved T5 Data Center Campus FAQs, updated June 5, 2026 - archived snapshot).',
     src: 'lakecountygis',
   },
   {
     topic: 'Pending Legal Action',
     stat: 'Circuit Court Lawsuit Filed',
-    citation: 'On July 31, 2026, the Preservation of Community Well-being Collective LLC and nine residents filed a lawsuit in Lake County Circuit Court challenging Village approvals under local zoning and sustainability ordinances. (Lake & McHenry County Scanner, Aug. 2026).',
+    citation: 'On July 31, 2026, the Preservation of Community Well-being Collective LLC and nine individual residents filed a complaint in the Circuit Court of the 19th Judicial Circuit, Lake County, Chancery Division (No. 2026CH00000171). It pleads four counts: ultra vires municipal action, substantive due process and procedural due process under the Illinois Constitution, and violation of the Illinois Open Meetings Act. Allegations, not findings. (Complaint, filed July 31, 2026; Lake & McHenry County Scanner, Aug. 8, 2026).',
     src: 'scannerLawsuit2026',
   },
 ]
