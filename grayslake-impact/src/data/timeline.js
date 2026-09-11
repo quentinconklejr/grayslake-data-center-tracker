@@ -155,4 +155,36 @@ export const timelineEvents = [
     category: "policy",
     sourceKey: "scannerCancellation2026",
   },
+  {
+    date: "2026-08-18",
+    title: "County zoning board recommends data center moratorium, 6-0",
+    description:
+      "The Lake County Zoning Board of Appeals voted 6-0 to recommend a county code amendment establishing an eight-month temporary moratorium on data centers in unincorporated Lake County. Chronicle Media reported more than 225 people attended the hearing and that the county had received more than 1,000 responses through its website. The recommendation moved to the Zoning, Building and Development Committee on September 2 and to the full County Board on September 8. The measure covers unincorporated Lake County only; Chronicle Media reported that County Board approval \u201cdoes not hinder or impact what is done within municipal boundaries and its jurisdictions.\u201d",
+    category: "policy",
+    sourceKey: "chronicleZba2026",
+  },
+  {
+    date: "2026-08-30",
+    title: "State representative says project should not proceed without answers",
+    description:
+      "Illinois State Rep. Daniel Didech (D-Buffalo Grove) said the project should not proceed unless the Village and the developer demonstrate it will not harm energy costs, water quality and availability, noise levels or ecological health, saying residents \u201cdeserve concrete evidence and clear answers on each of these issues and other relevant concerns.\u201d He also criticized limiting public comment to 15 minutes at future meetings, and said he plans to push the POWER Act during the fall veto session, which would require data centers to disclose water and electricity consumption. The Village and T5 were not quoted in response.",
+    category: "policy",
+    sourceKey: "scannerDidech2026",
+  },
+  {
+    date: "2026-09-01",
+    title: "Village issues first building permit; site work to begin immediately",
+    description:
+      "The Village of Grayslake issued the first building permit for the campus, covering an 800,000 sq ft initial facility, and said site work on the first building would begin immediately. This follows the foundation permit issued on July 31. The Village stated the development was \u201csecured without local municipal tax incentives, tax exemptions or TIF subsidies\u201d and projected $1.4 billion in property tax revenue over 20 years across local taxing bodies. That figure is a Village projection, not an assessed valuation. Mayor Elizabeth Davies said that \u201cbecause Grayslake is debt-free, operates on a balanced budget, and gave no money to the developer, we are in a truly unique position.\u201d Reporting put the campus at up to 18 buildings and 10.1 million sq ft, an $18 billion private investment and roughly 1.55 GW of electrical demand. The lawsuit filed July 31 remains pending; no court had ruled and the initial status hearing remains set for October 30.",
+    category: "construction",
+    sourceKeys: ["dailyherald_sep2026", "scannerPermit2026"],
+  },
+  {
+    date: "2026-09-08",
+    title: "County Board adopts data center moratorium for unincorporated areas",
+    description:
+      "The Lake County Board approved an ordinance amending Chapter 151 of the county code, establishing a moratorium on new data center approvals in unincorporated Lake County and creating a legal definition for data centers. The moratorium took effect immediately and is set to expire May 11, 2027, or earlier if the county adopts data center regulations first. The Lake & McHenry County Scanner reported it \u201cdoes not affect data centers proposed or approved inside municipalities, including the T5 Data Center Campus in Grayslake.\u201d District 16 board member Esiah A. Campos said the board was \u201ctaking pressure from every side of this issue, but at the end of the day, we choose our citizens.\u201d",
+    category: "policy",
+    sourceKey: "scannerMoratorium2026",
+  },
 ];
