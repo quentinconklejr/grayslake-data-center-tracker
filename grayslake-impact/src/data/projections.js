@@ -3,11 +3,30 @@ export const projections = {
     name: "T5 @ Chicago IV",
     developer: "T5 Data Centers",
     location: "Grayslake, IL (Peterson Road & Route 83)",
-    totalAcres: 472,
-    totalSqFt: 10_100_000,
-    approvedBuildings: 18,
+    // Primary records lead. These three are what the five signed ordinances
+    // state; the Village FAQ's rounder numbers and CLCJAWA's follow, kept
+    // beside them so a page can attribute both without retyping either.
+    //
+    //   acres     135 + 90 + 31.5 + 33 + 184, one figure per ordinance
+    //             (packet pp. 2, 60, 142, 169, 195)
+    //   sq ft     2,570,000 + 2,120,000 + 1,060,000 + 4,410,000, the four
+    //             caps in force (packet pp. 12, 178, 150, 196). Ordinance
+    //             2025-0-06 replaced the Phase 2 cap of 1,590,000 with the
+    //             combined 2,120,000, so the earlier figure is not added.
+    //   buildings a count of labels on the master plan sheet (packet p. 242).
+    //             No ordinance sets a building count, and the agreements let
+    //             the number change within the floor area cap (packet p. 12).
+    totalAcres: 473.5,
+    totalSqFt: 10_160_000,
+    maxSqFt: "10,160,000",
+    masterPlanBuildings: 18,
     maxBuildings: 20,
-    maxSqFt: "10,100,000",
+
+    // Other published figures for the same things, each attributed wherever
+    // it is shown. Neither is a correction of the other.
+    faqAcres: 472,
+    faqMaxSqFt: "10,100,000",
+    clcjawaAcres: 470,
     totalCapacityMW: 1200,
     securedPowerMW: 1600,
     comEdCapacityGW: 1.55,
@@ -128,12 +147,12 @@ export const projections = {
     },
     {
       key: "approved",
-      value: "up to 472 acres",
-      metric: "Approved for development",
+      value: "about 473.5 acres",
+      metric: "Approved across five ordinances",
       definition:
-        "The maximum area the Village's approvals permit to be developed, together with no more than 10,100,000 sq ft of building.",
-      attribution: "Village of Grayslake FAQ",
-      sourceKey: "villagefaq_archived",
+        "The sum of the acreage each of the five approval ordinances states: 135 + 90 + 31.5 + 33 + 184. The same ordinances cap building at 10,160,000 sq ft in total. The Village FAQ gives the figures as up to 472 acres and 10,100,000 sq ft; CLCJAWA records 470 acres.",
+      attribution: "Village of Grayslake Ordinances 2024-0-37, 2024-0-38, 2025-0-05, 2025-0-06 and 2025-0-21",
+      sourceKey: "t5RecordsPacket2026",
     },
     {
       key: "controlled",
@@ -147,7 +166,7 @@ export const projections = {
     },
   ],
   acreageNote:
-    "Ownership, approval and control are three different things. T5 holds title to 287.8 acres today; the Village approved development on up to 472; T5 states it controls more than 490. None of these is a correction of the others.",
+    "Ownership, approval and control are three different things. T5 holds title to 287.8 acres today; the five approval ordinances cover about 473.5 acres between them; T5 states it controls more than 490. None of these is a correction of the others.",
 
   // Three published capacity figures. They measure DIFFERENT things and are not
   // in conflict with one another. Each is attributed to whoever stated it.
