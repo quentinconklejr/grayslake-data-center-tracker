@@ -15,6 +15,11 @@ import Accessibility from './pages/Accessibility'
 import Privacy from './pages/Privacy'
 import Reporters from './pages/Reporters'
 import Actions from './pages/Actions'
+import Records from './pages/Records'
+import RecordsT5 from './pages/RecordsT5'
+import RecordsOrdinance from './pages/RecordsOrdinance'
+import Press from './pages/Press'
+import Updates from './pages/Updates'
 
 export default function App() {
   return (
@@ -56,6 +61,13 @@ export default function App() {
                 categories and nothing else. Redirected rather than 404'd. */}
             <Route path="/officials" element={<Navigate to="/timeline" replace />} />
             <Route path="/actions" element={<Actions />} />
+            {/* Public Records. /records/t5 is the flagship page; each ordinance
+                gets its own address so a citation can point at one document. */}
+            <Route path="/records" element={<Records />} />
+            <Route path="/records/t5" element={<RecordsT5 />} />
+            <Route path="/records/t5/:ordinance" element={<RecordsOrdinance />} />
+            <Route path="/press" element={<Press />} />
+            <Route path="/updates" element={<Updates />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </main>
