@@ -15,7 +15,15 @@ import parcelsGeoJSON from '../../data/parcels.geojson'
  * Functional behaviour is untouched — filter, sort, Show All, Export
  * CSV all preserved. Only the chrome around them has been retyped.
  */
-export default function ParcelTable({ parcels }) {
+/**
+ * `headingLevel` exists because this table renders in two outlines. On the
+ * homepage it sits inside a section already headed by an h2, so h3 is right.
+ * On /map it follows the page h1 directly, and an h3 there skips a level.
+ * Default stays 3 so the homepage is unchanged.
+ */
+export default function ParcelTable({ parcels, headingLevel = 3 }) {
+  const Heading = `h${headingLevel}`
+
   const [search, setSearch] = useState('')
   const [sortField, setSortField] = useState('acres')
   const [sortOrder, setSortOrder] = useState('desc')
@@ -80,9 +88,9 @@ export default function ParcelTable({ parcels }) {
           Records-style caption: name, filtered totals, retrieval date. */}
       <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-4">
         <div className="min-w-0">
-          <h3 className="text-2xl font-display text-ink-900 tracking-tight">
+          <Heading className="text-2xl font-display text-ink-900 tracking-tight">
             Recorded Parcel Directory
-          </h3>
+          </Heading>
           <p className="mt-1 text-sm font-sans text-ink-600">
             {filteredParcels.length} parcels &middot; <span className="font-mono text-ink-700">{totalAcres}</span> acres filtered
           </p>

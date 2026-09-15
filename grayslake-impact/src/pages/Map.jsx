@@ -33,7 +33,7 @@ export default function MapPage() {
         </header>
 
         <SiteMap />
-        <ParcelTable parcels={PARCELS_DATA} />
+        <ParcelTable parcels={PARCELS_DATA} headingLevel={2} />
 
         <FootnoteList />
       </Container>

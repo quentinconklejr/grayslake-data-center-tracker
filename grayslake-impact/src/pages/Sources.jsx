@@ -78,7 +78,10 @@ export default function Sources() {
                       )}
                     </div>
                   )}
-                  <h3 className="text-lg font-display font-semibold text-ink-900 leading-snug mb-1">
+                  {/* h2, not h3. The page goes h1 (page title) straight into
+                      the document list, so an h3 here skipped a level and
+                      broke the outline for anyone navigating by heading. */}
+                  <h2 className="text-lg font-display font-semibold text-ink-900 leading-snug mb-1">
                     {source.url && source.status !== 'dead' && source.status !== 'unverified' ? (
                       <a
                         href={source.url}
@@ -91,7 +94,7 @@ export default function Sources() {
                     ) : (
                       source.title
                     )}
-                  </h3>
+                  </h2>
 
                   <div className="text-sm font-sans text-ink-600">
                     <span className="font-mono text-ink-500">
