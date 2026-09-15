@@ -27,6 +27,7 @@ import { readFileSync, writeFileSync, mkdirSync } from 'node:fs'
 import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { pageMeta, SITE_ORIGIN } from '../src/data/pageMeta.js'
+import { recordsPackets, recordsFiles, recordsDocuments } from '../src/data/records.js'
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const dist = join(root, 'dist')
@@ -57,6 +58,56 @@ const REDIRECT_CANONICAL = {
   '/schools': '/project',
 }
 
+/**
+ * schema.org Dataset for /records/t5.
+ *
+ * Injected into the static shell rather than rendered by React, because the
+ * crawlers that read this markup are the same ones that do not run the
+ * bundle. Built from the records data file so the distribution list and the
+ * hash cannot drift from what the page actually serves.
+ */
+function recordsDataset() {
+  const packet = recordsPackets['t5-2024-2025']
+  const distribution = Object.entries(recordsFiles).map(([key, f]) => ({
+    '@type': 'DataDownload',
+    name: key,
+    encodingFormat: 'application/pdf',
+    contentUrl: `${SITE_ORIGIN}${f.path}`,
+    contentSize: `${f.sizeBytes}`,
+    sha256: f.sha256,
+  }))
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Dataset',
+    name: packet.title,
+    description: pageMeta['/records/t5'].description,
+    url: `${SITE_ORIGIN}/records/t5`,
+    identifier: packet.sha256,
+    license: 'https://www.ilga.gov/legislation/ilcs/ilcs3.asp?ActID=85',
+    isAccessibleForFree: true,
+    creator: { '@type': 'GovernmentOrganization', name: 'Village of Grayslake' },
+    publisher: { '@type': 'Organization', name: 'Grayslake Data Center Tracker', url: SITE_ORIGIN },
+    temporalCoverage: `${packet.approvalsFrom}/${packet.approvalsTo}`,
+    spatialCoverage: { '@type': 'Place', name: 'Grayslake, Lake County, Illinois' },
+    keyword: ['data center', 'zoning', 'special use permit', 'Grayslake', 'Illinois FOIA'],
+    citation: packet.citation,
+    hasPart: recordsDocuments.map(d => ({
+      '@type': 'Legislation',
+      name: `Village of Grayslake Ordinance ${d.ordinance}`,
+      legislationIdentifier: d.ordinance,
+      legislationDate: d.passed,
+      legislationJurisdiction: 'Village of Grayslake, Illinois',
+      url: `${SITE_ORIGIN}/records/t5/${d.id}`,
+    })),
+    distribution,
+  }
+}
+
+const STRUCTURED_DATA = {
+  '/records/t5': recordsDataset(),
+}
+
 const template = readFileSync(join(dist, 'index.html'), 'utf8')
 let count = 0
 
@@ -85,6 +136,12 @@ for (const [route, meta] of Object.entries(pageMeta)) {
     html = html.replace(/(<link\s+rel="canonical"\s+href=")[^"]*(")/i, `$1${canonicalUrl}$2`)
   } else {
     html = html.replace('</head>', `    <link rel="canonical" href="${canonicalUrl}" />\n  </head>`)
+  }
+
+  const data = STRUCTURED_DATA[route]
+  if (data) {
+    const json = JSON.stringify(data).replace(/</g, '\\u003c')
+    html = html.replace('</head>', `    <script type="application/ld+json">${json}</script>\n  </head>`)
   }
 
   const outPath = route === '/' ? join(dist, 'index.html') : join(dist, `${route.slice(1)}.html`)

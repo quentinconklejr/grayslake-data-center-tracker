@@ -106,4 +106,58 @@ export const pageMeta = {
       'Permit applications, legal challenges and policy actions on T5 @ Chicago IV, filterable by jurisdiction across village, county, state and federal bodies.',
     ogImage: '/og/actions.png',
   },
+  '/records': {
+    title: 'Public Records',
+    description:
+      'Government records obtained by the Grayslake Data Center Tracker and published in full, with every figure linked to the page of the document it came from.',
+    ogImage: '/og/records.png',
+  },
+  '/records/t5': {
+    title: 'T5 Grayslake data center ordinances and site plans',
+    description:
+      'The five Village of Grayslake ordinances approving the T5 @ Chicago IV campus: about 473.5 acres, up to 10,160,000 sq ft of building floor area, passed between Nov 19, 2024 and May 6, 2025, with the signed agreements and site plans.',
+    ogImage: '/og/records-t5.png',
+  },
+  '/records/t5/ord-2024-0-37': {
+    title: 'Ordinance 2024-0-37, Third Amendment to the Cornerstone SUP Agreement',
+    description:
+      'Grayslake Ordinance 2024-0-37, passed Nov 19, 2024: about 135 acres north of Medline, a 2,570,000 sq ft floor area cap, and the development standards for the T5 campus plan.',
+    ogImage: '/og/records-t5.png',
+  },
+  '/records/t5/ord-2024-0-38': {
+    title: 'Ordinance 2024-0-38, T5 Phase 2 special use permit',
+    description:
+      'Grayslake Ordinance 2024-0-38, passed Nov 19, 2024: a special use permit for about 90 acres west of Route 83 on Peterson Road, with a 1,590,000 sq ft floor area cap later replaced.',
+    ogImage: '/og/records-t5.png',
+  },
+  '/records/t5/ord-2025-0-05': {
+    title: 'Ordinance 2025-0-05, Fourth Amendment to the Cornerstone SUP Agreement',
+    description:
+      'Grayslake Ordinance 2025-0-05, passed Feb 18, 2025: about 31.5 acres east of Cornerstone Parkway and a 1,060,000 sq ft floor area cap, signed by T5 on May 12, 2025.',
+    ogImage: '/og/records-t5.png',
+  },
+  '/records/t5/ord-2025-0-06': {
+    title: 'Ordinance 2025-0-06, First Amendment to the Phase 2 SUP Agreement',
+    description:
+      'Grayslake Ordinance 2025-0-06, passed Feb 18, 2025: about 33 acres added to the Phase 2 PUD and a combined floor area cap of 2,120,000 sq ft replacing the earlier 1,590,000.',
+    ogImage: '/og/records-t5.png',
+  },
+  '/records/t5/ord-2025-0-21': {
+    title: 'Ordinance 2025-0-21, Fifth Amendment to the Cornerstone SUP Agreement',
+    description:
+      'Grayslake Ordinance 2025-0-21, passed May 6, 2025: about 184 acres at Route 83 and Peterson Road, a 4,410,000 sq ft floor area cap, and a March 31, 2026 closing deadline.',
+    ogImage: '/og/records-t5.png',
+  },
+  '/press': {
+    title: 'For reporters',
+    description:
+      'A short briefing on the T5 @ Chicago IV public records for newsrooms: the key numbers with page citations, download links, a suggested citation and a contact.',
+    ogImage: '/og/records-t5.png',
+  },
+  '/updates': {
+    title: 'Updates',
+    description:
+      'A dated log of what has been added to or corrected on the Grayslake Data Center Tracker.',
+    ogImage: '/og/home.png',
+  },
 }
