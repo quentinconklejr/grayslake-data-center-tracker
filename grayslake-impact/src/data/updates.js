@@ -11,6 +11,15 @@
 export const updates = [
   {
     date: '2026-09-15',
+    kind: 'corrected',
+    title: 'Site-wide figures now lead with what the ordinances state',
+    description:
+      'Pages that give the size of the approved campus now lead with the figures in the signed ordinances, about 473.5 acres and a cap of 10,160,000 sq ft, each with a page citation, and give the Village FAQ figures of 472 acres and 10,100,000 sq ft and CLCJAWA\u2019s 470 acres after them, attributed; references to 18 buildings as an approved count now say that 18 is the number shown on the master site plan and that the ordinances set no building count.',
+    link: '/records/t5',
+    linkLabel: 'See the ordinance figures',
+  },
+  {
+    date: '2026-09-15',
     kind: 'added',
     title: 'Added the signed T5 ordinances, agreements and site plans obtained through FOIA',
     description:
