@@ -27,9 +27,9 @@ const PRESS_FACTS = [
   },
   {
     topic: 'Land Ownership & Site Area',
-    stat: '287.8 Acres Recorded / 472 Approved',
-    citation: 'Lake County GIS records confirm 287.82 acres recorded across 57 parcels to T5 Data Centers (Lake County GIS Tax Parcel layer, retrieved Aug. 5, 2026). Village approvals separately permit development on up to 472 acres in Cornerstone Business Park (Approved T5 Data Center Campus FAQs, updated June 5, 2026 - archived snapshot).',
-    src: 'lakecountygis',
+    stat: '287.8 Acres Recorded / About 473.5 Approved',
+    citation: 'Lake County GIS records confirm 287.82 acres recorded across 57 parcels to T5 Data Centers (Lake County GIS Tax Parcel layer, retrieved Aug. 5, 2026). Village approvals separately cover about 473.5 acres, the sum of the acreage the five approval ordinances each state: 135 + 90 + 31.5 + 33 + 184 (Village of Grayslake Ordinances 2024-0-37, 2024-0-38, 2025-0-05, 2025-0-06 and 2025-0-21, obtained via Illinois FOIA). The Village FAQ gives the figure as up to 472 acres (Approved T5 Data Center Campus FAQs, updated June 5, 2026 - archived snapshot).',
+    src: 't5RecordsPacket2026',
   },
   {
     topic: 'Pending Legal Action',
