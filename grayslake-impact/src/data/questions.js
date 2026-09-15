@@ -70,21 +70,25 @@
 
   {
     id: 'campus-scale',
-    plain: "Three acreage numbers circulate and they mean different things. T5 owns 287.8 acres today. The Village approved development on up to 472. T5 says it controls more than 490, which can include land it has not bought yet. The approvals cap building at 10.1 million square feet across what the Village calls \u201cseveral individual buildings\u201d without naming a number; reporting puts it at 18, and the T5 chief executive has said up to 20.",
+    plain: "The five ordinances that approved this campus cover about 473.5 acres between them and cap building at 10,160,000 square feet. None of them sets a building count, and the agreements let the number of buildings change as long as the floor area cap holds. The master site plan sheet shows 18. Those approval figures are ceilings rather than commitments, and they are separate from what T5 owns: 287.8 acres are recorded to T5 today, and T5 says it controls more than 490, which can include land it has not bought. The Village FAQ, the Daily Herald and CLCJAWA each summarise the approvals with slightly rounder numbers.",
     question: 'How big will it actually get?',
     category: 'scale',
     stated: [
       {
-        text: 'The Village FAQ states the approved campus "covers up to 472 acres and can include no more than 10,100,000 square feet of data center space in several individual buildings" and gives no building count. Daily Herald reporting puts the count at 18. CLCJAWA records 470 acres, up to 10 million square feet, in fewer than 20 buildings.',
-        sourceKeys: ['villagefaq_archived', 'dailyherald2026', 'clcjawa2026'],
-      },
-      {
-        text: '18 buildings were approved per Daily Herald and Government Technology reporting. Developer CEO Pete Marin cited up to 20 buildings as an upper estimate. Leasable IT capacity is 1,200 MW at full buildout.',
-        sourceKey: 'govtech2025',
-      },
-      {
-        text: 'The five approval ordinances set their own figures, which do not match the round numbers in circulation. Each ordinance states its own acreage: about 135, 90, 31.5, 33 and 184 acres, which come to about 473.5. Each sets its own floor area cap: 2,570,000, 2,120,000, 1,060,000 and 4,410,000 square feet, which come to 10,160,000. No ordinance states a building count. The master site plan sheet labels 18 buildings, 11 at 530,000 sq ft and 7 at 630,000 sq ft, each labelled 90 feet in height, but those are labels on a concept plan rather than approved limits, and the agreements say the size, configuration and number of buildings may be adjusted within the floor area cap.',
+        text: 'The five approval ordinances each state their own acreage: about 135, 90, 31.5, 33 and 184 acres, which come to about 473.5 (packet pp. 2, 60, 142, 169, 195). Each sets its own floor area cap: 2,570,000, 2,120,000, 1,060,000 and 4,410,000 square feet, which come to 10,160,000 (packet pp. 12, 178, 150, 196). Ordinance 2025-0-06 replaced the Phase 2 cap of 1,590,000 with the combined 2,120,000, so the earlier figure is not added on top.',
         sourceKey: 't5RecordsPacket2026',
+      },
+      {
+        text: 'No ordinance states a building count. The master site plan sheet labels 18 buildings, 11 at 530,000 sq ft and 7 at 630,000, each labelled 90 feet in height (packet p. 242), and the agreements say the size, configuration and number of buildings may be adjusted to accommodate customer needs within the floor area cap (packet p. 12). The Daily Herald and Government Technology both reported the campus at 18 buildings, which is the plan figure. T5 chief executive Pete Marin cited up to 20 as an upper estimate.',
+        sourceKeys: ['t5RecordsPacket2026', 'dailyherald2026', 'govtech2025'],
+      },
+      {
+        text: 'The Village FAQ summarises the same approvals as covering "up to 472 acres" with "no more than 10,100,000 square feet of data center space in several individual buildings", and gives no building count.',
+        sourceKey: 'villagefaq_archived',
+      },
+      {
+        text: 'CLCJAWA records the campus as 470 acres, up to 10 million square feet, in fewer than 20 buildings. Leasable IT capacity is 1,200 MW at full buildout.',
+        sourceKeys: ['clcjawa2026', 'govtech2025'],
       },
     ],
     disputed: [],
