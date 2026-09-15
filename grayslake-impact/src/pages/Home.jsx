@@ -26,7 +26,10 @@ const SECONDARY_STATS = [
   { label: 'Secured Power',  numValue: project.securedPowerMW,  suffix: ' MW', note: 'Utility-contracted capacity' },
   { label: 'ComEd Capacity', value: `${project.comEdCapacityGW} GW`,           note: 'Secured from ComEd, per T5 CEO' },
   { label: 'Phase 1 Online', value: project.firstBuildingOnline,               note: 'Under construction now' },
-  { label: 'Approved Max',   numValue: project.totalAcres,      suffix: ' ac', note: 'Approved campus maximum' },
+  // A plain string, not AnimatedNumber: the counter's formatter rounds, and
+  // rounding 473.5 to 474 would misstate a figure the records section shows
+  // the arithmetic for.
+  { label: 'Approved Max',   value: `${project.totalAcres} ac`,               note: 'Across five ordinances' },
 ]
 
 export default function Home() {
@@ -214,7 +217,7 @@ export default function Home() {
               Land Recorded to T5
             </h2>
             <p className="mt-2 text-base font-sans text-ink-700 leading-relaxed">
-              287.8 acres across 57 parcels in Grayslake, IL. The approved campus is larger, up to 472 acres, and is not mapped.
+              287.8 acres across 57 parcels in Grayslake, IL. The approved campus is larger, about 473.5 acres across five ordinances, and is not mapped.
             </p>
           </div>
           <SiteMap showCaption={false} />
