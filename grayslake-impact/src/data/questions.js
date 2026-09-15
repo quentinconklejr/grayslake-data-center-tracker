@@ -82,6 +82,10 @@
         text: '18 buildings were approved per Daily Herald and Government Technology reporting. Developer CEO Pete Marin cited up to 20 buildings as an upper estimate. Leasable IT capacity is 1,200 MW at full buildout.',
         sourceKey: 'govtech2025',
       },
+      {
+        text: 'The five approval ordinances set their own figures, which do not match the round numbers in circulation. Each ordinance states its own acreage: about 135, 90, 31.5, 33 and 184 acres, which come to about 473.5. Each sets its own floor area cap: 2,570,000, 2,120,000, 1,060,000 and 4,410,000 square feet, which come to 10,160,000. No ordinance states a building count. The master site plan sheet labels 18 buildings, 11 at 530,000 sq ft and 7 at 630,000 sq ft, each labelled 90 feet in height, but those are labels on a concept plan rather than approved limits, and the agreements say the size, configuration and number of buildings may be adjusted within the floor area cap.',
+        sourceKey: 't5RecordsPacket2026',
+      },
     ],
     disputed: [],
     unknown: [
@@ -142,6 +146,10 @@
       {
         text: 'The Mayor of Grayslake has stated that T5 received all required land-use and zoning approvals.',
         sourceKey: 'dailyherald2026',
+      },
+      {
+        text: 'The approval ordinances themselves are now public. Five ordinances were passed: 2024-0-37 and 2024-0-38 on November 19, 2024, 2025-0-05 and 2025-0-06 on February 18, 2025, and 2025-0-21 on May 6, 2025. Each carries a recorded vote on its signature page. No trustee voted nay on any of the five. Trustees Magnetta and Sahu were absent for the two November votes; the remaining three were unanimous among the trustees present. Notice of the hearings was published in the Daily Herald on September 9, 2024, December 27, 2024 and March 27, 2025, and the Plan Commission opened its hearing on the Phase 2 application on September 23, 2024.',
+        sourceKey: 't5RecordsPacket2026',
       },
       {
         text: 'The Village FAQ, updated June 5, 2026, stated the Village can no longer respond to further questions about the project due to pending litigation: "Unfortunately, due to notice of impending litigation, and upon advice of counsel, the village cannot at this time offer further responses to questions regarding the approved data center development." The FAQ document itself became unreachable by August 5, 2026.',
