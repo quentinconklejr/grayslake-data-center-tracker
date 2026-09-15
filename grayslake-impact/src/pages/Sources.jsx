@@ -4,20 +4,13 @@ import { pageMeta } from '../data/pageMeta'
 import { sources } from '../data/sources'
 import { docMeta } from '../data/docMeta'
 import { LAST_VERIFIED } from '../data/siteConfig'
+import { formatBytes } from '../lib/formatBytes'
 
 const TIER = {
   primary:    'text-status-stated',
   aggregator: 'text-status-disputed',
   trade:      'text-status-approval',
   default:    'text-ink-500',
-}
-
-// Bytes → "154 KB" / "1.2 MB". Kept alongside the render because the
-// unit shows up in exactly one place; a util file would be premature.
-function fmtSize(bytes) {
-  if (!bytes) return null
-  const kb = bytes / 1024
-  return kb < 1024 ? `${Math.round(kb)} KB` : `${(kb / 1024).toFixed(1)} MB`
 }
 
 export default function Sources() {
@@ -55,7 +48,7 @@ export default function Sources() {
           // because we can't inspect the file — better to omit than guess.
           const meta = source.localCopy ? docMeta[source.localCopy] : null
           const fileMeta = meta
-            ? [meta.pages ? `${meta.pages} pages` : null, fmtSize(meta.sizeBytes)].filter(Boolean).join(' · ')
+            ? [meta.pages ? `${meta.pages} pages` : null, formatBytes(meta.sizeBytes)].filter(Boolean).join(' · ')
             : null
           return (
             <li key={key} className="py-6">
