@@ -10,8 +10,10 @@ import { PARCELS_DATA } from '../data/parcels'
 import { FootnoteProvider, FootnoteList } from '../components/ui/FootnoteContext'
 import { projections } from '../data/projections'
 import { LAST_VERIFIED } from '../data/siteConfig'
+import { recordsTotals, recordsPackets } from '../data/records'
 
 const { project } = projections
+const recordsPacket = recordsPackets['t5-2024-2025']
 
 /*
  * Five secondary figures rendered as a records grid below the two hero
@@ -54,6 +56,50 @@ export default function Home() {
             Every claim linked to its source &middot; Last verified {LAST_VERIFIED}
           </p>
         </header>
+
+
+        {/* ── The approved records ─────────────────────────────────────
+            The most important primary source on the site, so it sits
+            directly under the hero. Calm on purpose: a rule, three
+            figures and a link, in the same records grammar as the
+            figures below it. No banner, no alert colour, nothing about
+            the signature gap — that belongs on the ordinance pages,
+            where the reader has the document in front of them. */}
+        <section aria-labelledby="records-block" className="border-t border-rule pt-6 sm:pt-8 pb-2">
+          <h2 id="records-block" className="text-2xl sm:text-3xl font-display text-ink-900 tracking-tight">
+            Read the approved ordinances and site plans
+          </h2>
+          <p className="mt-2 text-base font-sans text-ink-700 leading-relaxed max-w-2xl">
+            The five Village ordinances that approved this campus, the agreements attached to them
+            and the site plans, published in full. Every figure links to the page it came from.
+          </p>
+          <dl className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-x-8 gap-y-5">
+            <div>
+              <dt className="text-xs font-sans font-semibold text-ink-600">Land approved</dt>
+              <dd className="mt-1.5 text-2xl font-display text-ink-900 tracking-tight">
+                about {recordsTotals.acres.value} acres
+              </dd>
+            </div>
+            <div>
+              <dt className="text-xs font-sans font-semibold text-ink-600">Floor area allowed</dt>
+              <dd className="mt-1.5 text-2xl font-display text-ink-900 tracking-tight">
+                up to {(recordsTotals.floorArea.value / 1_000_000).toFixed(2)} million sq ft
+              </dd>
+            </div>
+            <div>
+              <dt className="text-xs font-sans font-semibold text-ink-600">Ordinances passed</dt>
+              <dd className="mt-1.5 text-2xl font-display text-ink-900 tracking-tight">
+                {recordsTotals.ordinances.value}, none opposed
+              </dd>
+            </div>
+          </dl>
+          <p className="mt-6">
+            <Link to="/records/t5" className="inline-flex items-center gap-2 text-base font-sans font-semibold text-accent hover:text-accent-hover min-h-[44px]">
+              The {recordsPacket.pages}-page records packet
+              <span aria-hidden="true">→</span>
+            </Link>
+          </p>
+        </section>
 
         {/* ── Permanent-jobs figure ────────────────────────────────────
             The old design put this behind rounded-2xl + shadow-sm. The
