@@ -535,19 +535,28 @@ export const notInPacket = [
   'The contents of several exhibits that appear only as blank cover pages, at packet pages 29, 30, 38, 109, 110, 160, 218 and 222',
 ]
 
-/** Questions put to the Village. `status` is displayed next to each. */
+/**
+ * Questions put to the Village.
+ *
+ * `status` is the label on the chip and `tone` picks its hue: 'unasked',
+ * 'asked' or 'answered'. The tone is stored rather than derived from the
+ * label so the wording can change ("Asked Oct 3, no reply yet") without the
+ * colour silently falling back to grey.
+ */
 export const openQuestionsForVillage = [
   {
     id: 'signed-counterparts',
     question:
       'Does the Village hold T5-executed counterparts of the Third Amendment, the Phase 2 SUP Agreement and the Fifth Amendment?',
     status: 'Not yet asked',
+    tone: 'unasked',
     asked: null,
   },
   {
     id: 'exhibit-d-consent',
     question: 'Did T5 file the Exhibit D unconditional agreement and consent for Ordinance 2024-0-38, and on what date?',
     status: 'Not yet asked',
+    tone: 'unasked',
     asked: null,
   },
   {
@@ -555,12 +564,14 @@ export const openQuestionsForVillage = [
     question:
       'Did T5 close on the Fifth Amendment property by March 31, 2026, and what payment was made under the Transportation IGA?',
     status: 'Not yet asked',
+    tone: 'unasked',
     asked: null,
   },
   {
     id: 'blank-exhibits',
     question: 'Can the Village provide the exhibits that appear in this copy as blank cover pages?',
     status: 'Not yet asked',
+    tone: 'unasked',
     asked: null,
   },
 ]

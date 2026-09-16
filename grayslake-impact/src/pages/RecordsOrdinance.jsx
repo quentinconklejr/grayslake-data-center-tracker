@@ -4,6 +4,7 @@ import Container from '../components/layout/Container'
 import ReportErrorLink from '../components/ui/ReportErrorLink'
 import PageCite from '../components/records/PageCite'
 import PdfLink from '../components/records/PdfLink'
+import HashBlock from '../components/records/HashBlock'
 import SignatureNote from '../components/records/SignatureNote'
 import { pageMeta } from '../data/pageMeta'
 import { LAST_VERIFIED } from '../data/siteConfig'
@@ -231,7 +232,9 @@ export default function RecordsOrdinance() {
         <p className="mt-4">
           <PdfLink file={doc.file} label={`Ordinance ${doc.ordinance}`} />
         </p>
-        <p className="mt-4 text-2xs font-mono text-ink-500 break-all">SHA-256 {file.sha256}</p>
+        <div className="mt-5">
+          <HashBlock label={`SHA-256 of ${file.path.split('/').pop()}`} value={file.sha256} />
+        </div>
         <object
           data={file.path}
           type="application/pdf"
