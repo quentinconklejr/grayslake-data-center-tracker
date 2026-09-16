@@ -172,7 +172,7 @@ export default function Press() {
           </span>
         </span>
         <p className="mt-4 text-sm font-sans text-ink-600 leading-relaxed max-w-2xl">
-          Records obtained by {packet.credit} through an Illinois FOIA request, {packet.receivedMonth}.
+          {packet.credit}, {packet.receivedMonth}.
         </p>
       </section>
 
