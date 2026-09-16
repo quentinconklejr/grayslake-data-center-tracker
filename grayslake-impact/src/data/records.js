@@ -26,9 +26,22 @@
  * records that.
  */
 
-/** Placeholder tokens the site renders verbatim until they are filled in. */
-export const RECORDS_CREDIT = '{{RECORDS_CREDIT}}'
-export const FULL_PDF_URL = '{{FULL_PDF_URL}}'
+/**
+ * Provenance line for the packet. Deliberately does not name the requester:
+ * she has not agreed to be named, and a FOIA response is a public record
+ * whatever its route here, so the site can say how it arrived without
+ * identifying who asked.
+ */
+export const RECORDS_CREDIT =
+  'Obtained through an Illinois FOIA request by a Grayslake resident'
+
+/**
+ * The complete 242-page packet, hosted off-site. The repository carries the
+ * six split files; the 48.4 MB original lives at the Internet Archive so the
+ * record survives independently of this site.
+ */
+export const FULL_PDF_URL =
+  'https://archive.org/details/t-5-signed-ordinances-and-master-site-plan'
 
 export const recordsProjects = {
   t5: {

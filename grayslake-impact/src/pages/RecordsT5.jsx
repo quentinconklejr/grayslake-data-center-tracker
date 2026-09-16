@@ -468,9 +468,9 @@ export default function RecordsT5() {
             </span>
           </div>
           <div>
-            <p className="text-xs font-sans font-semibold text-ink-600">Records obtained by</p>
+            <p className="text-xs font-sans font-semibold text-ink-600">Provenance</p>
             <p className="mt-1.5 text-sm font-sans text-ink-900 leading-relaxed">
-              {packet.credit}, through an {packet.obtainedVia}, {packet.receivedMonth}.
+              {packet.credit}, {packet.receivedMonth}.
             </p>
           </div>
           <p className="text-sm font-sans text-ink-600 leading-relaxed">
