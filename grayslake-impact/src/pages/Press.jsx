@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom'
 import PageTitle from '../components/ui/PageTitle'
 import Container from '../components/layout/Container'
 import PageCite from '../components/records/PageCite'
-import PdfLink from '../components/records/PdfLink'
+import DocumentDownload from '../components/records/DocumentDownload'
+import HashBlock from '../components/records/HashBlock'
 import { pageMeta } from '../data/pageMeta'
 import { SITE_CONTACT, LAST_VERIFIED } from '../data/siteConfig'
 import {
@@ -123,28 +124,49 @@ export default function Press() {
         <h2 id="downloads" className="text-2xl font-display text-ink-900 tracking-tight">
           Downloads
         </h2>
-        <ul className="mt-4 flex flex-wrap gap-3">
+        <a
+          href={packet.fullPdfUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`The complete ${packet.pages}-page packet. PDF, hosted at the Internet Archive.`}
+          className="group mt-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-l-[3px] border-ink-900 bg-paper-sunk pl-5 sm:pl-6 pr-5 py-4 hover:bg-paper-raised transition-colors"
+        >
+          <span className="min-w-0">
+            <span className="block text-2xs font-display font-semibold text-ink-800 uppercase tracking-[0.14em] mb-1">
+              The complete packet
+            </span>
+            <span className="block text-lg font-display text-ink-900 leading-snug group-hover:text-accent">
+              All {packet.pages} pages, as received
+            </span>
+            <span className="block text-2xs font-mono text-ink-600 tabular-nums mt-1">
+              PDF &middot; hosted at the Internet Archive
+            </span>
+          </span>
+          <span aria-hidden="true" className="shrink-0 text-sm font-sans font-semibold text-accent group-hover:text-accent-hover">
+            Open ↗
+          </span>
+        </a>
+
+        <p className="mt-6 text-xs font-sans font-semibold text-ink-600">Or one file per document</p>
+        <div className="mt-2 border-t border-rule">
           {recordsDocuments.map(d => (
-            <li key={d.id}>
-              <PdfLink file={d.file} label={`Ordinance ${d.ordinance}`} />
-            </li>
+            <DocumentDownload
+              key={d.id}
+              file={d.file}
+              label={`Ordinance ${d.ordinance}`}
+              sublabel={d.shortTitle}
+            />
           ))}
-          <li>
-            <PdfLink file={masterSitePlan.file} label="Master site plan" />
-          </li>
-        </ul>
-        <p className="mt-4 text-sm font-sans text-ink-700">
-          <a
-            href={packet.fullPdfUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="font-semibold text-accent hover:text-accent-hover underline underline-offset-4 decoration-accent"
-          >
-            The complete {packet.pages}-page packet
-          </a>
-          <span className="text-ink-500"> &middot; SHA-256 </span>
-          <span className="font-mono text-2xs text-ink-600 break-all">{packet.sha256}</span>
-        </p>
+          <DocumentDownload
+            file={masterSitePlan.file}
+            label="Master site plan"
+            sublabel={masterSitePlan.title}
+          />
+        </div>
+
+        <div className="mt-6">
+          <HashBlock label="SHA-256 of the complete packet as received" value={packet.sha256} />
+        </div>
       </section>
 
       <section aria-labelledby="citation" className="border-t border-rule pt-8">

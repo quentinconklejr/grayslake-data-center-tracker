@@ -4,7 +4,9 @@ import PageTitle from '../components/ui/PageTitle'
 import Container from '../components/layout/Container'
 import ReportErrorLink from '../components/ui/ReportErrorLink'
 import PageCite from '../components/records/PageCite'
-import PdfLink from '../components/records/PdfLink'
+import DocumentDownload from '../components/records/DocumentDownload'
+import HashBlock from '../components/records/HashBlock'
+import StatusPill from '../components/records/StatusPill'
 import ScrollTable from '../components/records/ScrollTable'
 import { formatBytes } from '../lib/formatBytes'
 import { pageMeta } from '../data/pageMeta'
@@ -399,9 +401,12 @@ export default function RecordsT5() {
         </p>
         <ol className="mt-6 border-t border-rule">
           {openQuestionsForVillage.map(q => (
-            <li key={q.id} className="border-b border-rule-strong py-4">
+            <li
+              key={q.id}
+              className="border-b border-rule-strong py-4 flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 sm:gap-5"
+            >
               <p className="text-base font-sans text-ink-900 leading-relaxed">{q.question}</p>
-              <p className="mt-1.5 text-2xs font-mono text-ink-500">Status: {q.status}</p>
+              <StatusPill tone={q.tone}>{q.status}</StatusPill>
             </li>
           ))}
         </ol>
@@ -416,36 +421,61 @@ export default function RecordsT5() {
           {packet.fullPdfNote}
         </p>
 
-        <ul className="mt-6 flex flex-wrap gap-3">
-          {recordsDocuments.map(d => (
-            <li key={d.id}>
-              <PdfLink file={d.file} label={`Ordinance ${d.ordinance}`} />
-            </li>
-          ))}
-          <li>
-            <PdfLink file={masterSitePlan.file} label="Master site plan" />
-          </li>
-        </ul>
-
-        <p className="mt-5">
-          <a
-            href={packet.fullPdfUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-base font-sans font-semibold text-accent hover:text-accent-hover underline underline-offset-4 decoration-accent"
+        {/* The master file first, given the weight it earns. This is the same
+            heavy-left-rule treatment the map uses for its editor's note: the
+            site's existing way of saying "read this one", rather than a new
+            card style invented for one block. */}
+        <a
+          href={packet.fullPdfUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`The complete ${packet.pages}-page packet. PDF, ${formatBytes(packet.sizeBytes)}, hosted at the Internet Archive.`}
+          className="group mt-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-l-[3px] border-ink-900 bg-paper-sunk pl-5 sm:pl-6 pr-5 py-4 hover:bg-paper-raised transition-colors"
+        >
+          <span className="min-w-0">
+            <span className="block text-2xs font-display font-semibold text-ink-800 uppercase tracking-[0.14em] mb-1">
+              The complete packet
+            </span>
+            <span className="block text-lg font-display text-ink-900 leading-snug group-hover:text-accent">
+              All {packet.pages} pages, as received
+            </span>
+            <span className="block text-2xs font-mono text-ink-600 tabular-nums mt-1">
+              PDF &middot; {formatBytes(packet.sizeBytes)} &middot; hosted at the Internet Archive
+            </span>
+          </span>
+          <span
+            aria-hidden="true"
+            className="shrink-0 text-sm font-sans font-semibold text-accent group-hover:text-accent-hover"
           >
-            The complete {packet.pages}-page packet
-          </a>{' '}
-          <span className="text-sm font-mono text-ink-500">PDF, {formatBytes(packet.sizeBytes)}</span>
-        </p>
+            Open ↗
+          </span>
+        </a>
 
-        <div className="mt-8 border-t border-rule pt-6 space-y-4 max-w-2xl">
-          <div>
-            <p className="text-xs font-sans font-semibold text-ink-600">
-              SHA-256 of the complete packet as received
-            </p>
-            <p className="mt-1.5 text-2xs font-mono text-ink-700 break-all">{packet.sha256}</p>
-          </div>
+        <p className="mt-8 text-xs font-sans font-semibold text-ink-600">
+          Or one file per document
+        </p>
+        <div className="mt-2 border-t border-rule">
+          {recordsDocuments.map(d => (
+            <DocumentDownload
+              key={d.id}
+              file={d.file}
+              label={`Ordinance ${d.ordinance}`}
+              sublabel={d.shortTitle}
+            />
+          ))}
+          <DocumentDownload
+            file={masterSitePlan.file}
+            label="Master site plan"
+            sublabel={masterSitePlan.title}
+          />
+        </div>
+
+        <div className="mt-8 border-t border-rule pt-6 space-y-5 max-w-2xl">
+          <HashBlock
+            label="SHA-256 of the complete packet as received"
+            value={packet.sha256}
+            note="Check a download against this to confirm it is the file we were sent. Triple-click to select the whole hash."
+          />
           <div>
             <p className="text-xs font-sans font-semibold text-ink-600">Suggested citation</p>
             <p className="mt-1.5 text-sm font-sans text-ink-900 leading-relaxed">{packet.citation}</p>
