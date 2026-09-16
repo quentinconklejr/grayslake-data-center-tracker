@@ -77,10 +77,10 @@ const TERMS = [
   },
   {
     term: 'Development caps',
-    who: 'Village FAQ',
+    who: 'The signed ordinances',
     detail:
-      'Up to 472 acres of development and no more than 10,100,000 sq ft of building. These are ceilings the approvals permit, not commitments T5 has made.',
-    sourceKey: 'villagefaq_archived',
+      'About 473.5 acres of development and no more than 10,160,000 sq ft of building, the sums of the figures the five ordinances state one by one. The Village FAQ gives them as up to 472 acres and 10,100,000 sq ft. Either way these are ceilings the approvals permit, not commitments T5 has made.',
+    sourceKeys: ['t5RecordsPacket2026', 'villagefaq_archived'],
   },
 ]
 
@@ -339,7 +339,12 @@ export default function Agreement() {
                     </div>
                     <p className="text-base font-sans text-ink-700 leading-relaxed">
                       {t.detail}
-                      <SourceCitation sourceKey={t.sourceKey} />
+                      {/* A term can now rest on more than one document: the
+                          development caps are stated by the ordinances and
+                          summarised by the FAQ, and both belong on the line. */}
+                      {t.sourceKeys
+                        ? t.sourceKeys.map(k => <SourceCitation key={k} sourceKey={k} />)
+                        : t.sourceKey && <SourceCitation sourceKey={t.sourceKey} />}
                     </p>
                     {t.caveat && (
                       <p className="text-sm font-sans text-status-disputed border-l-[3px] border-status-disputed bg-status-disputed-soft pl-4 pr-4 py-2.5 mt-3 leading-relaxed">

@@ -34,11 +34,11 @@ export const keyFigures = [
   {
     id: 'acres-approved',
     label: 'Approved for development',
-    value: `up to ${project.totalAcres} acres`,
-    qualifier: 'maximum permitted, not a commitment',
+    value: `about ${project.totalAcres} acres`,
+    qualifier: 'across five ordinances, and a ceiling rather than a commitment',
     detail:
-      'Village approvals permit development on up to 472 acres with no more than 10,100,000 sq ft of building, described as “several individual buildings” without a count.',
-    sourceKey: 'villagefaq_archived',
+      `The five approval ordinances each state their own acreage: 135 + 90 + 31.5 + 33 + 184 = ${project.totalAcres}. The Village FAQ gives the figure as up to ${project.faqAcres} acres. CLCJAWA records ${project.clcjawaAcres}.`,
+    sourceKeys: ['t5RecordsPacket2026', 'villagefaq_archived', 'clcjawa2026'],
   },
   {
     id: 'acres-controlled',
@@ -52,19 +52,20 @@ export const keyFigures = [
   {
     id: 'buildable-area',
     label: 'Total buildable area',
-    value: '10,100,000 sq ft',
-    qualifier: 'ceiling the approvals allow',
-    detail: 'No more than 10,100,000 sq ft of data center space across the approved campus.',
-    sourceKey: 'villagefaq_archived',
+    value: `up to ${project.maxSqFt} sq ft`,
+    qualifier: 'the sum of four floor area caps, and a ceiling rather than a commitment',
+    detail:
+      `Four caps are in force: 2,570,000 + 2,120,000 + 1,060,000 + 4,410,000 = ${project.maxSqFt}. Ordinance 2025-0-06 replaced the Phase 2 cap of 1,590,000 sq ft with the combined 2,120,000, so the earlier figure is not added on top. The Village FAQ gives the figure as no more than ${project.faqMaxSqFt} sq ft.`,
+    sourceKeys: ['t5RecordsPacket2026', 'villagefaq_archived'],
   },
   {
     id: 'buildings',
     label: 'Buildings',
-    value: `${project.approvedBuildings} approved`,
-    qualifier: `CEO cited up to ${project.maxBuildings} as an upper estimate`,
+    value: `${project.masterPlanBuildings} on the master plan`,
+    qualifier: 'a label count, not an approved limit',
     detail:
-      'The Village FAQ says “several individual buildings” and gives no count. The count of 18 comes from Daily Herald reporting; Pete Marin cited up to 20.',
-    sourceKeys: ['dailyherald2026', 'govtech2025'],
+      `The master site plan sheet labels ${project.masterPlanBuildings} buildings, 11 at 530,000 sq ft and 7 at 630,000, each labelled 90 feet in height (packet p. 242). The ordinances set no building count and allow the number to change within the floor area cap (packet p. 12). Daily Herald and Government Technology reported the figure of ${project.masterPlanBuildings}; the Village FAQ says “several individual buildings” and gives no count; Pete Marin cited up to ${project.maxBuildings}.`,
+    sourceKeys: ['t5RecordsPacket2026', 'dailyherald2026', 'govtech2025'],
   },
   {
     id: 'jobs-permanent',

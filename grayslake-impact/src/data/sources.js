@@ -261,4 +261,16 @@ export const sources = {
     note: "The ordinance amends Chapter 151 of the Lake County Code and applies to unincorporated Lake County only. The article states it does not affect the T5 campus in Grayslake.",
     verified: "Sep 11, 2026",
   },
+  // The FOIA'd approval packet, published on this site at /records/t5 and
+  // split into one file per ordinance. Cited from pages that state approval
+  // dates or vote counts, which this packet is the primary record for.
+  t5RecordsPacket2026: {
+    title: "T5@CHICAGO IV ordinances, agreements and site plans (Village of Grayslake, 2024-2025)",
+    publisher: "Village of Grayslake, obtained under the Illinois Freedom of Information Act",
+    date: "Ordinances passed Nov. 19, 2024 to May 6, 2025",
+    url: "/records/t5",
+    tier: "primary",
+    note: "242 pages. Five ordinances, the special use permit agreements and amendments attached to them, the Lake County zoning verification letter, the 2005 Village-County intergovernmental agreement, and the site plans. Published in full on this site, split into one file per document, with every page citation linking to the page it refers to.",
+    verified: "Sep 15, 2026",
+  },
 };

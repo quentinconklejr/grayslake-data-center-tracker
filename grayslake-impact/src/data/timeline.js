@@ -9,9 +9,9 @@ export const timelineEvents = [
   {
     date: "2025-05-06",
     title: "Village approval process complete",
-    description: "The Village FAQ records the approval as completed \u201cover an almost eight-month period between 9/23/2024 and 5/6/2025\u201d after a number of public hearings and Village Board meetings. Grayslake Mayor Elizabeth Davies cited 1,500 permanent jobs and major tax revenue during this period.",
+    description: "The Village FAQ records the approval as completed \u201cover an almost eight-month period between 9/23/2024 and 5/6/2025\u201d after a number of public hearings and Village Board meetings. The ordinances themselves bear this out: the Plan Commission opened its hearing on September 23, 2024, and the last of the five ordinances passed on May 6, 2025. No trustee voted nay on any of the five. Grayslake Mayor Elizabeth Davies cited 1,500 permanent jobs and major tax revenue during this period.",
     category: "approval",
-    sourceKeys: ["villagefaq_archived", "dailyherald2026", "govtech2025"],
+    sourceKeys: ["villagefaq_archived", "t5RecordsPacket2026", "dailyherald2026", "govtech2025"],
   },
   {
     date: "2024-05-02",
@@ -121,7 +121,7 @@ export const timelineEvents = [
   {
     date: "2029",
     title: "Full build-out projected",
-    description: "Campus could reach T5\u2019s stated 1.2 GW of leasable IT capacity. Village approvals cover 18 buildings; CEO Pete Marin cited up to 20 as an upper estimate.",
+    description: "Campus could reach T5\u2019s stated 1.2 GW of leasable IT capacity. The master site plan shows 18 buildings; the ordinances set no building count and allow the number to change within the floor area cap. CEO Pete Marin cited up to 20 as an upper estimate.",
     category: "construction",
     sourceKeys: ["govtech2025", "dailyherald2026", "patch2026"],
   },

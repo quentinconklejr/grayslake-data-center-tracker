@@ -16,7 +16,8 @@
     "verify-parcels": "node scripts/verify-parcels.js",
     "check-contrast": "node scripts/check-contrast.js",
     "a11y": "node scripts/a11y.js",
-    "build:icons": "python3 scripts/generate-icons.py"
+    "build:icons": "python3 scripts/generate-icons.py",
+    "audit:records": "node scripts/audit-records.mjs"
   },
   "dependencies": {
     "@fontsource/ibm-plex-mono": "^5.3.0",

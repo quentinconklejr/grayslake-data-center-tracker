@@ -24,3 +24,6 @@ screenshots
 *.sln
 *.sw?
 *.env
+
+# Source records the site does not ship (see scripts/audit-records.mjs)
+private/

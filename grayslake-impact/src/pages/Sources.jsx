@@ -4,20 +4,13 @@ import { pageMeta } from '../data/pageMeta'
 import { sources } from '../data/sources'
 import { docMeta } from '../data/docMeta'
 import { LAST_VERIFIED } from '../data/siteConfig'
+import { formatBytes } from '../lib/formatBytes'
 
 const TIER = {
   primary:    'text-status-stated',
   aggregator: 'text-status-disputed',
   trade:      'text-status-approval',
   default:    'text-ink-500',
-}
-
-// Bytes → "154 KB" / "1.2 MB". Kept alongside the render because the
-// unit shows up in exactly one place; a util file would be premature.
-function fmtSize(bytes) {
-  if (!bytes) return null
-  const kb = bytes / 1024
-  return kb < 1024 ? `${Math.round(kb)} KB` : `${(kb / 1024).toFixed(1)} MB`
 }
 
 export default function Sources() {
@@ -55,7 +48,7 @@ export default function Sources() {
           // because we can't inspect the file — better to omit than guess.
           const meta = source.localCopy ? docMeta[source.localCopy] : null
           const fileMeta = meta
-            ? [meta.pages ? `${meta.pages} pages` : null, fmtSize(meta.sizeBytes)].filter(Boolean).join(' · ')
+            ? [meta.pages ? `${meta.pages} pages` : null, formatBytes(meta.sizeBytes)].filter(Boolean).join(' · ')
             : null
           return (
             <li key={key} className="py-6">
@@ -85,7 +78,10 @@ export default function Sources() {
                       )}
                     </div>
                   )}
-                  <h3 className="text-lg font-display font-semibold text-ink-900 leading-snug mb-1">
+                  {/* h2, not h3. The page goes h1 (page title) straight into
+                      the document list, so an h3 here skipped a level and
+                      broke the outline for anyone navigating by heading. */}
+                  <h2 className="text-lg font-display font-semibold text-ink-900 leading-snug mb-1">
                     {source.url && source.status !== 'dead' && source.status !== 'unverified' ? (
                       <a
                         href={source.url}
@@ -98,7 +94,7 @@ export default function Sources() {
                     ) : (
                       source.title
                     )}
-                  </h3>
+                  </h2>
 
                   <div className="text-sm font-sans text-ink-600">
                     <span className="font-mono text-ink-500">
