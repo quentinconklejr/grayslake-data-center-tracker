@@ -39,10 +39,13 @@ export const questionStatus = {
   // capacity-price question has no project-specific figure at all.
   'energy-rates':     'unanswered',
 
-  // The approved envelope is a determination in a named document (up to
-  // 472 acres, no more than 10,100,000 sq ft). The rest is contested
-  // between sources: 470 vs 472 acres, 18 vs 'fewer than 20' vs 'up to
-  // 20' buildings, 1.55 vs 1.6 GW, and phasing is undetermined.
+  // The approved envelope is now settled by the ordinances themselves:
+  // about 473.5 acres and a 10,160,000 sq ft cap, each component stated in
+  // a signed document and cited to its page. What stays open is what gets
+  // built inside that envelope - no ordinance sets a building count, the
+  // agreements let the count move within the cap, and phasing beyond
+  // Phase 1 is undetermined. Total campus draw is also unexplained
+  // (1.55 vs 1.6 GW). Envelope answered, build-out not.
   'campus-scale':     'partial',
 
   // No public record produces a number. The two figures on offer are

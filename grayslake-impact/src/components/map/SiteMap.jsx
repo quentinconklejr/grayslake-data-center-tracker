@@ -339,10 +339,11 @@ export default function SiteMap({ className = '', showCaption = true }) {
           The approved campus is not drawn.
         </p>
         <p className="text-base font-sans text-ink-700 leading-relaxed">
-          Village approvals permit development on up to <span className="font-mono text-ink-900">472 acres</span>, a larger area
-          than T5 currently owns. The Village has never published that boundary as a mappable
-          shape, so nothing here represents it. Anyone showing you a 472-acre outline is showing
-          you an estimate.
+          Village approvals cover <span className="font-mono text-ink-900">about 473.5 acres</span> across five
+          ordinances, a larger area than T5 currently owns. The Village FAQ gives the figure as up
+          to 472 acres. Neither number has ever been published as a mappable boundary, so nothing
+          here represents it. Anyone showing you an outline of the approved campus is showing you
+          an estimate.
         </p>
       </aside>
     </div>

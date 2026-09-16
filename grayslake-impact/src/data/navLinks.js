@@ -12,6 +12,7 @@ export const NAV_LINKS = [
   { to: '/timeline',  label: 'Timeline',    end: false, group: 'story' },
   { to: '/questions', label: 'Questions',   end: false, group: 'story' },
 
+  { to: '/records',   label: 'Records',     end: false, group: 'tools' },
   { to: '/map',       label: 'Map',         end: false, group: 'tools' },
   { to: '/figures',   label: 'Key Figures', end: false, group: 'tools' },
   { to: '/documents', label: 'Documents',   end: false, group: 'tools' },

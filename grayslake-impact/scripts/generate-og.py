@@ -62,6 +62,24 @@ PAGES = {
                   "Plain-language summary of the project's local impact"),
     "officials": ("For Officials",
                   "Approval decisions, legal challenges, and policy events"),
+    "records": ("Public Records",
+                "Primary documents, published in full, cited page by page"),
+}
+
+# /records/t5 gets its own card rather than the generic template: the master
+# site plan is the single most recognisable thing in the packet, and a share
+# card carrying the drawing plus the three headline figures says what the page
+# holds before anyone clicks. Built from the same PNG the page renders.
+RECORDS_T5 = {
+    "slug": "records-t5",
+    "title": "The approved T5 ordinances",
+    "subtitle": "Village of Grayslake, Nov 2024 to May 2025",
+    "figures": [
+        ("Land approved", "about 473.5 acres"),
+        ("Floor area allowed", "up to 10.16M sq ft"),
+        ("Ordinances passed", "5, none opposed"),
+    ],
+    "plan": "public/records/t5/master-site-plan-p242.png",
 }
 
 
@@ -123,6 +141,66 @@ def render(slug, title, subtitle):
     return path
 
 
+def render_records_t5(spec):
+    """Split card: dark type panel on the left, the master plan on the right."""
+    img = Image.new("RGB", (W, H), BG)
+    d = ImageDraw.Draw(img)
+
+    panel_w = 640
+    pad = 56
+
+    plan_path = os.path.join(os.path.dirname(__file__), "..", spec["plan"])
+    if os.path.exists(plan_path):
+        plan = Image.open(plan_path).convert("RGB")
+        # Cover the right-hand area rather than letterboxing it: the drawing
+        # reads as a drawing at any crop, and bars of white would not.
+        area_w, area_h = W - panel_w, H
+        scale = max(area_w / plan.width, area_h / plan.height)
+        plan = plan.resize((max(1, int(plan.width * scale)), max(1, int(plan.height * scale))), Image.LANCZOS)
+        left = (plan.width - area_w) // 2
+        top = (plan.height - area_h) // 2
+        img.paste(plan.crop((left, top, left + area_w, top + area_h)), (panel_w, 0))
+        d.rectangle([panel_w, 0, panel_w + 2, H], fill=RULE)
+
+    f_title = ImageFont.truetype(FONT_BOLD, 46)
+    f_sub = ImageFont.truetype(FONT_REG, 23)
+    f_label = ImageFont.truetype(FONT_REG, 19)
+    f_value = ImageFont.truetype(FONT_BOLD, 32)
+    f_mono = ImageFont.truetype(FONT_MONO, 18)
+
+    heights = [26, 42, 34, 20]
+    base_y = pad + 44
+    x = pad
+    for h, colour in zip(heights, BARS):
+        w = 12 if colour != BARS[-1] else 7
+        d.rounded_rectangle([x, base_y - h, x + w, base_y], radius=3, fill=colour)
+        x += 18
+
+    y = base_y + 40
+    for line in wrap(d, spec["title"], f_title, panel_w - pad * 2):
+        d.text((pad, y), line, font=f_title, fill=FG)
+        y += 56
+    y += 4
+    for line in wrap(d, spec["subtitle"], f_sub, panel_w - pad * 2):
+        d.text((pad, y), line, font=f_sub, fill=MUTED)
+        y += 32
+
+    y += 20
+    for label, value in spec["figures"]:
+        d.text((pad, y), label, font=f_label, fill=MUTED)
+        d.text((pad, y + 24), value, font=f_value, fill=FG)
+        y += 66
+
+    d.rectangle([pad, H - pad - 40, panel_w - pad, H - pad - 39], fill=RULE)
+    d.text((pad, H - pad - 24), "grayslakedatacentertracker.org", font=f_mono, fill=MUTED)
+
+    os.makedirs(OUT, exist_ok=True)
+    path = os.path.join(OUT, f"{spec['slug']}.png")
+    img.save(path, "PNG", optimize=True)
+    return path
+
+
 if __name__ == "__main__":
     for slug, (title, subtitle) in PAGES.items():
         print("wrote", render(slug, title, subtitle))
+    print("wrote", render_records_t5(RECORDS_T5))

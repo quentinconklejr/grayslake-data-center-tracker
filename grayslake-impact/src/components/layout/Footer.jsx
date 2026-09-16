@@ -83,7 +83,22 @@ export default function Footer() {
         </div>
 
         {/* ── Utility links ───────────────────────────────────────── */}
+        {/* Updates and the press briefing live here rather than in the nav
+            bar, which is already at its width. Both are destinations people
+            arrive at deliberately, not while reading. */}
         <div className="mt-8 flex flex-wrap gap-x-5 gap-y-2 text-sm font-sans">
+          <Link
+            to="/updates"
+            className="text-ink-600 hover:text-ink-900 underline underline-offset-4 decoration-rule-strong hover:decoration-accent"
+          >
+            Updates
+          </Link>
+          <Link
+            to="/press"
+            className="text-ink-600 hover:text-ink-900 underline underline-offset-4 decoration-rule-strong hover:decoration-accent"
+          >
+            For reporters
+          </Link>
           <Link
             to="/accessibility"
             className="text-ink-600 hover:text-ink-900 underline underline-offset-4 decoration-rule-strong hover:decoration-accent"
