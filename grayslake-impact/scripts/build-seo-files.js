@@ -25,7 +25,10 @@ const ROUTES = [
   ['/actions', '0.7', 'weekly'],
   ['/press', '0.6', 'monthly'],
   ['/updates', '0.6', 'weekly'],
+  ['/agreement', '0.8', 'monthly'],
   ['/about', '0.5', 'yearly'],
+  ['/accessibility', '0.3', 'yearly'],
+  ['/privacy', '0.3', 'yearly'],
 ]
 
 const lastmod = new Date(LAST_VERIFIED + ' UTC').toISOString().slice(0, 10)

@@ -1,7 +1,10 @@
 import { useEffect } from 'react'
 
 const BASE_TITLE = 'Grayslake Data Center Tracker'
-const SUFFIX = ' | T5@Chicago Tracker'
+const SUFFIX = ' | Grayslake Data Center Tracker'
+// A title that already starts with the site name skips the suffix, so it
+// does not say "Grayslake Data Center" twice.
+const withSuffix = title => (title.startsWith('Grayslake Data Center') ? title : `${title}${SUFFIX}`)
 const CANONICAL_ORIGIN = 'https://grayslakedatacentertracker.org'
 
 function absolute(path) {
@@ -34,7 +37,7 @@ function upsertLink(rel, href) {
 }
 
 export default function PageTitle({ title, description, ogImage }) {
-  const fullTitle = title ? `${title}${SUFFIX}` : BASE_TITLE
+  const fullTitle = title ? withSuffix(title) : BASE_TITLE
 
   useEffect(() => {
     const prev = document.title
@@ -43,7 +46,7 @@ export default function PageTitle({ title, description, ogImage }) {
     if (description) {
       const url = window.location.origin + window.location.pathname
       upsertMeta('name', 'description', description)
-      upsertLink('canonical', url)
+      upsertLink('canonical', CANONICAL_ORIGIN + window.location.pathname)
       
       // OpenGraph Meta Tags
       upsertMeta('property', 'og:title', fullTitle)

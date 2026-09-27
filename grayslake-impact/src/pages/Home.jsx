@@ -58,6 +58,12 @@ export default function Home() {
           <p className="text-2xs font-mono text-ink-500 pt-1">
             Every claim linked to its source &middot; Last verified {LAST_VERIFIED}
           </p>
+          <p>
+            <Link to="/map" className="inline-flex items-center gap-2 text-base font-sans font-semibold text-accent hover:text-accent-hover min-h-[44px]">
+              See the site on the parcel map
+              <span aria-hidden="true">→</span>
+            </Link>
+          </p>
         </header>
 
 
