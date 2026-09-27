@@ -189,15 +189,27 @@ export const sources = {
     tier: "primary",
     verified: "Aug 5, 2026",
   },
+  // Was a Lake County DocumentCenter link that did not point to this
+  // presentation. The presentation is the slides plus the speaker script.
   clcjawa2026: {
     category: "government",
-    title: "Grayslake Data Center and CLCJAWA (presentation)",
-    publisher: "Central Lake County Joint Action Water Agency, via Lake County document center",
-    date: "2026",
-    url: "https://www.lakecountyil.gov/DocumentCenter/View/88568/Grayslake-Data-Center-and-CLCJAWA---2026",
+    title: "Anticipating Water Demand Impact at CLCJAWA: The T5 @ Chicago IV Data Center",
+    publisher: "William Soucie, CLCJAWA Executive Director, ICC Water Policy Session, Chicago",
+    date: "Jan. 15, 2026",
+    url: "https://drive.google.com/file/d/14Q7LsFHh36oft_WPXpf2uJ8hxCz6P_Fl/view?usp=drive_link",
     tier: "primary",
-    note: "Primary source for the project's water figures, including the one-time commissioning flush volume.",
-    verified: "Aug 5, 2026",
+    note: "Slides and speaker script. Source for the campus water figures, which it gives as the developer's expectations (under 50,000 gallons a day at full build-out, 3.2 million gallons to flush and fill one 200 MW building), and for the statement that Phase I “has 1.6 gigawatts available.” The slide graphic gives the campus as 472 acres; the script says 470.",
+    verified: "Sep 27, 2026",
+  },
+  clcjawaWaterPage2026: {
+    category: "government",
+    title: "Grayslake Data Center Water Usage Information",
+    publisher: "Central Lake County Joint Action Water Agency (homepage section)",
+    date: "Retrieved Sep 27, 2026",
+    url: "https://www.clcjawa.com/",
+    tier: "primary",
+    note: "States that T5 Data Centers’ design team indicated total campus water use will be less than 50 thousand gallons per day, and that this was presented to the Illinois Commerce Commission on January 15, 2026.",
+    verified: "Sep 27, 2026",
   },
   villagefaq_archived: {
     category: "government",

@@ -1,4 +1,5 @@
 import SourceCitation from './SourceCitation'
+import UnverifiedTag from './UnverifiedTag'
 
 /*
  * Small labelled figure used across pages for secondary metrics.
@@ -16,7 +17,7 @@ const ACCENT = {
   violet: 'text-status-development border-status-development',
 }
 
-export default function StatCard({ label, value, sub, badge, accent = 'blue', sourceKey }) {
+export default function StatCard({ label, value, sub, badge, accent = 'blue', sourceKey, unverified }) {
   const [labelCls, borderCls] = (ACCENT[accent] ?? ACCENT.blue).split(/\s+/)
 
   return (
@@ -25,7 +26,7 @@ export default function StatCard({ label, value, sub, badge, accent = 'blue', so
         {label}
       </p>
       <p className="mt-2 text-2xl sm:text-3xl font-display leading-tight tracking-tight text-ink-900 break-words">
-        {value}{sourceKey && <SourceCitation sourceKey={sourceKey} />}
+        {value}{sourceKey && <SourceCitation sourceKey={sourceKey} />}{unverified && <UnverifiedTag note={unverified} />}
       </p>
       {sub && <p className="mt-1.5 text-sm font-sans text-ink-600 leading-snug">{sub}</p>}
       {badge && (

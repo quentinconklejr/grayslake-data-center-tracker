@@ -78,12 +78,12 @@ export const keyFigures = [
   },
   {
     id: 'capacity-comed',
-    label: 'ComEd capacity secured',
+    label: 'Power secured from ComEd',
     value: `${project.comEdCapacityGW} GW`,
     qualifier: `of which ${project.totalCapacityMW.toLocaleString()} MW is leasable IT capacity`,
     detail:
-      'Total utility capacity secured from ComEd, per T5 CEO Pete Marin. The campus includes a ComEd-built substation. CLCJAWA separately records 1.6 GW available to Phase I.',
-    sourceKey: 'govtech2025',
+      'Power secured from ComEd, per T5 CEO Pete Marin (Oct. 2025). William Soucie, CLCJAWA Executive Director, told an ICC Water Policy Session in Chicago on Jan. 15, 2026 that Phase I "has 1.6 gigawatts available."',
+    sourceKeys: ['govtech2025', 'clcjawa2026'],
   },
   {
     id: 'investment',
@@ -104,15 +104,15 @@ export const keyFigures = [
     value: '< 50,000 gal/day',
     qualifier: '4.0% of Village supply, or 0.25% of the CLCJAWA system',
     detail:
-      'Same volume, two denominators. The Village FAQ scales it against Grayslake’s supply; CLCJAWA against its 14-member regional system. Both are accurate.',
-    sourceKeys: ['villagefaq_archived', 'clcjawa2026'],
+      'Same volume, two denominators. CLCJAWA reports the figure as T5’s design estimate and scales it against its 14-member regional system; the Village FAQ scales it against Grayslake’s supply. Both are accurate.',
+    sourceKeys: ['villagefaq_archived', 'clcjawa2026', 'clcjawaWaterPage2026'],
   },
   {
     id: 'water-flush',
     label: 'Commissioning flush',
     value: '~3.2M gal',
     qualifier: 'one-time, for one 200 MW building, staged over days',
-    detail: 'Initial flush and fill of the closed-loop cooling system, per CLCJAWA.',
+    detail: 'Initial flush and fill of the closed-loop cooling system. T5’s expectation for its initial 200 MW building, as reported by CLCJAWA.',
     sourceKey: 'clcjawa2026',
   },
   {

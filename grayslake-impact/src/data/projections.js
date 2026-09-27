@@ -191,24 +191,29 @@ export const projections = {
       // why it exceeds IT capacity. An earlier definition added "to allow for
       // redundancy and phasing", which no source states; removed.
       definition:
-        "Utility power T5 describes as secured for the campus.",
+        "Utility power T5 describes as secured for the campus. Data Center Dynamics reports it as a 1.6 GW ComEd onsite substation.",
       attribution: "Pete Marin, T5 CEO, via Data Center Dynamics (Feb. 2025)",
       sourceKey: "dcdGW2026",
     },
     {
       key: "comed",
       value: "1.55 GW",
-      metric: "Total ComEd capacity secured",
+      metric: "Power secured from ComEd",
+      // Marin: "developers have secured 1.55 gigawatts of power from ComEd".
+      // Substation wording belongs to the 1.6 GW figure (DCD), not this one.
       definition:
-        "Total utility capacity secured from ComEd for the campus, of which 1.2 GW is leasable. The campus includes a ComEd-built substation.",
+        "Power secured from ComEd for the campus, of which 1.2 GW is leasable.",
       attribution:
         "Pete Marin, T5 CEO, to the Chicago Tribune (Oct. 2025). The same figure was later cited by Chloe Russell, counsel to the coalition challenging the approvals, in the Daily Herald (June 2026).",
       sourceKey: "govtech2025",
       alsoSourceKey: "dailyherald2026",
     },
   ],
+  // Only what the sources say. Earlier wording called these "different
+  // measurements, not competing estimates" and ComEd capacity "necessarily
+  // larger"; no source says either.
   capacityNote:
-    "These are different measurements, not competing estimates of the same quantity. Leasable IT capacity is the computing load the campus can rent out; total ComEd capacity is the utility connection feeding it, which is necessarily larger. All three figures trace back to T5: CEO Pete Marin described 1.55 GW secured from ComEd with 1.2 GW of it leasable, and CLCJAWA's utility briefing independently records 1.6 GW available to Phase I.",
+    "T5 CEO Pete Marin gave 1.6 GW of secured utility power and up to 1.2 GW of IT capacity in February 2025, and 1.55 GW secured from ComEd, 1.2 GW of it leasable, in October 2025. CLCJAWA's executive director told an ICC session in January 2026 that Phase I has 1.6 GW available. The difference between 1.6 GW and 1.55 GW has not been explained publicly.",
 
   residentialRateImpact: {
     directImpact: "tariff-walled",

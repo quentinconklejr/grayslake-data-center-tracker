@@ -35,7 +35,7 @@ export default function Energy({ asSection = false }) {
           </>
         )}
         <p className="text-base font-sans text-ink-700 max-w-2xl leading-relaxed">
-          Public records document three electrical capacity figures for the Grayslake campus: {project.totalCapacityMW.toLocaleString()} MW of leasable IT computing load, {project.securedPowerMW.toLocaleString()} MW of utility-contracted capacity, and {project.comEdCapacityGW} GW of ComEd substation capacity. They measure different things. Each is cited below with its source.
+          Three electrical capacity figures have been published for the Grayslake campus, all from T5 CEO Pete Marin: {project.totalCapacityMW.toLocaleString()} MW of leasable IT capacity, {project.securedPowerMW.toLocaleString()} MW of secured utility power, and {project.comEdCapacityGW} GW of power secured from ComEd. Each is cited below with its source.
         </p>
         {!asSection && <p className="text-2xs font-mono text-ink-500 mt-3">Last verified {LAST_VERIFIED}</p>}
       </FadeIn>
@@ -49,8 +49,8 @@ export default function Energy({ asSection = false }) {
           PJM transmission zone — are context the chart does not carry
           and stay in the metric row. */}
       <FadeIn className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 mb-12">
-        <StatCard label="Total ComEd Capacity" value={`${project.comEdCapacityGW} GW`}                  sub="Secured from ComEd, per T5 CEO" accent="amber" sourceKey="govtech2025" />
-        <StatCard label="PJM Zone"             value="COMED"                                            sub="ComEd transmission zone, PJM"  accent="blue"  sourceKey="clcjawa2026" />
+        <StatCard label="Power Secured from ComEd" value={`${project.comEdCapacityGW} GW`}              sub="Per T5 CEO Pete Marin, Oct. 2025" accent="amber" sourceKey="govtech2025" />
+        <StatCard label="PJM Zone"             value="COMED"                                            sub="ComEd transmission zone, PJM"  accent="blue"  unverified="Previously cited to CLCJAWA, whose presentation does not mention PJM. No source on this site states the zone." />
       </FadeIn>
 
       <FadeIn className="mb-10">
@@ -61,7 +61,9 @@ export default function Energy({ asSection = false }) {
           </div>
         </div>
         <p className="text-base font-sans text-ink-700 mb-8 max-w-prose leading-relaxed">
-          T5 announced the campus at 480 MW in 2024 and later expanded the leasable IT capacity target to 1,200 MW. The {project.comEdCapacityGW} GW ComEd figure is the utility substation connection, not the computing load.
+          T5 announced the campus at 480 MW in 2024 and later expanded the leasable IT capacity target to 1,200 MW.<SourceCitation sourceKey="dcd2026" />{' '}
+          Data Center Dynamics reports a 1.6 GW ComEd onsite substation.<SourceCitation sourceKey="dcdGW2026" />{' '}
+          In October 2025 Marin said {project.comEdCapacityGW} GW of power had been secured from ComEd.<SourceCitation sourceKey="govtech2025" />
         </p>
         <EnergyDrawChart />
       </FadeIn>
@@ -144,7 +146,7 @@ export default function Energy({ asSection = false }) {
             {[
               ['Secured Power',            `${project.securedPowerMW.toLocaleString()} MW`,  'dcdGW2026'],
               ['Leasable IT Capacity',     `${project.totalCapacityMW.toLocaleString()} MW`, 'dcdGW2026'],
-              ['Total ComEd Capacity',     `${project.comEdCapacityGW} GW`,                   'govtech2025'],
+              ['Power Secured from ComEd', `${project.comEdCapacityGW} GW`,                   'govtech2025'],
               ['PJM Queue ID',             'Unreleased',                                     null],
               ['Interconnect Voltage',     'Pending filing',                                 null],
               ['Power Purchase (PPA)',     'Undisclosed',                                    null],
