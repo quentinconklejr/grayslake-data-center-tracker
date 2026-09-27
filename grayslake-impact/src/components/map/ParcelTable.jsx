@@ -165,15 +165,29 @@ export default function ParcelTable({ parcels, headingLevel = 3, stacked = false
           <thead>
             <tr className="border-y border-rule text-ink-700 text-xs font-sans font-semibold uppercase tracking-wide">
               <th scope="col" className={`py-2.5 ${PX} text-left`}>PIN</th>
+              {/* The sort is a real button inside the header cell, so it
+                  takes keyboard focus. aria-sort tells a screen reader the
+                  column's current order, and the live region below the
+                  table announces each change. */}
               <th
                 scope="col"
-                className={`py-2.5 ${PX} cursor-pointer hover:text-ink-900 text-right`}
-                onClick={() => {
-                  setSortField('acres')
-                  setSortOrder(prev => (prev === 'asc' ? 'desc' : 'asc'))
-                }}
+                aria-sort={sortField === 'acres' ? (sortOrder === 'asc' ? 'ascending' : 'descending') : 'none'}
+                className={`py-1 ${PX} text-right`}
               >
-                Acres <span aria-hidden="true">{sortField === 'acres' ? (sortOrder === 'asc' ? '↑' : '↓') : ''}</span>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSortField('acres')
+                    setSortOrder(prev => (prev === 'asc' ? 'desc' : 'asc'))
+                  }}
+                  className="inline-flex items-center justify-end gap-1 min-h-[44px] -mx-1 px-1 uppercase tracking-wide font-semibold hover:text-ink-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent"
+                >
+                  Acres
+                  <span aria-hidden="true">{sortField === 'acres' ? (sortOrder === 'asc' ? '↑' : '↓') : ''}</span>
+                  <span className="sr-only">
+                    {sortField === 'acres' && sortOrder === 'asc' ? ', sort largest first' : ', sort smallest first'}
+                  </span>
+                </button>
               </th>
               <th scope="col" className={`py-2.5 ${PX} text-right`}>Recorded sale price</th>
               <th scope="col" className={`py-2.5 ${PX} text-left`}>Sale date</th>
@@ -209,6 +223,11 @@ export default function ParcelTable({ parcels, headingLevel = 3, stacked = false
           </tbody>
         </table>
       </div>
+      <p role="status" className="sr-only">
+        {sortField === 'acres'
+          ? `Sorted by acres, ${sortOrder === 'asc' ? 'smallest first' : 'largest first'}`
+          : ''}
+      </p>
 
       {/* ── Source attribution ────────────────────────────────────────
           Deliberately given more weight than in the old design. This is
