@@ -15,10 +15,11 @@
 //
 // Rendering picks up the label + colour from STATUS_META below; the
 // values in `questionStatus` are the only thing to edit when reviewing.
+// `tone` is the StatusPill tone the label renders in.
 export const STATUS_META = {
-  answered:   { label: 'Answered',           cls: 'text-status-stated' },
-  partial:    { label: 'Partially answered', cls: 'text-status-disputed' },
-  unanswered: { label: 'Unanswered',         cls: 'text-status-unknown' },
+  answered:   { label: 'Answered',           tone: 'answered' },
+  partial:    { label: 'Partially answered', tone: 'partial' },
+  unanswered: { label: 'Unanswered',         tone: 'unanswered' },
 }
 
 // Keys match the `id` field on every entry in src/data/questions.js.

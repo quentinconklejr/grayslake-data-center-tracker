@@ -13,9 +13,14 @@
  * works in greyscale and for anyone who cannot separate the hues.
  */
 const TONE = {
-  unasked:  'text-status-unknown  bg-status-unknown-soft  border-status-unknown',
-  asked:    'text-status-approval bg-status-approval-soft border-status-approval',
-  answered: 'text-status-stated   bg-status-stated-soft   border-status-stated',
+  unasked:    'text-status-unknown  bg-status-unknown-soft  border-status-unknown',
+  asked:      'text-status-approval bg-status-approval-soft border-status-approval',
+  answered:   'text-status-stated   bg-status-stated-soft   border-status-stated',
+  // Question status on /questions. Same palette: answered shares the
+  // records "answered" green, a partial answer takes the disputed amber,
+  // and an unanswered question takes the unknown grey.
+  partial:    'text-status-disputed bg-status-disputed-soft border-status-disputed',
+  unanswered: 'text-status-unknown  bg-status-unknown-soft  border-status-unknown',
 }
 
 export default function StatusPill({ tone = 'unasked', children }) {

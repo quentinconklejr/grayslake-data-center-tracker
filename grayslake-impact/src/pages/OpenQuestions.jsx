@@ -1,10 +1,11 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import PageTitle from '../components/ui/PageTitle'
 import Container from '../components/layout/Container'
 import { pageMeta } from '../data/pageMeta'
 import { questions } from '../data/questions'
 import { questionStatus, STATUS_META } from '../data/questionStatus'
 import ItemCitations from '../components/ui/ItemCitations'
+import StatusPill from '../components/records/StatusPill'
 import { FootnoteProvider, FootnoteList } from '../components/ui/FootnoteContext'
 
 /*
@@ -15,8 +16,23 @@ import { FootnoteProvider, FootnoteList } from '../components/ui/FootnoteContext
  * top-rule per row supplies the visual separation.
  */
 
+// Everything a reader could search for in one question, lowercased once.
+function searchText(q) {
+  const items = [...(q.stated ?? []), ...(q.disputed ?? []), ...(q.unknown ?? [])]
+  return [q.question, q.plain, ...items.map(i => i.text)].filter(Boolean).join(' ').toLowerCase()
+}
+const SEARCH_INDEX = Object.fromEntries(questions.map(q => [q.id, searchText(q)]))
+
 export default function OpenQuestions() {
   const [openIds, setOpenIds] = useState([]) // All start collapsed
+  const [query, setQuery] = useState('')
+
+  // Every word must appear somewhere in the question or its answer.
+  const shown = useMemo(() => {
+    const words = query.toLowerCase().split(/\s+/).filter(Boolean)
+    if (!words.length) return questions
+    return questions.filter(q => words.every(w => SEARCH_INDEX[q.id].includes(w)))
+  }, [query])
 
   function toggle(id) {
     setOpenIds(prev => (prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]))
@@ -54,12 +70,50 @@ export default function OpenQuestions() {
           </button>
         </header>
 
+        {/* Keyword search. Filters the list as you type; the count below
+            the box is a live region so a screen reader hears the result. */}
+        <div>
+          <label htmlFor="question-search" className="block text-xs font-sans font-semibold text-ink-600 mb-1">
+            Search questions
+          </label>
+          <div className="relative">
+            <input
+              id="question-search"
+              type="search"
+              value={query}
+              onChange={e => setQuery(e.target.value)}
+              placeholder="Try water, taxes or jobs"
+              className="w-full text-base font-sans px-0 py-2 pr-10 bg-transparent border-0 border-b border-rule-strong text-ink-900 placeholder:text-ink-500 focus:outline-none focus:border-accent focus:ring-0 [&::-webkit-search-cancel-button]:hidden"
+            />
+            {query && (
+              <button
+                type="button"
+                onClick={() => setQuery('')}
+                aria-label="Clear search"
+                className="absolute right-0 top-1/2 -translate-y-1/2 text-ink-500 hover:text-ink-800 font-mono text-base leading-none min-h-[44px] min-w-[44px]"
+              >
+                ×
+              </button>
+            )}
+          </div>
+          <p role="status" className="mt-2 text-xs font-sans text-ink-600">
+            {query.trim()
+              ? `Showing ${shown.length} of ${questions.length} questions`
+              : ''}
+          </p>
+        </div>
+
         {/* Questions accordion list. Six questions do not warrant a
             jump nav; the accordion titles themselves are the index.
             Container reverted to the default measure so the titles
             do not stretch. */}
         <div>
-          {questions.map(q => {
+          {shown.length === 0 && (
+            <p className="border-t border-rule py-6 text-base font-sans text-ink-600">
+              No question matches &ldquo;{query.trim()}&rdquo;.
+            </p>
+          )}
+          {shown.map(q => {
             const isOpen = openIds.includes(q.id)
             // Status is per-question metadata edited in questionStatus.js.
             // Missing / unknown keys fall back to 'unanswered' so an
@@ -73,16 +127,14 @@ export default function OpenQuestions() {
                   className="group w-full text-left py-5 sm:py-6 flex items-center justify-between gap-4 hover:bg-paper-sunk transition-colors"
                 >
                   <div className="min-w-0 flex-1">
-                    {/* Status label sits on its own metadata row above
-                        the question — same small-caps sans treatment as
-                        the tier tags on /documents and the italic status
-                        labels inside each expanded block. Colour tokens
-                        (status-stated/disputed/unknown) map to the
-                        answered/partial/unanswered semantics. Not a
-                        pill, not a badge. */}
-                    <p className={`text-2xs font-sans font-semibold uppercase tracking-wide mb-1.5 ${status.cls}`}>
-                      {status.label}
-                    </p>
+                    {/* Status sits on its own metadata row above the
+                        question, as a StatusPill: the same chip the
+                        records pages use, so a status looks the same
+                        wherever it appears. The label carries the state
+                        in words, so colour is never the only cue. */}
+                    <span className="block mb-2">
+                      <StatusPill tone={status.tone}>{status.label}</StatusPill>
+                    </span>
                     <h2 className="text-xl sm:text-2xl font-display text-ink-900 leading-snug">
                       {q.question}
                     </h2>
