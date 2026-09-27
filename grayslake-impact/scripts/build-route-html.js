@@ -33,7 +33,10 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const dist = join(root, 'dist')
 
 const BASE_TITLE = 'Grayslake Data Center Tracker'
-const SUFFIX = ' | T5@Chicago Tracker'
+const SUFFIX = ' | Grayslake Data Center Tracker'
+// A title that already starts with the site name skips the suffix, so it
+// does not say "Grayslake Data Center" twice.
+const withSuffix = title => (title.startsWith('Grayslake Data Center') ? title : `${title}${SUFFIX}`)
 
 const escape = str =>
   String(str).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
@@ -112,7 +115,7 @@ const template = readFileSync(join(dist, 'index.html'), 'utf8')
 let count = 0
 
 for (const [route, meta] of Object.entries(pageMeta)) {
-  const title = meta.title ? `${meta.title}${SUFFIX}` : BASE_TITLE
+  const title = meta.title ? withSuffix(meta.title) : BASE_TITLE
   const url = `${SITE_ORIGIN}${route === '/' ? '/' : route}`
   const canonicalUrl = `${SITE_ORIGIN}${REDIRECT_CANONICAL[route] ?? (route === '/' ? '/' : route)}`
   const image = `${SITE_ORIGIN}${meta.ogImage}`

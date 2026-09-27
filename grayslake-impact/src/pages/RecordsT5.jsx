@@ -46,11 +46,11 @@ function SummaryFigure({ label, value, qualifier, math, children }) {
       <dd className="mt-2 text-2xl sm:text-[26px] font-display text-ink-900 tracking-tight leading-tight break-words">
         {value}
       </dd>
-      <p className="mt-1.5 text-xs font-sans text-ink-600 leading-snug">{qualifier}</p>
+      <dd className="mt-1.5 text-xs font-sans text-ink-600 leading-snug">{qualifier}</dd>
       {math && (
-        <p className="mt-2 text-2xs font-mono text-ink-500 leading-snug break-words">{math}</p>
+        <dd className="mt-2 text-2xs font-mono text-ink-500 leading-snug break-words">{math}</dd>
       )}
-      {children && <p className="mt-2 flex flex-wrap gap-x-2 gap-y-1">{children}</p>}
+      {children && <dd className="mt-2 flex flex-wrap gap-x-2 gap-y-1">{children}</dd>}
     </div>
   )
 }

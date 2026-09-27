@@ -58,6 +58,12 @@ export default function Home() {
           <p className="text-2xs font-mono text-ink-500 pt-1">
             Every claim linked to its source &middot; Last verified {LAST_VERIFIED}
           </p>
+          <p>
+            <Link to="/map" className="inline-flex items-center gap-2 text-base font-sans font-semibold text-accent hover:text-accent-hover min-h-[44px]">
+              See the site on the parcel map
+              <span aria-hidden="true">→</span>
+            </Link>
+          </p>
         </header>
 
 
@@ -200,7 +206,7 @@ export default function Home() {
                 <dd className="mt-2 text-2xl font-display text-ink-900 tracking-tight">
                   {numValue != null ? <AnimatedNumber value={numValue} suffix={suffix} /> : value}
                 </dd>
-                <p className="mt-1.5 text-xs font-sans text-ink-600 leading-snug">{note}</p>
+                <dd className="mt-1.5 text-xs font-sans text-ink-600 leading-snug">{note}</dd>
               </div>
             ))}
           </dl>

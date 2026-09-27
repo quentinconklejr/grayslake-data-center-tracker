@@ -86,11 +86,13 @@ export const sources = {
     title: "Approved T5 Data Center Campus FAQs",
     publisher: "Village of Grayslake",
     date: "June 5, 2026",
-    url: "https://villageofgrayslake.com/DocumentCenter/View/15282",
+    // The Village URL is dead, so the link goes to the Wayback Machine
+    // snapshot. originalUrl keeps the address the Village published.
+    url: "https://web.archive.org/web/20260724165553/https://www.villageofgrayslake.com/DocumentCenter/View/15282/T5-FAQ-sheet?bidId=",
+    originalUrl: "https://villageofgrayslake.com/DocumentCenter/View/15282",
     tier: "primary",
-    status: "dead",
     deadCheckedAt: "Aug 5, 2026",
-    note: "LINK DEAD as of Aug 5, 2026. The document was updated June 5, 2026 to state the Village could no longer respond to questions due to pending litigation, and is now unreachable at the URL above. An archived snapshot is available and is cited as villagefaq_archived; claims resting on the FAQ point there. Other claims were re-sourced to the Chicago Tribune / Government Technology reporting and the CLCJAWA utility briefing, which are independent of the FAQ.",
+    note: "Archived copy. The Village's original link (villageofgrayslake.com/DocumentCenter/View/15282) has been dead since Aug 5, 2026, so this entry links to the Wayback Machine snapshot. The document was updated June 5, 2026 to state the Village could no longer respond to questions due to pending litigation. An archived snapshot is available and is cited as villagefaq_archived; claims resting on the FAQ point there. Other claims were re-sourced to the Chicago Tribune / Government Technology reporting and the CLCJAWA utility briefing, which are independent of the FAQ.",
   },
   cub2026: {
     title: "How data centers are raising our bills in Illinois — and what we should do about it",

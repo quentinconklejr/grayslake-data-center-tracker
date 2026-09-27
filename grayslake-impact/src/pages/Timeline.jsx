@@ -99,7 +99,7 @@ export default function TimelinePage() {
                   : 'bg-transparent text-ink-700 border-rule-strong hover:border-ink-700 hover:text-ink-900'
               }`}
             >
-              All <span className="ml-1 text-ink-500">({timelineEvents.length})</span>
+              All <span className={`ml-1 ${activeCategory === 'all' ? 'text-paper-sunk' : 'text-ink-500'}`}>({timelineEvents.length})</span>
             </button>
             {LEGEND.map(({ key, label }) => {
               const count = timelineEvents.filter(e => e.category === key).length

@@ -12,6 +12,7 @@ export const SITE_ORIGIN = 'https://grayslakedatacentertracker.org'
 
 export const pageMeta = {
   '/': {
+    title: 'Grayslake Data Center Map, Records and Key Figures',
     description:
       'Tracking the T5 @ Chicago IV data center in Grayslake, Illinois. Jobs, taxes, energy, water and the pending litigation, with a source behind every figure.',
     ogImage: '/og/home.png',
@@ -65,15 +66,15 @@ export const pageMeta = {
     ogImage: '/og/questions.png',
   },
   '/map': {
-    title: 'Site Map',
+    title: 'Grayslake Data Center Map',
     description:
-      'Land recorded to T5 in Grayslake: 57 parcels totalling 287.8 acres, mapped from Lake County GIS. The approved campus is larger and is not mapped.',
+      'Grayslake data center map: 57 parcels totalling 287.8 acres recorded to T5, mapped from Lake County GIS. The approved campus is larger and is not mapped.',
     ogImage: '/og/map.png',
   },
   '/documents': {
-    title: 'Sources',
+    title: 'Grayslake Data Center Sources and Documents',
     description:
-      'Every document and source behind the tracker, including the archived Village FAQ, Lake County parcel data and press coverage.',
+      'Every document and source behind the Grayslake Data Center Tracker, including the archived Village FAQ, Lake County parcel data and press coverage.',
     ogImage: '/og/sources.png',
   },
   '/accessibility': {
@@ -95,7 +96,7 @@ export const pageMeta = {
     ogImage: '/og/about.png',
   },
   '/figures': {
-    title: 'Key Figures',
+    title: 'Grayslake Data Center Key Figures',
     description:
       'Key figures with citations, contacts and source documents for reporters covering T5 @ Chicago IV in Grayslake, Illinois.',
     ogImage: '/og/reporters.png',
@@ -107,13 +108,13 @@ export const pageMeta = {
     ogImage: '/og/actions.png',
   },
   '/records': {
-    title: 'Public Records',
+    title: 'Grayslake Data Center Public Records (FOIA)',
     description:
       'Government records obtained by the Grayslake Data Center Tracker and published in full, with every figure linked to the page of the document it came from.',
     ogImage: '/og/records.png',
   },
   '/records/t5': {
-    title: 'T5 Grayslake data center ordinances and site plans',
+    title: 'Grayslake Data Center Ordinances and Site Plans',
     description:
       'The five Village of Grayslake ordinances approving the T5 @ Chicago IV campus: about 473.5 acres, up to 10,160,000 sq ft of building floor area, passed between Nov 19, 2024 and May 6, 2025, with the signed agreements and site plans.',
     ogImage: '/og/records-t5.png',
