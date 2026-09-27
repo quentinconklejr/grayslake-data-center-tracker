@@ -3,6 +3,7 @@ import { pageMeta } from '../data/pageMeta'
 import StatCard from '../components/ui/StatCard'
 import JobsTimelineChart from '../components/charts/JobsTimelineChart'
 import SourceCitation from '../components/ui/SourceCitation'
+import UnverifiedTag from '../components/ui/UnverifiedTag'
 import FadeIn from '../components/ui/FadeIn'
 import Container from '../components/layout/Container'
 import { FootnoteProvider, FootnoteList } from '../components/ui/FootnoteContext'
@@ -17,23 +18,36 @@ const { project, jobs } = projections
 const PHASES = [
   {
     period: '2025 to Q4 2027',
+    // Q4 2027 first building: DCD. Work underway in Oct. 2025: Daily Herald.
+    periodSourceKeys: ['dailyherald_oct2025', 'dcd2026'],
     phase: 'Construction: Phase 1',
     status: 'Active',
     rail: 'border-status-policy',
     dot:  'bg-status-policy',
     label:'text-status-policy',
     jobs: 'Hundreds of construction and trade workers (estimated)',
+    // Mayor Davies: "hundreds of construction and trade jobs".
+    jobsSourceKeys: ['govtech2025'],
+    // No source gives November 2025. The Daily Herald reported work underway
+    // in October 2025; the month here is unconfirmed.
     note: 'Site preparation and earthmoving active as of November 2025.',
+    noteUnverified: 'No source confirms November 2025. The Daily Herald reported work underway in October 2025.',
   },
   {
     period: '2027 to 2029',
+    // 2029 buildout: Tribune via Government Technology. The Daily Herald gave
+    // seven to 10 years from Oct. 2025, which the Full Buildout card flags.
+    periodSourceKeys: ['govtech2025'],
     phase: 'Construction: Full Buildout',
     status: 'Projected',
     rail: 'border-status-approval',
     dot:  'bg-status-approval',
     label:'text-status-approval',
     jobs: 'Peak construction workforce across subsequent phases',
-    note: 'Phasing depends on commercial leasing demand; detailed schedule unreleased.',
+    jobsUnverified: 'No source describes a peak construction workforce or when it would occur.',
+    // "Phasing depends on commercial leasing demand" was removed: no source
+    // says it. The schedule itself has not been published.
+    note: 'Detailed schedule unreleased.',
   },
   {
     period: '2029+',
@@ -104,20 +118,30 @@ export default function Jobs({ asSection = false }) {
       <FadeIn className="mb-10 border-t border-rule pt-6">
         <p className="text-xs font-display italic text-ink-500 tracking-wide mb-4">Employment Timeline by Phase</p>
         <div className="space-y-5">
-          {PHASES.map(({ period, phase, status, rail, dot, label, jobs: jobDesc, note, sourceKey }) => (
+          {PHASES.map(({ period, periodSourceKeys, phase, status, rail, dot, label, jobs: jobDesc, jobsSourceKeys, jobsUnverified, note, noteUnverified, sourceKey, sourceKeys }) => (
             <div key={phase} className={`border-l-[3px] pl-5 py-1 ${rail}`}>
               <div className="flex items-start gap-3">
                 <span aria-hidden="true" className={`mt-2 w-2 h-2 rounded-full shrink-0 ${dot}`} />
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-3 flex-wrap mb-0.5">
-                    <span className="text-xs font-mono text-ink-600">{period}</span>
+                    <span className="text-xs font-mono text-ink-600">
+                      {period}
+                      {periodSourceKeys?.map(k => <SourceCitation key={k} sourceKey={k} />)}
+                    </span>
                     <span className={`text-2xs font-sans font-semibold uppercase tracking-wide ${label}`}>{status}</span>
                   </div>
                   <p className="text-lg font-display text-ink-900 mb-1">{phase}</p>
-                  <p className="text-base font-sans font-semibold text-ink-800">{jobDesc}</p>
+                  <p className="text-base font-sans font-semibold text-ink-800">
+                    {jobDesc}
+                    {jobsSourceKeys?.map(k => <SourceCitation key={k} sourceKey={k} />)}
+                    {jobsUnverified && <UnverifiedTag note={jobsUnverified} />}
+                  </p>
                   <p className="text-sm font-sans text-ink-600 mt-1 leading-relaxed">
                     {note}
-                    {sourceKey && <SourceCitation sourceKey={sourceKey} />}
+                    {/* sourceKeys was set on the Operations row but never
+                        rendered, so that row showed no footnote. */}
+                    {(sourceKeys ?? (sourceKey ? [sourceKey] : [])).map(k => <SourceCitation key={k} sourceKey={k} />)}
+                    {noteUnverified && <UnverifiedTag note={noteUnverified} />}
                   </p>
                 </div>
               </div>

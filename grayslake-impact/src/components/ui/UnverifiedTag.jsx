@@ -12,6 +12,9 @@ export default function UnverifiedTag({ note = 'Source unreachable, pending re-v
         <circle cx="6" cy="6" r="4.75" />
       </svg>
       Unverified
+      {/* The title tooltip is mouse-only; this carries the note to screen
+          readers too. */}
+      <span className="sr-only">: {note}</span>
     </span>
   )
 }
