@@ -1,6 +1,7 @@
 import { useState, useContext, useRef, useEffect } from 'react'
 import { sources } from '../../data/sources'
 import { useFootnoteNumber, FootnoteCtx } from './FootnoteContext'
+import { prefersReducedMotion } from '../../lib/prefersReducedMotion'
 
 export default function SourceCitation({ sourceKey }) {
   const num = useFootnoteNumber(sourceKey)
@@ -8,12 +9,19 @@ export default function SourceCitation({ sourceKey }) {
   const ctx = useContext(FootnoteCtx)
   const [show, setShow] = useState(false)
   const wrapperRef = useRef(null)
+  const buttonRef = useRef(null)
 
   function open(e) {
-    // Mobile Touch Handling: Scroll to footnote list on touch devices
+    // Phones: jump to this source's own entry in the list (not the top of
+    // the list), move focus there, and leave a "Back to text" button in the
+    // entry that returns to this superscript.
     if (window.matchMedia('(max-width: 768px)').matches) {
       e.preventDefault()
-      document.getElementById('footnote-list')?.scrollIntoView({ behavior: 'smooth' })
+      const entry = document.getElementById(`fn-${num}`) ?? document.getElementById('footnote-list')
+      if (!entry) return
+      ctx?.setBackTo?.({ num, el: buttonRef.current })
+      entry.scrollIntoView({ behavior: prefersReducedMotion() ? 'auto' : 'smooth', block: 'start' })
+      entry.focus({ preventScroll: true })
       return
     }
     setShow(true)
@@ -30,8 +38,18 @@ export default function SourceCitation({ sourceKey }) {
     function handler(e) {
       if (!wrapperRef.current?.contains(e.target)) close()
     }
+    // Escape closes the popup and puts focus back on the superscript.
+    function onKeyDown(e) {
+      if (e.key !== 'Escape') return
+      close()
+      buttonRef.current?.focus()
+    }
     document.addEventListener('pointerdown', handler)
-    return () => document.removeEventListener('pointerdown', handler)
+    document.addEventListener('keydown', onKeyDown)
+    return () => {
+      document.removeEventListener('pointerdown', handler)
+      document.removeEventListener('keydown', onKeyDown)
+    }
   }, [show])
 
   if (!source) return null
@@ -48,6 +66,7 @@ export default function SourceCitation({ sourceKey }) {
   return (
     <span ref={wrapperRef} className="relative inline align-baseline ml-0.5">
       <button
+        ref={buttonRef}
         type="button"
         onClick={open}
         onMouseEnter={() => !window.matchMedia('(max-width: 768px)').matches && open({ preventDefault: () => {} })}

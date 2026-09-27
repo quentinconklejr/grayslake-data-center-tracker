@@ -1,11 +1,15 @@
 import { createContext, useContext, useRef, useState } from 'react'
 import { sources } from '../../data/sources'
+import { prefersReducedMotion } from '../../lib/prefersReducedMotion'
 
 export const FootnoteCtx = createContext(null)
 
 export function FootnoteProvider({ children, preload = [] }) {
   const stateRef = useRef(null)
   const [hoveredKey, setHoveredKey] = useState(null)
+  // Set when a phone tap jumps to a source: which footnote was opened and
+  // the superscript button it came from, so "Back to text" can return there.
+  const [backTo, setBackTo] = useState(null)
 
   if (stateRef.current === null) {
     const registry = {}
@@ -30,7 +34,7 @@ export function FootnoteProvider({ children, preload = [] }) {
   }
 
   return (
-    <FootnoteCtx.Provider value={{ register, stateRef, hoveredKey, setHoveredKey }}>
+    <FootnoteCtx.Provider value={{ register, stateRef, hoveredKey, setHoveredKey, backTo, setBackTo }}>
       {children}
     </FootnoteCtx.Provider>
   )
@@ -46,8 +50,16 @@ export function FootnoteList() {
   const ctx = useContext(FootnoteCtx)
   if (!ctx) return null
   const { order } = ctx.stateRef.current
-  const { hoveredKey } = ctx
+  const { hoveredKey, backTo, setBackTo } = ctx
   if (!order.length) return null
+
+  function returnToText() {
+    const el = backTo?.el
+    setBackTo(null)
+    if (!el?.isConnected) return
+    el.scrollIntoView({ block: 'center', behavior: prefersReducedMotion() ? 'auto' : 'smooth' })
+    el.focus({ preventScroll: true })
+  }
 
   return (
     <div id="footnote-list" className="mt-12 pt-6 border-t border-rule scroll-mt-24">
@@ -66,7 +78,8 @@ export function FootnoteList() {
             <li
               key={key}
               id={`fn-${num}`}
-              className={`flex gap-3 scroll-mt-20 transition-all duration-150 ${
+              tabIndex={-1}
+              className={`flex gap-3 scroll-mt-20 transition-all duration-150 focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent ${
                 isHighlighted ? 'bg-accent-soft -mx-2 px-2 py-0.5' : ''
               }`}
             >
@@ -96,6 +109,16 @@ export function FootnoteList() {
                 )}
                 {source.note && (
                   <span className="block text-status-disputed italic mt-0.5 break-words">{source.note}</span>
+                )}
+                {backTo?.num === num && (
+                  <button
+                    type="button"
+                    onClick={returnToText}
+                    className="mt-2 inline-flex items-center gap-1.5 text-sm font-sans font-semibold text-accent hover:text-accent-hover underline underline-offset-4 decoration-accent min-h-[44px]"
+                  >
+                    <span aria-hidden="true">↑</span>
+                    Back to text
+                  </button>
                 )}
               </div>
             </li>
