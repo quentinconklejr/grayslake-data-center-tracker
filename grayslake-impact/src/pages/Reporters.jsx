@@ -39,13 +39,20 @@ const PRESS_FACTS = [
   },
 ]
 
-function CopyCitationButton({ text }) {
-  const [copied, setCopied] = useState(false)
+function CopyCitationButton({ text, topic }) {
+  // 'idle' | 'copied' | 'failed'. The old handler set "Copied" without
+  // waiting for the clipboard, so a blocked write still claimed success.
+  const [state, setState] = useState('idle')
+  const copied = state === 'copied'
 
-  function handleCopy() {
-    navigator.clipboard.writeText(text)
-    setCopied(true)
-    setTimeout(() => setCopied(false), 2000)
+  async function handleCopy() {
+    try {
+      await navigator.clipboard.writeText(text)
+      setState('copied')
+    } catch {
+      setState('failed')
+    }
+    setTimeout(() => setState('idle'), 2500)
   }
 
   // Quiet utility button — small bordered chip, not a dashboard CTA.
@@ -65,10 +72,11 @@ function CopyCitationButton({ text }) {
         }`}
       >
         <span aria-hidden="true">{copied ? '✓' : '⧉'}</span>
-        {copied ? 'Copied' : 'Copy AP citation'}
+        {copied ? 'Copied!' : 'Copy AP citation'}
+        {!copied && <span className="sr-only"> for {topic}</span>}
       </button>
-      <span role="status" aria-live="polite" className="sr-only">
-        {copied ? 'Citation copied to clipboard' : ''}
+      <span role="status" aria-live="polite" className={state === 'failed' ? 'text-xs font-sans text-status-legal' : 'sr-only'}>
+        {copied ? `${topic} citation copied to clipboard` : state === 'failed' ? 'Could not copy. Select the text below instead.' : ''}
       </span>
     </span>
   )
@@ -106,22 +114,26 @@ export default function Reporters() {
             so each card reads as a discrete records unit. */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
           {PRESS_FACTS.map(({ topic, stat, citation }) => (
-            <div key={topic} className="flex flex-col border border-rule-strong p-6">
-              <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-3">
-                <div className="min-w-0">
-                  <p className="text-xs font-sans font-semibold text-ink-600">
-                    {topic}
-                  </p>
-                  <p className="text-2xl font-display text-ink-900 tracking-tight mt-1 leading-tight">
-                    {stat}
-                  </p>
-                </div>
-                <CopyCitationButton text={`${topic}: ${stat} — ${citation}`} />
+            // Grid rows stretch every card in a row to the same height, and
+            // the button sits in a footer pushed to the bottom (mt-auto), so
+            // the Copy buttons in a row line up however long each citation is.
+            <div key={topic} className="flex flex-col h-full border border-rule-strong p-6">
+              <div className="min-w-0">
+                <p className="text-xs font-sans font-semibold text-ink-600">
+                  {topic}
+                </p>
+                <p className="text-2xl font-display text-ink-900 tracking-tight mt-1 leading-tight">
+                  {stat}
+                </p>
               </div>
 
-              <p className="text-sm font-sans text-ink-700 leading-relaxed mt-4 flex-1">
+              <p className="text-sm font-sans text-ink-700 leading-relaxed mt-4">
                 {citation}
               </p>
+
+              <div className="mt-auto pt-5">
+                <CopyCitationButton topic={topic} text={`${topic}: ${stat}. ${citation}`} />
+              </div>
             </div>
           ))}
         </div>
