@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import PageTitle from '../components/ui/PageTitle'
 import TimelineUI from '../components/ui/Timeline'
@@ -33,6 +33,22 @@ export default function TimelinePage() {
   // changes. Kept as state rather than a literal so the toggle can come back
   // without rewiring the component.
   const [proportional] = useState(false)
+
+  // The filter bar sticks under the site header. While this page is open,
+  // anchor jumps and scrollIntoView (the source list, footnote taps) stop
+  // below both, however tall the bar is at the current width.
+  const barRef = useRef(null)
+  useEffect(() => {
+    const bar = barRef.current
+    if (!bar) return
+    const root = document.documentElement
+    const HEADER = 64
+    const apply = () => { root.style.scrollPaddingTop = `${HEADER + bar.offsetHeight + 16}px` }
+    apply()
+    const ro = new ResizeObserver(apply)
+    ro.observe(bar)
+    return () => { ro.disconnect(); root.style.scrollPaddingTop = '' }
+  }, [])
 
   const visible = activeCategory === 'all'
     ? timelineEvents
@@ -87,13 +103,29 @@ export default function TimelinePage() {
             (export drops below chips) rather than overflowing. Chips use
             the same segmented convention as Actions filters and SiteMap's
             base-map toggle. */}
-        <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-3">
-          <div role="group" aria-label="Filter timeline by category" className="flex flex-wrap items-center gap-2">
+        {/* Export sits above the filters so the sticky bar holds only the
+            chips and stays one row high. */}
+        <div className="flex justify-end -mb-6">
+          <button
+            onClick={handleExportCSV}
+            className="text-sm font-sans text-accent hover:text-accent-hover underline underline-offset-4 decoration-accent shrink-0 min-h-[44px]"
+          >
+            Export Timeline CSV
+          </button>
+        </div>
+
+        {/* Sticky under the site header (h-16). On phones the chips stay on
+            one row and scroll sideways, so the stuck bar stays short. */}
+        <div
+          ref={barRef}
+          className="sticky top-16 z-30 -mx-4 sm:-mx-6 px-4 sm:px-6 py-2 bg-paper border-b border-rule"
+        >
+          <div role="group" aria-label="Filter timeline by category" className="flex flex-nowrap sm:flex-wrap items-center gap-2 overflow-x-auto sm:overflow-visible max-w-full -mb-1 pb-1 sm:mb-0 sm:pb-0">
             <button
               type="button"
               aria-pressed={activeCategory === 'all'}
               onClick={() => setActiveCategory('all')}
-              className={`px-3 py-1.5 text-xs font-sans font-semibold border transition-colors min-h-[44px] ${
+              className={`shrink-0 whitespace-nowrap px-3 py-1.5 text-xs font-sans font-semibold border transition-colors min-h-[44px] ${
                 activeCategory === 'all'
                   ? 'bg-ink-900 text-paper border-ink-900'
                   : 'bg-transparent text-ink-700 border-rule-strong hover:border-ink-700 hover:text-ink-900'
@@ -110,7 +142,7 @@ export default function TimelinePage() {
                   type="button"
                   aria-pressed={isActive}
                   onClick={() => setActiveCategory(prev => prev === key ? 'all' : key)}
-                  className={`px-3 py-1.5 text-xs font-sans font-semibold border transition-colors min-h-[44px] ${
+                  className={`shrink-0 whitespace-nowrap px-3 py-1.5 text-xs font-sans font-semibold border transition-colors min-h-[44px] ${
                     isActive
                       ? 'bg-ink-900 text-paper border-ink-900'
                       : 'bg-transparent text-ink-700 border-rule-strong hover:border-ink-700 hover:text-ink-900'
@@ -121,13 +153,6 @@ export default function TimelinePage() {
               )
             })}
           </div>
-
-          <button
-            onClick={handleExportCSV}
-            className="text-sm font-sans text-accent hover:text-accent-hover underline underline-offset-4 decoration-accent shrink-0 min-h-[44px]"
-          >
-            Export Timeline CSV
-          </button>
         </div>
 
         {/* Timeline */}
