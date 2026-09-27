@@ -13,10 +13,11 @@ import { figureById } from '../data/keyFigures'
 import { LAST_VERIFIED } from '../data/siteConfig'
 
 const { project, capacityFigures, capacityNote } = projections
-// A "Power Buffer" stat used to be derived here. It subtracted two figures
-// of different scope, and which answer you got depended on whether you used
-// 1,600 or the 1,550 ComEd is elsewhere credited with. No source publishes a
-// headroom figure, so the site should not manufacture one.
+// A "Power Buffer" stat used to be derived here, and EnergyDrawChart later
+// drew the same subtraction as a "400 MW / 25% buffer" bar. Both subtracted
+// two figures of different scope, and which answer you got depended on
+// whether you used 1,600 or the 1,550 ComEd is elsewhere credited with. No
+// source publishes a headroom figure, so the site does not manufacture one.
 
 export default function Energy({ asSection = false }) {
   const Wrap = asSection ? Fragment : FootnoteProvider
@@ -56,9 +57,8 @@ export default function Energy({ asSection = false }) {
         <div className="flex items-baseline justify-between mb-2 border-t border-rule pt-4">
           <div>
             <p className="text-xs font-display italic text-ink-500 tracking-wide mb-1">Power Profile</p>
-            <h3 className="text-2xl font-display text-ink-900 tracking-tight">Secured Power vs. IT Capacity</h3>
+            <h3 className="text-2xl font-display text-ink-900 tracking-tight">Reported capacity figures</h3>
           </div>
-          <SourceCitation sourceKey="dcdGW2026" />
         </div>
         <p className="text-base font-sans text-ink-700 mb-8 max-w-prose leading-relaxed">
           T5 announced the campus at 480 MW in 2024 and later expanded the leasable IT capacity target to 1,200 MW. The {project.comEdCapacityGW} GW ComEd figure is the utility substation connection, not the computing load.
