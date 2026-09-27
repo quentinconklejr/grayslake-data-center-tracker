@@ -1,10 +1,12 @@
+import { Link } from 'react-router-dom'
 import PageTitle from '../components/ui/PageTitle'
 import Container from '../components/layout/Container'
+import DocBadges from '../components/ui/DocBadges'
 import { pageMeta } from '../data/pageMeta'
 import { sources } from '../data/sources'
 import { docMeta } from '../data/docMeta'
 import { LAST_VERIFIED } from '../data/siteConfig'
-import { formatBytes } from '../lib/formatBytes'
+import { recordsPackets, recordsDocuments, recordsFiles } from '../data/records'
 
 const TIER = {
   primary:    'text-status-stated',
@@ -13,11 +15,120 @@ const TIER = {
   default:    'text-ink-500',
 }
 
+const packet = recordsPackets['t5-2024-2025']
+
+function fmtDate(iso) {
+  return new Date(`${iso}T00:00:00`).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+}
+
+function formatOf(path) {
+  return /\.pdf$/i.test(path ?? '') ? 'PDF' : null
+}
+
+const byCategory = cat => Object.entries(sources).filter(([, s]) => s.category === cat)
+
+/*
+ * The hub. /documents holds every source the tracker cites, grouped by
+ * kind, and is the one nav item for documents. /records and /records/t5
+ * keep their addresses and are linked from the first two sections rather
+ * than folded in here, because they carry the page-level citations.
+ */
+const SECTIONS = [
+  { id: 'public-records', title: 'Public Records (FOIA)', count: 1 },
+  { id: 'ordinances',     title: 'Municipal Ordinances',  count: recordsDocuments.length },
+  { id: 'court-filings',  title: 'Court Filings',         count: byCategory('court').length },
+  { id: 'news',           title: 'News and Trade Reporting', count: byCategory('news').length },
+  { id: 'government',     title: 'Government Notices, Data and Analysis', count: byCategory('government').length },
+]
+
+const H3 = 'text-lg font-display font-semibold text-ink-900 leading-snug mb-1'
+const TITLE_LINK = 'hover:text-accent underline underline-offset-4 decoration-rule-strong hover:decoration-accent'
+const CHIP_BUTTON = 'inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-sans font-semibold border border-rule-strong text-ink-700 hover:border-ink-700 hover:text-ink-900 transition-colors min-h-[44px]'
+const ARROW_LINK = 'inline-flex items-center gap-2 text-sm font-sans font-semibold text-accent hover:text-accent-hover underline underline-offset-4 decoration-accent min-h-[44px]'
+
+function Section({ id, title, intro, children }) {
+  return (
+    <section aria-labelledby={id} className="scroll-mt-24" id={`section-${id}`}>
+      <h2 id={id} className="text-2xl sm:text-3xl font-display text-ink-900 tracking-tight">
+        {title}
+      </h2>
+      {intro && (
+        <p className="mt-2 text-base font-sans text-ink-700 leading-relaxed max-w-2xl">{intro}</p>
+      )}
+      <ol className="mt-5 divide-y divide-rule-strong border-y border-rule">{children}</ol>
+    </section>
+  )
+}
+
+function Entry({ n, children }) {
+  return (
+    <li className="py-6">
+      <div className="flex items-baseline gap-4">
+        <span className="text-sm font-mono text-ink-500 tabular-nums shrink-0 w-8 text-right">
+          {String(n).padStart(2, '0')}.
+        </span>
+        <div className="min-w-0 flex-1">{children}</div>
+      </div>
+    </li>
+  )
+}
+
+function SourceEntry({ n, source }) {
+  const tierCls = TIER[source.tier] ?? TIER.default
+  // Real, read-from-file metadata for mirrored PDFs only. An external-link
+  // source (no localCopy) gets no badges because we cannot inspect the file.
+  const meta = source.localCopy ? docMeta[source.localCopy] : null
+  return (
+    <Entry n={n}>
+      {/* Tier tag on its own metadata row above the title so a long title
+          cannot displace it mid-line. File badges ride on the same row. */}
+      {(source.tier || meta) && (
+        <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1.5 mb-1.5">
+          {source.tier ? (
+            <p className={`text-2xs font-sans font-semibold uppercase tracking-wide ${tierCls}`}>
+              {source.tier}
+            </p>
+          ) : <span aria-hidden="true" />}
+          {meta && <DocBadges format={formatOf(source.localCopy)} pages={meta.pages} sizeBytes={meta.sizeBytes} />}
+        </div>
+      )}
+      <h3 className={H3}>
+        {source.url && source.status !== 'dead' && source.status !== 'unverified' ? (
+          <a href={source.url} target="_blank" rel="noopener noreferrer" className={TITLE_LINK}>
+            {source.title} <span aria-hidden="true">↗</span>
+          </a>
+        ) : (
+          source.title
+        )}
+      </h3>
+
+      <div className="text-sm font-sans text-ink-600">
+        <span className="font-mono text-ink-500">
+          {[source.publisher, source.date].filter(Boolean).join(' · ')}
+        </span>
+      </div>
+
+      {source.note && (
+        <p className="text-sm font-sans text-ink-600 leading-relaxed mt-2 break-words">{source.note}</p>
+      )}
+
+      {source.localCopy && (
+        <p className="mt-3">
+          <a href={source.localCopy} target="_blank" rel="noopener noreferrer" className={CHIP_BUTTON}>
+            <span aria-hidden="true">↓</span>
+            Download PDF mirror
+          </a>
+        </p>
+      )}
+    </Entry>
+  )
+}
+
 export default function Sources() {
-  const sourceEntries = Object.entries(sources)
+  const foia = sources.t5RecordsPacket2026
 
   return (
-    <Container size="default" className="py-10 sm:py-14 space-y-10">
+    <Container size="default" className="py-10 sm:py-14 space-y-12">
       <PageTitle
         title={pageMeta['/documents'].title}
         description={pageMeta['/documents'].description}
@@ -37,99 +148,106 @@ export default function Sources() {
         <p className="text-2xs font-mono text-ink-500 mt-3">
           Last verified {LAST_VERIFIED}
         </p>
+
+        <nav aria-label="Document sections" className="mt-6">
+          <ul className="flex flex-wrap gap-2">
+            {SECTIONS.map(s => (
+              <li key={s.id}>
+                <a
+                  href={`#section-${s.id}`}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-sans font-semibold border border-rule-strong text-ink-700 hover:border-ink-700 hover:text-ink-900 transition-colors min-h-[44px]"
+                >
+                  {s.title} <span className="font-mono font-normal text-ink-500">({s.count})</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
       </header>
 
-      {/* Document list */}
-      <ol className="divide-y divide-rule-strong border-y border-rule">
-        {sourceEntries.map(([key, source], i) => {
-          const tierCls = TIER[source.tier] ?? TIER.default
-          // Real, read-from-file metadata for mirrored PDFs only. An
-          // external-link source (no localCopy) gets no page/size fields
-          // because we can't inspect the file — better to omit than guess.
-          const meta = source.localCopy ? docMeta[source.localCopy] : null
-          const fileMeta = meta
-            ? [meta.pages ? `${meta.pages} pages` : null, formatBytes(meta.sizeBytes)].filter(Boolean).join(' · ')
-            : null
+      <Section
+        id="public-records"
+        title="Public Records (FOIA)"
+        intro="Records this tracker obtained under the Illinois Freedom of Information Act and publishes in full, each figure linked to the page it came from."
+      >
+        <Entry n={1}>
+          <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1.5 mb-1.5">
+            <p className={`text-2xs font-sans font-semibold uppercase tracking-wide ${TIER.primary}`}>primary</p>
+            <DocBadges format="PDF" pages={packet.pages} sizeBytes={packet.sizeBytes} />
+          </div>
+          <h3 className={H3}>
+            <Link to="/records/t5" className={TITLE_LINK}>{packet.title}</Link>
+          </h3>
+          <div className="text-sm font-sans text-ink-600">
+            <span className="font-mono text-ink-500">
+              {[foia?.publisher, foia?.date].filter(Boolean).join(' · ')}
+            </span>
+          </div>
+          {foia?.note && (
+            <p className="text-sm font-sans text-ink-600 leading-relaxed mt-2">{foia.note}</p>
+          )}
+          <p className="mt-3 flex flex-wrap gap-x-6 gap-y-1">
+            <Link to="/records/t5" className={ARROW_LINK}>
+              Read the T5 records <span aria-hidden="true">→</span>
+            </Link>
+            <Link to="/records" className={ARROW_LINK}>
+              All public records and how we handle them <span aria-hidden="true">→</span>
+            </Link>
+          </p>
+        </Entry>
+      </Section>
+
+      <Section
+        id="ordinances"
+        title="Municipal Ordinances"
+        intro="The five Village of Grayslake ordinances that approved the campus. Each has its own page with the key figures cited to the page of the ordinance."
+      >
+        {recordsDocuments.map((d, i) => {
+          const file = recordsFiles[d.file]
           return (
-            <li key={key} className="py-6">
-              <div className="flex items-baseline gap-4">
-                <span className="text-sm font-mono text-ink-500 tabular-nums shrink-0 w-8 text-right">
-                  {String(i + 1).padStart(2, '0')}.
-                </span>
-                <div className="min-w-0 flex-1">
-                  {/* Tier tag lives on its own metadata row above the title
-                      so a long title cannot displace it mid-line and cause
-                      wrap jitter. Also keeps the h3 measure predictable
-                      when scanning the list. Page count + file size ride
-                      on the same row (mirror-only, read from the actual
-                      PDF at build time) — same row treatment, no new
-                      badge style. */}
-                  {(source.tier || fileMeta) && (
-                    <div className="flex items-baseline justify-between gap-3 mb-1.5">
-                      {source.tier ? (
-                        <p className={`text-2xs font-sans font-semibold uppercase tracking-wide ${tierCls}`}>
-                          {source.tier}
-                        </p>
-                      ) : <span aria-hidden="true" />}
-                      {fileMeta && (
-                        <p className="text-2xs font-mono text-ink-500 tabular-nums shrink-0">
-                          {fileMeta}
-                        </p>
-                      )}
-                    </div>
-                  )}
-                  {/* h2, not h3. The page goes h1 (page title) straight into
-                      the document list, so an h3 here skipped a level and
-                      broke the outline for anyone navigating by heading. */}
-                  <h2 className="text-lg font-display font-semibold text-ink-900 leading-snug mb-1">
-                    {source.url && source.status !== 'dead' && source.status !== 'unverified' ? (
-                      <a
-                        href={source.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="hover:text-accent underline underline-offset-4 decoration-rule-strong hover:decoration-accent"
-                      >
-                        {source.title} <span aria-hidden="true">↗</span>
-                      </a>
-                    ) : (
-                      source.title
-                    )}
-                  </h2>
-
-                  <div className="text-sm font-sans text-ink-600">
-                    <span className="font-mono text-ink-500">
-                      {[source.publisher, source.date].filter(Boolean).join(' · ')}
-                    </span>
-                  </div>
-
-                  {source.note && (
-                    <p className="text-sm font-sans text-ink-600 leading-relaxed mt-2">
-                      {source.note}
-                    </p>
-                  )}
-
-                  {source.localCopy && (
-                    <p className="mt-3">
-                      {/* Quiet utility button — bordered chip, not a dashboard CTA.
-                          Same treatment as Copy AP citation on /figures so the
-                          two record-adjacent actions read as a matched pair. */}
-                      <a
-                        href={source.localCopy}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-sans font-semibold border border-rule-strong text-ink-700 hover:border-ink-700 hover:text-ink-900 transition-colors min-h-[44px]"
-                      >
-                        <span aria-hidden="true">↓</span>
-                        Download PDF mirror
-                      </a>
-                    </p>
-                  )}
-                </div>
+            <Entry key={d.id} n={i + 1}>
+              <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1.5 mb-1.5">
+                <p className={`text-2xs font-sans font-semibold uppercase tracking-wide ${TIER.primary}`}>primary</p>
+                <DocBadges format={formatOf(file?.path)} pages={file?.pages} sizeBytes={file?.sizeBytes} />
               </div>
-            </li>
+              <h3 className={H3}>
+                <Link to={`/records/t5/${d.id}`} className={TITLE_LINK}>
+                  Ordinance {d.ordinance}, {d.shortTitle}
+                </Link>
+              </h3>
+              <div className="text-sm font-sans text-ink-600">
+                <span className="font-mono text-ink-500">
+                  {d.jurisdiction} &middot; Passed {fmtDate(d.passed)}
+                </span>
+              </div>
+              {file?.path && (
+                <p className="mt-3">
+                  <a href={file.path} target="_blank" rel="noopener noreferrer" className={CHIP_BUTTON}>
+                    <span aria-hidden="true">↓</span>
+                    Download PDF
+                  </a>
+                </p>
+              )}
+            </Entry>
           )
         })}
-      </ol>
+      </Section>
+
+      <Section id="court-filings" title="Court Filings">
+        {byCategory('court').map(([key, s], i) => <SourceEntry key={key} n={i + 1} source={s} />)}
+      </Section>
+
+      <Section id="news" title="News and Trade Reporting">
+        {byCategory('news').map(([key, s], i) => <SourceEntry key={key} n={i + 1} source={s} />)}
+      </Section>
+
+      <Section
+        id="government"
+        title="Government Notices, Data and Analysis"
+        intro="Notices and data published by public bodies, and analysis from utility and environmental groups."
+      >
+        {byCategory('government').map(([key, s], i) => <SourceEntry key={key} n={i + 1} source={s} />)}
+      </Section>
     </Container>
   )
 }

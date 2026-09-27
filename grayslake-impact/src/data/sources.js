@@ -1,9 +1,16 @@
+// `category` places each source in a section of the /documents hub:
+//   foia        records obtained under the Illinois FOIA (the packet itself)
+//   court       court filings
+//   news        news and trade reporting, including aggregators
+//   government  government notices, data sets and advocacy analysis
+// The five ordinances are listed from records.js, not from here.
 export const sources = {
   // The filed complaint itself, file-stamped by the Clerk and mirrored here so
   // the record does not depend on a shared Drive link staying alive. A copy was
   // circulating in community Facebook groups; this one was checked against the
   // stamp, the case number and the Clerk's name before being published.
   complaint2026: {
+    category: "court",
     title: "Preservation of Community Well-being Collective LLC et al. v. Village of Grayslake, T5 Data Centers LLC, and Alter Asset Management Company - Complaint for Declaratory and Injunctive Relief",
     publisher: "Circuit Court of the 19th Judicial Circuit, Lake County, Illinois, Chancery Division",
     date: "Filed July 31, 2026",
@@ -16,6 +23,7 @@ export const sources = {
     tier: "primary",
   },
   baxtel2026: {
+    category: "news",
     title: "T5: Grayslake, Illinois Data Center",
     publisher: "Baxtel",
     date: "2026",
@@ -23,6 +31,7 @@ export const sources = {
     tier: "aggregator",
   },
   dcd2026: {
+    category: "news",
     title: "T5 announces 480MW data center campus in Grayslake, Illinois (original announcement; project later expanded to 1.2 GW)",
     publisher: "Data Center Dynamics",
     date: "2024",
@@ -30,6 +39,7 @@ export const sources = {
     tier: "trade",
   },
   dcdGW2026: {
+    category: "news",
     title: "T5 plans five gigawatt-scale data center campuses, announces Chicago campus",
     publisher: "Data Center Dynamics",
     date: "Feb. 10, 2025",
@@ -37,6 +47,7 @@ export const sources = {
     tier: "trade",
   },
   dailyherald2026: {
+    category: "news",
     title: "Despite village approvals, legal action expected against Grayslake data center",
     publisher: "Daily Herald",
     date: "June 8, 2026",
@@ -44,6 +55,7 @@ export const sources = {
     tier: "primary",
   },
   hoodline2026: {
+    category: "news",
     title: "Grayslake T5 Data Center Moves Ahead Amid Local Protests",
     publisher: "Hoodline",
     date: "May 2026",
@@ -52,6 +64,7 @@ export const sources = {
     tier: "aggregator",
   },
   govtech2025: {
+    category: "news",
     title: "Data Center Could Be Largest Lake County, Ill., Development",
     publisher: "Government Technology",
     date: "Oct. 2025",
@@ -60,6 +73,7 @@ export const sources = {
     tier: "aggregator",
   },
   patch2026: {
+    category: "news",
     title: "Plans Move Forward For Massive Data Center Campus In Grayslake",
     publisher: "Patch",
     date: "2026",
@@ -67,6 +81,7 @@ export const sources = {
     tier: "aggregator",
   },
   capitolnews2026: {
+    category: "news",
     title: "How do data centers benefit the places where they're built? Local mayors give mixed reviews",
     publisher: "Capitol News Illinois",
     date: "2026",
@@ -74,6 +89,7 @@ export const sources = {
     tier: "primary",
   },
   dceo2026: {
+    category: "government",
     title: "Data Center Investment Tax Exemptions and Credits",
     publisher: "Illinois DCEO",
     date: "Retrieved Aug 28, 2026",
@@ -83,6 +99,7 @@ export const sources = {
     verified: "Aug 28, 2026",
   },
   villageoffaq: {
+    category: "government",
     title: "Approved T5 Data Center Campus FAQs",
     publisher: "Village of Grayslake",
     date: "June 5, 2026",
@@ -95,12 +112,14 @@ export const sources = {
     note: "Archived copy. The Village's original link (villageofgrayslake.com/DocumentCenter/View/15282) has been dead since Aug 5, 2026, so this entry links to the Wayback Machine snapshot. The document was updated June 5, 2026 to state the Village could no longer respond to questions due to pending litigation. An archived snapshot is available and is cited as villagefaq_archived; claims resting on the FAQ point there. Other claims were re-sourced to the Chicago Tribune / Government Technology reporting and the CLCJAWA utility briefing, which are independent of the FAQ.",
   },
   cub2026: {
+    category: "government",
     title: "How data centers are raising our bills in Illinois — and what we should do about it",
     publisher: "Citizens Utility Board (CUB)",
     date: "Aug. 19, 2025",
     url: "https://www.citizensutilityboard.org/blog/2025/08/19/how-data-centers-are-raising-our-bills-in-illinois-and-what-we-should-do-about-it/",
   },
   alliancegreatlakes: {
+    category: "government",
     title: "Data Center Playbook: A Regional Guide for Managing Data Center Impacts in the Great Lakes",
     publisher: "Alliance for the Great Lakes",
     date: "March 2026",
@@ -108,6 +127,7 @@ export const sources = {
     status: "background",
   },
   chitrib_june2026: {
+    category: "news",
     title: "Legal challenge to Grayslake data center project likely: 'The juice isn't worth the squeeze'",
     publisher: "Chicago Tribune",
     date: "June 5, 2026",
@@ -115,6 +135,7 @@ export const sources = {
     tier: "primary",
   },
   chitrib_jul2026: {
+    category: "news",
     title: "Grayslake data center opponents call for wetlands protection: 'Wetlands are incredibly important'",
     publisher: "Chicago Tribune, via Illinois Environmental Council",
     author: "Joseph States",
@@ -125,6 +146,7 @@ export const sources = {
     tier: "primary",
   },
   chronicle2026: {
+    category: "news",
     title: "Grayslake data center approval sparks growing controversy",
     publisher: "Chronicle Media",
     date: "June 26, 2026",
@@ -132,6 +154,7 @@ export const sources = {
     tier: "primary",
   },
   mundeleindata: {
+    category: "government",
     title: "Information related to the Grayslake T5 data center",
     publisher: "Village of Mundelein",
     date: "June 2, 2026",
@@ -139,6 +162,7 @@ export const sources = {
     tier: "primary",
   },
   dailyherald_jul2026: {
+    category: "news",
     title: "Data center company suspends wetland permit application in light of community concern",
     publisher: "Daily Herald",
     date: "July 31, 2026",
@@ -147,6 +171,7 @@ export const sources = {
     tier: "primary",
   },
   lakecounty_tad2026: {
+    category: "government",
     title: "Temporary Administrative Deferral — Data Center Applications in Unincorporated Lake County",
     publisher: "Lake County, Illinois",
     date: "June 2026",
@@ -156,6 +181,7 @@ export const sources = {
     verified: "Aug 5, 2026",
   },
   lakemchenry_jun2026: {
+    category: "news",
     title: "Board votes to temporarily ban new data centers in unincorporated Lake County",
     publisher: "Lake & McHenry County Scanner",
     date: "June 20, 2026",
@@ -164,6 +190,7 @@ export const sources = {
     verified: "Aug 5, 2026",
   },
   clcjawa2026: {
+    category: "government",
     title: "Grayslake Data Center and CLCJAWA (presentation)",
     publisher: "Central Lake County Joint Action Water Agency, via Lake County document center",
     date: "2026",
@@ -173,6 +200,7 @@ export const sources = {
     verified: "Aug 5, 2026",
   },
   villagefaq_archived: {
+    category: "government",
     title: "Approved T5 Data Center Campus FAQs (archived snapshot, updated as of June 5, 2026)",
     publisher: "Village of Grayslake, via Internet Archive Wayback Machine",
     date: "Snapshot captured July 24, 2026",
@@ -184,6 +212,7 @@ export const sources = {
     verified: "Aug 5, 2026",
   },
   lakecountygis: {
+    category: "government",
     title: "Tax Parcel Information layer (GIS parcel boundaries and ownership)",
     publisher: "Lake County, Illinois GIS Division",
     date: "Retrieved Aug 5, 2026",
@@ -193,6 +222,7 @@ export const sources = {
     verified: "Aug 5, 2026",
   },
   dailyherald_oct2025: {
+    category: "news",
     title: "\u2018A place of innovation and opportunity\u2019: Work underway for data center campus in Grayslake",
     publisher: "Daily Herald",
     date: "Oct. 11, 2025",
@@ -201,6 +231,7 @@ export const sources = {
     tier: "primary",
   },
   scannerLawsuit2026: {
+    category: "news",
   title: "'Project of unprecedented scale': Lake County residents file lawsuit to block 472-acre data center campus in Grayslake",
   publisher: "Lake & McHenry County Scanner",
   author: "Sam Borcia",
@@ -209,6 +240,7 @@ export const sources = {
   tier: "primary",
 },
   scannerCancellation2026: {
+    category: "news",
   title: "Village of Grayslake announces special session for public to discuss data center, then cancels it citing social media threats",
   publisher: "Lake & McHenry County Scanner",
   author: "Sam Borcia",
@@ -217,6 +249,7 @@ export const sources = {
   tier: "primary",
 },
   chronicleZba2026: {
+    category: "news",
     title: "Lake County ZBA recommends data center moratorium in unanimous vote",
     publisher: "Chronicle Media",
     date: "Aug. 25, 2026",
@@ -226,6 +259,7 @@ export const sources = {
     verified: "Sep 11, 2026",
   },
   scannerDidech2026: {
+    category: "news",
     title: "Lawmaker says Grayslake mega data center 'should not proceed' without answers on power, water and noise",
     publisher: "Lake & McHenry County Scanner",
     author: "Sam Borcia",
@@ -235,6 +269,7 @@ export const sources = {
     verified: "Sep 11, 2026",
   },
   dailyherald_sep2026: {
+    category: "news",
     title: "Against the grain: Defying trends, Grayslake welcomes start of massive data center project",
     publisher: "Daily Herald",
     author: "Mick Zawislak",
@@ -245,6 +280,7 @@ export const sources = {
     verified: "Sep 11, 2026",
   },
   scannerPermit2026: {
+    category: "news",
     title: "Grayslake issues first permit for construction to begin on mega data center campus as lawsuit seeks to block development",
     publisher: "Lake & McHenry County Scanner",
     author: "Sam Borcia",
@@ -254,6 +290,7 @@ export const sources = {
     verified: "Sep 11, 2026",
   },
   scannerMoratorium2026: {
+    category: "news",
     title: "'We choose our citizens': County board bans data centers in unincorporated Lake County until mid-2027",
     publisher: "Lake & McHenry County Scanner",
     author: "Sam Borcia",
@@ -267,6 +304,7 @@ export const sources = {
   // split into one file per ordinance. Cited from pages that state approval
   // dates or vote counts, which this packet is the primary record for.
   t5RecordsPacket2026: {
+    category: "foia",
     title: "T5@CHICAGO IV ordinances, agreements and site plans (Village of Grayslake, 2024-2025)",
     publisher: "Village of Grayslake, obtained under the Illinois Freedom of Information Act",
     date: "Ordinances passed Nov. 19, 2024 to May 6, 2025",

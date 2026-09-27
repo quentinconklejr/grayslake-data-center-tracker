@@ -95,7 +95,7 @@ export function FootnoteList() {
                   </a>
                 )}
                 {source.note && (
-                  <span className="block text-status-disputed italic mt-0.5">{source.note}</span>
+                  <span className="block text-status-disputed italic mt-0.5 break-words">{source.note}</span>
                 )}
               </div>
             </li>
