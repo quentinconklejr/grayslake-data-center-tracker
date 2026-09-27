@@ -39,7 +39,7 @@ const FIGURES = [
     label: 'Secured utility power',
     value: `${securedPowerMW.toLocaleString()} MW`,
     mw: securedPowerMW,
-    source: 'Reported by T5, via Data Center Dynamics (Feb. 2025)',
+    source: 'Pete Marin, T5 CEO, via Data Center Dynamics (Feb. 2025)',
     sourceKey: 'dcdGW2026',
     bar: 'bg-status-policy',
   },
@@ -82,7 +82,7 @@ export default function EnergyDrawChart() {
         </ul>
 
         <p className="mt-4 text-sm font-sans text-status-disputed border-l-[3px] border-status-disputed bg-status-disputed-soft pl-4 pr-4 py-2.5 leading-relaxed">
-          The 1.55 GW and 1.6 GW (1,600 MW) figures have not been reconciled publicly.
+          T5 CEO Pete Marin cited 1.6 GW (1,600 MW) in February 2025 and 1.55 GW in October 2025. The difference has not been explained publicly.
         </p>
         <p className="mt-3 text-xs font-sans text-ink-600 leading-relaxed">
           Bars share one scale. Each shows a single published figure; none is calculated from the others.
