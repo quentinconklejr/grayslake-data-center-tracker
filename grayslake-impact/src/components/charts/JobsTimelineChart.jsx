@@ -1,9 +1,10 @@
 import ChartFigure from '../ui/ChartFigure'
+import SourceCitation from '../ui/SourceCitation'
 import { useRef, useState, useLayoutEffect } from 'react'
 import { motion } from 'framer-motion'
 import { projections } from '../../data/projections'
 
-const { permanent, constructionMidpoint } = projections.jobs
+const { permanent } = projections.jobs
 
 const ITEMS = [
   {
@@ -15,18 +16,6 @@ const ITEMS = [
     textCls:  'text-status-construction',
     display:  permanent.toLocaleString(),
     sourced:  true,
-  },
-  {
-    label:    'Construction Workforce',
-    // "Hundreds" is Mayor Davies (Government Technology). No Village
-    // document gives a number; the bar length is a display estimate only.
-    sublabel: '"Hundreds" per the Grayslake mayor; bar drawn at ~400 for display only',
-    value:    constructionMidpoint,
-    max:      permanent,
-    fillCls:  'bg-status-policy',
-    textCls:  'text-status-policy',
-    display:  `~${constructionMidpoint}`,
-    sourced:  false,
   },
 ]
 
@@ -53,9 +42,12 @@ export default function JobsTimelineChart() {
 
   return (
     <ChartFigure
-      caption="Permanent versus construction workforce"
-      description="Bar chart comparing projected permanent positions with the estimated construction workforce."
-      rows={ITEMS.map(i => [i.label, `${i.display ?? i.value}: ${i.sublabel}`])}
+      caption="Permanent workforce"
+      description="Bar showing projected permanent positions. No construction headcount has been published, so none is drawn."
+      rows={[
+        ...ITEMS.map(i => [i.label, `${i.display ?? i.value}: ${i.sublabel}`]),
+        ['Construction workforce', 'Not published. The Grayslake mayor has described hundreds of construction and trade jobs.'],
+      ]}
     >
       <div ref={ref} className="space-y-6">
         {ITEMS.map((item, i) => (
@@ -88,8 +80,13 @@ export default function JobsTimelineChart() {
           </div>
         ))}
 
-        <p className="text-xs font-sans text-ink-500 pt-2 border-t border-rule-soft">
-          Dimmed bar = estimated figure. Solid bar = sourced Village projection.
+        {/* The construction bar used to be drawn at ~400, a display
+            estimate with no source behind it. No headcount has been
+            published, so no bar is drawn. */}
+        <p className="text-sm font-sans text-ink-700 pt-3 border-t border-rule-soft leading-relaxed">
+          <span className="font-semibold text-ink-900">Construction workforce:</span> construction headcount has not been
+          published. The Grayslake mayor has described &ldquo;hundreds of construction and trade jobs&rdquo;
+          (Government Technology).<SourceCitation sourceKey="govtech2025" />
         </p>
       </div>
     </ChartFigure>

@@ -14,8 +14,12 @@
         sourceKeys: ['villagefaq_archived', 'clcjawa2026', 'govtech2025'],
       },
       {
-        text: 'Two sources put campus water use at less than 50,000 gallons per day on average, but scale it against different denominators. The Village FAQ calls this "just 4.0% additional water use over what the Village supplies each day." CLCJAWA, the wholesale agency serving Grayslake and 13 other members, reports the figure as T5\'s design estimate and puts the same volume at about 0.25% of its system-wide daily flow, within its existing IDNR Lake Michigan allocation. Both can be accurate: one compares against Grayslake\'s supply, the other against a 100-square-mile regional system.',
-        sourceKeys: ['villagefaq_archived', 'clcjawa2026', 'clcjawaWaterPage2026'],
+        text: 'The Village FAQ puts campus water use at "no more than 50 thousand gallons per day" and calls this "just 4.0% additional water use over what the Village supplies each day."',
+        sourceKey: 'villagefaq_archived',
+      },
+      {
+        text: 'CLCJAWA, the wholesale agency serving Grayslake and 13 other members, reports T5\'s design estimate as less than 50,000 gallons per day on average, about 0.25% of its system-wide daily flow and within its existing IDNR Lake Michigan allocation. The two sources scale a similar volume against different denominators: one against Grayslake\'s supply, the other against a 100-square-mile regional system.',
+        sourceKeys: ['clcjawa2026', 'clcjawaWaterPage2026'],
       },
       {
         text: 'CLCJAWA reports T5\'s expected initial flush and fill for one 200 MW building at 3.2 million gallons, roughly 15% of the agency\'s daily demand if drawn at once, but planned and staged over several days.',

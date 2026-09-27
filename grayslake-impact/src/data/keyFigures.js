@@ -104,7 +104,7 @@ export const keyFigures = [
     value: '< 50,000 gal/day',
     qualifier: '4.0% of Village supply, or 0.25% of the CLCJAWA system',
     detail:
-      'Same volume, two denominators. CLCJAWA reports the figure as T5’s design estimate and scales it against its 14-member regional system; the Village FAQ scales it against Grayslake’s supply. Both are accurate. For T5’s initial 200 MW building, CLCJAWA reports T5’s design estimate for routine use at 1,500 gallons a day on average, with a 4,000-gallon peak.',
+      'Two wordings, two denominators. The Village FAQ says “no more than 50 thousand gallons per day,” 4.0% of Village supply. CLCJAWA reports T5’s design estimate as less than 50,000 gallons per day on average, 0.25% of its 14-member regional system. For T5’s initial 200 MW building, CLCJAWA reports T5’s design estimate for routine use at 1,500 gallons a day on average, with a 4,000-gallon peak.',
     sourceKeys: ['villagefaq_archived', 'clcjawa2026', 'clcjawaWaterPage2026'],
   },
   {

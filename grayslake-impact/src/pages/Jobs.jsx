@@ -104,10 +104,6 @@ export default function Jobs({ asSection = false }) {
             <p className="text-xs font-display italic text-ink-500 tracking-wide mb-1">Workforce Comparison</p>
             <h3 className="text-2xl font-display text-ink-900 tracking-tight">Permanent vs. Construction Workforce</h3>
           </div>
-          <div className="flex items-center gap-3">
-            <span className="text-xs font-sans font-semibold text-status-disputed">Est. included</span>
-            <SourceCitation sourceKey="govtech2025" />
-          </div>
         </div>
         <p className="text-base font-sans text-ink-700 mb-8 max-w-prose leading-relaxed">
           Grayslake Mayor Elizabeth Davies described &ldquo;hundreds of construction and trade jobs during development.&rdquo;<SourceCitation sourceKey="govtech2025" /> No construction headcount has been published; the Village FAQ excludes construction from its job estimate. Permanent operational headcount is listed as <Figure id="jobs-permanent" />.
