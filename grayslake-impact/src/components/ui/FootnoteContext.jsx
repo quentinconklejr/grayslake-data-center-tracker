@@ -88,7 +88,7 @@ export function FootnoteList() {
                     href={source.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="ml-1.5 text-accent hover:text-accent-hover transition-colors"
+                    className="ml-1.5 text-accent hover:text-accent-hover underline underline-offset-4 decoration-accent transition-colors"
                   >
                     ↗
                   </a>

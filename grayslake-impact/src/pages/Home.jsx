@@ -206,7 +206,7 @@ export default function Home() {
                 <dd className="mt-2 text-2xl font-display text-ink-900 tracking-tight">
                   {numValue != null ? <AnimatedNumber value={numValue} suffix={suffix} /> : value}
                 </dd>
-                <p className="mt-1.5 text-xs font-sans text-ink-600 leading-snug">{note}</p>
+                <dd className="mt-1.5 text-xs font-sans text-ink-600 leading-snug">{note}</dd>
               </div>
             ))}
           </dl>

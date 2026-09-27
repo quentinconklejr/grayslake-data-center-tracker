@@ -21,7 +21,7 @@ const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const DIST = join(ROOT, 'dist')
 const PORT = 4177
 
-const ROUTES = ['/', '/project', '/timeline', '/questions', '/documents', '/map', '/about', '/actions', '/reporters']
+const ROUTES = ['/', '/project', '/timeline', '/questions', '/documents', '/map', '/about', '/actions', '/records', '/records/t5', '/press', '/updates']
 
 const MIME = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.png': 'image/png', '.svg': 'image/svg+xml', '.json': 'application/json', '.geojson': 'application/json', '.pdf': 'application/pdf' }
 
