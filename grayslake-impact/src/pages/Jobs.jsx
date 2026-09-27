@@ -110,7 +110,7 @@ export default function Jobs({ asSection = false }) {
           </div>
         </div>
         <p className="text-base font-sans text-ink-700 mb-8 max-w-prose leading-relaxed">
-          Village documents estimate construction headcount at 400 positions. Permanent operational headcount is listed as <Figure id="jobs-permanent" />.
+          Grayslake Mayor Elizabeth Davies described &ldquo;hundreds of construction and trade jobs during development.&rdquo;<SourceCitation sourceKey="govtech2025" /> No construction headcount has been published; the Village FAQ excludes construction from its job estimate. Permanent operational headcount is listed as <Figure id="jobs-permanent" />.
         </p>
         <JobsTimelineChart />
       </FadeIn>

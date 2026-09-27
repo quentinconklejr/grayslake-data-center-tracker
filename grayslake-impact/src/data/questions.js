@@ -1,7 +1,7 @@
 ﻿export const questions = [
   {
     id: 'water-usage',
-    plain: "T5's design team expects the campus to use less than 50,000 gallons a day once fully built, as reported by the regional water agency. The Village calls that 4.0% more than it currently supplies, and the regional water agency puts the same volume at 0.25% of its system. Cooling is closed-loop, so water circulates rather than being consumed. The one large draw is a one-time flush of about 3.2 million gallons per 200 MW building, staged over several days. What is not settled is how much water the electricity generation behind the campus consumes, which happens at the power plant rather than here.",
+    plain: "T5's design team expects the campus to use less than 50,000 gallons a day once fully built, as reported by the regional water agency. The Village calls that 4.0% more than it currently supplies, and the regional water agency puts the same volume at 0.25% of its system. Cooling is closed-loop, so water circulates rather than being consumed. The one large draw is a one-time flush and fill of about 3.2 million gallons for T5's initial 200 MW building, staged over several days, as reported by CLCJAWA. What is not settled is how much water the electricity generation behind the campus consumes, which happens at the power plant rather than here.",
     question: 'How much water will the campus use, and from where?',
     category: 'water',
     stated: [
@@ -14,11 +14,15 @@
         sourceKeys: ['villagefaq_archived', 'clcjawa2026', 'govtech2025'],
       },
       {
-        text: 'Two sources put campus water use at no more than 50,000 gallons per day, but scale it against different denominators. The Village FAQ calls this "just 4.0% additional water use over what the Village supplies each day." CLCJAWA, the wholesale agency serving Grayslake and 13 other members, reports the figure as T5\'s design estimate and puts the same volume at about 0.25% of its system-wide daily flow, within its existing IDNR Lake Michigan allocation. Both can be accurate: one compares against Grayslake\'s supply, the other against a 100-square-mile regional system.',
+        text: 'Two sources put campus water use at less than 50,000 gallons per day on average, but scale it against different denominators. The Village FAQ calls this "just 4.0% additional water use over what the Village supplies each day." CLCJAWA, the wholesale agency serving Grayslake and 13 other members, reports the figure as T5\'s design estimate and puts the same volume at about 0.25% of its system-wide daily flow, within its existing IDNR Lake Michigan allocation. Both can be accurate: one compares against Grayslake\'s supply, the other against a 100-square-mile regional system.',
         sourceKeys: ['villagefaq_archived', 'clcjawa2026', 'clcjawaWaterPage2026'],
       },
       {
         text: 'CLCJAWA reports T5\'s expected initial flush and fill for one 200 MW building at 3.2 million gallons, roughly 15% of the agency\'s daily demand if drawn at once, but planned and staged over several days.',
+        sourceKey: 'clcjawa2026',
+      },
+      {
+        text: 'For the same initial 200 MW building, CLCJAWA reports T5\'s design estimate for routine use, kitchens and restrooms, at 1,500 gallons a day on average, with a peak of 4,000 gallons.',
         sourceKey: 'clcjawa2026',
       },
     ],
@@ -94,7 +98,7 @@
     disputed: [],
     unknown: [
       {
-        text: 'T5 CEO Pete Marin stated 1.55 GW of capacity secured from ComEd, of which 1.2 GW is leasable IT capacity, plus a ComEd-built substation. CLCJAWA\'s executive director told an ICC session in January 2026 that Phase I has 1.6 GW available. What governs the ceiling on total campus draw, and how phasing maps to it, has not been publicly explained.',
+        text: 'T5 CEO Pete Marin stated that 1.55 GW of power had been secured from ComEd, 1.2 GW of it leasable IT capacity. The same report says the campus will also include its own ComEd-built substation, without giving its capacity. CLCJAWA\'s executive director told an ICC session in January 2026 that Phase I has 1.6 GW available. What governs the ceiling on total campus draw, and how phasing maps to it, has not been publicly explained.',
         sourceKeys: ['govtech2025', 'clcjawa2026'],
       },
       {

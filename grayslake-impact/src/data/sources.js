@@ -215,6 +215,19 @@ export const sources = {
     note: "Slides and speaker script. Source for the campus water figures, which it gives as the developer's expectations (under 50,000 gallons a day at full build-out, 3.2 million gallons to flush and fill one 200 MW building), and for the statement that Phase I “has 1.6 gigawatts available.” The slide graphic gives the campus as 472 acres; the script says 470.",
     verified: "Sep 27, 2026",
   },
+  pjmZones2023: {
+    category: "government",
+    title: "PJM Zone Map",
+    publisher: "PJM Interconnection",
+    date: "May 11, 2023",
+    url: "https://www.pjm.com/-/media/DotCom/about-pjm/pjm-zones.pdf",
+    // Existing Sept. 15, 2026 snapshot; byte-identical to the live PDF on
+    // Sept. 27, 2026. A fresh capture failed (523).
+    archiveUrl: "https://web.archive.org/web/20260915175518/https://www.pjm.com/-/media/DotCom/about-pjm/pjm-zones.pdf",
+    tier: "primary",
+    note: "PJM's official map of its transmission zones. The legend lists Commonwealth Edison Company (ComEd) as a zone.",
+    verified: "Sep 27, 2026",
+  },
   clcjawaWaterPage2026: {
     category: "government",
     title: "Grayslake Data Center Water Usage Information",

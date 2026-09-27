@@ -18,7 +18,9 @@ const ITEMS = [
   },
   {
     label:    'Construction Workforce',
-    sublabel: '"Hundreds" per Village documents; shown at ~400 (estimated)',
+    // "Hundreds" is Mayor Davies (Government Technology). No Village
+    // document gives a number; the bar length is a display estimate only.
+    sublabel: '"Hundreds" per the Grayslake mayor; bar drawn at ~400 for display only',
     value:    constructionMidpoint,
     max:      permanent,
     fillCls:  'bg-status-policy',
@@ -53,7 +55,7 @@ export default function JobsTimelineChart() {
     <ChartFigure
       caption="Permanent versus construction workforce"
       description="Bar chart comparing projected permanent positions with the estimated construction workforce."
-      rows={ITEMS.map(i => [i.label, `${i.display ?? i.value} — ${i.sublabel}`])}
+      rows={ITEMS.map(i => [i.label, `${i.display ?? i.value}: ${i.sublabel}`])}
     >
       <div ref={ref} className="space-y-6">
         {ITEMS.map((item, i) => (

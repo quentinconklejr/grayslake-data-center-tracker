@@ -50,7 +50,7 @@ export default function Energy({ asSection = false }) {
           and stay in the metric row. */}
       <FadeIn className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 mb-12">
         <StatCard label="Power Secured from ComEd" value={`${project.comEdCapacityGW} GW`}              sub="Per T5 CEO Pete Marin, Oct. 2025" accent="amber" sourceKey="govtech2025" />
-        <StatCard label="PJM Zone"             value="COMED"                                            sub="ComEd transmission zone, PJM"  accent="blue"  unverified="Previously cited to CLCJAWA, whose presentation does not mention PJM. No source on this site states the zone." />
+        <StatCard label="PJM Zone"             value="COMED"                                            sub="ComEd transmission zone, PJM"  accent="blue"  sourceKey="pjmZones2023" />
       </FadeIn>
 
       <FadeIn className="mb-10">
