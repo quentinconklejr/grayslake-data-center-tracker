@@ -3,6 +3,7 @@ import PageTitle from '../components/ui/PageTitle'
 import AccordionSection from '../components/ui/AccordionSection'
 import Container from '../components/layout/Container'
 import { FootnoteProvider, FootnoteList } from '../components/ui/FootnoteContext'
+import OnThisPage from '../components/ui/OnThisPage'
 import { figureById } from '../data/keyFigures'
 import { pageMeta } from '../data/pageMeta'
 import Energy from './Energy'
@@ -18,6 +19,8 @@ const SECTIONS = [
 ]
 
 const IDS = SECTIONS.map(s => s.id)
+
+const PAGE_NAV = [...SECTIONS.map(({ id, label }) => ({ id, label })), { id: 'footnote-list', label: 'Sources' }]
 
 function idFromHash() {
   const h = typeof window !== 'undefined' ? window.location.hash.replace('#', '') : ''
@@ -42,6 +45,11 @@ export default function Project() {
   }, [])
 
   const allOpen = open.length === IDS.length
+
+  // A rail link to a collapsed section opens it before the jump.
+  const openSection = useCallback(id => {
+    if (IDS.includes(id)) setOpen(prev => (prev.includes(id) ? prev : [...prev, id]))
+  }, [])
 
   return (
     <FootnoteProvider>
@@ -76,14 +84,18 @@ export default function Project() {
           </div>
         </header>
 
-        {/* Four core impact areas */}
-        <div>
+        {/* Four core impact areas, with the on-this-page rail in the
+            right-hand space on xl screens. */}
+        <div className="xl:grid xl:grid-cols-[minmax(0,1fr)_11rem] xl:gap-12">
+        <div className="min-w-0">
           {SECTIONS.map(({ id, label, figure, blurb, accent, Component }) => {
             const isSectionOpen = open.includes(id)
             return (
               <div id={id} key={id} className="scroll-mt-20">
+                {/* The id lives on this wrapper only. It was also passed to
+                    AccordionSection, which put a second element with the
+                    same id on the page. */}
                 <AccordionSection
-                  id={id}
                   label={label}
                   value={figureById[figure]?.value}
                   qualifier={figureById[figure]?.qualifier}
@@ -97,9 +109,12 @@ export default function Project() {
               </div>
             )
           })}
+
+          <FootnoteList />
         </div>
 
-        <FootnoteList />
+          <OnThisPage items={PAGE_NAV} onNavigate={openSection} />
+        </div>
       </Container>
     </FootnoteProvider>
   )

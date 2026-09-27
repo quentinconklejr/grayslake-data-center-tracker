@@ -5,6 +5,7 @@ import BackToTop from '../components/ui/BackToTop'
 import SourceCitation from '../components/ui/SourceCitation'
 import Container from '../components/layout/Container'
 import { FootnoteProvider, FootnoteList } from '../components/ui/FootnoteContext'
+import OnThisPage from '../components/ui/OnThisPage'
 import { LAST_VERIFIED } from '../data/siteConfig'
 import { sources } from '../data/sources'
 
@@ -175,12 +176,27 @@ const SIDE = {
   developer: { bar: 'bg-status-policy',   chip: 'text-status-policy',   label: 'Developer' },
 }
 
-function Counter({ n, label, tone, textCls }) {
+const PAGE_NAV = [
+  { id: 'court-challenge', label: 'The court challenge' },
+  { id: 'on-the-record',   label: 'What is on the record' },
+  { id: 'revenue-claims',  label: 'What the community is told it gets' },
+  { id: 'not-published',   label: 'What has not been published' },
+  { id: 'get-the-document', label: 'Get the document yourself' },
+  { id: 'footnote-list',   label: 'Sources' },
+]
+
+// Each counter jumps to the section that lists what it counts.
+function Counter({ n, label, tone, textCls, to }) {
   return (
-    <div className={`flex-1 min-w-[9rem] border-t-2 ${tone} pt-3`}>
-      <div className={`text-3xl font-display leading-none tracking-tight ${textCls ?? 'text-ink-900'}`}>{n}</div>
-      <div className="text-sm font-sans text-ink-700 leading-snug mt-1.5">{label}</div>
-    </div>
+    <a
+      href={`#${to}`}
+      className={`group block flex-1 min-w-[9rem] border-t-2 ${tone} pt-3 pb-1 hover:bg-paper-sunk transition-colors`}
+    >
+      <span className={`block text-3xl font-display leading-none tracking-tight ${textCls ?? 'text-ink-900'}`}>{n}</span>
+      <span className="block text-sm font-sans text-ink-700 leading-snug mt-1.5 underline underline-offset-4 decoration-rule-strong group-hover:decoration-accent">
+        {label} <span aria-hidden="true">↓</span>
+      </span>
+    </a>
   )
 }
 
@@ -189,6 +205,11 @@ export default function Agreement() {
     <FootnoteProvider>
       <Container size="default" className="py-10 sm:py-14">
         <PageTitle {...pageMeta['/agreement']} />
+
+        {/* The rail sits in the page margin to the right of this column,
+            so the text column keeps its width and position. */}
+        <div className="relative">
+        <OnThisPage items={PAGE_NAV} className="absolute top-0 left-full h-full ml-6 w-40" />
 
         <FadeIn className="mb-10">
           <p className="text-xs font-display italic text-ink-500 tracking-wide mb-2">The Deal</p>
@@ -206,9 +227,9 @@ export default function Agreement() {
         {/* The shape of the answer, before the detail. */}
         <FadeIn className="mb-10">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-x-8 gap-y-4">
-            <Counter n={TERMS.length} label="terms on the public record" tone="border-status-construction" textCls="text-status-construction" />
-            <Counter n={REVENUE_CLAIMS.length} label="revenue claims, none verified" tone="border-status-disputed" textCls="text-status-disputed" />
-            <Counter n={UNPUBLISHED.length} label="questions with no public answer" tone="border-ink-500" />
+            <Counter n={TERMS.length} label="terms on the public record" tone="border-status-construction" textCls="text-status-construction" to="on-the-record" />
+            <Counter n={REVENUE_CLAIMS.length} label="revenue claims, none verified" tone="border-status-disputed" textCls="text-status-disputed" to="revenue-claims" />
+            <Counter n={UNPUBLISHED.length} label="questions with no public answer" tone="border-ink-500" to="not-published" />
           </div>
         </FadeIn>
 
@@ -229,7 +250,7 @@ export default function Agreement() {
             presented with the visual weight of a document, with a dark
             title bar reading like a docket header. It is the only elevated
             surface in the app, and it's earned. */}
-        <FadeIn className="mb-14">
+        <FadeIn id="court-challenge" className="mb-14 scroll-mt-24">
           <div className="border-2 border-ink-900 overflow-hidden">
             <div className="bg-ink-900 px-5 sm:px-6 py-4">
               <p className="text-2xs font-sans font-semibold uppercase tracking-wide text-paper-sunk">
@@ -241,7 +262,10 @@ export default function Agreement() {
             </div>
 
             <div className="px-5 sm:px-6 py-5 bg-paper-raised">
-              <dl className="grid sm:grid-cols-2 gap-x-8 gap-y-3 mb-6">
+              {/* Rows share a baseline: each label/value pair is its own
+                  grid cell and the grid aligns cells to the row start, so
+                  a long plaintiffs line no longer shifts its neighbour. */}
+              <dl className="grid sm:grid-cols-2 sm:items-start gap-x-8 gap-y-4 mb-6">
                 {[
                   ['Case number', COMPLAINT.caseNumber],
                   ['Filed',       COMPLAINT.filed],
@@ -250,14 +274,14 @@ export default function Agreement() {
                   ['Defendants',  COMPLAINT.defendants],
                   ['Counsel',     COMPLAINT.counsel],
                 ].map(([k, v]) => (
-                  <div key={k} className="min-w-0">
-                    <dt className="text-2xs font-sans font-semibold uppercase tracking-wide text-ink-500">{k}</dt>
+                  <div key={k} className="min-w-0 border-t border-rule-soft pt-2">
+                    <dt className="text-2xs font-sans font-semibold uppercase tracking-wide text-ink-700">{k}</dt>
                     <dd className="text-sm font-sans text-ink-900 leading-snug mt-0.5">{v}</dd>
                   </div>
                 ))}
               </dl>
 
-              <p className="text-xs font-display italic text-ink-500 tracking-wide mb-2">
+              <p className="text-xs font-display italic text-ink-700 tracking-wide mb-2">
                 Four counts
               </p>
               <ol className="space-y-2 mb-5">
@@ -274,7 +298,7 @@ export default function Agreement() {
                 ))}
               </ol>
 
-              <p className="text-xs font-display italic text-ink-500 tracking-wide mb-2">
+              <p className="text-xs font-display italic text-ink-700 tracking-wide mb-2">
                 Relief sought
               </p>
               <ul className="space-y-1.5 mb-5">
@@ -286,7 +310,7 @@ export default function Agreement() {
                 ))}
               </ul>
 
-              <div className="flex flex-col sm:flex-row gap-3 items-start">
+              <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center">
                 <a
                   href={sources.complaint2026?.localCopy ?? '/docs/t5-grayslake-complaint-2026ch00000171.pdf'}
                   target="_blank"
@@ -296,7 +320,7 @@ export default function Agreement() {
                   Read the complaint (PDF, 37 pages)
                   <span aria-hidden="true">↓</span>
                 </a>
-                <span className="inline-flex items-center text-sm font-sans text-ink-600 leading-snug pt-1">
+                <span className="inline-flex items-center text-sm font-sans text-ink-600 leading-snug">
                   File-stamped copy, mirrored on this site.
                 </span>
               </div>
@@ -311,7 +335,7 @@ export default function Agreement() {
         </FadeIn>
 
         {/* ── 1. On the record ──────────────────────────────────────────── */}
-        <FadeIn className="mb-14">
+        <FadeIn id="on-the-record" className="mb-14 scroll-mt-24">
           <div className="flex items-baseline gap-3 mb-2 border-t border-rule pt-4">
             <span className="text-2xs font-mono font-semibold text-status-construction">01</span>
             <h2 className="text-3xl font-display text-ink-900 tracking-tight">What is on the record</h2>
@@ -359,7 +383,7 @@ export default function Agreement() {
         </FadeIn>
 
         {/* ── 2. Revenue claims, drawn to scale ─────────────────────────── */}
-        <FadeIn className="mb-14">
+        <FadeIn id="revenue-claims" className="mb-14 scroll-mt-24">
           <div className="flex items-baseline gap-3 mb-2 border-t border-rule pt-4">
             <span className="text-2xs font-mono font-semibold text-status-disputed">02</span>
             <h2 className="text-3xl font-display text-ink-900 tracking-tight">What the community is told it gets</h2>
@@ -412,7 +436,7 @@ export default function Agreement() {
         </FadeIn>
 
         {/* ── 3. The gaps ───────────────────────────────────────────────── */}
-        <FadeIn className="mb-14">
+        <FadeIn id="not-published" className="mb-14 scroll-mt-24">
           <div className="flex items-baseline gap-3 mb-2 border-t border-rule pt-4">
             <span className="text-2xs font-mono font-semibold text-ink-600">03</span>
             <h2 className="text-3xl font-display text-ink-900 tracking-tight">What has not been published</h2>
@@ -437,7 +461,7 @@ export default function Agreement() {
         </FadeIn>
 
         {/* ── 4. Go get it ──────────────────────────────────────────────── */}
-        <FadeIn>
+        <FadeIn id="get-the-document" className="scroll-mt-24">
           <div className="border-t border-rule pt-6">
             <p className="text-xs font-display italic text-accent tracking-wide mb-2">
               Get the document yourself
@@ -469,6 +493,7 @@ export default function Agreement() {
         </FadeIn>
 
         <FootnoteList />
+        </div>
         <BackToTop />
       </Container>
     </FootnoteProvider>

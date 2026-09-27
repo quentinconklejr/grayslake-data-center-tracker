@@ -1,6 +1,6 @@
 import { useRef, useLayoutEffect } from 'react'
 
-export default function FadeIn({ children, delay = 0, y = 8, className = '', as: Tag = 'div' }) {
+export default function FadeIn({ children, delay = 0, y = 8, className = '', as: Tag = 'div', ...rest }) {
   const ref = useRef(null)
 
   useLayoutEffect(() => {
@@ -40,5 +40,5 @@ export default function FadeIn({ children, delay = 0, y = 8, className = '', as:
     return () => observer.disconnect()
   }, [delay, y])
 
-  return <Tag ref={ref} className={className}>{children}</Tag>
+  return <Tag ref={ref} className={className} {...rest}>{children}</Tag>
 }
