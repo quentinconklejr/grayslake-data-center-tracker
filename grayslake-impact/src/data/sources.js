@@ -4,6 +4,11 @@
 //   news        news and trade reporting, including aggregators
 //   government  government notices, data sets and advocacy analysis
 // The five ordinances are listed from records.js, not from here.
+//
+// `archiveUrl` is a Wayback Machine copy of `url`, checked to contain the
+// right document before it was added. Sources without one could not be
+// archived automatically (the site blocks the archiver) and are archived by
+// hand.
 export const sources = {
   // The filed complaint itself, file-stamped by the Clerk and mirrored here so
   // the record does not depend on a shared Drive link staying alive. A copy was
@@ -28,6 +33,7 @@ export const sources = {
     publisher: "Baxtel",
     date: "2026",
     url: "https://baxtel.com/data-center/t5-grayslake-illinois",
+    archiveUrl: "https://web.archive.org/web/20260927073149/https://baxtel.com/data-center/t5-grayslake-illinois",
     tier: "aggregator",
   },
   dcd2026: {
@@ -78,6 +84,7 @@ export const sources = {
     publisher: "Patch",
     date: "2026",
     url: "https://new.patch.com/illinois/grayslake/plans-move-forward-massive-data-center-campus-grayslake",
+    archiveUrl: "https://web.archive.org/web/20260927074105/https://new.patch.com/illinois/grayslake/plans-move-forward-massive-data-center-campus-grayslake",
     tier: "aggregator",
   },
   capitolnews2026: {
@@ -86,6 +93,7 @@ export const sources = {
     publisher: "Capitol News Illinois",
     date: "2026",
     url: "https://capitolnewsillinois.com/news/how-do-data-centers-benefit-the-places-where-theyre-built-local-mayors-give-mixed-reviews/",
+    archiveUrl: "https://web.archive.org/web/20260927074150/https://capitolnewsillinois.com/news/how-do-data-centers-benefit-the-places-where-theyre-built-local-mayors-give-mixed-reviews/",
     tier: "primary",
   },
   dceo2026: {
@@ -117,6 +125,7 @@ export const sources = {
     publisher: "Citizens Utility Board (CUB)",
     date: "Aug. 19, 2025",
     url: "https://www.citizensutilityboard.org/blog/2025/08/19/how-data-centers-are-raising-our-bills-in-illinois-and-what-we-should-do-about-it/",
+    archiveUrl: "https://web.archive.org/web/20260927074451/https://www.citizensutilityboard.org/blog/2025/08/19/how-data-centers-are-raising-our-bills-in-illinois-and-what-we-should-do-about-it/",
   },
   alliancegreatlakes: {
     category: "government",
@@ -132,6 +141,7 @@ export const sources = {
     publisher: "Chicago Tribune",
     date: "June 5, 2026",
     url: "https://www.chicagotribune.com/2026/06/05/grayslake-data-center-3/",
+    archiveUrl: "https://web.archive.org/web/20260927074551/https://www.chicagotribune.com/2026/06/05/grayslake-data-center-3/",
     tier: "primary",
   },
   chitrib_jul2026: {
@@ -141,6 +151,7 @@ export const sources = {
     author: "Joseph States",
     date: "July 2, 2026",
     url: "https://ilenviro.org/grayslake-data-center-opponents-call-for-wetlands-protection-wetlands-are-incredibly-important/",
+    archiveUrl: "https://web.archive.org/web/20260927074637/https://ilenviro.org/grayslake-data-center-opponents-call-for-wetlands-protection-wetlands-are-incredibly-important/",
     note: "Chicago Tribune reporting, republished in full by the Illinois Environmental Council on July 7, 2026; cited to the republication because it is reachable without a subscription. Primary source for the 15.75-acre wetland fill application and for the September 2025 Lake County Stormwater Management Commission letter finding that at least some on-site wetlands likely fall under US Army Corps of Engineers jurisdiction.",
     verified: "Aug 28, 2026",
     tier: "primary",
@@ -151,6 +162,7 @@ export const sources = {
     publisher: "Chronicle Media",
     date: "June 26, 2026",
     url: "https://chronicleillinois.com/news/lake-county-news/grayslake-data-center-approval-sparks-growing-controversy/",
+    archiveUrl: "https://web.archive.org/web/20260927074710/https://chronicleillinois.com/news/lake-county-news/grayslake-data-center-approval-sparks-growing-controversy/",
     tier: "primary",
   },
   mundeleindata: {
@@ -159,6 +171,7 @@ export const sources = {
     publisher: "Village of Mundelein",
     date: "June 2, 2026",
     url: "https://www.mundelein.org/m/newsflash/Home/Detail/230",
+    archiveUrl: "https://web.archive.org/web/20260927074744/https://www.mundelein.org/m/newsflash/Home/Detail/230",
     tier: "primary",
   },
   dailyherald_jul2026: {
@@ -197,6 +210,7 @@ export const sources = {
     publisher: "William Soucie, CLCJAWA Executive Director, ICC Water Policy Session, Chicago",
     date: "Jan. 15, 2026",
     url: "https://drive.google.com/file/d/14Q7LsFHh36oft_WPXpf2uJ8hxCz6P_Fl/view?usp=drive_link",
+    archiveUrl: "https://web.archive.org/web/20260927075639/https://drive.usercontent.google.com/download?id=14Q7LsFHh36oft_WPXpf2uJ8hxCz6P_Fl&export=download",
     tier: "primary",
     note: "Slides and speaker script. Source for the campus water figures, which it gives as the developer's expectations (under 50,000 gallons a day at full build-out, 3.2 million gallons to flush and fill one 200 MW building), and for the statement that Phase I “has 1.6 gigawatts available.” The slide graphic gives the campus as 472 acres; the script says 470.",
     verified: "Sep 27, 2026",
@@ -207,6 +221,7 @@ export const sources = {
     publisher: "Central Lake County Joint Action Water Agency (homepage section)",
     date: "Retrieved Sep 27, 2026",
     url: "https://www.clcjawa.com/",
+    archiveUrl: "https://web.archive.org/web/20260927075019/https://www.clcjawa.com/",
     tier: "primary",
     note: "States that T5 Data Centers’ design team indicated total campus water use will be less than 50 thousand gallons per day, and that this was presented to the Illinois Commerce Commission on January 15, 2026.",
     verified: "Sep 27, 2026",
@@ -249,6 +264,7 @@ export const sources = {
   author: "Sam Borcia",
   date: "Aug 8, 2026",
   url: "https://www.lakemchenryscanner.com/2026/08/08/project-of-unprecedented-scale-lake-county-residents-file-lawsuit-to-block-472-acre-data-center-campus-in-grayslake/",
+  archiveUrl: "https://web.archive.org/web/20260927075154/https://www.lakemchenryscanner.com/2026/08/08/project-of-unprecedented-scale-lake-county-residents-file-lawsuit-to-block-472-acre-data-center-campus-in-grayslake/",
   tier: "primary",
 },
   scannerCancellation2026: {
@@ -258,6 +274,7 @@ export const sources = {
   author: "Sam Borcia",
   date: "Aug 20, 2026",
   url: "https://www.lakemchenryscanner.com/2026/08/20/village-of-grayslake-announces-special-session-for-public-to-discuss-data-center-then-cancels-it-citing-social-media-threats/",
+  archiveUrl: "https://web.archive.org/web/20260927075227/https://www.lakemchenryscanner.com/2026/08/20/village-of-grayslake-announces-special-session-for-public-to-discuss-data-center-then-cancels-it-citing-social-media-threats/",
   tier: "primary",
 },
   chronicleZba2026: {
@@ -266,6 +283,7 @@ export const sources = {
     publisher: "Chronicle Media",
     date: "Aug. 25, 2026",
     url: "https://chronicleillinois.com/news/lake-county-news/lake-county-zba-recommends-data-center-moratorium-in-unanimous-vote/",
+    archiveUrl: "https://web.archive.org/web/20260927075300/https://chronicleillinois.com/news/lake-county-news/lake-county-zba-recommends-data-center-moratorium-in-unanimous-vote/",
     tier: "primary",
     note: "Source for the Aug. 18, 2026 Zoning Board of Appeals vote and for the scheduled Sept. 2 committee hearing and Sept. 8 County Board vote. Covers unincorporated Lake County only.",
     verified: "Sep 11, 2026",
@@ -298,6 +316,7 @@ export const sources = {
     author: "Sam Borcia",
     date: "Sept. 1, 2026",
     url: "https://www.lakemchenryscanner.com/2026/09/01/grayslake-issues-first-permit-for-construction-to-begin-on-mega-data-center-campus-as-lawsuit-seeks-to-block-development/",
+    archiveUrl: "https://web.archive.org/web/20260927075421/https://www.lakemchenryscanner.com/2026/09/01/grayslake-issues-first-permit-for-construction-to-begin-on-mega-data-center-campus-as-lawsuit-seeks-to-block-development/",
     tier: "primary",
     verified: "Sep 11, 2026",
   },
@@ -308,6 +327,7 @@ export const sources = {
     author: "Sam Borcia",
     date: "Sept. 8, 2026",
     url: "https://www.lakemchenryscanner.com/2026/09/08/we-choose-our-citizens-county-board-bans-data-centers-in-unincorporated-lake-county-until-mid-2027/",
+    archiveUrl: "https://web.archive.org/web/20260927075454/https://www.lakemchenryscanner.com/2026/09/08/we-choose-our-citizens-county-board-bans-data-centers-in-unincorporated-lake-county-until-mid-2027/",
     tier: "primary",
     note: "The ordinance amends Chapter 151 of the Lake County Code and applies to unincorporated Lake County only. The article states it does not affect the T5 campus in Grayslake.",
     verified: "Sep 11, 2026",

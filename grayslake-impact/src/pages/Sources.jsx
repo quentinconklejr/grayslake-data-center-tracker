@@ -112,12 +112,27 @@ function SourceEntry({ n, source }) {
         <p className="text-sm font-sans text-ink-600 leading-relaxed mt-2 break-words">{source.note}</p>
       )}
 
-      {source.localCopy && (
-        <p className="mt-3">
-          <a href={source.localCopy} target="_blank" rel="noopener noreferrer" className={CHIP_BUTTON}>
-            <span aria-hidden="true">↓</span>
-            Download PDF mirror
-          </a>
+      {(source.localCopy || source.archiveUrl) && (
+        <p className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-1">
+          {source.localCopy && (
+            <a href={source.localCopy} target="_blank" rel="noopener noreferrer" className={CHIP_BUTTON}>
+              <span aria-hidden="true">↓</span>
+              Download PDF mirror
+            </a>
+          )}
+          {/* A Wayback Machine copy, so the citation survives the original
+              page moving or disappearing. */}
+          {source.archiveUrl && (
+            <a
+              href={source.archiveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 text-sm font-sans text-accent hover:text-accent-hover underline underline-offset-4 decoration-accent min-h-[44px]"
+            >
+              Archived copy <span aria-hidden="true">↗</span>
+              <span className="sr-only">(Wayback Machine, opens in new tab)</span>
+            </a>
+          )}
         </p>
       )}
     </Entry>
