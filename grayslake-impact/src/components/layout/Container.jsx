@@ -9,9 +9,10 @@
  *   default  56rem (~896px), the general-purpose measure for pages that
  *            mix prose with records tables, timelines, and key-figure
  *            lists
- *   wide     72rem (~1152px), reserved for the Home dashboard, the
- *            Project overview, and the standalone Map — anything that
- *            needs to fit the parcel table or the map surface at width
+ *   wide     72rem (~1152px), reserved for the Home dashboard and the
+ *            Project overview
+ *   map      wide below xl, then 100rem so /map can set the map and the
+ *            parcel table side by side on a desktop screen
  *
  * All three carry the same horizontal padding. They are centred, so
  * switching size between pages does shift the visible left edge of the
@@ -28,6 +29,7 @@ export default function Container({
   const width =
     size === 'prose' ? 'max-w-[65ch]'
     : size === 'wide' ? 'max-w-6xl'
+    : size === 'map' ? 'max-w-6xl xl:max-w-[100rem]'
     : 'max-w-4xl'
 
   return (

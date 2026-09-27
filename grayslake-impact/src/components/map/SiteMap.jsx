@@ -55,7 +55,15 @@ const LANDMARKS = [
   { at: [42.31300, -88.02650], text: 'Route 83' },
 ]
 
-export default function SiteMap({ className = '', showCaption = true }) {
+/**
+ * `aside` is the /map layout. When given, wide screens (xl) get a two-column
+ * grid: the toolbar and map in a sticky left column sized to the viewport,
+ * and the legend, editor's note and `aside` (the parcel table) in a right
+ * column that scrolls with the page. Below xl the DOM order is the layout,
+ * so phones still get map, legend, note, table. The homepage passes no
+ * aside and renders exactly as before.
+ */
+export default function SiteMap({ className = '', showCaption = true, aside = null }) {
   const mapContainer = useRef(null)
   const map = useRef(null)
   const layersRef = useRef({})
@@ -241,6 +249,8 @@ export default function SiteMap({ className = '', showCaption = true }) {
           filters, so the site has one segmented-control convention
           rather than two. role="group" + aria-pressed preserved for
           screen readers. */}
+      <div className={aside ? 'xl:grid xl:grid-cols-[minmax(0,1fr)_30rem] xl:gap-x-10' : ''}>
+      <div className={aside ? 'xl:row-span-2 xl:self-start xl:sticky xl:top-20' : ''}>
       <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-rule">
         <div className="inline-flex items-center gap-2" role="group" aria-label="Base map style">
           <span className="text-xs font-sans font-semibold text-ink-600 mr-1">Base map</span>
@@ -270,7 +280,10 @@ export default function SiteMap({ className = '', showCaption = true }) {
           so the map does not read as a foreign rectangle while tiles
           load or between raster gaps. */}
       <div className="relative w-full mt-3 border border-rule bg-paper overflow-hidden">
-        <div ref={mapContainer} className="w-full h-[340px] sm:h-[460px] lg:h-[540px] z-0" />
+        <div
+          ref={mapContainer}
+          className={`w-full h-[340px] sm:h-[460px] lg:h-[540px] z-0 ${aside ? 'xl:h-[calc(100vh-10rem)] xl:min-h-[520px]' : ''}`}
+        />
 
         <div
           className="absolute top-3 right-3 z-[400] w-9 h-9 border border-rule flex flex-col items-center justify-center bg-ink-900/85 text-paper pointer-events-none"
@@ -304,6 +317,9 @@ export default function SiteMap({ className = '', showCaption = true }) {
         )}
       </div>
 
+      </div>
+
+      <div>
       {/* ── Legend (typeset, not boxed) ───────────────────────────── */}
       <p className="mt-4 text-sm font-sans text-ink-700 leading-relaxed max-w-3xl">
         <span
@@ -346,6 +362,10 @@ export default function SiteMap({ className = '', showCaption = true }) {
           an estimate.
         </p>
       </aside>
+      </div>
+
+      {aside && <div className="mt-12 xl:mt-8 xl:col-start-2">{aside}</div>}
+      </div>
     </div>
   )
 }

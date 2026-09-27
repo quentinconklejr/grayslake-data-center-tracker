@@ -10,7 +10,7 @@ import { LAST_VERIFIED } from '../data/siteConfig'
 export default function MapPage() {
   return (
     <FootnoteProvider>
-      <Container size="wide" className="py-12 sm:py-16 space-y-12">
+      <Container size="map" className="py-12 sm:py-16 space-y-12">
         <PageTitle
           title={pageMeta['/map'].title}
           description={pageMeta['/map'].description}
@@ -32,8 +32,7 @@ export default function MapPage() {
           </p>
         </header>
 
-        <SiteMap />
-        <ParcelTable parcels={PARCELS_DATA} headingLevel={2} />
+        <SiteMap aside={<ParcelTable parcels={PARCELS_DATA} headingLevel={2} stacked />} />
 
         <FootnoteList />
       </Container>

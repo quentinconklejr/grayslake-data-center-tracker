@@ -21,8 +21,17 @@ import parcelsGeoJSON from '../../data/parcels.geojson'
  * On /map it follows the page h1 directly, and an h3 there skips a level.
  * Default stays 3 so the homepage is unchanged.
  */
-export default function ParcelTable({ parcels, headingLevel = 3 }) {
+/**
+ * `stacked` keeps the heading above the buttons at every width. On /map the
+ * table sits in a 30rem column beside the map, where the side-by-side
+ * header row would crowd.
+ */
+export default function ParcelTable({ parcels, headingLevel = 3, stacked = false }) {
   const Heading = `h${headingLevel}`
+  // In the 30rem column beside the map (xl, stacked) the cells tighten and
+  // the long price header may wrap, so all four columns fit without a
+  // sideways scroll. Every other width keeps the original spacing.
+  const PX = stacked ? 'px-4 sm:px-3 xl:px-2' : 'px-4 sm:px-3'
 
   const [search, setSearch] = useState('')
   const [sortField, setSortField] = useState('acres')
@@ -86,7 +95,7 @@ export default function ParcelTable({ parcels, headingLevel = 3 }) {
     <section aria-label="Recorded parcel directory" className="border-t border-rule pt-6">
       {/* ── Table header ─────────────────────────────────────────────
           Records-style caption: name, filtered totals, retrieval date. */}
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-4">
+      <div className={`flex flex-col justify-between gap-4 pb-4 ${stacked ? '' : 'sm:flex-row sm:items-end'}`}>
         <div className="min-w-0">
           <Heading className="text-2xl font-display text-ink-900 tracking-tight">
             Recorded Parcel Directory
@@ -140,17 +149,25 @@ export default function ParcelTable({ parcels, headingLevel = 3 }) {
 
       {/* Records table — hairline rules, tabular numerals, PIN as the
           row header, paper-sunk on zebra rows. */}
-      <div className="overflow-x-auto -mx-4 sm:mx-0">
-        <table className="w-full min-w-max text-left border-collapse text-sm font-mono">
+      {/* Focusable with a name so a keyboard user can scroll it sideways
+          when the table is wider than its column (axe:
+          scrollable-region-focusable). */}
+      <div
+        className="overflow-x-auto -mx-4 sm:mx-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent"
+        tabIndex={0}
+        role="region"
+        aria-label="Recorded parcels table"
+      >
+        <table className={`w-full text-left border-collapse text-sm font-mono ${stacked ? 'min-w-max xl:min-w-0 [&_td]:whitespace-nowrap [&_tbody_th]:whitespace-nowrap' : 'min-w-max'}`}>
           <caption className="sr-only">
             Recorded parcels showing PIN, acres, recorded sale price, and recorded sale date.
           </caption>
           <thead>
             <tr className="border-y border-rule text-ink-700 text-xs font-sans font-semibold uppercase tracking-wide">
-              <th scope="col" className="py-2.5 px-4 sm:px-3 text-left">PIN</th>
+              <th scope="col" className={`py-2.5 ${PX} text-left`}>PIN</th>
               <th
                 scope="col"
-                className="py-2.5 px-4 sm:px-3 cursor-pointer hover:text-ink-900 text-right"
+                className={`py-2.5 ${PX} cursor-pointer hover:text-ink-900 text-right`}
                 onClick={() => {
                   setSortField('acres')
                   setSortOrder(prev => (prev === 'asc' ? 'desc' : 'asc'))
@@ -158,8 +175,8 @@ export default function ParcelTable({ parcels, headingLevel = 3 }) {
               >
                 Acres <span aria-hidden="true">{sortField === 'acres' ? (sortOrder === 'asc' ? '↑' : '↓') : ''}</span>
               </th>
-              <th scope="col" className="py-2.5 px-4 sm:px-3 text-right">Recorded sale price</th>
-              <th scope="col" className="py-2.5 px-4 sm:px-3 text-left">Sale date</th>
+              <th scope="col" className={`py-2.5 ${PX} text-right`}>Recorded sale price</th>
+              <th scope="col" className={`py-2.5 ${PX} text-left`}>Sale date</th>
             </tr>
           </thead>
           {/* Zebra tint (bg-paper-sunk/50) removed — carried a Tailwind
@@ -170,14 +187,14 @@ export default function ParcelTable({ parcels, headingLevel = 3 }) {
             {displayedParcels.length > 0 ? (
               displayedParcels.map(p => (
                 <tr key={p.pin}>
-                  <th scope="row" className="py-2 px-4 sm:px-3 font-mono font-semibold text-ink-900 text-left">
+                  <th scope="row" className={`py-2 ${PX} font-mono font-semibold text-ink-900 text-left`}>
                     {p.pin}
                   </th>
-                  <td className="py-2 px-4 sm:px-3 text-ink-700 text-right tabular-nums">{p.acres}</td>
-                  <td className={`py-2 px-4 sm:px-3 text-ink-700 tabular-nums ${p.salePrice ? 'text-right' : 'text-center'}`}>
+                  <td className={`py-2 ${PX} text-ink-700 text-right tabular-nums`}>{p.acres}</td>
+                  <td className={`py-2 ${PX} text-ink-700 tabular-nums ${p.salePrice ? 'text-right' : 'text-center'}`}>
                     {p.salePrice || '—'}
                   </td>
-                  <td className={`py-2 px-4 sm:px-3 text-ink-700 ${p.date ? 'text-left' : 'text-center'}`}>
+                  <td className={`py-2 ${PX} text-ink-700 ${p.date ? 'text-left' : 'text-center'}`}>
                     {p.date || '—'}
                   </td>
                 </tr>
