@@ -177,16 +177,22 @@ export const projections = {
       metric: "Leasable IT capacity",
       definition:
         "The computing load T5 markets the campus as able to support at full buildout.",
-      attribution: "T5 Data Centers (developer), via Data Center Dynamics",
+      // Marin gave 1.2 GW in both: "up to 1.2GW of IT capacity" (DCD) and
+      // 1.2 GW of the 1.55 GW "will be leasable power" (Government Technology).
+      attribution: "Pete Marin, T5 CEO, via Data Center Dynamics (Feb. 2025) and Government Technology (Oct. 2025)",
       sourceKey: "dcdGW2026",
+      alsoSourceKey: "govtech2025",
     },
     {
       key: "secured",
       value: "1,600 MW",
       metric: "Secured utility power",
+      // The source says "1.6GW of secured utility power" and nothing about
+      // why it exceeds IT capacity. An earlier definition added "to allow for
+      // redundancy and phasing", which no source states; removed.
       definition:
-        "Utility capacity T5 states it has contracted, above leasable IT capacity to allow for redundancy and phasing.",
-      attribution: "T5 Data Centers (developer), via Data Center Dynamics",
+        "Utility power T5 describes as secured for the campus.",
+      attribution: "Pete Marin, T5 CEO, via Data Center Dynamics (Feb. 2025)",
       sourceKey: "dcdGW2026",
     },
     {

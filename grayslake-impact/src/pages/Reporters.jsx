@@ -22,7 +22,7 @@ const PRESS_FACTS = [
   {
     topic: 'Electrical Capacity',
     stat: '1,200 MW IT / 1,600 MW Power',
-    citation: 'T5 reports 1,200 MW of leasable IT capacity and 1,600 MW of utility-contracted capacity. Total substation capacity from ComEd is rated at 1.55 GW. (Data Center Dynamics, Feb. 2025; Government Technology, Oct. 2025).',
+    citation: 'T5 chief executive Pete Marin cited up to 1,200 MW (1.2 GW) of IT capacity and 1,600 MW (1.6 GW) of secured utility power (Data Center Dynamics, Feb. 2025). In October 2025 he said 1.55 GW had been secured from ComEd, 1.2 GW of it leasable (Government Technology, Oct. 2025). The difference between 1.6 GW and 1.55 GW has not been explained publicly.',
     src: 'dcdGW2026',
   },
   {
