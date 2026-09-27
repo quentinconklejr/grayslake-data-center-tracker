@@ -1,18 +1,28 @@
 import { useState, useEffect, useRef } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import Container from './Container'
-import { NAV_STORY, NAV_TOOLS, NAV_META } from '../../data/navLinks'
+import { NAV_PRIMARY, NAV_SECONDARY } from '../../data/navLinks'
 
-function NavLink_({ to, label, end }) {
+// `also` lists other path prefixes that count as this item: Documents stays
+// marked while the reader is inside /records, which the Documents hub links to.
+function useAlsoActive(also) {
+  const { pathname } = useLocation()
+  return Boolean(also?.some(p => pathname === p || pathname.startsWith(`${p}/`)))
+}
+
+function NavLink_({ to, label, end, also, secondary = false }) {
+  const alsoActive = useAlsoActive(also)
   return (
     <NavLink
       to={to}
       end={end}
       className={({ isActive }) =>
-        `inline-flex items-center whitespace-nowrap py-1.5 border-b-2 text-sm font-sans transition-colors duration-150 ${
-          isActive
+        `inline-flex items-center whitespace-nowrap py-1.5 border-b-2 font-sans transition-colors duration-150 ${
+          secondary ? 'text-xs' : 'text-sm'
+        } ${
+          isActive || alsoActive
             ? 'text-ink-900 border-accent font-semibold'
-            : 'text-ink-700 border-transparent hover:text-ink-900 hover:border-rule'
+            : `${secondary ? 'text-ink-600' : 'text-ink-700'} border-transparent hover:text-ink-900 hover:border-rule`
         }`
       }
     >
@@ -21,7 +31,8 @@ function NavLink_({ to, label, end }) {
   )
 }
 
-function MobileNavLink({ to, label, end, onClick }) {
+function MobileNavLink({ to, label, end, also, onClick }) {
+  const alsoActive = useAlsoActive(also)
   return (
     <NavLink
       to={to}
@@ -29,7 +40,7 @@ function MobileNavLink({ to, label, end, onClick }) {
       onClick={onClick}
       className={({ isActive }) =>
         `block py-2.5 px-3 text-sm font-sans transition-colors ${
-          isActive
+          isActive || alsoActive
             ? 'text-ink-900 font-semibold bg-accent-soft'
             : 'text-ink-700 hover:bg-paper-sunk'
         }`
@@ -109,18 +120,20 @@ export default function Header() {
         </Link>
 
         {/* Desktop Nav */}
+        {/* Two lists so a screen reader hears the grouping the eye sees:
+            five primary destinations, then three lighter reference links. */}
         <nav className="hidden lg:flex items-center gap-4 xl:gap-5 shrink-0" aria-label="Primary">
-          {NAV_STORY.map(l => (
-            <NavLink_ key={l.to} to={l.to} label={l.label} end={l.end} />
-          ))}
+          <ul className="flex items-center gap-4 xl:gap-5">
+            {NAV_PRIMARY.map(l => (
+              <li key={l.to}><NavLink_ {...l} /></li>
+            ))}
+          </ul>
           <span aria-hidden="true" className="h-4 w-px bg-rule" />
-          {NAV_TOOLS.map(l => (
-            <NavLink_ key={l.to} to={l.to} label={l.label} end={l.end} />
-          ))}
-          <span aria-hidden="true" className="h-4 w-px bg-rule" />
-          {NAV_META.map(l => (
-            <NavLink_ key={l.to} to={l.to} label={l.label} end={l.end} />
-          ))}
+          <ul className="flex items-center gap-3 xl:gap-4" aria-label="More">
+            {NAV_SECONDARY.map(l => (
+              <li key={l.to}><NavLink_ {...l} secondary /></li>
+            ))}
+          </ul>
         </nav>
 
         {/* Mobile hamburger */}
@@ -143,14 +156,12 @@ export default function Header() {
 
       {mobileOpen && (
         <div ref={menuRef} className="lg:hidden bg-paper border-b border-rule px-4 py-3 space-y-1 max-h-[80vh] overflow-y-auto">
-          {NAV_STORY.map(l => (
-            <MobileNavLink key={l.to} to={l.to} label={l.label} end={l.end} onClick={() => setMobileOpen(false)} />
+          {NAV_PRIMARY.map(l => (
+            <MobileNavLink key={l.to} {...l} onClick={() => setMobileOpen(false)} />
           ))}
-          {NAV_TOOLS.map(l => (
-            <MobileNavLink key={l.to} to={l.to} label={l.label} end={l.end} onClick={() => setMobileOpen(false)} />
-          ))}
-          {NAV_META.map(l => (
-            <MobileNavLink key={l.to} to={l.to} label={l.label} end={l.end} onClick={() => setMobileOpen(false)} />
+          <p className="pt-3 mt-2 border-t border-rule-soft px-3 text-xs font-display italic text-ink-500">More</p>
+          {NAV_SECONDARY.map(l => (
+            <MobileNavLink key={l.to} {...l} onClick={() => setMobileOpen(false)} />
           ))}
         </div>
       )}

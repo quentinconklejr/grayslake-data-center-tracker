@@ -2,9 +2,7 @@ import { Link } from 'react-router-dom'
 import ReportErrorLink from '../ui/ReportErrorLink'
 import Container from './Container'
 import { SITE_CONTACT, LAST_VERIFIED } from '../../data/siteConfig'
-import { NAV_LINKS } from '../../data/navLinks'
-
-const NAV = NAV_LINKS.filter(l => l.to !== '/')
+import { NAV_PRIMARY, NAV_SECONDARY } from '../../data/navLinks'
 
 /*
  * Colophon. What replaces the old dark three-column-plus-pill-badge
@@ -68,12 +66,25 @@ export default function Footer() {
           <p className="text-xs font-display italic text-ink-500 tracking-wide mb-3">
             Pages
           </p>
+          {/* Same two groups, same order and labels as the header nav. */}
           <ul className="flex flex-wrap gap-x-6 gap-y-2 text-sm font-sans">
-            {NAV.map(({ to, label }) => (
+            {NAV_PRIMARY.map(({ to, label }) => (
               <li key={to}>
                 <Link
                   to={to}
                   className="text-ink-700 hover:text-ink-900 underline underline-offset-4 decoration-rule-strong hover:decoration-accent"
+                >
+                  {label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <ul className="mt-2 flex flex-wrap gap-x-6 gap-y-2 text-sm font-sans">
+            {NAV_SECONDARY.map(({ to, label }) => (
+              <li key={to}>
+                <Link
+                  to={to}
+                  className="text-ink-600 hover:text-ink-900 underline underline-offset-4 decoration-rule-strong hover:decoration-accent"
                 >
                   {label}
                 </Link>
