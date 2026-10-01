@@ -67,11 +67,11 @@ export const actions = [
     jurisdiction: "US Army Corps of Engineers",
     actionType: "Permit Application",
     description:
-      "T5 applied for a Section 404 permit to fill approximately 15.75 acres of wetlands on the site. A September 2025 Stormwater Management Commission letter reportedly indicates some of those wetlands may fall under US Army Corps jurisdiction.",
-    outcome: "Application filed June 2026; indefinitely suspended by T5 on July 31, 2026.",
-    sourceIds: ["chitrib_june2026", "dailyherald_jul2026"],
+      "T5 applied to the U.S. Army Corps of Engineers to fill 15.75 acres of wetlands on the site. The Chicago Tribune reported that a September 2025 Lake County Stormwater Management Commission letter found that at least some of those wetlands likely fall under Army Corps jurisdiction.",
+    outcome: "Application sent to the Army Corps earlier in 2026, according to the Chicago Tribune; indefinitely suspended by T5 in a statement the Daily Herald reported on July 31, 2026.",
+    sourceIds: ["chitrib_june2026", "chitrib_jul2026", "dailyherald_jul2026"],
     status: "complete",
-    lastVerified: "Aug 5, 2026",
+    lastVerified: "Oct 1, 2026",
   },
   {
     id: "usace-wetlands-suspension-2026",
@@ -79,11 +79,11 @@ export const actions = [
     jurisdiction: "US Army Corps of Engineers",
     actionType: "Permit Application",
     description:
-      "T5 indefinitely suspended its Section 404 wetland remediation permit application. CEO Pete Marin: \u201cGiven the extent of community questions and concerns about wetland remediation in Grayslake, we\u2019ve volunteered to indefinitely suspend our permit application for wetland remediation.\u201d Deputy Village Manager Chase Muscato said the Village \u201cstrongly advocated\u201d for withdrawal and that \u201cthe mitigation was not necessary for the project to move forward.\u201d The suspension applies to the wetland permit only; the project itself is not on hold.",
+      "T5 indefinitely suspended its application to the U.S. Army Corps of Engineers to fill 15.75 acres of wetlands, which it called its \u201cpermit application for wetland remediation.\u201d CEO Pete Marin: \u201cGiven the extent of community questions and concerns about wetland remediation in Grayslake, we\u2019ve volunteered to indefinitely suspend our permit application for wetland remediation.\u201d Deputy Village Manager Chase Muscato said the Village \u201cstrongly advocated\u201d for withdrawal and that \u201cthe mitigation was not necessary for the project to move forward.\u201d The suspension applies to the wetland permit only; the project itself is not on hold.",
     outcome: "Application indefinitely suspended. The 15.75-acre wetland fill is not proceeding at this time.",
-    sourceIds: ["dailyherald_jul2026"],
+    sourceIds: ["dailyherald_jul2026", "chitrib_june2026"],
     status: "complete",
-    lastVerified: "Aug 5, 2026",
+    lastVerified: "Oct 1, 2026",
   },
   {
     id: "grayslake-foundation-permit-2026",
@@ -155,11 +155,11 @@ export const actions = [
     jurisdiction: "Village of Grayslake",
     actionType: "Official Statement",
     description:
-      "The Village of Grayslake announced on August 17, 2026 a special extended public comment session on the T5 project for the evening of August 20, 2026 at the University Center of Lake County. On August 19, 2026 the Village canceled the session, stating that recent social media posts and other information over the previous 24 hours had raised safety concerns and that area law enforcement agencies had expressed similar concerns. The Village said pre-entry screening for attendees and a prohibition on bags, backpacks and similar items inside village hall would be in place at future board meetings.",
-    outcome: "Session canceled before it was held. New security screening announced for future board meetings.",
-    sourceIds: ["scannerCancellation2026"],
+      "The Village of Grayslake announced on August 17, 2026 a one-time extended public comment session on the approved data center campus for Thursday, August 20 at 6 pm at the University Center of Lake County. On August 19, 2026 the Village announced that the session \u201chas been postponed,\u201d stating that the University Center \u201chas informed the Village that it can no longer host the meeting\u201d and that \u201crecent social media posts, and other information, over the past 24 hours have raised safety concerns about the session.\u201d The August 17 release announced pre-entry screening for attendees and a prohibition on bags, backpacks and similar items inside the Village Hall at Board meetings starting August 18.",
+    outcome: "Session postponed before it was held. Public safety measures in place at Board meetings from August 18.",
+    sourceIds: ["villagePressRelease0817_2026", "villagePressRelease0819_2026"],
     status: "complete",
-    lastVerified: "Aug 24, 2026",
+    lastVerified: "Oct 1, 2026",
   },
   {
     id: "illinois-dceo-incentive-suspension-2026",

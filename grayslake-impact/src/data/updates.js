@@ -12,27 +12,27 @@ export const updates = [
   {
     date: '2026-10-01',
     kind: 'corrected',
-    title: 'Land acquisition entry: acreage corrected, totals labeled as calculated, sources added',
+    title: 'Land acquisition entry: acreage corrected, totals labeled as calculated, reported acreages attributed',
     description:
-      'The May 2, 2024 land acquisition entry now gives the January 2025 parcels as 89.4 acres (it said 89.3; the county parcel acreages sum to 89.35), says that its acreage and dollar totals are calculated from county parcel records, takes the approval dates from the Village FAQ, and cites Crain\u2019s Chicago Business for the \u201c$29.4 million for 134 acres\u201d figure it discusses.',
+      'The May 2, 2024 land acquisition entry now gives the January 2025 parcels as 89.4 acres (it said 89.3; the county parcel acreages sum to 89.35), says that its acreage and dollar totals are calculated from county parcel records, and takes the approval dates from the Village FAQ. It now attributes the larger acreages reported for the first purchase to where they came from: 160 acres (the planned project area) and \u201cmore than 134 acres\u201d to The Real Deal, which cited Lake County records for the 134, and both figures as Crain\u2019s Chicago Business reported them.',
     link: '/timeline',
     linkLabel: 'See the timeline',
   },
   {
     date: '2026-10-01',
     kind: 'corrected',
-    title: 'Wetland permit entry no longer says \u201cSection 404\u201d',
+    title: 'Wetland permit: \u201cSection 404\u201d and unsourced dates removed across the site',
     description:
-      'The July 31, 2026 wetland permit entry now describes T5\u2019s application as one to the U.S. Army Corps of Engineers to fill 15.75 acres of wetlands, as the cited Daily Herald and Chicago Tribune reporting does; neither names Section 404. The Village\u2019s words are now given as the Daily Herald reported them: the mitigation was not necessary for the project \u201cto move forward.\u201d',
+      'The timeline entry, the two wetland actions, the wetland key figure and the related open question now describe T5\u2019s application as one to the U.S. Army Corps of Engineers to fill 15.75 acres of wetlands, as the cited Daily Herald and Chicago Tribune reporting does; none of the sources names Section 404. They no longer say the application was filed in June 2026 or suspended on July 31, 2026: the Tribune reported it was sent earlier in 2026, and the Daily Herald reported the suspension on July 31. The open question no longer says the Village approval process did not cover a federal permit; it now gives the Tribune\u2019s account of the Stormwater Management Commission letter and the complaint\u2019s allegation about that commission\u2019s review, attributed.',
     link: '/timeline',
     linkLabel: 'See the timeline',
   },
   {
     date: '2026-10-01',
     kind: 'corrected',
-    title: 'Public comment session entry now gives the days as reported',
+    title: 'Public comment session: dates and wording now from the Village\u2019s own press releases',
     description:
-      'The August 19, 2026 entry on the extended public comment session no longer gives August 17 and August 19 as the dates of the announcement and the postponement. The cited report gives them as Monday and Wednesday of that week, and the entry now attributes them to it. The Village\u2019s statement is quoted as written, and the session is described as postponed, the word the Village used.',
+      'The August 19, 2026 timeline entry and the matching action now cite the Village\u2019s August 17 and August 19 press releases. They give the dates the Village gives, say the session was postponed, the Village\u2019s word, and quote the Village\u2019s reasons as written. News reports that gave other days for the announcement are no longer relied on.',
     link: '/timeline',
     linkLabel: 'See the timeline',
   },
@@ -51,6 +51,15 @@ export const updates = [
     title: 'State representative quotation corrected',
     description:
       'The August 30, 2026 entry quoted Rep. Daniel Didech as saying residents deserve answers on \u201cother relevant concerns.\u201d The quotation now reads as published: \u201cother relevant questions that may arise.\u201d',
+    link: '/timeline',
+    linkLabel: 'See the timeline',
+  },
+  {
+    date: '2026-10-01',
+    kind: 'corrected',
+    title: '\u201cPOWER Act\u201d now named with its bill numbers',
+    description:
+      'The August 30, 2026 entry now gives the name in quotation marks with the bill numbers, the so-called \u201cPOWER Act\u201d (HB5513 / SB4016), and says that the bill text does not use the name. It cites the two bills\u2019 status pages on ilga.gov and the Village\u2019s August 4 statement that calls House Bill 5513 the \u201cIllinois POWER Act.\u201d',
     link: '/timeline',
     linkLabel: 'See the timeline',
   },

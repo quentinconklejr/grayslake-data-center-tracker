@@ -16,9 +16,9 @@ export const timelineEvents = [
   {
     date: "2024-05-02",
     title: "Land acquisition begins",
-    description: "The first recorded purchase predates the start of the Village approval process by four months. County parcel records show $29,356,282 recorded against three parcels on May 2, 2024; the Village FAQ dates the approval process from 9/23/2024 to 5/6/2025. The following totals are calculated from county parcel records. The three parcels sold on May 2, 2024 total 69.9 acres. A further $17,000,000 was recorded against five parcels totalling 89.4 acres in January 2025, and three further recordings in April and May 2025 bring recorded consideration to $62,968,250. The last of those recordings is dated May 6, 2025, the day the Village FAQ gives as the end of the approval process. That total covers 55 of the 57 parcels, or 223.8 of the 287.8 acres: two parcels totalling 64.0 acres carry no recorded sale in the county layer. Crain\u2019s Chicago Business reported in May 2024, citing The Real Deal, that \u201cT5 paid $29.4 million for 134 acres.\u201d That pairs the first sale amount with a larger acreage the county does not associate with it; 134.9 acres, also calculated from county parcel records, is the size of T5\u2019s largest contiguous block, not that purchase.",
+    description: "The first recorded purchase predates the start of the Village approval process by four months. County parcel records show $29,356,282 recorded against three parcels on May 2, 2024; the Village FAQ dates the approval process from 9/23/2024 to 5/6/2025. The following totals are calculated from county parcel records. The three parcels sold on May 2, 2024 total 69.9 acres. A further $17,000,000 was recorded against five parcels totalling 89.4 acres in January 2025, and three further recordings in April and May 2025 bring recorded consideration to $62,968,250. The last of those recordings is dated May 6, 2025, the day the Village FAQ gives as the end of the approval process. That total covers 55 of the 57 parcels, or 223.8 of the 287.8 acres: two parcels totalling 64.0 acres carry no recorded sale in the county layer. Larger acreages reported for the first purchase come from news coverage. The Real Deal reported in May 2024 a \u201c$29.4 million sale of vacant land\u201d to a T5 venture planning \u201cmultiple data center buildings across 160 acres,\u201d and, citing Lake County records, that the seller \u201csold four parcels totaling more than 134 acres\u201d and gave T5 an option on another 45 acres. Crain\u2019s Chicago Business reported the project \u201con 160 acres it acquired in Grayslake\u201d and, citing The Real Deal, that \u201cT5 paid $29.4 million for 134 acres.\u201d The current county parcel layer associates the May 2, 2024 sale with three parcels totalling 69.9 acres, calculated from county parcel records; 134.9 acres, also calculated from county parcel records, is the size of T5\u2019s largest contiguous block, not that purchase.",
     category: "development",
-    sourceKeys: ["lakecountygis", "villagefaq_archived", "crains2024"],
+    sourceKeys: ["lakecountygis", "villagefaq_archived", "trd2024", "crains2024"],
   },
   {
     date: "2025-10",
@@ -149,10 +149,10 @@ export const timelineEvents = [
   },
   {
     date: "2026-08-19",
-    title: "Village cancels special public comment session, cites social media threats",
-    description: "The Lake and McHenry County Scanner reported that the Village of Grayslake announced on Monday a one-time extended public comment session on the T5 project, set for 6 p.m. Thursday, August 20, at the University Center of Lake County, and that on Wednesday the Village postponed it. The Village stated that \u201crecent social media posts, and other information, over the past 24 hours have raised safety concerns about the session\u201d and that area law enforcement agencies had expressed similar concerns. The Village also announced new security measures for future board meetings, including pre-entry screening for attendees and a prohibition on bags, backpacks and similar items inside village hall.",
+    title: "Village postpones extended public comment session, citing safety concerns",
+    description: "On August 17, 2026, the Village of Grayslake announced a one-time extended public comment session on the approved data center campus for Thursday, August 20 at 6 pm at the University Center of Lake County. On August 19 the Village announced that the session \u201chas been postponed,\u201d stating that the University Center \u201chas informed the Village that it can no longer host the meeting\u201d and that \u201crecent social media posts, and other information, over the past 24 hours have raised safety concerns about the session.\u201d The August 17 release also announced public safety measures for Village Board meetings starting August 18, including pre-entry screening for attendees and a prohibition on bags, backpacks and similar items inside the Village Hall.",
     category: "policy",
-    sourceKey: "scannerCancellation2026",
+    sourceKeys: ["villagePressRelease0817_2026", "villagePressRelease0819_2026"],
   },
   {
     date: "2026-08-18",
@@ -164,9 +164,9 @@ export const timelineEvents = [
   {
     date: "2026-08-30",
     title: "State representative says project should not proceed without answers",
-    description: "Illinois State Rep. Daniel Didech (D-Buffalo Grove) said the project should not proceed unless the Village and the developer demonstrate it will not harm energy costs, water quality and availability, noise levels or ecological health, saying residents \u201cdeserve concrete evidence and clear answers on each of these issues and other relevant questions that may arise.\u201d He also criticized limiting public comment to 15 minutes at future meetings, and said he plans to push the POWER Act during the fall veto session, which would require data centers to disclose water and electricity consumption. The Village and T5 were not quoted in response.",
+    description: "Illinois State Rep. Daniel Didech (D-Buffalo Grove) said the project should not proceed unless the Village and the developer demonstrate it will not harm energy costs, water quality and availability, noise levels or ecological health, saying residents \u201cdeserve concrete evidence and clear answers on each of these issues and other relevant questions that may arise.\u201d He also criticized limiting public comment to 15 minutes at future meetings, and said he plans to push for passage of the so-called \u201cPOWER Act\u201d (HB5513 / SB4016) during the fall veto session, legislation that would require data centers to disclose water and electricity consumption. The bill text does not use the name. The Village and T5 were not quoted in response.",
     category: "policy",
-    sourceKey: "scannerDidech2026",
+    sourceKeys: ["scannerDidech2026", "ilgaHB5513", "ilgaSB4016", "villagePowerAct2026"],
   },
   {
     date: "2026-09-01",
