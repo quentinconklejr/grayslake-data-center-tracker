@@ -10,6 +10,87 @@
  */
 export const updates = [
   {
+    date: '2026-10-01',
+    kind: 'corrected',
+    title: 'July 2 wetland reporting now cited to the Chicago Tribune original',
+    description:
+      'The July 2, 2026 Chicago Tribune article by Joseph States on the wetland fill application and the September 2025 Stormwater Management Commission letter is now cited to the Tribune\u2019s own page, with an archived copy from the day it was published. It was cited to a republication by the Illinois Environmental Council, which carried only the first part of the article.',
+    link: 'C:/Program Files/Git/actions',
+    linkLabel: 'See the actions',
+  },
+  {
+    date: '2026-10-01',
+    kind: 'corrected',
+    title: 'Documents page labels now show each source\u2019s tier',
+    description:
+      'The labels on the Documents page now come from the site\u2019s source registry and show each source\u2019s tier. The Lake and McHenry County Scanner and Chronicle Media, which were labeled \u201cprimary,\u201d are now labeled \u201cTier 3 \u00b7 news report\u201d; established outlets such as the Daily Herald and the Chicago Tribune are \u201cTier 2 \u00b7 established outlet\u201d; government records and court filings are \u201cTier 1 \u00b7 public record\u201d; trade publications, aggregators and advocacy groups are labeled as such at Tier 3.',
+    link: 'C:/Program Files/Git/documents',
+    linkLabel: 'See the documents',
+  },
+  {
+    date: '2026-10-01',
+    kind: 'corrected',
+    title: 'Land acquisition entry: acreage corrected, totals labeled as calculated, reported acreages attributed',
+    description:
+      'The May 2, 2024 land acquisition entry now gives the January 2025 parcels as 89.4 acres (it said 89.3; the county parcel acreages sum to 89.35), says that its acreage and dollar totals are calculated from county parcel records, and takes the approval dates from the Village FAQ. It now attributes the larger acreages reported for the first purchase to where they came from: 160 acres (the planned project area) and \u201cmore than 134 acres\u201d to The Real Deal, which cited Lake County records for the 134, and both figures as Crain\u2019s Chicago Business reported them.',
+    link: '/timeline',
+    linkLabel: 'See the timeline',
+  },
+  {
+    date: '2026-10-01',
+    kind: 'corrected',
+    title: 'Wetland permit: \u201cSection 404\u201d and unsourced dates removed across the site',
+    description:
+      'The timeline entry, the two wetland actions, the wetland key figure and the related open question now describe T5\u2019s application as one to the U.S. Army Corps of Engineers to fill 15.75 acres of wetlands, as the cited Daily Herald and Chicago Tribune reporting does; none of the sources names Section 404. They no longer say the application was filed in June 2026 or suspended on July 31, 2026: the Tribune reported on June 5, 2026 that it was sent \u201cearlier this year\u201d, and the Daily Herald reported the suspension on July 31. The open question no longer says the Village approval process did not cover a federal permit; it now gives the Tribune\u2019s account of the Stormwater Management Commission letter and the complaint\u2019s allegation about that commission\u2019s review, attributed.',
+    link: '/timeline',
+    linkLabel: 'See the timeline',
+  },
+  {
+    date: '2026-10-01',
+    kind: 'corrected',
+    title: 'Public comment session: dates and wording now from the Village\u2019s own press releases',
+    description:
+      'The August 19, 2026 timeline entry and the matching action now cite the Village\u2019s August 17 and August 19 press releases. They give the dates the Village gives, say the session was postponed, the Village\u2019s word, and quote the Village\u2019s reasons as written. News reports that gave other days for the announcement are no longer relied on.',
+    link: '/timeline',
+    linkLabel: 'See the timeline',
+  },
+  {
+    date: '2026-10-01',
+    kind: 'corrected',
+    title: 'County zoning hearing attendance corrected',
+    description:
+      'The August 18, 2026 County zoning board entry said Chronicle Media reported more than 225 people attended. Chronicle Media reported more than 125 people in the meeting room and another 100 in the hallway and stairwell; the entry now says that.',
+    link: '/timeline',
+    linkLabel: 'See the timeline',
+  },
+  {
+    date: '2026-10-01',
+    kind: 'corrected',
+    title: 'State representative quotation corrected',
+    description:
+      'The August 30, 2026 entry quoted Rep. Daniel Didech as saying residents deserve answers on \u201cother relevant concerns.\u201d The quotation now reads as published: \u201cother relevant questions that may arise.\u201d',
+    link: '/timeline',
+    linkLabel: 'See the timeline',
+  },
+  {
+    date: '2026-10-01',
+    kind: 'corrected',
+    title: '\u201cPOWER Act\u201d now named with its House bill number',
+    description:
+      'The August 30, 2026 entry now gives the name in quotation marks with the House bill it is attached to, the so-called \u201cPOWER Act\u201d (HB5513), and says that the bill text does not use the name. It names SB4016 by number only, as the Senate bill with an identical synopsis. It cites both bills\u2019 status pages on ilga.gov and the Village\u2019s August 4 statement, which calls House Bill 5513 the \u201cIllinois POWER Act.\u201d',
+    link: '/timeline',
+    linkLabel: 'See the timeline',
+  },
+  {
+    date: '2026-10-01',
+    kind: 'corrected',
+    title: 'First building permit entry: foundation permit date removed',
+    description:
+      'The September 1, 2026 entry said the foundation permit was issued on July 31. No cited source gives that date; the Daily Herald reported in July that a foundation permit had already been issued. The entry now says that, and cites the complaint for the lawsuit\u2019s July 31 filing date.',
+    link: '/timeline',
+    linkLabel: 'See the timeline',
+  },
+  {
     date: '2026-09-15',
     kind: 'corrected',
     title: 'Site-wide figures now lead with what the ordinances state',

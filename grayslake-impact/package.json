@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "node scripts/extract-doc-meta.js && vite build && node scripts/build-route-html.js && node scripts/build-seo-files.js",
+    "build": "node scripts/build-source-tiers.js && node scripts/extract-doc-meta.js && vite build && node scripts/build-route-html.js && node scripts/build-seo-files.js",
     "extract-doc-meta": "node scripts/extract-doc-meta.js",
     "check-links": "node scripts/check-links.js",
     "screenshot": "node scripts/screenshot.js",
@@ -17,7 +17,8 @@
     "check-contrast": "node scripts/check-contrast.js",
     "a11y": "node scripts/a11y.js",
     "build:icons": "python3 scripts/generate-icons.py",
-    "audit:records": "node scripts/audit-records.mjs"
+    "audit:records": "node scripts/audit-records.mjs",
+    "source-tiers": "node scripts/build-source-tiers.js"
   },
   "dependencies": {
     "@fontsource/ibm-plex-mono": "^5.3.0",
@@ -47,6 +48,7 @@
     "postcss": "^8.5.15",
     "puppeteer": "^25.12.0",
     "tailwindcss": "^3.4.19",
-    "vite": "^8.0.12"
+    "vite": "^8.0.12",
+    "yaml": "^2.9.1"
   }
 }
