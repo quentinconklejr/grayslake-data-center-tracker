@@ -57,9 +57,9 @@ export const updates = [
   {
     date: '2026-10-01',
     kind: 'corrected',
-    title: '\u201cPOWER Act\u201d now named with its bill numbers',
+    title: '\u201cPOWER Act\u201d now named with its House bill number',
     description:
-      'The August 30, 2026 entry now gives the name in quotation marks with the bill numbers, the so-called \u201cPOWER Act\u201d (HB5513 / SB4016), and says that the bill text does not use the name. It cites the two bills\u2019 status pages on ilga.gov and the Village\u2019s August 4 statement that calls House Bill 5513 the \u201cIllinois POWER Act.\u201d',
+      'The August 30, 2026 entry now gives the name in quotation marks with the House bill it is attached to, the so-called \u201cPOWER Act\u201d (HB5513), and says that the bill text does not use the name. It names SB4016 by number only, as the Senate bill with an identical synopsis. It cites both bills\u2019 status pages on ilga.gov and the Village\u2019s August 4 statement, which calls House Bill 5513 the \u201cIllinois POWER Act.\u201d',
     link: '/timeline',
     linkLabel: 'See the timeline',
   },
