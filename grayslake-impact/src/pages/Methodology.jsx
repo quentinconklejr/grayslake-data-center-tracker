@@ -4,6 +4,7 @@ import Container from '../components/layout/Container'
 import ReportErrorLink from '../components/ui/ReportErrorLink'
 import { pageMeta } from '../data/pageMeta'
 import { updates } from '../data/updates'
+import { tierLabels } from '../data/sourceTiers'
 import { LAST_VERIFIED, SITE_CONTACT } from '../data/siteConfig'
 
 /*
@@ -25,24 +26,30 @@ const H2 = 'text-2xl sm:text-3xl font-display text-ink-900 tracking-tight scroll
 const P = 'text-base font-sans text-ink-700 leading-relaxed max-w-2xl'
 const TEXT_LINK = 'text-accent hover:text-accent-hover underline underline-offset-4 decoration-accent'
 
+// The label names shown on the Documents page for each tier, read from the
+// source registry (config/sources.yaml via src/data/sourceTiers.js).
+const labelsFor = n => Object.values(tierLabels)
+  .filter(l => l.startsWith(`Tier ${n} `))
+  .map(l => l.split(' · ')[1])
+
 const TIERS = [
   {
-    tier: 'Tier 1',
+    tier: 1,
     name: 'The record itself',
     text: 'Village of Grayslake agendas, approved minutes, ordinances, permits and press releases; Lake County Board and Zoning Board of Appeals records; the county’s parcel map data and recorded documents; court filings; bill text and status on ilga.gov; notices and permits from state and federal agencies; and official meeting video. When I cite one, I state what the document says or records and link to it, with a page number where I can.',
   },
   {
-    tier: 'Tier 2',
+    tier: 2,
     name: 'An established news outlet',
     text: 'An article with a named reporter from one of six outlets: the Daily Herald, the Chicago Tribune, the Lake County News-Sun, the Chicago Sun-Times, Crain’s Chicago Business and Capitol News Illinois. I attribute what they report to them by name.',
   },
   {
-    tier: 'Tier 3',
+    tier: 3,
     name: 'Other reporting and secondary sources',
     text: 'Trade publications, sites that rewrite other outlets’ stories, republished articles, advocacy groups, blogs, and articles from a Tier 2 outlet that carry no reporter’s name. The Lake and McHenry County Scanner and Chronicle Media are in this tier. Some entries cite a Tier 3 report on its own, such as a lawmaker’s statement that only the Scanner reported. When a Tier 1 or Tier 2 source covers the same thing, I cite that instead.',
   },
   {
-    tier: 'Tier 4',
+    tier: 4,
     name: 'Leads only',
     text: 'Social media posts, anonymous posts, comment sections and websites I have not reviewed. I never cite or quote them. At most they tell me where to look.',
   },
@@ -55,7 +62,7 @@ const LABELS = [
   ['Projections', 'Forecasts, such as tax revenue, jobs or build-out dates, are labeled as projections and attributed to whoever made them.'],
   ['News reports', 'When I rely on a news report, I name the outlet (“the Daily Herald reported”).'],
   ['Figures I calculate', 'When I add up figures myself, for example acreage and sale totals from county parcel records, I say that the figure is calculated and what it was calculated from.'],
-  ['Names the record does not use', 'Some officials and advocates call HB5513 and SB4016 the “POWER Act.” The bill text does not use that name, so I use it only in quotation marks, next to the bill numbers.'],
+  ['Names the record does not use', 'The Village’s mayor calls HB5513 the “POWER Act.” The bill text does not use the name, so I use it only in quotation marks, next to the bill number. Advocacy groups also attach the name to SB4016, the Senate bill with an identical synopsis; when I mention that, I say it is their label.'],
   ['Quotations', 'Words in quotation marks are copied exactly from the source. I do not shorten a quotation with an ellipsis.'],
   ['Private individuals', 'I do not name private residents, and I do not publish anyone’s health, address or family details. Public officials are named in their official roles.'],
 ]
@@ -94,18 +101,19 @@ export default function Methodology() {
           {TIERS.map(t => (
             <div key={t.tier} className="border-b border-rule-strong py-5 sm:grid sm:grid-cols-[9rem_minmax(0,1fr)] sm:gap-6">
               <dt>
-                <span className="block text-2xs font-sans font-semibold uppercase tracking-wide text-ink-500">{t.tier}</span>
+                <span className="block text-2xs font-sans font-semibold uppercase tracking-wide text-ink-500">Tier {t.tier}</span>
                 <span className="block mt-1 text-base font-display font-semibold text-ink-900 leading-snug">{t.name}</span>
+                <span className="block mt-1 text-xs font-sans text-ink-500">Labeled: {labelsFor(t.tier).join(', ')}</span>
               </dt>
               <dd className="mt-2 sm:mt-0 text-base font-sans text-ink-700 leading-relaxed">{t.text}</dd>
             </div>
           ))}
         </dl>
         <p className={P}>
-          The labels on the <Link to="/documents" className={TEXT_LINK}>Documents</Link> page (primary,
-          trade, aggregator) describe what kind of publication a source is: a record or an outlet&rsquo;s
-          own reporting, an industry publication, or a site that rewrites others&rsquo; reporting. They are
-          not the tiers above.
+          Every source on the <Link to="/documents" className={TEXT_LINK}>Documents</Link> page carries
+          its tier and the kind of source it is, for example &ldquo;{tierLabels.news_report}.&rdquo; Those
+          labels are generated from the same list of sources and tiers that the review scripts use, not
+          set by hand.
         </p>
       </section>
 
