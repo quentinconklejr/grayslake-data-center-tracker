@@ -12,6 +12,15 @@ export const updates = [
   {
     date: '2026-10-01',
     kind: 'corrected',
+    title: 'July 2 wetland reporting now cited to the Chicago Tribune original',
+    description:
+      'The July 2, 2026 Chicago Tribune article by Joseph States on the wetland fill application and the September 2025 Stormwater Management Commission letter is now cited to the Tribune\u2019s own page, with an archived copy from the day it was published. It was cited to a republication by the Illinois Environmental Council, which carried only the first part of the article.',
+    link: 'C:/Program Files/Git/actions',
+    linkLabel: 'See the actions',
+  },
+  {
+    date: '2026-10-01',
+    kind: 'corrected',
     title: 'Documents page labels now show each source\u2019s tier',
     description:
       'The labels on the Documents page now come from the site\u2019s source registry and show each source\u2019s tier. The Lake and McHenry County Scanner and Chronicle Media, which were labeled \u201cprimary,\u201d are now labeled \u201cTier 3 \u00b7 news report\u201d; established outlets such as the Daily Herald and the Chicago Tribune are \u201cTier 2 \u00b7 established outlet\u201d; government records and court filings are \u201cTier 1 \u00b7 public record\u201d; trade publications, aggregators and advocacy groups are labeled as such at Tier 3.',

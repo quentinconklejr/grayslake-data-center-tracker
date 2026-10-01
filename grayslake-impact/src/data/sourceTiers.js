@@ -72,9 +72,9 @@ export const sourceTiers = {
     "label": "Tier 2 · established outlet"
   },
   "chitrib_jul2026": {
-    "tier": 3,
-    "registryId": "illinois-environmental-council",
-    "label": "Tier 3 · advocacy group"
+    "tier": 2,
+    "registryId": "chicago-tribune",
+    "label": "Tier 2 · established outlet"
   },
   "chronicle2026": {
     "tier": 3,
