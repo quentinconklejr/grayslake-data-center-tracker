@@ -174,6 +174,15 @@ export const sources = {
     archiveUrl: "https://web.archive.org/web/20260927074744/https://www.mundelein.org/m/newsflash/Home/Detail/230",
     tier: "primary",
   },
+  crains2024: {
+    category: "news",
+    title: "T5 buys Alter Group property for Grayslake data center",
+    publisher: "Crain's Chicago Business",
+    date: "May 8, 2024",
+    url: "https://www.chicagobusiness.com/commercial-real-estate/t5-buys-alter-group-property-grayslake-data-center",
+    archiveUrl: "https://web.archive.org/web/20250429051330/https://www.chicagobusiness.com/commercial-real-estate/t5-buys-alter-group-property-grayslake-data-center",
+    tier: "primary",
+  },
   dailyherald_jul2026: {
     category: "news",
     title: "Data center company suspends wetland permit application in light of community concern",
