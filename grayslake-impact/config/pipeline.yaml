@@ -112,14 +112,58 @@ triage:
     - SB 4016
     - SB2181
     - SB 2181
+    # Developer entities and agreements not derived from the data files.
+    - Alter Asset Management
+    - Alter Group
+    - Cornerstone SUP
+    - Cornerstone Property
+    - Heartland
+  # Further strong terms are derived at run time from the site's own data
+  # (triage.mjs derivedTerms): parcel owner names from parcels.geojson, the
+  # project name, party names and ordinance numbers from records.js, and the
+  # case caption from sources.js. The 57 parcel PINs are added as before.
   project_terms: [data center, data centers, data centre, datacenter, hyperscale]
   local_terms: [Grayslake, Cornerstone, Peterson Road, Route 83, Alleghany, Lake County, ComEd, Mundelein, Round Lake, Avon Township]
   # PDF pages kept around each matching page, so a sentence that runs over a
   # page break is not cut.
   page_context: 1
-  # Bill actions worth drafting (matched against "HB5513 <date> <chamber>: <action>");
-  # co-sponsor additions and readings are routine and left out.
-  significant_bill_actions: "Filed with the Clerk|Assigned to|Committee Hearing|Do Pass|Amendment No|Third Reading|Passed|Sent to the Governor|Governor Approved|Public Act|Veto|Re-referred|Rule 19|Rule 3-9|Session Sine Die|Tabled|Postponed"
+  # Owner decision D-4: only significant bill milestones (chamber passage,
+  # governor action, effective dates), matched against
+  # "HB5513 <date> <chamber>: <action>". Everything else is routine.
+  significant_bill_actions: "Third Reading - Passed|Passed Both Houses|Sent to the Governor|Governor Approved|Governor Vetoed|Veto|Public Act|Effective Date"
+
+# --- Privacy (owner decision D-2) -------------------------------------------------
+# Drafts never name a private individual or give their health, medical,
+# address or family details; individual plaintiffs are "a plaintiff". Public
+# officials and public figures in their official role may be named. A draft
+# that trips the check goes to human review, not to a PR.
+privacy:
+  # The case caption may appear exactly as listed (the parties named in it are
+  # organisations).
+  case_captions:
+    - Preservation of Community Well-being Collective LLC et al. v. Village of Grayslake, T5 Data Centers LLC, and Alter Asset Management Company
+  # People who may be named: officials and public figures in their public role.
+  allowed_people:
+    - Elizabeth Davies
+    - Rhett Taylor
+    - Daniel Didech
+    - Esiah A. Campos
+    - Sandy Hart
+    - Robin D. Meier
+    - Robin Meier
+    - William Soucie
+    - JB Pritzker
+    - Robyn Gabel
+    - Ann M. Williams
+    - Ram Villivalam
+    - Pete Marin
+    - Chloe Russell
+    - Erin Cartwright Weinstein
+    - Sam Borcia
+    - Mick Zawislak
+    - Joseph States
+  # Trustees appear by surname with their title ("Trustee Sahu").
+  allowed_surnames_with_title: [Waldenstrom, Davies, Kornit, Vogel, Magnetta, Sahu, Engdahl, Taylor, Meier, Didech, Hart, Marin]
 
 # --- Scheduled job (Stage D) -----------------------------------------------------
 # One Task Scheduler entry runs pipeline/scripts/run-job.mjs every 30 minutes;
@@ -157,3 +201,7 @@ notify:
     token_env: NTFY_TOKEN
     tiers: [1]                     # content alerts only for Tier 1 drafts
     health_alerts: true
+    # Real ntfy pushes even while the job is a dry run (they touch nothing on
+    # the site). The link points to the dry-run PR file in the private repo.
+    send_in_dry_run: true
+    dry_run_link_base: https://github.com/quentinconklejr/private-info/blob/main/

@@ -29,6 +29,11 @@ sources:
   - id: village-grayslake
     name: Village of Grayslake
     tier: 1
+    # Owner decision D-1 (2026-10-01): the Village is a defendant in
+    # 2026CH00000171. Claims from its own channels are attributed ("the
+    # Village stated"); only record facts (dates, votes, document existence,
+    # numbers in official records) are stated as fact.
+    litigation_party: Village of Grayslake
     domains: [villageofgrayslake.com]
     automate: true
   - id: lake-county

@@ -283,7 +283,16 @@ export function checkClaim(claim, source, cfg, opts = {}) {
   const quotes = Array.isArray(claim?.supporting_quotes) ? claim.supporting_quotes : []
   if (!quotes.length) failures.push({ check: 'quote', reason: 'no_supporting_quote' })
 
-  const results = quotes.map(q => ({ quote: q, ...checkQuote(q, source, cfg) }))
+  // A Tier 1 record row is quoted whole, so it may be shorter than a normal
+  // quote; it must then be the entire source text, not a fragment of it.
+  const results = quotes.map(q => {
+    if (opts.record) {
+      const r = checkQuote(q, source, { ...cfg, minChars: cfg.recordMinChars, minWords: cfg.recordMinWords })
+      if (r.ok && canon(q) !== source.canon) return { quote: q, ok: false, reason: 'record_quote_not_whole_row' }
+      return { quote: q, ...r }
+    }
+    return { quote: q, ...checkQuote(q, source, cfg) }
+  })
   for (const r of results) if (!r.ok) failures.push({ check: 'quote', reason: r.reason, value: r.quote, detail: r.detail, nearest: r.nearest })
 
   const passed = results.filter(r => r.ok)

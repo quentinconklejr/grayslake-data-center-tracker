@@ -8,7 +8,7 @@
  * error message. In dry-run mode the notification is written to
  * reports/dry-run/<run>/ntfy.jsonl with the topic and token redacted.
  */
-export function makeNotifier({ ncfg, live, env = process.env, store, dryRunDir, fetchImpl = fetch }) {
+export function makeNotifier({ ncfg, live, dryRunJob = false, env = process.env, store, dryRunDir, fetchImpl = fetch }) {
   const topic = env[ncfg?.topic_env ?? 'NTFY_TOPIC']
   const token = env[ncfg?.token_env ?? 'NTFY_TOKEN']
   const configured = Boolean(ncfg?.enabled && topic)
@@ -16,7 +16,9 @@ export function makeNotifier({ ncfg, live, env = process.env, store, dryRunDir, 
 
   async function send({ title, message, url, priority = 'default', tags = [] }) {
     const payload = { title: String(title).slice(0, 120), message: String(message ?? '').slice(0, 300), click: url ?? null, priority, tags }
-    if (!live) {
+    // Not sending for real (dry run, or no topic set): the payload goes to a
+    // file with the topic and token redacted.
+    if (!live || !configured) {
       store.appendJsonl(`${dryRunDir}/ntfy.jsonl`, { ...payload, at: new Date().toISOString(), topic: topic ? '[set, redacted]' : '[not set]', token: token ? '[set, redacted]' : '[not set]', mode: 'dry-run' })
       sent.push({ ...payload, mode: 'dry-run' })
       return { ok: true, mode: 'dry-run' }
@@ -40,7 +42,7 @@ export function makeNotifier({ ncfg, live, env = process.env, store, dryRunDir, 
     /** A Tier 1 draft is ready for review. */
     async draftReady(d, prUrl) {
       if (!(ncfg?.tiers ?? [1]).includes(d.effectiveTier)) return { ok: true, skipped: `tier ${d.effectiveTier} is not alerted` }
-      return send({ title: `Tracker draft: ${d.entry?.title ?? d.title}`, message: `Tier ${d.effectiveTier} draft ready for review.`, url: prUrl, priority: 'high', tags: ['memo'] })
+      return send({ title: `Tracker draft${dryRunJob ? " (dry run)" : ""}: ${d.entry?.title ?? d.title}`, message: dryRunJob ? `Tier ${d.effectiveTier} dry-run draft: nothing was opened on the site repo.` : `Tier ${d.effectiveTier} draft ready for review.`, url: prUrl, priority: 'high', tags: ['memo'] })
     },
     async health(text) {
       if (ncfg?.health_alerts === false) return { ok: true, skipped: 'health alerts off' }

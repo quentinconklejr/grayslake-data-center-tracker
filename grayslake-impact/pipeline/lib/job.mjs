@@ -129,7 +129,9 @@ export async function runJob(deps) {
         url = (await openLivePr(d, pr, { jcfg, liveFlag: deps.liveFlag, run: deps.run })).url
       } else {
         const base = writeDryRun(store, dryDir, i + 1, pr, diff, ghCommandPreview(pr, jcfg))
-        url = `(dry run) ${store.path(base + '.md')}`
+        // In a dry run the link is the PR file in the private repo, which the
+        // job pushes at the end of the run (readable in the GitHub app).
+        url = cfg.notify?.ntfy?.dry_run_link_base ? `${cfg.notify.ntfy.dry_run_link_base}${base}.md` : `(dry run) ${store.path(base + '.md')}`
       }
       report.prs.push({ branch: pr.branch, title: pr.title, tier: d.effectiveTier, url })
       const n = await deps.notifier.draftReady(d, url)

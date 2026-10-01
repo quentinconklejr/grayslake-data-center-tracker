@@ -9,6 +9,7 @@
  *                                                 sources behind existing entries)
  *   npm run pipeline:stage-c -- --corpus-only
  *   npm run pipeline:stage-c -- --max-chunks 8
+ *   npm run pipeline:stage-c -- --ids village-newsflash:2ee928d7800b6d86,corpus:complaint2026
  *
  * Writes only to the private store (shadow/stage-c/<run>/, logs/). Opens no
  * pull request and changes nothing in this repository.
@@ -35,6 +36,8 @@ const registry = loadRegistry()
 const store = openStore(cfg.private_store.dir)
 const provider = createProvider(cfg)
 const runId = new Date().toISOString().replace(/[:.]/g, '-')
+// --ids a,b: only these items (shadow ids, or corpus:<sourceKey>), processed again.
+const ids = arg('ids') ? new Set(arg('ids').split(',')) : null
 
 function walk(dir, acc = []) {
   if (!existsSync(dir)) return acc
@@ -48,15 +51,17 @@ if (!has('corpus-only')) {
   for (const p of walk(store.path('shadow/items'))) {
     const rel = p.slice(store.root.length + 1).replace(/\\/g, '/')
     const it = store.readJson(rel)
-    if (it.stageC && !has('all')) continue
+    if (ids && !ids.has(it.id)) continue
+    if (it.stageC && !has('all') && !ids) continue
     it._path = rel
     shadowPaths.push(rel)
     inputs.push(fromShadow(it, { registry, store }))
   }
 }
-if (has('corpus') || has('corpus-only')) {
+if (has('corpus') || has('corpus-only') || ids) {
   for (const f of readdirSync(store.path('corpus/sources'))) {
     const rec = store.readJson(`corpus/sources/${f}`)
+    if (ids && !ids.has(`corpus:${rec.key}`)) continue
     if (rec?.text && sources[rec.key]) inputs.push(fromCorpus(rec, { registry, store, sources, existsSync }))
   }
 }

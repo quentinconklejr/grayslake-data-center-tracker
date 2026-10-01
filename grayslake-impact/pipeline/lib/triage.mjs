@@ -30,8 +30,31 @@ export function parcelPins() {
   return [...pins]
 }
 
-export function makeTriage(tcfg, pins = parcelPins()) {
-  const strong = termRe([...(tcfg.strong_terms ?? []), ...pins])
+/**
+ * Strong terms taken from the site's own data, so triage knows every name
+ * the project goes by: parcel owner names (parcels.geojson), the project
+ * name, the parties and the ordinance numbers (records.js), and the parties
+ * in the case caption (sources.js). Read as text; nothing is imported or
+ * written.
+ */
+export function derivedTerms() {
+  const read = f => readFileSync(join(ROOT, 'src/data', f), 'utf8')
+  const terms = new Set()
+  const gj = JSON.parse(read('parcels.geojson'))
+  for (const f of gj.features) if (f.properties.owner) terms.add(f.properties.owner.replace(/,?\s*(LP|LLC|Inc\.?)$/i, '').trim())
+  const rec = read('records.js')
+  for (const m of rec.matchAll(/ordinance: '([^']+)'/g)) terms.add(m[1])
+  for (const m of rec.matchAll(/parties: \[([^\]]+)\]/g)) for (const p of m[1].split(',')) { const n = p.trim().replace(/^'|'$/g, ''); if (n && !/^Village of/i.test(n)) terms.add(n) }
+  const name = /name: '([^']+)'/.exec(rec)
+  if (name) terms.add(name[1])
+  const caption = /title: "Preservation of Community[^"]*?v\. ([^"-]+)/.exec(read('sources.js'))
+  if (caption) for (const p of caption[1].split(/,\s*(?:and\s+)?|\s+and\s+/)) { const n = p.trim(); if (n && !/^Village of/i.test(n)) terms.add(n) }
+  // Generic words that would match unrelated documents are never strong terms.
+  return [...terms].filter(t => t.length >= 6 && !/^(LP|LLC|Inc)$/i.test(t))
+}
+
+export function makeTriage(tcfg, pins = parcelPins(), extra = derivedTerms()) {
+  const strong = termRe([...(tcfg.strong_terms ?? []), ...pins, ...extra])
   const project = termRe(tcfg.project_terms ?? [])
   const local = termRe(tcfg.local_terms ?? [])
   const t5 = /(?<![\p{L}\p{N}])T5(?![\p{L}\p{N}])/gu   // upper case only

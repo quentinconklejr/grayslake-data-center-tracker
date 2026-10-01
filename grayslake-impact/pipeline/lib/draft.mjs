@@ -57,6 +57,7 @@ Rules:
 - Any words inside quotation marks must be copied exactly from a quote, with “ and ” around them.
 - Every number, date and name you write must appear in the quotes.
 - Never use the words "POWER Act".
+- Never name a private individual: call an individual plaintiff "a plaintiff". Never include anyone's health, medical, address or family details. Public officials may be named in their official role.
 - Write in your own words. Anything copied from a quote goes inside quotation marks; never copy a long passage without them.
 - Never write in the first person (I, we, our, us, my) outside quotation marks.
 - title: a short sentence-case headline, no final period.
@@ -74,6 +75,23 @@ function claimsBlock(claims, item) {
 
 function examplesBlock(examples) {
   return examples.map(e => `Example (category ${e.category}):\nTitle: ${e.title}\nDescription: ${e.description}`).join('\n\n')
+}
+
+/**
+ * Title and description for one ilga.gov bill action, from the item title
+ * "HB5513 3/27/2026 House: <action>". The action is quoted whole; the bill is
+ * named by number only (the "POWER Act" hold).
+ */
+export function billTemplate(item) {
+  const m = /^([A-Z]{2}\d+) (\d{1,2})\/(\d{1,2})\/(\d{4}) (\w+): (.+)$/.exec(item.title ?? '')
+  if (!m) return null
+  const [, bill, mo, dd, yy, chamber, action] = m
+  const iso = `${yy}-${mo.padStart(2, '0')}-${dd.padStart(2, '0')}`
+  return {
+    title: `${bill}: ${action}`.slice(0, 110),
+    description: `The Illinois General Assembly’s bill status page for ${bill} records this ${chamber} action on ${apDate(iso)}: “${action}”.`,
+    category: 'policy',
+  }
 }
 
 /** Straight double quotes in pairs become curly ones; a lone quote is left alone. */
@@ -141,7 +159,7 @@ export function sourceKeyFor(item, title, existing) {
 
 function sourceRecord(item, title) {
   const category = item.partyKind === 'court_filing' || item.registryCategory === 'court' ? 'court'
-    : item.effectiveTier === 1 && !item.party ? 'government' : 'news'
+    : item.effectiveTier === 1 && (!item.party || item.party.channel === 'litigation_party') ? 'government' : 'news'
   const tier = item.registryTier <= 2 ? 'primary' : AGGREGATORS.has(item.registryId) ? 'aggregator' : 'trade'
   return {
     category,
@@ -169,7 +187,17 @@ export async function draftItem(item, claims, ctx) {
   const attempts = []
   let prose = null
   let failures = []
-  for (let attempt = 1; attempt <= 2 && !prose; attempt++) {
+  // D-4: a bill milestone is written by code from a template, not by the
+  // model, with the ilga.gov action quoted whole.
+  if (item.fetcher === 'ilga-bills') {
+    const t = billTemplate(item)
+    if (t) {
+      const g = checkDraftProse(`${t.title}. ${t.description}`, item.guardCfg, { ...opts, noUnquotedCopy: 0 })
+      attempts.push({ attempt: 1, template: true, title: t.title, guard: g.ok, failures: g.failures, notes: g.notes })
+      if (g.ok) prose = { ...t, guardNotes: g.notes }
+    }
+  }
+  for (let attempt = 1; attempt <= 2 && !prose && item.fetcher !== 'ilga-bills'; attempt++) {
     const note = attempt === 2
       ? `\n\nYour previous draft failed these checks; fix every one:\n${failures.map(f => `- ${f.check}: ${f.reason}${f.value ? ` (${JSON.stringify(f.value)})` : ''}`).join('\n')}`
       : ''
@@ -191,6 +219,15 @@ export async function draftItem(item, claims, ctx) {
     claims: claims.map(c => ({ claim_text: c.claim_text, claim_type: c.claim_type, relabeled: c.relabeled ?? null, speaker: c.speaker, outcome: c.outcome, rule: c.rule, labels: c.labels, quotes: c.supporting_quotes, guardMatch: c.guardMatch, instruction: instructionFor(c, item) })),
     status: prose ? 'ready' : 'claims_only',
     guard: prose ? 'pass' : 'fail',
+  }
+  // D-2: a draft that names a private person or gives health, address or
+  // family details goes to human review, not to a PR.
+  if (prose && ctx.privacy) {
+    const pv = ctx.privacy.check(`${prose.title}. ${prose.description}`)
+    if (!pv.ok) {
+      Object.assign(draft, { status: 'human_review', privacy: pv.failures, heldProse: { title: prose.title, description: prose.description } })
+      return draft
+    }
   }
   if (!prose || !date.date) {
     if (!date.date) draft.status = 'claims_only'

@@ -99,5 +99,8 @@ export function lookup(registry, url) {
 }
 
 function hit(s, matchedBy) {
-  return { tier: s.tier, id: s.id, name: s.name, matchedBy, entry: s, party: s.category === 'party_statement' ? s.party : null }
+  // A party's own channel: T5's website (party_statement) or a government
+  // body that is itself a party to the litigation (litigation_party, D-1).
+  const party = s.category === 'party_statement' ? s.party : (s.litigation_party ?? null)
+  return { tier: s.tier, id: s.id, name: s.name, matchedBy, entry: s, party, partyChannel: s.litigation_party ? 'litigation_party' : (party ? 'party_statement' : null) }
 }

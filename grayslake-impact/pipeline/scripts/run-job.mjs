@@ -71,7 +71,9 @@ const report = await runJob({
   provider: createProvider(cfg), triage: makeTriage(cfg.triage).triage, flagCtx: loadFlagContext(),
   http, wayback: makeWayback({ politeFetch: http, userAgent: cfg.http.user_agent }),
   fetchers: Object.fromEntries((cfg.fetchers?.enabled ?? Object.keys(FETCHERS)).map(n => [n, FETCHERS[n]])),
-  notifier: makeNotifier({ ncfg: cfg.notify.ntfy, live: cfg.job.live === true && has('live'), store, dryRunDir: `reports/dry-run/${new Date().toISOString().replace(/[:.]/g, '-')}` }),
+  // Real ntfy pushes in a live job, or in a dry run when notify.ntfy.send_in_dry_run
+  // is on (they touch nothing on the site).
+  notifier: makeNotifier({ ncfg: cfg.notify.ntfy, live: (cfg.job.live === true && has('live')) || cfg.notify.ntfy.send_in_dry_run === true, dryRunJob: !(cfg.job.live === true && has('live')), store, dryRunDir: `reports/dry-run/${new Date().toISOString().replace(/[:.]/g, '-')}` }),
   run, liveFlag: has('live'), pushStore: cfg.job.push_private_store && !has('no-push'),
 })
 

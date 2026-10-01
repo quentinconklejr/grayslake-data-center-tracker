@@ -204,7 +204,7 @@ test('job: a full dry run fetches, triages, extracts, drafts, writes PR files an
   assert.equal(r.mode, 'dry-run')
   assert.equal(r.fetch['village-newsflash'].new, 1)
   assert.equal(r.prs.length, 1)
-  assert.match(r.prs[0].url, /^\(dry run\)/)
+  assert.match(r.prs[0].url, /^https:\/\/github\.com\/quentinconklejr\/private-info\/blob\/main\/reports\/dry-run\/.+\.md$/, 'dry-run link points to the PR file in the private repo')
   const dry = store.list(`reports/dry-run/${r.runId}`)
   assert.ok(dry.some(f => f.endsWith('.md')) && dry.some(f => f.endsWith('.diff')))
   assert.ok(existsSync(store.path('reports/dry-run/test/ntfy.jsonl')))
@@ -253,8 +253,22 @@ test('job: --live alone does not go live when config job.live is false', async (
 
 test('every scheduled command uses --use-system-ca', () => {
   const ps1 = readFileSync(join(ROOT, 'pipeline/scheduler/setup-task-scheduler.ps1'), 'utf8')
-  assert.match(ps1, /\$argList = @\('--use-system-ca'/)
+  assert.match(ps1, /\$arguments = "--use-system-ca /)
+  assert.ok(!/--live/.test(ps1.match(/\$arguments = [^\n]*/)[0]), 'the scheduled task never passes --live')
+  assert.ok(!/\[switch\]\$Live/.test(ps1), 'no -Live switch')
+  assert.match(ps1, /live:\\s\*true'\) \{ throw/, 'refuses to register while job.live is true')
   const pkg = JSON.parse(readFileSync(join(ROOT, 'package.json'), 'utf8'))
   for (const [k, v] of Object.entries(pkg.scripts)) if (k.startsWith('pipeline:') && k !== 'pipeline:test') assert.match(v, /--use-system-ca/, k)
   assert.match(readFileSync(join(ROOT, 'pipeline/scripts/run-job.mjs'), 'utf8'), /execArgv\.includes\('--use-system-ca'\)/)
+})
+
+test('ntfy in a dry run: real push allowed by config, titled as a dry run, link only', async () => {
+  const store = tempStore()
+  const calls = []
+  const n = makeNotifier({ ncfg: cfg.notify.ntfy, live: true, dryRunJob: true, env: { NTFY_TOPIC: 't' }, store, dryRunDir: 'd', fetchImpl: async (u, o) => { calls.push(o); return { ok: true, status: 200 } } })
+  await n.draftReady({ effectiveTier: 1, entry: { title: 'X' } }, 'https://github.com/quentinconklejr/private-info/blob/main/reports/dry-run/r/01.md')
+  assert.match(calls[0].headers.Title, /(dry run)/)
+  assert.match(calls[0].body, /nothing was opened on the site repo/)
+  assert.equal(cfg.notify.ntfy.send_in_dry_run, true)
+  assert.equal(cfg.job.live, false, 'the job itself stays a dry run')
 })

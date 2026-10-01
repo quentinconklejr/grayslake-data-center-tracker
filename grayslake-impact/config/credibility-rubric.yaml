@@ -366,6 +366,12 @@ verbatim_guard:
     max_chars: 600
     reject_if_contains: ["...", "…", "[", "]"]   # no elisions, no editorial insertions
     must_be_unique_or_first_occurrence_recorded: true
+  # Owner decision D-4: a Tier 1 record row (one bill action on ilga.gov) is
+  # quoted whole. Rows are short ("Senate: Passed Both Houses"), so the
+  # minimum is lower; the quote must still be the entire row, exactly.
+  record_quote_rules:
+    min_chars: 10
+    min_words: 2
   claim_quote_consistency:
     # Every number, money amount, date and proper name in the drafted claim
     # must appear in one of that claim's verified quotes.

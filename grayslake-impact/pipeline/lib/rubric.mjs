@@ -91,5 +91,7 @@ export function guardConfig(rubric) {
     maxChars: g.quote_rules.max_chars,
     rejectIfContains: g.quote_rules.reject_if_contains,
     speakerWindow: g.claim_quote_consistency.named_speaker_within_chars_of_quote,
+    recordMinChars: g.record_quote_rules?.min_chars ?? g.quote_rules.min_chars,
+    recordMinWords: g.record_quote_rules?.min_words ?? g.quote_rules.min_words,
   }
 }

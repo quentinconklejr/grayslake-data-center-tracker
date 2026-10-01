@@ -267,11 +267,13 @@ test('Stage C: routine bill actions are filtered before extraction; significant 
   const mk = (id, action) => ({ origin: 'shadow', id, fetcher: 'ilga-bills', title: `HB5513 3/27/2026 House: ${action}`, url, text: `HB5513. 3/27/2026. House: ${action}`, kind: 'record', published: '2026-03-27', registryHit: lookup(registry, url), registryId: 'ilga', registryTier: 1, publisher: 'Illinois General Assembly' })
   let calls = 0
   const provider = { model: 'stub', budgetChars: () => 20000, async generateJSON() { calls++; return { content: JSON.stringify({ document: { doc_type: 'bill_status', published_date: null, byline: [], is_about_t5_grayslake: 'no', origin: 'originates', repeats_whom: null }, claims: [] }), usage: { inputTokens: 1, outputTokens: 1 }, durationMs: 1, warnings: [] } } }
-  const r = await processItems([mk('a', 'Added Co-Sponsor Rep. A'), mk('b', 'First Reading'), mk('c', 'Rule 19(a) / Re-referred to Rules Committee')], { cfg, rubric, gcfg, provider, triage, flagCtx: loadFlagContext(), sources, timelineEvents, runId: 't', today: '2026-10-01' })
+  const r = await processItems([mk('a', 'Added Co-Sponsor Rep. A'), mk('b', 'Rule 19(a) / Re-referred to Rules Committee'), mk('c', 'Third Reading - Passed; 059-000-000')], { cfg, rubric, gcfg, provider, triage, flagCtx: loadFlagContext(), sources, timelineEvents, runId: 't', today: '2026-10-01' })
   takeWarnings()
   assert.deepEqual(r.filtered.map(f => f.id).sort(), ['a', 'b'])
   assert.match(r.filtered[0].reason, /routine bill action/)
-  assert.equal(calls, 1, 'only the re-referral reaches the model')
+  assert.equal(calls, 0, 'D-4: bill rows never go to the model; code quotes the row whole')
+  assert.equal(r.work.map(w => w.id).join(), 'c', 'only chamber passage goes on')
+  assert.equal(r.work[0].claims[0].supporting_quotes[0], 'HB5513. 3/27/2026. House: Third Reading - Passed; 059-000-000')
 })
 
 test('drafting: the updates line may repeat a long publisher name; copy limits are 20 words for public records, 12 otherwise', async () => {

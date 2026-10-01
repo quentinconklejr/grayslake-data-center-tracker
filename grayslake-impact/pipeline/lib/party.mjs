@@ -34,7 +34,7 @@ const COURT_HOSTS = /(^|\.)(lakecountycircuitclerk\.org|researchil\.tylerhost\.n
  */
 export function detectParty(item, registryHit) {
   if (registryHit?.party) {
-    return { kind: 'party_statement', party: registryHit.party, label: `${registryHit.party} stated` }
+    return { kind: 'party_statement', party: registryHit.party, channel: registryHit.partyChannel ?? 'party_statement', label: `${registryHit.party} stated` }
   }
   let host = ''
   try { host = new URL(item.url, 'https://grayslakedatacentertracker.org').hostname } catch { /* not a URL */ }
@@ -65,14 +65,48 @@ export function isProceduralDetail(claim) {
   return extractNumbers(masked).filter(n => !/^(19|20)\d\d$/.test(n.value)).length === 0
 }
 
+// Owner decision D-1: from a party's own channel, only record facts may be
+// stated as fact: dates, vote outcomes, the existence of a document or act,
+// and numbers in an official record. Anything evaluative, negated or
+// forward-looking is the party's claim and is attributed.
+const EVALUATIVE = /\b(compl(y|ies|iance|iant)|ensur\w*|transparen\w*|minimal(ly)?|best interests?|consistent with|satisf(y|ies|ied|actory)|safe(ly|ty)?|benefit\w*|largest|significant(ly)?|commit(s|ted|ment)?|protect\w*|responsib\w*|sustainab\w*|diversif\w*|virtually|fully|properly|lawful(ly)?|legal(ly)?|appropriate(ly)?|adequate(ly)?|thorough(ly)?|openness|openly|successful(ly)?|important|unique|strong|world-class|state-of-the-art|clean|efficient)\b/i
+const NEGATION = /\b(no|not|never|none|neither|nor|without)\b|n['’]t\b/i
+const FORWARD = /\b(will|would|could|may|might|expect\w*|estimat\w*|project(s|ed|ion|ions)?|plans? to|anticipat\w*|intend\w*)\b/i
+const VOTE = /\b(voted|vote of|ayes?|nays?|unanimous(ly)?|roll call)\b|\b\d+\s*-\s*\d+\s+vote\b/i
+const DOC_EVENT = /\b(issued|approved|adopted|passed|denied|tabled|filed|published|posted|scheduled|held|signed|recorded|introduced|referred|amended|granted|executed|convened|continued|received)\b/i
+const RECORD_NOUN = /\b(ordinance|agreement|permit|plan|amendment|resolution|minutes|agenda|exhibit|section|parcel|pin)\b/i
+const OFFICIAL_DOC_TYPES = new Set(['ordinance', 'minutes', 'agenda', 'docket', 'bill_status', 'data'])
+
+/**
+ * True when a claim from a party's own channel is a record fact that may be
+ * stated as fact (D-1). officialRecord: the document is itself an official
+ * record (ordinance, minutes, agenda, docket), not a press release,
+ * newsletter or FAQ.
+ */
+export function isRecordFact(claim, { officialRecord = false } = {}) {
+  if (!['fact', 'procedural'].includes(claim?.claim_type)) return false
+  const t = String(claim.claim_text ?? '')
+  if (EVALUATIVE.test(t) || NEGATION.test(t) || FORWARD.test(t)) return false
+  if (isProceduralDetail(claim)) return true
+  if (VOTE.test(t)) return true
+  const figures = extractNumbers(t).filter(n => !/^(19|20)\d\d$/.test(n.value)).length > 0
+  if (DOC_EVENT.test(t)) return !figures || officialRecord
+  return officialRecord && figures && RECORD_NOUN.test(t)
+}
+
+export const isOfficialRecord = ({ docType, fetcher }) => OFFICIAL_DOC_TYPES.has(docType) || fetcher === 'village-agendas'
+
 /**
  * Relabels claims from a party document. Returns new claim objects; each
  * carries `relabeled: { from, reason }` when its type changed.
+ * opts.officialRecord: see isRecordFact (applies to party channels, not to
+ * court filings, where only procedural details stay facts).
  */
-export function relabelClaims(claims, party) {
+export function relabelClaims(claims, party, opts = {}) {
   if (!party) return claims.map(c => ({ ...c }))
   return claims.map(c => {
     if (isProceduralDetail(c)) return { ...c, partyDocument: party.kind }
+    if (party.kind === 'party_statement' && isRecordFact(c, opts)) return { ...c, partyDocument: party.kind, recordFact: true }
     const to = party.kind === 'court_filing' ? 'allegation' : 'party_statement'
     const out = { ...c, claim_type: to, speaker: party.party, attribution: 'named', partyDocument: party.kind }
     if (c.claim_type !== to) out.relabeled = { from: c.claim_type, reason: `${party.kind === 'court_filing' ? 'party court filing' : 'party statement source'}: ${party.party}` }

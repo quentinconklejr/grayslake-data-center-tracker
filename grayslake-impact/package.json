@@ -25,7 +25,8 @@
     "pipeline:fetch": "node --use-system-ca pipeline/scripts/run-fetch.mjs",
     "pipeline:stage-c": "node --use-system-ca pipeline/scripts/run-stage-c.mjs",
     "pipeline:job": "node --use-system-ca pipeline/scripts/run-job.mjs",
-    "pipeline:dry-run-prs": "node --use-system-ca pipeline/scripts/dry-run-prs.mjs"
+    "pipeline:dry-run-prs": "node --use-system-ca pipeline/scripts/dry-run-prs.mjs",
+    "pipeline:ocr": "node --use-system-ca pipeline/scripts/ocr-scans.mjs"
   },
   "dependencies": {
     "@fontsource/ibm-plex-mono": "^5.3.0",

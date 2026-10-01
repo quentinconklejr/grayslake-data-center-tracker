@@ -334,7 +334,7 @@ test('party: everything from T5\'s website becomes "T5 stated", never fact', () 
   assert.equal(out[0].claim_type, 'party_statement')
   assert.equal(out[0].speaker, 'T5 Data Centers')
   assert.equal(out[1].claim_type, 'procedural', 'a bare procedural detail keeps its type')
-  assert.equal(out[2].claim_type, 'party_statement', 'a permit issuance is substantive: T5 saying it does not make it fact')
+  assert.equal(out[2].claim_type, 'procedural', 'D-1: the existence of a document or act is a record fact')
 })
 
 test('party: claims from a non-party source are left alone', () => {
