@@ -57,7 +57,7 @@ spend_cap_usd_per_month: 50
 # --- Fetching --------------------------------------------------------------
 http:
   user_agent: "GrayslakeTrackerBot/0.1 (+https://grayslakedatacentertracker.org/about)"
-  timeout_s: 30
+  timeout_s: 60                 # the Village site sometimes takes 10+ s
   min_interval_per_host_s: 5
   retries: 2
 
@@ -74,3 +74,18 @@ editorial:
   blocked_terms:
     - term: POWER Act
       reason: Owner has not yet confirmed which bills carry this name (HB5513 / SB4016).
+
+# --- Fetchers (Stage B) -------------------------------------------------------
+fetchers:
+  enabled: [village-agendas, village-newsflash, village-youtube, ilga-bills, lake-county-legistar]
+  # First run of a fetcher: items dated within this many days are processed;
+  # older ones are recorded as already seen, so the backlog is not ingested.
+  first_run_window_days: 14
+  # Wayback captures requested per run; the rest wait in a queue.
+  max_snapshots_per_run: 10
+  ilga:
+    # 104th General Assembly. Identified by number only (see editorial hold).
+    bills:
+      - { type: HB, number: 5513, gaid: 18, session: 114 }
+      - { type: SB, number: 4016, gaid: 18, session: 114 }
+      - { type: SB, number: 2181, gaid: 18, session: 114 }

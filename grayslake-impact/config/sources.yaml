@@ -128,6 +128,19 @@ sources:
     automate: false
     note: Site-relative paths /docs/ and /records/ resolve here.
 
+  # --- Party statements ----------------------------------------------------
+  # A party's own channel is the primary record of what that party SAYS, and
+  # nothing more. Code relabels every claim from a `party_statement` source
+  # as the party's statement ("T5 stated ..."), never as fact, the same way
+  # it treats a party's court filing (owner decision 2026-10-01).
+  - id: t5-data-centers
+    name: T5 Data Centers (company website)
+    tier: 1
+    category: party_statement
+    party: T5 Data Centers
+    domains: [t5datacenters.com]
+    automate: false   # no fetcher yet; items arrive by link from other sources
+
   # --- Tier 2: established outlets ----------------------------------------
   # A Tier 2 article without a named byline is scored as Tier 3.
   - id: daily-herald

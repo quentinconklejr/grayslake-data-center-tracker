@@ -22,6 +22,7 @@ export function validateRegistry(reg) {
     if (![1, 2, 3, 4].includes(s.tier)) errors.push(`${s.id}: tier must be 1-4`)
     if (s.tier === 2 && !s.corrections_policy) errors.push(`${s.id}: Tier 2 entries must state corrections_policy`)
     for (const d of s.domains ?? []) if (/[/:]/.test(d)) errors.push(`${s.id}: domain "${d}" must be a bare host`)
+    if (s.category === 'party_statement' && !s.party) errors.push(`${s.id}: a party_statement source must name its party`)
   }
   if (!ids.size) errors.push('registry has no sources')
   return errors
@@ -98,5 +99,5 @@ export function lookup(registry, url) {
 }
 
 function hit(s, matchedBy) {
-  return { tier: s.tier, id: s.id, name: s.name, matchedBy, entry: s }
+  return { tier: s.tier, id: s.id, name: s.name, matchedBy, entry: s, party: s.category === 'party_statement' ? s.party : null }
 }

@@ -37,7 +37,8 @@ export function makeFetcher(httpCfg) {
         }
       } catch (err) {
         if (attempt < retries) { await sleep(2000 * 2 ** attempt); continue }
-        return { ok: false, status: 0, error: err.name === 'TimeoutError' ? 'timeout' : err.message, finalUrl: url, bytes: Buffer.alloc(0), contentType: '' }
+        const cause = err.cause?.code ? ` (${err.cause.code})` : ''
+        return { ok: false, status: 0, error: err.name === 'TimeoutError' ? 'timeout' : `${err.message}${cause}`, finalUrl: url, bytes: Buffer.alloc(0), contentType: '' }
       }
     }
   }

@@ -74,6 +74,14 @@ test('tier lookups', () => {
   assert.equal(t('javascript:alert(1)'), 4)
 })
 
+test('owner decision: T5 website is a listed party-statement source', () => {
+  const r = lookup(reg, 'https://t5datacenters.com/some-press-release/')
+  assert.equal(r.id, 't5-data-centers')
+  assert.equal(r.party, 'T5 Data Centers')
+  assert.equal(lookup(reg, 'https://www.dailyherald.com/x').party, null)
+  assert.equal(lookup(reg, 'https://www.chronicleillinois.com/x').tier, 3, 'Chronicle stays Tier 3')
+})
+
 test('look-alike hosts do not inherit a tier', () => {
   const t = u => lookup(reg, u).tier
   assert.equal(t('https://villageofgrayslake.com.evil.example/x'), 4)
