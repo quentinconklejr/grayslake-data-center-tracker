@@ -68,7 +68,7 @@ export const actions = [
     actionType: "Permit Application",
     description:
       "T5 applied to the U.S. Army Corps of Engineers to fill 15.75 acres of wetlands on the site. The Chicago Tribune reported that a September 2025 Lake County Stormwater Management Commission letter found that at least some of those wetlands likely fall under Army Corps jurisdiction.",
-    outcome: "Application sent to the Army Corps earlier in 2026, according to the Chicago Tribune; indefinitely suspended by T5 in a statement the Daily Herald reported on July 31, 2026.",
+    outcome: "Application sent to the Army Corps \u201cearlier this year,\u201d the Chicago Tribune reported on June 5, 2026; indefinitely suspended by T5 in a statement the Daily Herald reported on July 31, 2026.",
     sourceIds: ["chitrib_june2026", "chitrib_jul2026", "dailyherald_jul2026"],
     status: "complete",
     lastVerified: "Oct 1, 2026",
