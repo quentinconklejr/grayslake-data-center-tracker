@@ -12,6 +12,15 @@ export const updates = [
   {
     date: '2026-10-01',
     kind: 'corrected',
+    title: 'Documents page labels now show each source\u2019s tier',
+    description:
+      'The labels on the Documents page now come from the site\u2019s source registry and show each source\u2019s tier. The Lake and McHenry County Scanner and Chronicle Media, which were labeled \u201cprimary,\u201d are now labeled \u201cTier 3 \u00b7 news report\u201d; established outlets such as the Daily Herald and the Chicago Tribune are \u201cTier 2 \u00b7 established outlet\u201d; government records and court filings are \u201cTier 1 \u00b7 public record\u201d; trade publications, aggregators and advocacy groups are labeled as such at Tier 3.',
+    link: 'C:/Program Files/Git/documents',
+    linkLabel: 'See the documents',
+  },
+  {
+    date: '2026-10-01',
+    kind: 'corrected',
     title: 'Land acquisition entry: acreage corrected, totals labeled as calculated, reported acreages attributed',
     description:
       'The May 2, 2024 land acquisition entry now gives the January 2025 parcels as 89.4 acres (it said 89.3; the county parcel acreages sum to 89.35), says that its acreage and dollar totals are calculated from county parcel records, and takes the approval dates from the Village FAQ. It now attributes the larger acreages reported for the first purchase to where they came from: 160 acres (the planned project area) and \u201cmore than 134 acres\u201d to The Real Deal, which cited Lake County records for the 134, and both figures as Crain\u2019s Chicago Business reported them.',
