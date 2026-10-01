@@ -25,6 +25,7 @@ import { loadPipelineConfig } from '../lib/config.mjs'
 import { loadRubric, guardConfig } from '../lib/rubric.mjs'
 import { openStore } from '../lib/store.mjs'
 import { prepareSource, checkDraftProse, extractDates, makeCanon, occurrences } from '../lib/guard.mjs'
+import { loadOverrides, applyOverrides } from '../lib/overrides.mjs'
 import { sources } from '../../src/data/sources.js'
 import { timelineEvents } from '../../src/data/timeline.js'
 
@@ -32,6 +33,7 @@ const cfg = loadPipelineConfig()
 const gcfg = guardConfig(loadRubric())
 const store = openStore(cfg.private_store.dir)
 const canon = makeCanon(gcfg)
+const overrides = loadOverrides()
 const keysOf = e => [...new Set([e.sourceKey, ...(e.sourceKeys ?? [])].filter(Boolean))]
 
 const results = []
@@ -62,10 +64,14 @@ for (const [i, entry] of timelineEvents.entries()) {
   const blocked = checkDraftProse(prose, gcfg, { evidence, blockedTerms: cfg.editorial?.blocked_terms ?? [], labeledTerms: cfg.editorial?.labeled_terms ?? [] })
     .failures.filter(f => f.check === 'blocked_term' || f.check === 'labeled_term')
 
+  // Recorded exceptions (config/guard-overrides.yaml), each re-checked against the source text.
+  const ov = applyOverrides(entry, res.failures, k => recs.find(r => r.key === k)?.rec?.text ?? null, overrides)
+  res.failures = ov.failures
+
   const status = !withText.length ? 'UNVERIFIABLE'
     : res.failures.length === 0 ? 'PASS'
     : missing.length ? 'UNRESOLVED' : 'FAIL'
-  results.push({ i, date: entry.date, title: entry.title, keys, missing, status, failures: res.failures, notes: res.notes, blocked })
+  results.push({ i, date: entry.date, title: entry.title, keys, missing, status, failures: res.failures, notes: res.notes, blocked, overrides: ov.applied, staleOverrides: ov.stale })
 }
 
 // --- console summary ---------------------------------------------------------
@@ -79,6 +85,8 @@ for (const r of results) {
     console.log(`               - ${f.check}: ${f.reason}${f.value ? ` → ${JSON.stringify(f.value)}` : ''}${where}`)
   }
   for (const n of r.notes) console.log(`               · note: ${n.note} → ${JSON.stringify(n.value)}`)
+  for (const o of r.overrides) console.log(`               · override: ${o.check} ${JSON.stringify(o.value)} accepted from ${o.source} (config/guard-overrides.yaml)`)
+  for (const o of r.staleOverrides) console.log(`               ! stale override: ${o.check} ${JSON.stringify(o.value)} (${o.why})`)
   for (const b of r.blocked) console.log(`               · editorial: ${b.check === 'labeled_term' ? `"${b.value}" ${b.reason.replace(/_/g, ' ')}${b.detail ? ` (${b.detail})` : ''}` : `hold: contains "${b.value}"`} (fine in owner text; generated text may not)`)
   if (r.missing.length) console.log(`               · no text for: ${r.missing.join(', ')}`)
 }
@@ -93,6 +101,8 @@ for (const r of results) {
     if (f.nearest) md.push(`  - nearest in source (${Math.round(f.nearest.score * 100)}% word overlap): “${f.nearest.text}”`)
   }
   for (const n of r.notes) md.push(`- note: ${n.note}: \`${n.value}\``)
+  for (const o of r.overrides) md.push(`- override: **${o.check}** \`${o.value}\` accepted from ${o.source}, passage \`${o.passage}\`. Reason: ${o.reason}`)
+  for (const o of r.staleOverrides) md.push(`- **stale override**: ${o.check} \`${o.value}\` (${o.why})`)
   md.push('')
 }
 const file = store.writeText(`reports/guard-timeline-${day}.md`, md.join('\n'))
