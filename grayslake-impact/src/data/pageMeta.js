@@ -155,6 +155,12 @@ export const pageMeta = {
       'A short briefing on the T5 @ Chicago IV public records for newsrooms: the key numbers with page citations, download links, a suggested citation and a contact.',
     ogImage: '/og/records-t5.png',
   },
+  '/methodology': {
+    title: 'Methodology and Corrections',
+    description:
+      'How the Grayslake Data Center Tracker rates sources, labels allegations and statements, reviews changes before they publish, and logs every correction.',
+    ogImage: '/og/about.png',
+  },
   '/updates': {
     title: 'Updates',
     description:

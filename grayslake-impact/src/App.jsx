@@ -20,6 +20,7 @@ import RecordsT5 from './pages/RecordsT5'
 import RecordsOrdinance from './pages/RecordsOrdinance'
 import Press from './pages/Press'
 import Updates from './pages/Updates'
+import Methodology from './pages/Methodology'
 
 export default function App() {
   return (
@@ -68,6 +69,7 @@ export default function App() {
             <Route path="/records/t5/:ordinance" element={<RecordsOrdinance />} />
             <Route path="/press" element={<Press />} />
             <Route path="/updates" element={<Updates />} />
+            <Route path="/methodology" element={<Methodology />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </main>
