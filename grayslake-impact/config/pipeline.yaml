@@ -117,6 +117,9 @@ triage:
   # PDF pages kept around each matching page, so a sentence that runs over a
   # page break is not cut.
   page_context: 1
+  # Bill actions worth drafting (matched against "HB5513 <date> <chamber>: <action>");
+  # co-sponsor additions and readings are routine and left out.
+  significant_bill_actions: "Filed with the Clerk|Assigned to|Committee Hearing|Do Pass|Amendment No|Third Reading|Passed|Sent to the Governor|Governor Approved|Public Act|Veto|Re-referred|Rule 19|Rule 3-9|Session Sine Die|Tabled|Postponed"
 
 # --- Scheduled job (Stage D) -----------------------------------------------------
 # One Task Scheduler entry runs pipeline/scripts/run-job.mjs every 30 minutes;

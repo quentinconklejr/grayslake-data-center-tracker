@@ -427,6 +427,35 @@ export function checkDraftProse(text, cfg, opts = {}) {
     failures.push({ check: 'allegation', reason: 'allegation_without_attribution' })
   }
 
+  // Outside quotation marks the text must be the tracker's own words: no run
+  // of `noUnquotedCopy` words copied from the evidence (that is a quotation
+  // without quotation marks, and for news a copyright problem), and no first
+  // person ("I attended", "our attorney"), which can only be someone else's.
+  if (opts.noUnquotedCopy || opts.noFirstPerson) {
+    const outside = s.replace(/“[^”]*”/g, ' ‖ ').replace(/"[^"]*"/g, ' ‖ ')
+    if (opts.noFirstPerson) {
+      const fp = outside.match(/(?<![\p{L}])(I|I['’](?:ve|m|d|ll)|we|we['’](?:ve|re|d|ll)|our|ours|us|my|me)(?![\p{L}])/giu)
+      // "US" in capitals is the country, not "us".
+      const real = (fp ?? []).filter(w => w !== 'US')
+      if (real.length) failures.push({ check: 'voice', reason: 'first_person_outside_quotation', value: [...new Set(real)].join(', ') })
+    }
+    if (opts.noUnquotedCopy) {
+      const n = opts.noUnquotedCopy
+      // The marker left where a quotation was stays a word, so a run never spans it.
+      const words = canon(outside).split(' ').filter(Boolean)
+      const hay = evidence.map(e => ' ' + e.canon.toLowerCase().replace(/[^\p{L}\p{N}]+/gu, ' ') + ' ')
+      const norm = w => w.toLowerCase().replace(/[^\p{L}\p{N}]+/gu, '')
+      for (let i = 0; i + n <= words.length; i++) {
+        const run = words.slice(i, i + n).map(norm).filter(Boolean)
+        if (run.length < n) continue
+        if (hay.some(h => h.includes(' ' + run.join(' ') + ' '))) {
+          failures.push({ check: 'voice', reason: 'unquoted_copy', value: words.slice(i, i + n).join(' ') })
+          break
+        }
+      }
+    }
+  }
+
   // Attribution the text must carry: a party's claims ("T5 stated", "the
   // complaint alleges"), or an outlet's ("reported by").
   for (const r of opts.requiredAttribution ?? []) {
@@ -466,6 +495,7 @@ export function nearestSpan(needle, hay) {
     if (!best || score > best.score) best = { score, start, end }
     if (score === n.length) break
   }
+  if (!best) return null   // no word in common
   const text = hay.slice(h[best.start].i, h[best.end - 1].end)
   return { score: best.score / n.length, text }
 }

@@ -59,6 +59,14 @@ export async function processItems(inputs, ctx) {
   for (const item of inputs) {
     item.guardCfg = gcfg
     if (item.dedupe?.duplicateOf) { filtered.push({ id: item.id, title: item.title, origin: item.origin, reason: `duplicate of ${item.dedupe.duplicateOf}` }); continue }
+    // Routine bill actions (co-sponsors, readings) are not news: only the
+    // actions matching triage.significant_bill_actions go further.
+    if (item.fetcher === 'ilga-bills' && cfg.triage?.significant_bill_actions && !new RegExp(cfg.triage.significant_bill_actions, 'i').test(item.title ?? '')) {
+      filtered.push({ id: item.id, title: item.title, origin: item.origin, reason: 'routine bill action (not in triage.significant_bill_actions)' })
+      continue
+    }
+    // A scan has no text to triage; a person reads it (never OCR'd into evidence).
+    if (item.kind === 'pdf' && String(item.text ?? '').trim().length < 200) { humanReview.push({ id: item.id, title: item.title, url: item.url, reason: 'scanned PDF with no text layer: a person must read it', triage: 'not triaged (no text)' }); continue }
     let pages = null
     if (item.rawPdf) { try { pages = pdfToText(item.rawPdf, cfg.tools.pdftotext).pages } catch (e) { log.warn(`${item.id}: could not re-read PDF pages: ${e.message}`) } }
     const t = triage(item, pages)
@@ -66,13 +74,16 @@ export async function processItems(inputs, ctx) {
     item.triage = { rule: t.rule, reason: t.reason, pages: t.pages, pagesTotal: t.pagesTotal }
     if (t.pages && t.pagesTotal && t.pages.length < t.pagesTotal) log.warn(`${item.id}: triage kept ${t.pages.length} of ${t.pagesTotal} PDF pages; the rest are not read`)
     if (item.kind === 'video') { humanReview.push({ id: item.id, title: item.title, url: item.url, reason: item.needsHumanReview, triage: t.reason }); continue }
+    // Structured records (the county parcel layer) are not prose: a model
+    // writing about them pastes raw rows. They need a data diff, by a person.
+    if (item.kind === 'records') { humanReview.push({ id: item.id, title: item.title, url: item.url, reason: 'structured records: review the parcel diff (scripts/fetch-parcels.js), not a prose draft', triage: t.reason }); continue }
     item.extractText = t.text
     work.push(item)
   }
 
   for (const item of work) {
     say(`extracting ${item.id} (T${item.registryTier}, ${item.triage.reason})`)
-    const meta = { title: item.title, publisher: item.publisher, date: item.published }
+    const meta = { title: item.title, publisher: item.publisher, date: item.published, relevance: item.triage.reason }
     const chunks = chunksFor(provider, meta, item.extractText, { maxChunks, label: item.id })
     item.claims = []
     item.docInfo = null

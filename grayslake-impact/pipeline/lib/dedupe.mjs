@@ -76,6 +76,7 @@ export function similarity(sigA, sigB) {
 }
 
 export const NEAR_DUP_THRESHOLD = 0.8
+export const MIN_HASH_WORDS = 30
 
 /**
  * index: { urls: {canon: itemId}, hashes: {hash: itemId}, recent: [{id, sig}] }
@@ -84,7 +85,10 @@ export const NEAR_DUP_THRESHOLD = 0.8
  */
 export function classify(index, { url, text }, citedUrls = new Set()) {
   const canon = canonicalUrl(url)
-  const out = { canonicalUrl: canon, contentHash: text ? contentHash(text) : null }
+  // Too little text to fingerprint: a scanned PDF with no text layer extracts
+  // as "" and every scan would "match" every other one.
+  const enoughText = normText(text).split(' ').filter(Boolean).length >= MIN_HASH_WORDS
+  const out = { canonicalUrl: canon, contentHash: enoughText ? contentHash(text) : null }
   if (citedUrls.has(canon)) out.alreadyCited = true
   if (index.urls[canon]) return { ...out, duplicateOf: index.urls[canon], reason: 'url' }
   if (out.contentHash && index.hashes[out.contentHash]) return { ...out, duplicateOf: index.hashes[out.contentHash], reason: 'content' }

@@ -213,7 +213,7 @@ test('runner: first run baselines the backlog, processes recent items, and write
 
 test('runner: an unlisted domain is Tier 4, and a document already stored elsewhere is a duplicate', async () => {
   const store = tempStore()
-  const text = 'identical content posted twice at two different addresses on the web'
+  const text = 'identical content posted twice at two different addresses on the web, long enough to fingerprint: the Village Board approved the agenda, heard public comment on the campus, and adjourned at nine in the evening after a long meeting'
   const cands = () => [
     { key: 'a', url: 'https://some-blog.example/post', title: 'a', published: '2026-09-30', text },
     { key: 'b', url: 'https://www.villageofgrayslake.com/DocumentCenter/View/9', title: 'b', published: '2026-09-30', text },
@@ -329,4 +329,26 @@ test('runner: backfill fetches the items a first run baselined, and nothing alre
   assert.equal(r.fetchers.f9.alreadySeen, 1, 'the item processed on the first run is not refetched')
   const again = await quietly(() => runFetchers({ fetchers: [fakeFetcher('f9', cands, { snapshot: 'never' })], store, cfg, registry, sources: {}, http: null, wayback: null, now: NOW, backfill: true }))
   assert.equal(again.fetchers.f9.backfilled ?? 0, 0, 'a backfilled item is no longer a baseline entry')
+})
+
+test('dedupe: scans with no text are not duplicates of each other', () => {
+  const index = emptyIndex()
+  const a = classify(index, { url: 'https://www.villageofgrayslake.com/DocumentCenter/View/1', text: '' })
+  remember(index, 'a', a)
+  const b = classify(index, { url: 'https://www.villageofgrayslake.com/DocumentCenter/View/2', text: '  ' })
+  assert.equal(b.duplicateOf, undefined)
+  assert.equal(b.contentHash, null)
+})
+
+test('runner: records cut from one shared page are not duplicates of each other', async () => {
+  const store = tempStore()
+  const page = 'https://www.ilga.gov/Legislation/BillStatus?DocTypeID=HB&DocNum=5513&GAID=18&SessionID=114'
+  const recFetcher = {
+    name: 'f10', snapshot: 'never', sourceUrl: page,
+    async discover() { return { candidates: ['a', 'b', 'c'].map(k => ({ key: `HB5513|${k}`, url: page, title: k, published: '2026-09-30' })) } },
+    async fetchItem(ctx, c) { return { kind: 'record', text: `HB5513. 9/30/2026. House: action ${c.title}` } },
+  }
+  const r = await quietly(() => runFetchers({ fetchers: [recFetcher], store, cfg, registry, sources: {}, http: null, wayback: null, now: NOW }))
+  assert.equal(r.fetchers.f10.new, 3)
+  assert.equal(r.fetchers.f10.duplicates, 0)
 })

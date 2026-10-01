@@ -57,6 +57,8 @@ Rules:
 - Any words inside quotation marks must be copied exactly from a quote, with “ and ” around them.
 - Every number, date and name you write must appear in the quotes.
 - Never use the words "POWER Act".
+- Write in your own words. Anything copied from a quote goes inside quotation marks; never copy a long passage without them.
+- Never write in the first person (I, we, our, us, my) outside quotation marks.
 - title: a short sentence-case headline, no final period.
 - description: one paragraph.
 - category: one of approval, opposition, development, construction, legal, policy.
@@ -80,10 +82,18 @@ export function curlyQuotes(s) {
 }
 
 /** Most common verified full event date, else the document date. */
-export function entryDate(claims, docIso) {
+export function entryDate(claims, docIso, { party } = {}) {
+  const doc = /^\d{4}-\d{2}-\d{2}/.test(docIso ?? '') ? docIso.slice(0, 10) : null
+  // A court filing is an event on its filing date, not on the dates it
+  // describes (which reach back to 2024).
+  if (party?.kind === 'court_filing' && doc) return { date: doc, basis: 'filing date (a court filing is dated when filed)' }
   const counts = new Map()
   for (const c of claims) {
-    if (c.date_basis === 'stated_in_text' && /^\d{4}-\d{2}-\d{2}$/.test(c.event_date ?? '')) counts.set(c.event_date, (counts.get(c.event_date) ?? 0) + 1)
+    if (c.date_basis !== 'stated_in_text' || !/^\d{4}-\d{2}-\d{2}$/.test(c.event_date ?? '')) continue
+    // A date after the document's own date is something scheduled (a hearing
+    // set for later), not the event the document reports.
+    if (doc && c.event_date > doc) continue
+    counts.set(c.event_date, (counts.get(c.event_date) ?? 0) + 1)
   }
   if (counts.size) {
     const [date] = [...counts.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))[0]
@@ -103,7 +113,11 @@ export function guardOptions(claims, item, blockedTerms) {
     const name = item.publisher.replace(/^the\s+/i, '')
     req.push({ label: `"${name} reported" or "according to ${name}"`, test: new RegExp(`${name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/\s+/g, '\\s+')}[^.]{0,40}\\b(reported|reports|wrote)\\b|according to (the )?${name.replace(/\s+/g, '\\s+')}`, 'i') })
   }
-  return { evidence, docDates, allegation: claims.some(c => c.claim_type === 'allegation'), requiredAttribution: req, blockedTerms }
+  // Unquoted copying: 12 words for news and party sources (copyright,
+  // attribution); 20 for Tier 1 public records, whose wording may be reused
+  // but still not at length without quotation marks.
+  const copyLimit = item.effectiveTier === 1 && !item.party ? 20 : 12
+  return { evidence, docDates, allegation: claims.some(c => c.claim_type === 'allegation'), requiredAttribution: req, blockedTerms, noUnquotedCopy: copyLimit, noFirstPerson: true }
 }
 
 const KEY_PREFIX = {
@@ -149,7 +163,7 @@ const ACTION_TYPE = { approval: 'Land-Use Approval', construction: 'Building Per
  * blockedTerms, today (ISO), canonUrl }
  */
 export async function draftItem(item, claims, ctx) {
-  const date = entryDate(claims, item.published)
+  const date = entryDate(claims, item.published, { party: item.party })
   const opts = guardOptions(claims, item, ctx.blockedTerms)
   const user0 = `${examplesBlock(ctx.examples)}\n\nDocument: ${item.title} (${item.publisher}${item.published ? ', ' + item.published.slice(0, 10) : ''})\nEntry date: ${date.date ?? 'unknown'}\n\n${claimsBlock(claims, item)}`
   const attempts = []
@@ -203,7 +217,8 @@ export async function draftItem(item, claims, ctx) {
   // evidence (a publisher name can hold a number no quote has, e.g. "19th
   // Judicial Circuit").
   const meta = prepareSource([item.publisher, prose.title, date.date].join('\n'), item.guardCfg)
-  const ug = checkDraftProse(`${update.title}. ${update.description}`, item.guardCfg, { ...opts, evidence: [...opts.evidence, meta], docDates: [...opts.docDates, ...extractDates(date.date ?? '')], requiredAttribution: [] })
+  // No copy check here: the line names the publisher, which is copied by design.
+  const ug = checkDraftProse(`${update.title}. ${update.description}`, item.guardCfg, { ...opts, evidence: [...opts.evidence, meta], docDates: [...opts.docDates, ...extractDates(date.date ?? '')], requiredAttribution: [], noUnquotedCopy: 0 })
   let action = null
   if (item.effectiveTier === 1 && !item.party && JURISDICTION[item.registryId]) {
     action = {

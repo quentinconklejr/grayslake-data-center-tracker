@@ -172,7 +172,7 @@ const baseClaims = [{ claim_text: 'The Board approved a moratorium set to expire
 const ctxFor = provider => ({ provider, examples: [], sources, cited: new Map(), blockedTerms: cfg.editorial.blocked_terms, today: '2026-10-01', canonUrl: u => u })
 
 test('drafting: prose that passes the guard yields valid timeline, sources and updates entries', async () => {
-  const d = await draftItem(baseItem, baseClaims, ctxFor(stubProvider([{ title: 'County Board approves data center moratorium', description: 'The Lake County Board approved an ordinance establishing a moratorium on new data center approvals, set to expire May 11, 2027.', category: 'policy' }])))
+  const d = await draftItem(baseItem, baseClaims, ctxFor(stubProvider([{ title: 'County Board approves data center moratorium', description: "The County Board approved a moratorium on new data center approvals, “set to expire May 11, 2027.”", category: 'policy' }])))
   takeWarnings()
   assert.equal(d.guard, 'pass')
   assert.equal(d.status, 'ready', JSON.stringify(d.validation))
@@ -229,7 +229,7 @@ test('straight quotation marks become curly ones, in pairs', () => {
 
 test('drafting: the updates line may name the publisher even if its numbers are in no quote', async () => {
   const it = { ...baseItem, publisher: 'Circuit Court of the 19th Judicial Circuit' }
-  const d = await draftItem(it, baseClaims, ctxFor(stubProvider([{ title: 'County Board approves data center moratorium', description: QUOTE, category: 'policy' }])))
+  const d = await draftItem(it, baseClaims, ctxFor(stubProvider([{ title: 'County Board approves data center moratorium', description: "The County Board approved a moratorium on new data center approvals, “set to expire May 11, 2027.”", category: 'policy' }])))
   assert.equal(d.updateGuard, 'pass', JSON.stringify(d.updateGuardFailures))
   assert.equal(d.status, 'ready')
 })
@@ -246,7 +246,7 @@ test('Stage C: a corroborated Tier 3 claim is queued with its corroborator, neve
     model: 'stub', budgetChars: () => 20000,
     async generateJSON({ schema }) {
       const content = schema.properties?.title
-        ? { title: 'County Board approves data center moratorium', description: quote, category: 'policy' }
+        ? { title: 'County Board approves data center moratorium', description: "The County Board approved a moratorium on new data center approvals, “set to expire May 11, 2027.”", category: 'policy' }
         : { document: { doc_type: 'news_article', published_date: null, byline: [], is_about_t5_grayslake: 'partly', origin: 'originates', repeats_whom: null },
             claims: [{ claim_text: 'The moratorium is set to expire May 11, 2027.', claim_type: 'fact', speaker: null, attribution: 'document', event_date: null, date_basis: 'unknown', supporting_quotes: [quote], timeline_category: 'policy' }] }
       return { content: JSON.stringify(content), usage: { inputTokens: 1, outputTokens: 1 }, durationMs: 1, warnings: [] }
@@ -259,4 +259,36 @@ test('Stage C: a corroborated Tier 3 claim is queued with its corroborator, neve
   assert.equal(q.outcome, 'redraft_from_corroborating_source')
   assert.deepEqual(q.corroboratedBy, ['gov'])
   assert.equal(r.work.find(w => w.id === 'scanner').origin, 'shadow', 'the input origin is not overwritten by the model\'s origin signal')
+})
+
+test('Stage C: routine bill actions are filtered before extraction; significant ones go on', async () => {
+  const registry = loadRegistry()
+  const url = 'https://www.ilga.gov/Legislation/BillStatus?DocTypeID=HB&DocNum=5513&GAID=18&SessionID=114'
+  const mk = (id, action) => ({ origin: 'shadow', id, fetcher: 'ilga-bills', title: `HB5513 3/27/2026 House: ${action}`, url, text: `HB5513. 3/27/2026. House: ${action}`, kind: 'record', published: '2026-03-27', registryHit: lookup(registry, url), registryId: 'ilga', registryTier: 1, publisher: 'Illinois General Assembly' })
+  let calls = 0
+  const provider = { model: 'stub', budgetChars: () => 20000, async generateJSON() { calls++; return { content: JSON.stringify({ document: { doc_type: 'bill_status', published_date: null, byline: [], is_about_t5_grayslake: 'no', origin: 'originates', repeats_whom: null }, claims: [] }), usage: { inputTokens: 1, outputTokens: 1 }, durationMs: 1, warnings: [] } } }
+  const r = await processItems([mk('a', 'Added Co-Sponsor Rep. A'), mk('b', 'First Reading'), mk('c', 'Rule 19(a) / Re-referred to Rules Committee')], { cfg, rubric, gcfg, provider, triage, flagCtx: loadFlagContext(), sources, timelineEvents, runId: 't', today: '2026-10-01' })
+  takeWarnings()
+  assert.deepEqual(r.filtered.map(f => f.id).sort(), ['a', 'b'])
+  assert.match(r.filtered[0].reason, /routine bill action/)
+  assert.equal(calls, 1, 'only the re-referral reaches the model')
+})
+
+test('drafting: the updates line may repeat a long publisher name; copy limits are 20 words for public records, 12 otherwise', async () => {
+  const it = { ...baseItem, publisher: 'Circuit Court of the 19th Judicial Circuit, Lake County, Illinois, Chancery Division' }
+  const claims = [{ ...baseClaims[0], supporting_quotes: [QUOTE + ' Circuit Court of the 19th Judicial Circuit, Lake County, Illinois, Chancery Division'] }]
+  const d = await draftItem(it, claims, ctxFor(stubProvider([{ title: 'County Board approves data center moratorium', description: 'The County Board approved a moratorium on new data center approvals, “set to expire May 11, 2027.”', category: 'policy' }])))
+  assert.equal(d.updateGuard, 'pass', JSON.stringify(d.updateGuardFailures))
+  const { guardOptions } = await import('../lib/draft.mjs')
+  assert.equal(guardOptions(baseClaims, { ...baseItem, effectiveTier: 1, party: null }, []).noUnquotedCopy, 20)
+  assert.equal(guardOptions(baseClaims, { ...baseItem, effectiveTier: 2, party: null, publisher: 'Daily Herald' }, []).noUnquotedCopy, 12)
+  assert.equal(guardOptions(baseClaims, { ...baseItem, effectiveTier: 1, party: { kind: 'party_statement', party: 'T5 Data Centers' } }, []).noUnquotedCopy, 12)
+})
+
+test('entry date: a later scheduled date is not the event; a court filing is dated when filed', () => {
+  const hearing = [{ date_basis: 'stated_in_text', event_date: '2026-10-30' }, { date_basis: 'stated_in_text', event_date: '2026-10-30' }]
+  assert.equal(entryDate(hearing, '2026-08-30').date, '2026-08-30', 'the Oct 30 hearing is after the Aug 30 article')
+  const filing = [{ date_basis: 'stated_in_text', event_date: '2024-09-23' }, { date_basis: 'stated_in_text', event_date: '2024-09-23' }]
+  assert.equal(entryDate(filing, '2026-07-31', { party: { kind: 'court_filing' } }).date, '2026-07-31')
+  assert.equal(entryDate(filing, '2026-07-31').date, '2024-09-23', 'a non-filing may report an earlier event')
 })

@@ -90,7 +90,11 @@ export async function runFetchers({ fetchers, store, cfg, registry, sources, htt
       }
 
       const tierInfo = lookup(registry, cand.tierUrl ?? cand.url)
-      const dd = classify(index, { url: cand.url, text: doc.text }, cited)
+      // A record cut from a shared page (one bill action of many on the bill's
+      // status page) is identified by page URL plus its key, not the page URL.
+      // (A query parameter, not a #fragment: canonicalUrl drops fragments.)
+      const dedupeUrl = doc.kind === 'record' ? `${cand.url}${cand.url.includes('?') ? '&' : '?'}_record=${encodeURIComponent(cand.key)}` : cand.url
+      const dd = classify(index, { url: dedupeUrl, text: doc.text }, cited)
       const id = `${f.name}:${sha256(cand.key).slice(0, 16)}`
       const update = f.isUpdate?.(state, cand) ?? false
       const ext = doc.kind === 'pdf' ? 'pdf' : doc.kind === 'html' ? 'html' : null

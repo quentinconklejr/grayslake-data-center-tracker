@@ -356,3 +356,29 @@ test('party: a drafted text must carry the party attribution or the guard fails 
   assert.ok(checkDraftProse('The campus has 1.5 to 2 gigawatts of backup diesel generation.', cfg, { evidence: [c], requiredAttribution: filing }).failures.some(f => f.check === 'attribution'))
   assert.equal(checkDraftProse('The complaint alleges the campus has 1.5 to 2 gigawatts of backup diesel generation.', cfg, { evidence: [c], requiredAttribution: filing }).ok, true)
 })
+
+// --- voice: the tracker's own words outside quotation marks ---------------------------
+
+test('voice: a long passage copied without quotation marks fails; the same passage quoted passes', () => {
+  const s = prepareSource('Mundelein does not have any jurisdiction in decisions, does not receive any money and/or tax dollars from this project.', cfg)
+  const copied = checkDraftProse('Mundelein does not have any jurisdiction in decisions, does not receive any money and/or tax dollars from this project.', cfg, { evidence: [s], noUnquotedCopy: 12 })
+  assert.ok(copied.failures.some(f => f.reason === 'unquoted_copy'))
+  const quoted = checkDraftProse('Mundelein said it “does not have any jurisdiction in decisions, does not receive any money and/or tax dollars from this project.”', cfg, { evidence: [s], noUnquotedCopy: 12 })
+  assert.ok(!quoted.failures.some(f => f.reason === 'unquoted_copy'))
+  const paraphrase = checkDraftProse('Mundelein said it has no say in the decisions and receives no tax money from the project.', cfg, { evidence: [s], noUnquotedCopy: 12 })
+  assert.ok(!paraphrase.failures.some(f => f.check === 'voice'))
+})
+
+test('voice: a copied run may not straddle a quotation', () => {
+  const s = prepareSource('one two three four five six seven eight nine ten eleven twelve thirteen', cfg)
+  const r = checkDraftProse('one two three four five six “seven eight” nine ten eleven twelve thirteen', cfg, { evidence: [s], noUnquotedCopy: 12 })
+  assert.ok(!r.failures.some(f => f.reason === 'unquoted_copy'))
+})
+
+test('voice: first person outside quotation marks fails; inside it is fine; "US" is not "us"', () => {
+  const s = prepareSource('x', cfg)
+  assert.ok(checkDraftProse('CLCJAWA has never raised concerns in any meeting I’ve attended.', cfg, { evidence: [s], noFirstPerson: true }).failures.some(f => f.reason === 'first_person_outside_quotation'))
+  assert.ok(checkDraftProse('Mundelein has talked with legislators and our attorney.', cfg, { evidence: [s], noFirstPerson: true }).failures.some(f => f.check === 'voice'))
+  assert.ok(!checkDraftProse('The mayor said “we choose our citizens.”', cfg, { evidence: [s], noFirstPerson: true }).failures.some(f => f.check === 'voice'))
+  assert.ok(!checkDraftProse('The US Army Corps of Engineers received the permit.', cfg, { evidence: [s], noFirstPerson: true }).failures.some(f => f.check === 'voice'))
+})
