@@ -17,7 +17,11 @@
     "check-contrast": "node scripts/check-contrast.js",
     "a11y": "node scripts/a11y.js",
     "build:icons": "python3 scripts/generate-icons.py",
-    "audit:records": "node scripts/audit-records.mjs"
+    "audit:records": "node scripts/audit-records.mjs",
+    "pipeline:test": "node --test \"pipeline/test/*.test.mjs\"",
+    "pipeline:corpus": "node pipeline/scripts/build-corpus.mjs",
+    "pipeline:guard-timeline": "node pipeline/scripts/guard-timeline.mjs",
+    "pipeline:bench": "node pipeline/scripts/bench-models.mjs"
   },
   "dependencies": {
     "@fontsource/ibm-plex-mono": "^5.3.0",
@@ -33,20 +37,24 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@mozilla/readability": "^0.6.0",
     "@turf/turf": "^7.4.0",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.1",
+    "ajv": "^8.20.0",
     "autoprefixer": "^10.5.0",
     "axe-core": "^4.13.0",
     "eslint": "^10.3.0",
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-refresh": "^0.5.2",
     "globals": "^17.6.0",
+    "jsdom": "^30.1.1",
     "playwright": "^1.62.1",
     "postcss": "^8.5.15",
     "puppeteer": "^25.12.0",
     "tailwindcss": "^3.4.19",
-    "vite": "^8.0.12"
+    "vite": "^8.0.12",
+    "yaml": "^2.9.1"
   }
 }

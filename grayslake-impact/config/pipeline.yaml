@@ -1,0 +1,76 @@
+# Pipeline settings. No secrets in this file: API keys and tokens are read
+# from environment variables named below, never from the repository.
+
+# Where raw source text, leads, logs and shadow-mode drafts are written. This
+# is a local clone of the private repo quentinconklejr/private-info, kept
+# outside this repository. Override with the PRIVATE_INFO_DIR env var.
+private_store:
+  dir: C:/Users/Quentin/private-info
+  remote: https://github.com/quentinconklejr/private-info.git
+
+# --- Model providers -------------------------------------------------------
+# `provider` is the one setting that picks the model. Fallbacks are tried in
+# order only when the primary fails (unreachable, or a schema failure that
+# survives the retry). Both paid/remote fallbacks are off by default.
+provider: ollama
+fallback_providers: []          # e.g. [gemini, claude]; empty = none
+
+providers:
+  ollama:
+    enabled: true
+    paid: false
+    base_url: http://127.0.0.1:11434
+    model: gemma4:12b            # Stage A benchmark winner (2026-10-01); see private-info/reports/bench-*.md
+    num_ctx: 8192                # explicit; tested to 16384 (fits on GPU, scored lower)
+    output_reserve_tokens: 3072  # room kept for the JSON answer
+    chars_per_token: 3.2         # conservative estimate used for chunking
+    temperature: 0
+    seed: 42
+    keep_alive: 10m
+    request_timeout_s: 600
+    rate_limit: { requests_per_minute: 0, concurrency: 1 }   # 0 = no cap
+    # Per-model request options. qwen3 and gemma4 are thinking models
+    # (`ollama show` lists the capability); extraction does not want a
+    # reasoning preamble, so it is turned off for them.
+    model_options:
+      "qwen3:14b": { think: false }
+      "gemma4:12b": { think: false }
+
+  gemini:
+    enabled: false
+    paid: false                  # free tier; becomes paid if billing is on
+    model: gemini-2.5-flash      # UNVERIFIED model id; confirm before enabling
+    api_key_env: GEMINI_API_KEY
+    rate_limit: { requests_per_minute: 10, concurrency: 1 }
+
+  claude:
+    enabled: false
+    paid: true
+    model: claude-opus-5-5
+    api_key_env: ANTHROPIC_API_KEY
+    rate_limit: { requests_per_minute: 20, concurrency: 2 }
+
+# Applies only while a paid provider is enabled. When the month's estimated
+# spend reaches the cap, paid calls stop and the owner is notified.
+spend_cap_usd_per_month: 50
+
+# --- Fetching --------------------------------------------------------------
+http:
+  user_agent: "GrayslakeTrackerBot/0.1 (+https://grayslakedatacentertracker.org/about)"
+  timeout_s: 30
+  min_interval_per_host_s: 5
+  retries: 2
+
+# Binaries the pipeline shells out to. pdftotext ships with Git for Windows;
+# it is not on PATH for Task Scheduler jobs, so the full path is given.
+tools:
+  pdftotext:
+    - pdftotext
+    - C:/Program Files/Git/mingw64/bin/pdftotext.exe
+
+# --- Editorial holds -------------------------------------------------------
+# Terms generated text must not contain until the owner lifts the hold.
+editorial:
+  blocked_terms:
+    - term: POWER Act
+      reason: Owner has not yet confirmed which bills carry this name (HB5513 / SB4016).

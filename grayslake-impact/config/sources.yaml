@@ -1,0 +1,231 @@
+# Source registry: which domains, feeds and channels the pipeline trusts, and
+# at what tier. Tiers are defined in config/credibility-rubric.yaml.
+#
+# The pipeline looks a URL up here and nowhere else. A host that matches no
+# entry is Tier 4 (hard rule tier_from_registry). Nothing a page says about
+# itself can change its tier.
+#
+# Matching
+#   domains           the host or any subdomain of it (www. is ignored)
+#   url_prefixes      exact prefix of the URL after scheme and www.
+#   youtube_channels  channel ids, for youtube.com / youtu.be links and feeds
+# The most specific match wins: url_prefixes, then youtube_channels, then the
+# longest matching domain.
+#
+# Wayback Machine links (web.archive.org/web/<timestamp>/<url>) are looked up
+# by the archived URL, so a snapshot carries the tier of what it is a copy of.
+#
+# Owner decisions recorded here (2026-09-30):
+#   - Tier 2 outlets are the six listed below, each marked
+#     corrections_policy: unverified until the owner confirms it.
+#   - Lake & McHenry County Scanner is Tier 3.
+#   - Court dockets and Recorder searches are manual: `automate: false`.
+
+version: 0.1.0
+updated: 2026-09-30
+
+sources:
+  # --- Tier 1: government records -----------------------------------------
+  - id: village-grayslake
+    name: Village of Grayslake
+    tier: 1
+    domains: [villageofgrayslake.com]
+    automate: true
+  - id: lake-county
+    name: Lake County, Illinois
+    tier: 1
+    domains: [lakecountyil.gov, maps.lakecountyil.gov]
+    automate: true
+  - id: lake-county-legistar
+    name: Lake County Legistar (County Board, ZBA, SMC, committees)
+    tier: 1
+    domains: [lakecounty.legistar.com]
+    url_prefixes: [webapi.legistar.com/v1/lakecounty/]
+    automate: true
+  - id: village-grayslake-youtube
+    name: Village of Grayslake YouTube channel
+    tier: 1
+    youtube_channels: [UCPnLOnmTu9VhW0paDWubHhw]
+    automate: true
+    note: Official meeting video. Auto-captions are never verbatim evidence.
+  - id: ilga
+    name: Illinois General Assembly
+    tier: 1
+    domains: [ilga.gov]
+    automate: true
+  - id: icc
+    name: Illinois Commerce Commission
+    tier: 1
+    domains: [icc.illinois.gov]
+    automate: true
+  - id: iepa
+    name: Illinois EPA
+    tier: 1
+    domains: [epa.illinois.gov]
+    automate: true
+  - id: dceo
+    name: Illinois DCEO
+    tier: 1
+    domains: [dceo.illinois.gov]
+    automate: true
+  - id: mundelein
+    name: Village of Mundelein
+    tier: 1
+    domains: [mundelein.org]
+    automate: true
+  - id: clcjawa
+    name: Central Lake County Joint Action Water Agency
+    tier: 1
+    domains: [clcjawa.com]
+    automate: true
+  - id: usace-chicago
+    name: US Army Corps of Engineers, Chicago District
+    tier: 1
+    domains: [lrc.usace.army.mil]
+    automate: true
+  - id: pjm
+    name: PJM Interconnection
+    tier: 1
+    domains: [pjm.com, dataminer2.pjm.com]
+    automate: true
+  - id: ferc
+    name: FERC eLibrary
+    tier: 1
+    domains: [ferc.gov]
+    automate: true
+  - id: comed
+    name: ComEd
+    tier: 1
+    domains: [comed.com]
+    automate: true
+    note: Tier 1 as to filings. ComEd statements about itself are attributed by the claim-type rules.
+  - id: lake-county-circuit-clerk
+    name: Lake County Circuit Clerk
+    tier: 1
+    domains: [lakecountycircuitclerk.org]
+    automate: false   # owner decision: court dockets stay manual
+  - id: researchil
+    name: re:SearchIL court records
+    tier: 1
+    domains: [researchil.tylerhost.net]
+    automate: false   # owner decision: court dockets stay manual
+  - id: nineteenth-circuit
+    name: 19th Judicial Circuit Court
+    tier: 1
+    domains: [19thcircuitcourt.state.il.us]
+    automate: false
+  - id: lake-county-recorder-search
+    name: Lake County Recorder property records search
+    tier: 1
+    domains: [lake.il.publicsearch.us]
+    automate: false   # owner decision: Recorder searches stay manual
+  - id: tracker-mirror
+    name: Documents mirrored on this site (public records with a recorded SHA-256)
+    tier: 1
+    url_prefixes:
+      - grayslakedatacentertracker.org/docs/
+      - grayslakedatacentertracker.org/records/
+    automate: false
+    note: Site-relative paths /docs/ and /records/ resolve here.
+
+  # --- Tier 2: established outlets ----------------------------------------
+  # A Tier 2 article without a named byline is scored as Tier 3.
+  - id: daily-herald
+    name: Daily Herald
+    tier: 2
+    domains: [dailyherald.com]
+    corrections_policy: unverified
+    automate: true
+  - id: chicago-tribune
+    name: Chicago Tribune
+    tier: 2
+    domains: [chicagotribune.com]
+    corrections_policy: unverified
+    automate: true
+  - id: lake-county-news-sun
+    name: Lake County News-Sun
+    tier: 2
+    # UNVERIFIED: News-Sun stories are believed to publish on
+    # chicagotribune.com, which the entry above already covers at Tier 2. Add
+    # its own domain or url_prefix here once a real article URL confirms it.
+    domains: []
+    corrections_policy: unverified
+    automate: true
+  - id: chicago-sun-times
+    name: Chicago Sun-Times
+    tier: 2
+    domains: [suntimes.com]
+    corrections_policy: unverified
+    automate: true
+  - id: crains-chicago
+    name: Crain's Chicago Business
+    tier: 2
+    domains: [chicagobusiness.com]
+    corrections_policy: unverified
+    automate: true
+  - id: capitol-news-illinois
+    name: Capitol News Illinois
+    tier: 2
+    domains: [capitolnewsillinois.com]
+    corrections_policy: unverified
+    automate: true
+
+  # --- Tier 3: trade press, aggregators, republishers, advocacy ------------
+  - id: lake-mchenry-scanner
+    name: Lake & McHenry County Scanner
+    tier: 3
+    domains: [lakemchenryscanner.com]
+    automate: true
+    note: Owner decision 2026-09-30.
+  - id: chronicle-media
+    name: Chronicle Media
+    tier: 3
+    domains: [chronicleillinois.com]
+    automate: true
+    note: Not in the owner's Tier 2 list. Placed at Tier 3 pending owner review.
+  - id: patch
+    name: Patch
+    tier: 3
+    domains: [patch.com]
+    automate: true
+  - id: datacenterdynamics
+    name: Data Center Dynamics
+    tier: 3
+    domains: [datacenterdynamics.com]
+    automate: true
+  - id: baxtel
+    name: Baxtel
+    tier: 3
+    domains: [baxtel.com]
+    automate: false
+  - id: hoodline
+    name: Hoodline
+    tier: 3
+    domains: [hoodline.com]
+    automate: false
+  - id: govtech
+    name: Government Technology
+    tier: 3
+    domains: [govtech.com]
+    automate: false
+  - id: illinois-environmental-council
+    name: Illinois Environmental Council (advocacy; republishes Tribune reporting)
+    tier: 3
+    domains: [ilenviro.org]
+    automate: false
+  - id: citizens-utility-board
+    name: Citizens Utility Board (advocacy)
+    tier: 3
+    domains: [citizensutilityboard.org]
+    automate: false
+  - id: alliance-great-lakes
+    name: Alliance for the Great Lakes (advocacy)
+    tier: 3
+    domains: [greatlakes.org]
+    automate: false
+
+# Discovery-only services. A hit from one of these is never scored as the
+# service; the pipeline resolves the link and scores the destination.
+discovery_only:
+  - news.google.com
+  - google.com/alerts
