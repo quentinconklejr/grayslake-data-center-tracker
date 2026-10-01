@@ -9,11 +9,12 @@
 import { join } from 'node:path'
 import { CONFIG_DIR, readYaml } from './config.mjs'
 
-export const CLAIM_TYPES = ['fact', 'quote', 'opinion', 'allegation', 'projection', 'procedural']
+export const CLAIM_TYPES = ['fact', 'quote', 'opinion', 'allegation', 'projection', 'procedural', 'party_statement']
 const TIER_OUTCOMES = ['draft_as_fact', 'draft_as_reported', 'queue_only', 'never']
 const REQUIRED_HARD_RULES = [
   'no_verbatim_no_claim', 'opinion_never_fact', 'unnamed_never_fact', 'tier_from_registry',
   'tier4_never_public', 'model_text_is_not_evidence', 'human_merge_only', 'no_rewrite_of_existing',
+  'party_assertions_attributed',
 ]
 
 export function validateRubric(r) {
@@ -33,7 +34,7 @@ export function validateRubric(r) {
   need(r.tiers?.[4]?.default_for_unknown_domain === true, 'tiers.4.default_for_unknown_domain must be true')
 
   for (const ct of CLAIM_TYPES) need(r.claim_types?.[ct], `claim_types.${ct} missing`)
-  for (const ct of ['quote', 'opinion', 'allegation', 'projection']) {
+  for (const ct of ['quote', 'opinion', 'allegation', 'projection', 'party_statement']) {
     need(r.claim_types?.[ct]?.may_become_fact === false, `claim_types.${ct}.may_become_fact must be false`)
   }
   need(r.modifiers?.attribution?.unnamed, 'modifiers.attribution.unnamed missing')

@@ -275,3 +275,84 @@ test('draft prose: the first letter of a quotation may change case, with a note;
   const bad = checkDraftProse('Davies said that “because grayslake is debt-free”', cfg, { evidence: [s] })
   assert.ok(bad.failures.some(f => f.check === 'quotation'))
 })
+
+// --- party assertions (rubric hard rule party_assertions_attributed) -----------------
+
+import { detectParty, relabelClaims, isProceduralDetail, requiredAttribution } from '../lib/party.mjs'
+import { loadRegistry, lookup } from '../lib/registry.mjs'
+
+const COMPLAINT_HEAD = 'IN THE CIRCUIT COURT OF THE NINETEENTH JUDICIAL CIRCUIT\nPRESERVATION OF COMMUNITY WELL-BEING COLLECTIVE LLC, et al., Plaintiffs,\nv. VILLAGE OF GRAYSLAKE, Defendants.\nCase No. 2026CH00000171\nCOMPLAINT FOR DECLARATORY AND INJUNCTIVE RELIEF'
+const complaint = { url: '/docs/t5-grayslake-complaint-2026ch00000171.pdf', category: 'court', text: COMPLAINT_HEAD }
+const reg = loadRegistry()
+const claimOf = (claim_type, claim_text) => ({ claim_type, claim_text, speaker: null, attribution: 'document', supporting_quotes: [], event_date: null, date_basis: 'unknown' })
+
+test('party: a complaint is a party court filing; a court order is not', () => {
+  assert.equal(detectParty(complaint, lookup(reg, complaint.url)).kind, 'court_filing')
+  const order = { ...complaint, text: 'IN THE CIRCUIT COURT\nPlaintiffs v. Defendants\nORDER ON MOTION TO DISMISS\nIT IS HEREBY ORDERED that the motion is denied.' }
+  assert.equal(detectParty(order, lookup(reg, order.url)), null)
+  const news = { url: 'https://www.lakemchenryscanner.com/2026/08/08/x/', category: 'news', text: 'The complaint says the Plaintiffs ...' }
+  assert.equal(detectParty(news, lookup(reg, news.url)), null, 'news reporting about a complaint is not the filing')
+})
+
+test('party: every substantive claim in a complaint becomes an allegation, whatever the model said', () => {
+  const party = detectParty(complaint, lookup(reg, complaint.url))
+  const out = relabelClaims([
+    claimOf('fact', 'The campus has backup diesel generation capacity in the range of 1.5 to 2 gigawatts.'),
+    claimOf('projection', 'The campus will consume more than 1 gigawatt continuously.'),
+    claimOf('opinion', 'The approvals were unlawful.'),
+    claimOf('quote', 'Mayor Davies estimated the investment at $8.5 billion.'),
+  ], party)
+  for (const c of out) {
+    assert.equal(c.claim_type, 'allegation')
+    assert.equal(c.speaker, 'the plaintiffs')
+  }
+  assert.equal(out[0].relabeled.from, 'fact')
+})
+
+test('party: procedural details in a filing stay procedural; a "procedural" claim with a figure does not', () => {
+  const party = detectParty(complaint, lookup(reg, complaint.url))
+  const [caseNo, hearing, disguised] = relabelClaims([
+    claimOf('procedural', 'Case No. 2026CH00000171 was filed in the Chancery Division on July 31, 2026.'),
+    claimOf('procedural', 'An initial status hearing is set for October 30, 2026 at 9:00 a.m. in Courtroom 301.'),
+    claimOf('procedural', 'The complaint was filed over a campus using 1.55 gigawatts of power.'),
+  ], party)
+  assert.equal(caseNo.claim_type, 'procedural')
+  assert.equal(hearing.claim_type, 'procedural')
+  assert.equal(disguised.claim_type, 'allegation', 'a figure makes it substantive')
+  assert.equal(isProceduralDetail(claimOf('fact', 'Case No. 2026CH00000171 was filed.')), false, 'only claims typed procedural qualify')
+})
+
+test('party: everything from T5\'s website becomes "T5 stated", never fact', () => {
+  const url = 'https://t5datacenters.com/news/grayslake-update/'
+  const party = detectParty({ url, text: 'T5 announces ...' }, lookup(reg, url))
+  assert.deepEqual([party.kind, party.party], ['party_statement', 'T5 Data Centers'])
+  const out = relabelClaims([
+    claimOf('fact', 'The campus will use less than 50,000 gallons of water a day.'),
+    claimOf('procedural', 'A public hearing is scheduled for October 15, 2026.'),
+    claimOf('procedural', 'The first building permit was issued on September 1, 2026.'),
+  ], party)
+  assert.equal(out[0].claim_type, 'party_statement')
+  assert.equal(out[0].speaker, 'T5 Data Centers')
+  assert.equal(out[1].claim_type, 'procedural', 'a bare procedural detail keeps its type')
+  assert.equal(out[2].claim_type, 'party_statement', 'a permit issuance is substantive: T5 saying it does not make it fact')
+})
+
+test('party: claims from a non-party source are left alone', () => {
+  const url = 'https://www.dailyherald.com/20260901/news/x/'
+  const out = relabelClaims([claimOf('fact', 'The Village issued a permit.')], detectParty({ url, text: '' }, lookup(reg, url)))
+  assert.equal(out[0].claim_type, 'fact')
+  assert.equal(out[0].relabeled, undefined)
+})
+
+test('party: a drafted text must carry the party attribution or the guard fails it', () => {
+  const s = prepareSource('T5 expects the campus to use less than 50,000 gallons of water a day once fully built.', cfg)
+  const t5 = requiredAttribution({ kind: 'party_statement', party: 'T5 Data Centers' })
+  assert.ok(checkDraftProse('The campus will use less than 50,000 gallons of water a day.', cfg, { evidence: [s], requiredAttribution: t5 }).failures.some(f => f.check === 'attribution'))
+  assert.equal(checkDraftProse('T5 stated the campus will use less than 50,000 gallons of water a day.', cfg, { evidence: [s], requiredAttribution: t5 }).ok, true)
+  assert.equal(checkDraftProse('According to T5, the campus will use less than 50,000 gallons a day.', cfg, { evidence: [s], requiredAttribution: t5 }).ok, true)
+
+  const c = prepareSource('backup diesel generation capacity in the range of 1.5 to 2 gigawatts', cfg)
+  const filing = requiredAttribution({ kind: 'court_filing', party: 'the plaintiffs' })
+  assert.ok(checkDraftProse('The campus has 1.5 to 2 gigawatts of backup diesel generation.', cfg, { evidence: [c], requiredAttribution: filing }).failures.some(f => f.check === 'attribution'))
+  assert.equal(checkDraftProse('The complaint alleges the campus has 1.5 to 2 gigawatts of backup diesel generation.', cfg, { evidence: [c], requiredAttribution: filing }).ok, true)
+})

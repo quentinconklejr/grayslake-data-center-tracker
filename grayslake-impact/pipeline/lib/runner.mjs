@@ -31,7 +31,7 @@ const HEALTH_ALERT_AFTER = 3
 
 const safe = s => String(s).replace(/[^\w.-]+/g, '_').slice(0, 80)
 
-export async function runFetchers({ fetchers, store, cfg, registry, sources, http, wayback, env = process.env, now = new Date(), snapshots = true }) {
+export async function runFetchers({ fetchers, store, cfg, registry, sources, http, wayback, env = process.env, now = new Date(), snapshots = true, backfill = false }) {
   const runId = now.toISOString().replace(/[:.]/g, '-')
   const day = now.toISOString().slice(0, 10)
   const windowDays = cfg.fetchers?.first_run_window_days ?? 14
@@ -68,7 +68,11 @@ export async function runFetchers({ fetchers, store, cfg, registry, sources, htt
     stats.discovered = found.candidates.length
 
     for (const cand of found.candidates) {
-      if (state.seen[cand.key]) { stats.alreadySeen++; continue }
+      // Backfill: fetch what an earlier first run recorded as seen without
+      // fetching (the baseline backlog). Everything else already seen is skipped.
+      const backfilling = backfill && state.seen[cand.key]?.baseline
+      if (state.seen[cand.key] && !backfilling) { stats.alreadySeen++; continue }
+      if (backfilling) stats.backfilled = (stats.backfilled ?? 0) + 1
       const inWindow = cand.published && new Date(cand.published) >= since
       if (firstRun && !inWindow) {
         state.seen[cand.key] = { at: now.toISOString(), baseline: true }

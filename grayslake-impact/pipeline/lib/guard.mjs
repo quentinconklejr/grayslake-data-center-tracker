@@ -372,6 +372,7 @@ export function quotedSpans(text) {
  * opts.docDates      [{month, day, year}] document dates that may be cited
  * opts.allegation    true if the prose reports allegations
  * opts.blockedTerms  [{term, reason}] that must not appear
+ * opts.requiredAttribution [{label, test: RegExp}] that must each match
  */
 export function checkDraftProse(text, cfg, opts = {}) {
   const canon = makeCanon(cfg)
@@ -424,6 +425,12 @@ export function checkDraftProse(text, cfg, opts = {}) {
 
   if (opts.allegation && !ALLEGATION_MARKERS.test(s)) {
     failures.push({ check: 'allegation', reason: 'allegation_without_attribution' })
+  }
+
+  // Attribution the text must carry: a party's claims ("T5 stated", "the
+  // complaint alleges"), or an outlet's ("reported by").
+  for (const r of opts.requiredAttribution ?? []) {
+    if (!r.test.test(s)) failures.push({ check: 'attribution', reason: 'missing_required_attribution', value: r.label })
   }
 
   for (const b of opts.blockedTerms ?? []) {

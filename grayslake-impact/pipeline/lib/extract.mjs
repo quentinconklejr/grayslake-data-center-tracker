@@ -52,31 +52,34 @@ function userMessage(meta, chunk, total) {
   ].filter(l => l !== '').join('\n')
 }
 
-function parseAndValidate(content) {
+/** Parses a model response and validates it with a compiled Ajv validator. */
+export function parseAndValidate(content, validator = validate) {
   let data
   try { data = JSON.parse(content) } catch (e) { return { ok: false, errors: [`not valid JSON: ${e.message}`] } }
-  if (!validate(data)) return { ok: false, errors: validate.errors.map(e => `${e.instancePath || '/'} ${e.message}`) }
+  if (!validator(data)) return { ok: false, errors: validator.errors.map(e => `${e.instancePath || '/'} ${e.message}`) }
   return { ok: true, data }
 }
 
+export const compileSchema = schema => ajv.compile(schema)
+
 /**
- * Extracts claims from one chunk. Returns
- *   { ok, data?, attempts, firstAttemptOk, errors[], usage, durationMs, warnings[] }
+ * One schema-constrained call with validation and exactly one retry.
+ * Returns { ok, data?, attempts, firstAttemptOk, errors[], usage, durationMs, warnings[] }
  */
-export async function extractChunk(provider, meta, chunk, total, label) {
-  const system = SYSTEM_PROMPT
-  const user = userMessage(meta, chunk, total)
+export async function generateValidated(provider, { system, user, schema, validator, label }) {
   const usage = { inputTokens: 0, outputTokens: 0 }
   const warnings = []
   let durationMs = 0
   let errors = []
   for (let attempt = 1; attempt <= 2; attempt++) {
     const retryNote = attempt === 2
-      ? `\n\nYour previous answer did not match the required JSON schema: ${errors.slice(0, 8).join('; ')}. Return corrected JSON only.`
+      ? `
+
+Your previous answer did not match the required JSON schema: ${errors.slice(0, 8).join('; ')}. Return corrected JSON only.`
       : ''
     let r
     try {
-      r = await provider.generateJSON({ system, user: user + retryNote, schema: schemaForModel, label: `${label} chunk ${chunk.index + 1}/${total} attempt ${attempt}` })
+      r = await provider.generateJSON({ system, user: user + retryNote, schema, label: `${label} attempt ${attempt}` })
     } catch (err) {
       errors = [`provider error: ${err.message}`]
       continue
@@ -85,11 +88,22 @@ export async function extractChunk(provider, meta, chunk, total, label) {
     usage.outputTokens += r.usage.outputTokens
     durationMs += r.durationMs
     warnings.push(...r.warnings)
-    const v = parseAndValidate(r.content)
+    const v = parseAndValidate(r.content, validator)
     if (v.ok) return { ok: true, data: v.data, attempts: attempt, firstAttemptOk: attempt === 1, errors: [], usage, durationMs, warnings }
     errors = v.errors
   }
   return { ok: false, attempts: 2, firstAttemptOk: false, errors, usage, durationMs, warnings }
+}
+
+/** Extracts claims from one chunk (see generateValidated for the result). */
+export async function extractChunk(provider, meta, chunk, total, label) {
+  return generateValidated(provider, {
+    system: SYSTEM_PROMPT,
+    user: userMessage(meta, chunk, total),
+    schema: schemaForModel,
+    validator: validate,
+    label: `${label} chunk ${chunk.index + 1}/${total}`,
+  })
 }
 
 /** Splits a document to fit the provider and returns its chunks. */

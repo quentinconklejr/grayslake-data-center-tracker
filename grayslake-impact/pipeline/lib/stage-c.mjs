@@ -1,0 +1,184 @@
+/**
+ * Stage C as a library: triage → extraction → verbatim guard → party
+ * relabeling → scoring → drafting, over work items, plus the writer for its
+ * shadow output. Used by scripts/run-stage-c.mjs (stored items, corpus) and
+ * scripts/run-job.mjs (the scheduled job, on newly fetched items).
+ */
+import { chunksFor, extractChunk } from './extract.mjs'
+import { prepareSource, checkClaim, extractDates } from './guard.mjs'
+import { lookup } from './registry.mjs'
+import { detectParty, relabelClaims } from './party.mjs'
+import { decide, effectiveTier, signalsFor, corroboratingItems, isDraftable } from './score.mjs'
+import { flagsForClaim, existingEntryMatches } from './flags.mjs'
+import { draftItem } from './draft.mjs'
+import { canonicalUrl } from './dedupe.mjs'
+import { pdfToText } from './text.mjs'
+import { log } from './log.mjs'
+import { FEED as YT_FEED } from './fetchers/village-youtube.mjs'
+
+const MAX_CLAIMS_PER_DRAFT = 8
+
+/** A Stage B shadow item as a work item. */
+export function fromShadow(it, { registry, store }) {
+  const hit = lookup(registry, it.fetcher === 'village-youtube' ? YT_FEED : it.url)
+  return {
+    origin: 'shadow', id: it.id, itemPath: it._path ?? null, title: it.title, url: it.url, text: it.text, kind: it.kind,
+    published: it.published ? it.published.slice(0, 10) : null,
+    registryId: hit.id, registryTier: hit.tier, registryHit: hit, registryCategory: /court/i.test(hit.id ?? '') ? 'court' : null,
+    publisher: hit.name ?? 'Unknown', byline: it.meta?.page?.byline ?? null,
+    snapshot: it.snapshot, dedupe: it.dedupe, needsHumanReview: it.needsHumanReview, fetcher: it.fetcher,
+    rawPdf: it.kind === 'pdf' && it.rawPath ? store.path(it.rawPath) : null,
+  }
+}
+
+/** A Stage A corpus record (a source the site already cites) as a work item. */
+export function fromCorpus(rec, { registry, store, sources, existsSync }) {
+  const s = sources[rec.key]
+  const hit = lookup(registry, s.url)
+  const d = /^Retrieved/i.test(s.date ?? '') ? null : extractDates(s.date ?? '').find(x => x.year)
+  return {
+    origin: 'corpus', id: `corpus:${rec.key}`, title: s.title, url: s.url, text: rec.text, kind: rec.kind,
+    published: d ? `${d.year}-${String(d.month).padStart(2, '0')}-${String(d.day).padStart(2, '0')}` : null,
+    registryId: hit.id, registryTier: hit.tier, registryHit: hit, registryCategory: s.category,
+    publisher: s.publisher, byline: s.author ?? rec.pageMeta?.byline ?? null, sourceKey: rec.key,
+    snapshot: s.archiveUrl ? { verified: true, snapshotUrl: s.archiveUrl } : null,
+    rawPdf: rec.kind === 'pdf' && existsSync(store.path(`corpus/raw/${rec.key}.pdf`)) ? store.path(`corpus/raw/${rec.key}.pdf`) : null,
+  }
+}
+
+/**
+ * ctx: { cfg, rubric, gcfg, provider, triage, flagCtx, sources, timelineEvents, runId, today, maxChunks, onProgress }
+ * Returns { filtered, humanReview, work, drafts, dropped, queued, leads }.
+ */
+export async function processItems(inputs, ctx) {
+  const { cfg, rubric, gcfg, provider, triage, flagCtx, sources, timelineEvents, runId, today } = ctx
+  const maxChunks = ctx.maxChunks ?? 8
+  const say = ctx.onProgress ?? (() => {})
+  const filtered = [], humanReview = [], work = [], dropped = []
+
+  for (const item of inputs) {
+    item.guardCfg = gcfg
+    if (item.dedupe?.duplicateOf) { filtered.push({ id: item.id, title: item.title, origin: item.origin, reason: `duplicate of ${item.dedupe.duplicateOf}` }); continue }
+    let pages = null
+    if (item.rawPdf) { try { pages = pdfToText(item.rawPdf, cfg.tools.pdftotext).pages } catch (e) { log.warn(`${item.id}: could not re-read PDF pages: ${e.message}`) } }
+    const t = triage(item, pages)
+    if (!t.match) { filtered.push({ id: item.id, title: item.title, origin: item.origin, reason: t.reason }); continue }
+    item.triage = { rule: t.rule, reason: t.reason, pages: t.pages, pagesTotal: t.pagesTotal }
+    if (t.pages && t.pagesTotal && t.pages.length < t.pagesTotal) log.warn(`${item.id}: triage kept ${t.pages.length} of ${t.pagesTotal} PDF pages; the rest are not read`)
+    if (item.kind === 'video') { humanReview.push({ id: item.id, title: item.title, url: item.url, reason: item.needsHumanReview, triage: t.reason }); continue }
+    item.extractText = t.text
+    work.push(item)
+  }
+
+  for (const item of work) {
+    say(`extracting ${item.id} (T${item.registryTier}, ${item.triage.reason})`)
+    const meta = { title: item.title, publisher: item.publisher, date: item.published }
+    const chunks = chunksFor(provider, meta, item.extractText, { maxChunks, label: item.id })
+    item.claims = []
+    item.docInfo = null
+    item.schemaFailures = 0
+    item.chunks = chunks.length
+    const d0 = item.published ? extractDates(item.published)[0] : null
+    const docDate = d0 ? { month: d0.month, day: d0.day, year: d0.year } : undefined
+    for (const ch of chunks) {
+      const r = await extractChunk(provider, meta, ch, chunks.length, item.id)
+      if (!r.ok) { item.schemaFailures++; log.warn(`${item.id} chunk ${ch.index + 1}: schema failure after retry: ${r.errors.slice(0, 2).join('; ')}`); continue }
+      item.docInfo ??= r.data.document
+      const src = prepareSource(ch.text, gcfg)
+      for (const c of r.data.claims) {
+        const g = checkClaim(c, src, gcfg, { docDate })
+        if (!g.ok) { dropped.push({ runId, item: item.id, url: item.url, claim: c, failures: g.failures.map(f => ({ check: f.check, reason: f.reason, value: f.value })) }); continue }
+        item.claims.push({ ...c, guardMatch: g.quotes.map(q => q.match) })
+      }
+    }
+    item.party = detectParty({ url: item.url, text: item.text, category: item.registryCategory, docType: item.docInfo?.doc_type }, item.registryHit)
+    item.partyKind = item.party?.kind ?? null
+    item.passingClaims = relabelClaims(item.claims, item.party)
+    item.effectiveTier = effectiveTier(item.registryTier, item.byline ?? item.docInfo?.byline)
+    item.docOrigin = item.docInfo?.origin ?? 'unclear'
+  }
+
+  for (const item of work) {
+    for (const c of item.passingClaims) {
+      const by = corroboratingItems(c, item, work)
+      const d = decide(rubric, signalsFor(c, item, true, by.length))
+      Object.assign(c, { outcome: d.outcome, rule: d.rule, labels: [d.label, ...d.flags].filter(Boolean), corroboration: by.length, corroboratedBy: by })
+    }
+  }
+
+  const cited = new Map()
+  for (const [k, s] of Object.entries(sources)) for (const u of [s.url, s.archiveUrl, s.originalUrl]) if (u && /^https?:/.test(u)) cited.set(canonicalUrl(u), k)
+  const examples = ['2026-09-08', '2026-07-31', '2026-06-02'].map(date => timelineEvents.find(e => e.date === date && e.description)).filter(Boolean)
+  const dctx = { provider, examples, sources, cited, blockedTerms: cfg.editorial?.blocked_terms ?? [], today, canonUrl: canonicalUrl }
+  const drafts = [], queued = [], leads = []
+  for (const item of work) {
+    // A Tier 3 item is never cited alone (rubric tiers.3). A corroborated
+    // claim from it is queued with the corroborating items named: the entry
+    // belongs to their draft, cited to them, not to a draft of the Tier 3 item.
+    const draftable = item.passingClaims.filter(c => isDraftable(c.outcome) && c.outcome !== 'redraft_from_corroborating_source')
+    for (const c of item.passingClaims.filter(c => !draftable.includes(c))) {
+      const rec = { runId, item: item.id, url: item.url, tier: item.effectiveTier, outcome: c.outcome, claim: c.claim_text, quotes: c.supporting_quotes, corroboratedBy: c.corroboratedBy ?? [] }
+      if (c.outcome === 'private_lead') leads.push(rec)
+      else queued.push(rec)
+    }
+    if (!draftable.length) continue
+    if (draftable.length > MAX_CLAIMS_PER_DRAFT) log.warn(`${item.id}: ${draftable.length} draftable claims; the first ${MAX_CLAIMS_PER_DRAFT} are drafted, the rest listed`)
+    say(`drafting ${item.id} from ${Math.min(draftable.length, MAX_CLAIMS_PER_DRAFT)} claim(s)`)
+    const d = await draftItem(item, draftable.slice(0, MAX_CLAIMS_PER_DRAFT), dctx)
+    d.origin = item.origin   // 'shadow' or 'corpus'
+    d.fetcher = item.fetcher ?? null
+    d.title = item.title
+    d.extraClaims = draftable.slice(MAX_CLAIMS_PER_DRAFT).map(c => c.claim_text)
+    d.flags = [...new Map(draftable.flatMap(c => flagsForClaim(c, flagCtx)).map(f => [`${f.file}|${f.id ?? ''}`, f])).values()]
+    d.existing = d.entry ? existingEntryMatches({ ...d.entry, sourceKey: d.sourceKey }, timelineEvents) : []
+    drafts.push(d)
+  }
+  return { filtered, humanReview, work, drafts, dropped, queued, leads }
+}
+
+export function draftMarkdown(d, i) {
+  return [
+    `## ${i + 1}. ${d.entry?.title ?? '(no prose: claims only)'}`, '',
+    `- Item: ${d.itemId} (${d.origin}) · ${d.url}`,
+    `- Tier: registry ${d.tier}, effective ${d.effectiveTier} · party: ${d.party ? `${d.party.kind} (${d.party.party})` : 'none'}`,
+    `- Draft guard: **${d.guard}** · status: **${d.status}**${d.validation ? ` · format check: ${d.validation.ok ? 'pass' : 'FAIL ' + d.validation.errors.join('; ')}` : ''}${d.updateGuard ? ` · updates line guard: ${d.updateGuard}` : ''}`,
+    `- Date: ${d.date.date ?? 'none'} (${d.date.basis})`,
+    ...d.attempts.map(a => `- Attempt ${a.attempt}: ${a.schemaErrors ? 'schema errors ' + a.schemaErrors.join('; ') : a.guard ? 'guard pass' : 'guard FAIL: ' + a.failures.map(f => `${f.check} ${f.reason}${f.value ? ' ' + JSON.stringify(f.value) : ''}`).join('; ')}`),
+    ...(d.existing?.length ? [`- **Possible existing entry:** ${d.existing.map(e => `${e.date} "${e.title}" (${e.why})`).join('; ')}`] : []),
+    ...(d.flags ?? []).map(f => `- Flag: ${f.file}${f.id ? ' ' + f.id : ''}: ${f.note}`),
+    '', '**Claims**', '',
+    ...d.claims.map(c => `- [${c.claim_type}${c.relabeled ? ` ← ${c.relabeled.from}` : ''} → ${c.outcome}] ${c.claim_text}\n  - “${c.quotes[0]}” (${c.guardMatch.join(', ')})`),
+    '',
+    ...(d.rendered ? ['```js', '// src/data/timeline.js', d.rendered.timeline, ...(d.rendered.source ? ['', '// src/data/sources.js', d.rendered.source] : [`// sources.js: reuses existing key ${d.sourceKey}`]), '', '// src/data/updates.js (top of the array)', d.rendered.update, ...(d.rendered.action ? ['', '// src/data/actions.js', d.rendered.action] : []), '```'] : []),
+    '',
+  ].join('\n')
+}
+
+/** Writes drafts, summary, dropped claims, queue and leads to the private store. */
+export function writeStageC(store, base, runId, result, extra = {}) {
+  const { filtered, humanReview, work, drafts, dropped, queued, leads } = result
+  for (const r of dropped) store.appendJsonl('logs/dropped-claims.jsonl', r)
+  for (const q of queued) store.appendJsonl('shadow/queue/needs-corroboration.jsonl', q)
+  for (const l of leads) store.appendJsonl('shadow/leads/private-leads.jsonl', l)
+  drafts.forEach((d, i) => store.writeJson(`${base}/drafts/${String(i + 1).padStart(3, '0')}-${(d.sourceKey ?? d.itemId).replace(/[^\w-]+/g, '_')}.json`, d))
+  const reasons = {}
+  for (const f of filtered) {
+    const r = f.reason.startsWith('duplicate of') ? 'duplicate of a stored item' : f.reason.replace(/:.*$/, '')
+    reasons[r] = (reasons[r] ?? 0) + 1
+  }
+  const passed = work.reduce((s, i) => s + i.claims.length, 0)
+  const summary = {
+    runId, ...extra,
+    inputs: work.length + filtered.length + humanReview.length,
+    filtered: { total: filtered.length, byReason: reasons },
+    humanReview, extracted: work.length,
+    claims: { extracted: passed + dropped.length, passedGuard: passed, dropped: dropped.length, guardPassRate: passed + dropped.length ? passed / (passed + dropped.length) : null, relabeled: work.reduce((s, i) => s + i.passingClaims.filter(c => c.relabeled).length, 0) },
+    outcomes: Object.fromEntries([...new Set(work.flatMap(i => i.passingClaims.map(c => c.outcome)))].map(o => [o, work.reduce((s, i) => s + i.passingClaims.filter(c => c.outcome === o).length, 0)])),
+    drafts: drafts.map(d => ({ item: d.itemId, origin: d.origin, title: d.entry?.title ?? null, tier: d.tier, effectiveTier: d.effectiveTier, party: d.party?.kind ?? null, guard: d.guard, status: d.status, existing: d.existing.length, flags: d.flags.length })),
+    queued: queued.length, privateLeads: leads.length,
+    filteredItems: filtered,
+  }
+  store.writeJson(`${base}/summary.json`, summary)
+  store.writeText(`${base}/drafts.md`, `# Stage C shadow drafts, ${runId}\n\nNothing here is published; no PR was opened.\n\n${drafts.map(draftMarkdown).join('\n')}`)
+  return summary
+}

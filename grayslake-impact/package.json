@@ -22,7 +22,9 @@
     "pipeline:corpus": "node --use-system-ca pipeline/scripts/build-corpus.mjs",
     "pipeline:guard-timeline": "node --use-system-ca pipeline/scripts/guard-timeline.mjs",
     "pipeline:bench": "node --use-system-ca pipeline/scripts/bench-models.mjs",
-    "pipeline:fetch": "node --use-system-ca pipeline/scripts/run-fetch.mjs"
+    "pipeline:fetch": "node --use-system-ca pipeline/scripts/run-fetch.mjs",
+    "pipeline:stage-c": "node --use-system-ca pipeline/scripts/run-stage-c.mjs",
+    "pipeline:job": "node --use-system-ca pipeline/scripts/run-job.mjs"
   },
   "dependencies": {
     "@fontsource/ibm-plex-mono": "^5.3.0",

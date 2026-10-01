@@ -315,3 +315,18 @@ test('runner: a retake is not captured in the same run that found the capture mi
   await run()
   assert.equal(captures, 2, 'run 3 retakes it')
 })
+
+test('runner: backfill fetches the items a first run baselined, and nothing already processed', async () => {
+  const store = tempStore()
+  const cands = () => [
+    { key: 'old', url: 'https://www.villageofgrayslake.com/DocumentCenter/View/300', title: 'old', published: '2025-01-01', text: 'an old agenda' },
+    { key: 'new', url: 'https://www.villageofgrayslake.com/DocumentCenter/View/301', title: 'new', published: '2026-09-30', text: 'a new agenda' },
+  ]
+  await quietly(() => runFetchers({ fetchers: [fakeFetcher('f9', cands, { snapshot: 'never' })], store, cfg, registry, sources: {}, http: null, wayback: null, now: NOW }))
+  const r = await quietly(() => runFetchers({ fetchers: [fakeFetcher('f9', cands, { snapshot: 'never' })], store, cfg, registry, sources: {}, http: null, wayback: null, now: NOW, backfill: true }))
+  assert.equal(r.fetchers.f9.backfilled, 1)
+  assert.equal(r.fetchers.f9.new, 1)
+  assert.equal(r.fetchers.f9.alreadySeen, 1, 'the item processed on the first run is not refetched')
+  const again = await quietly(() => runFetchers({ fetchers: [fakeFetcher('f9', cands, { snapshot: 'never' })], store, cfg, registry, sources: {}, http: null, wayback: null, now: NOW, backfill: true }))
+  assert.equal(again.fetchers.f9.backfilled ?? 0, 0, 'a backfilled item is no longer a baseline entry')
+})

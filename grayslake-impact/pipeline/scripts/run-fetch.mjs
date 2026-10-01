@@ -21,20 +21,24 @@ import { sources } from '../../src/data/sources.js'
 const arg = name => { const i = process.argv.indexOf(`--${name}`); return i === -1 ? null : process.argv[i + 1] }
 const cfg = loadPipelineConfig()
 const store = openStore(cfg.private_store.dir)
-const http = makeFetcher(cfg.http)
 const snapshots = !process.argv.includes('--no-snapshots')
+const backfill = process.argv.includes('--backfill')
+// Backfill fetches a backlog in one go: twice the usual gap between requests
+// to the same host.
+if (backfill) cfg.http.min_interval_per_host_s = (cfg.http.min_interval_per_host_s ?? 5) * 2
+const http = makeFetcher(cfg.http)
 const wayback = makeWayback({ politeFetch: http, userAgent: cfg.http.user_agent })
 
 const run = await runFetchers({
   fetchers: enabledFetchers(cfg, arg('only')?.split(',')),
   store, cfg, registry: loadRegistry(), sources, http,
-  wayback: snapshots ? wayback : null, snapshots,
+  wayback: snapshots ? wayback : null, snapshots, backfill,
 })
 
 console.log(`\nRun ${run.runId} (shadow mode; Wayback ${snapshots ? (wayback.authed ? 'SPN2 with keys' : 'anonymous') : 'off'})`)
 for (const [name, s] of Object.entries(run.fetchers)) {
   if (s.error) { console.log(`  ${name.padEnd(22)} FAILED ${s.error}${s.healthAlert ? `  [HEALTH: ${s.healthAlert}]` : ''}`); continue }
-  console.log(`  ${name.padEnd(22)} ${s.firstRun ? 'first run, ' : ''}discovered ${s.discovered}, seen ${s.alreadySeen}, baselined ${s.baselined}, new ${s.new} (updates ${s.updates}, near-dup ${s.nearDuplicates}), duplicates ${s.duplicates}, already cited ${s.alreadyCited}, fetch errors ${s.fetchErrors}${s.via ? `, via ${s.via}` : ''}`)
+  console.log(`  ${name.padEnd(22)} ${s.firstRun ? 'first run, ' : ''}discovered ${s.discovered}, seen ${s.alreadySeen}, baselined ${s.baselined}, new ${s.new} (updates ${s.updates}, near-dup ${s.nearDuplicates}), duplicates ${s.duplicates}, already cited ${s.alreadyCited}, fetch errors ${s.fetchErrors}${s.backfilled ? `, backfilled ${s.backfilled}` : ''}${s.via ? `, via ${s.via}` : ''}`)
   for (const it of s.items.slice(0, 12)) console.log(`      T${it.tier} ${it.duplicateOf ? '(dup) ' : ''}${it.title}`)
   if (s.items.length > 12) console.log(`      … ${s.items.length - 12} more`)
 }

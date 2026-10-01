@@ -89,3 +89,68 @@ fetchers:
       - { type: HB, number: 5513, gaid: 18, session: 114 }
       - { type: SB, number: 4016, gaid: 18, session: 114 }
       - { type: SB, number: 2181, gaid: 18, session: 114 }
+
+# --- Triage (Stage C) -----------------------------------------------------------
+# Deterministic: no model decides relevance. An item goes to extraction when
+#   A  it contains a strong term, or a T5 parcel PIN (from parcels.geojson), or
+#   B  a project term and a local term both appear, or
+#   C  the word "T5" appears with a project or local term.
+# Matching is case-insensitive on word boundaries, except "T5", which must be
+# upper case so "t5" in a file name or model number does not count.
+triage:
+  strong_terms:
+    - T5 Data Centers
+    - T5 @ Chicago
+    - T5@Chicago
+    - Chicago IV
+    - T-5 Data
+    - 2026CH00000171
+    - Preservation of Community Well-being
+    - HB5513
+    - HB 5513
+    - SB4016
+    - SB 4016
+    - SB2181
+    - SB 2181
+  project_terms: [data center, data centers, data centre, datacenter, hyperscale]
+  local_terms: [Grayslake, Cornerstone, Peterson Road, Route 83, Alleghany, Lake County, ComEd, Mundelein, Round Lake, Avon Township]
+  # PDF pages kept around each matching page, so a sentence that runs over a
+  # page break is not cut.
+  page_context: 1
+
+# --- Scheduled job (Stage D) -----------------------------------------------------
+# One Task Scheduler entry runs pipeline/scripts/run-job.mjs every 30 minutes;
+# the job decides which fetchers are due from these cadences. After sleep or
+# time offline, every overdue fetcher runs once on the next start (fetchers
+# keep their own state, so one run catches up).
+job:
+  # Real PRs and real ntfy pushes need BOTH `live: true` here AND the --live
+  # flag on the command. Anything less is a dry run that writes the PR title,
+  # body and diff, and the ntfy payload, to private-info/reports/dry-run/.
+  live: false
+  cadence_minutes:
+    village-newsflash: 30
+    village-agendas: 120
+    village-youtube: 120
+    lake-county-legistar: 120
+    ilga-bills: 1440
+  lock_stale_minutes: 180          # a lock older than this is from a crashed run
+  max_prs_per_run: 5
+  health_alert_after_hours: 48     # no completed run for this long → alert
+  connectivity_check: [https://www.villageofgrayslake.com/, https://www.ilga.gov/]
+  site_repo:
+    dir: C:/Users/Quentin/grayslake-data-center-tracker
+    github: quentinconklejr/grayslake-data-center-tracker
+    base: main
+    data_dir: grayslake-impact/src/data
+  gh: C:/Program Files/GitHub CLI/gh.exe
+  push_private_store: true
+
+notify:
+  ntfy:
+    enabled: true                  # still dry-run unless job.live and --live
+    server: https://ntfy.sh
+    topic_env: NTFY_TOPIC          # names of env vars; values never in files
+    token_env: NTFY_TOKEN
+    tiers: [1]                     # content alerts only for Tier 1 drafts
+    health_alerts: true

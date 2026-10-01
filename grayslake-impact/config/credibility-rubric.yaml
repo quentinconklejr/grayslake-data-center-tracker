@@ -47,7 +47,7 @@
 #
 # All seven URLs were fetched and returned the named page on 2026-09-30.
 
-version: 0.1.0
+version: 0.2.0
 updated: 2026-09-30
 
 # ---------------------------------------------------------------------------
@@ -174,6 +174,15 @@ claim_types:
       Attribute to whoever projects it and name it a projection (as the site
       does: "That figure is a Village projection, not an assessed valuation.").
       Future-dated timeline entries render as projected automatically.
+  party_statement:
+    description: >
+      What a party to the dispute says about the matter in its own channel:
+      T5's website, or a party's court filing (where it is labelled
+      allegation instead). Never produced by the model; code assigns it.
+    may_become_fact: false
+    rule: >
+      Published only as the party's statement ("T5 stated that ..."), never
+      in the site's own voice.
   procedural:
     description: That an item is scheduled, filed, docketed, referred or on an agenda.
     may_become_fact: true
@@ -277,6 +286,13 @@ hard_rules:
       evidence and never satisfies the verbatim guard.
   - id: human_merge_only
     rule: Nothing reaches main without the owner merging a PR. The bot cannot merge.
+  - id: party_assertions_attributed
+    rule: >
+      Every claim taken from a party's court filing becomes an allegation, and
+      every claim from a party_statement source (T5's website) becomes a
+      party_statement, whatever type the model gave it. The only exception is
+      a procedural detail (case or bill number, filing or hearing date, court,
+      docket event) with no substantive figure in it.
   - id: no_rewrite_of_existing
     rule: >
       The pipeline adds entries. It proposes corrections to existing content
@@ -309,7 +325,7 @@ decision_table:
     outcome: draft_as_reported
   - when: { tier: 1, claim_type: [fact, procedural] }
     outcome: draft_as_fact
-  - when: { tier: 1, claim_type: [quote, opinion, allegation, projection] }
+  - when: { tier: 1, claim_type: [quote, opinion, allegation, projection, party_statement] }
     outcome: draft_attributed
   - when: {}
     outcome: queue_only
