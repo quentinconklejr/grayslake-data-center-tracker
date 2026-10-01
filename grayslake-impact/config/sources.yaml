@@ -22,7 +22,21 @@
 #   - Court dockets and Recorder searches are manual: `automate: false`.
 
 version: 0.1.0
-updated: 2026-09-30
+updated: 2026-10-01
+
+# Labels the site shows next to each source on the Documents page
+# (scripts/build-source-tiers.js reads them from here, so the page cannot
+# drift from this registry). A source's label is its entry's `kind` if it
+# has one, `party_statement` for a party_statement source, else its tier.
+labels:
+  tier_1: Tier 1 · public record
+  party_statement: Tier 1 · party statement
+  tier_2: Tier 2 · established outlet
+  news_report: Tier 3 · news report
+  trade: Tier 3 · trade press
+  aggregator: Tier 3 · aggregator
+  advocacy: Tier 3 · advocacy group
+  tier_4: Tier 4 · unreviewed
 
 sources:
   # --- Tier 1: government records -----------------------------------------
@@ -82,6 +96,10 @@ sources:
     name: Central Lake County Joint Action Water Agency
     tier: 1
     domains: [clcjawa.com]
+    # CLCJAWA hosts its Jan. 15, 2026 ICC presentation on Google Drive and
+    # links this exact file from www.clcjawa.com (checked 2026-10-01).
+    url_prefixes:
+      - drive.google.com/file/d/14Q7LsFHh36oft_WPXpf2uJ8hxCz6P_Fl
     automate: true
   - id: usace-chicago
     name: US Army Corps of Engineers, Chicago District
@@ -192,55 +210,72 @@ sources:
   - id: lake-mchenry-scanner
     name: Lake & McHenry County Scanner
     tier: 3
+    kind: news_report
     domains: [lakemchenryscanner.com]
     automate: true
     note: Owner decision 2026-09-30.
   - id: chronicle-media
     name: Chronicle Media
     tier: 3
+    kind: news_report
     domains: [chronicleillinois.com]
     automate: true
     note: Not in the owner's Tier 2 list. Placed at Tier 3 pending owner review.
   - id: patch
     name: Patch
     tier: 3
+    kind: aggregator
     domains: [patch.com]
     automate: true
   - id: datacenterdynamics
     name: Data Center Dynamics
     tier: 3
+    kind: trade
     domains: [datacenterdynamics.com]
     automate: true
   - id: baxtel
     name: Baxtel
     tier: 3
+    kind: trade
     domains: [baxtel.com]
     automate: false
   - id: hoodline
     name: Hoodline
     tier: 3
+    kind: aggregator
     domains: [hoodline.com]
     automate: false
   - id: govtech
     name: Government Technology
     tier: 3
+    kind: aggregator
     domains: [govtech.com]
     automate: false
   - id: illinois-environmental-council
     name: Illinois Environmental Council (advocacy; republishes Tribune reporting)
     tier: 3
+    kind: advocacy
     domains: [ilenviro.org]
     automate: false
   - id: citizens-utility-board
     name: Citizens Utility Board (advocacy)
     tier: 3
+    kind: advocacy
     domains: [citizensutilityboard.org]
     automate: false
   - id: alliance-great-lakes
     name: Alliance for the Great Lakes (advocacy)
     tier: 3
+    kind: advocacy
     domains: [greatlakes.org]
     automate: false
+  - id: the-real-deal
+    name: The Real Deal (real estate trade publication)
+    tier: 3
+    kind: trade
+    domains: [therealdeal.com]
+    automate: false
+    note: Added 2026-10-01; the site cites its May 7, 2024 article on the first land sale.
 
 # Discovery-only services. A hit from one of these is never scored as the
 # service; the pipeline resolves the link and scores the destination.
