@@ -515,8 +515,45 @@ export function labeledTermFailures(text, terms = []) {
     if (t.note && !lower.replace(/\s+/g, ' ').includes(String(t.note).toLowerCase().replace(/[.\s]+$/, ''))) {
       failures.push({ check: 'labeled_term', reason: 'label_without_note', value: t.term, detail: t.note })
     }
+    // Identifiers the label attaches to only on someone else's say-so: a
+    // sentence that puts the label and one of them together must name who
+    // makes that link ("advocacy groups call ... SB4016").
+    if (t.attributed_only) {
+      const ids = t.attributed_only.ids ?? []
+      const who = new RegExp(t.attributed_only.attribution, 'i')
+      for (const sentence of sentences(s)) {
+        if (!sentence.toLowerCase().includes(term)) continue
+        const linked = ids.filter(id => new RegExp(`\\b${id}\\b`).test(compactIds(sentence)))
+        if (linked.length && !who.test(sentence)) {
+          failures.push({ check: 'labeled_term', reason: 'label_linked_without_attribution', value: t.term, detail: `${linked.join(', ')}: ${t.attributed_only.label ?? t.attributed_only.attribution}` })
+        }
+      }
+    }
   }
   return failures
+}
+
+/** "HB 5513" and "H.B. 5513" written as "HB5513", upper case. */
+function compactIds(s) {
+  return String(s).toUpperCase().replace(/([A-Z])\.(?=[A-Z]\.?\s*\d)/g, '$1').replace(/([A-Z])\.?\s+(?=\d)/g, '$1')
+}
+
+// Abbreviations whose period does not end a sentence.
+const ABBREV = new Set(['rep', 'sen', 'gov', 'mr', 'mrs', 'ms', 'dr', 'st', 'no', 'vs', 'jr', 'sr', 'u.s', 'h.b', 's.b', 'inc', 'co', 'corp', 'ltd', 'llc', 'jan', 'feb', 'aug', 'sept', 'oct', 'nov', 'dec'])
+
+/** Splits prose into sentences, keeping "Rep. Daniel Didech" and "U.S. Army" whole. */
+export function sentences(text) {
+  const s = String(text ?? '')
+  const out = []
+  let start = 0
+  for (const m of s.matchAll(/[.!?][”"’)]*\s+(?=[“"(]?[A-Z0-9])/g)) {
+    const before = s.slice(start, m.index).match(/([A-Za-z.]+)$/)?.[1]?.toLowerCase().replace(/\.$/, '')
+    if (before && (ABBREV.has(before) || /^[a-z]$/.test(before))) continue
+    out.push(s.slice(start, m.index + m[0].trimEnd().length).trim())
+    start = m.index + m[0].length
+  }
+  if (start < s.length) out.push(s.slice(start).trim())
+  return out.filter(Boolean)
 }
 
 // ---------------------------------------------------------------------------

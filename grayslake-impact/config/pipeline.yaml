@@ -74,12 +74,21 @@ editorial:
   blocked_terms: []
   # Labels a source uses but the record does not. Generated text may use one
   # only inside quotation marks, always with every identifier in `requires`,
-  # and with `note`. Example:
-  #   the so-called "POWER Act" (HB5513 / SB4016). The bill text does not use the name.
+  # and with `note`. A sentence that links the label to an identifier in
+  # `attributed_only` must also name who makes that link. Example:
+  #   the so-called "POWER Act" (HB5513). The bill text does not use the name.
+  #   SB4016 is the Senate bill with an identical synopsis.
+  # The name attaches to HB5513 on the Village's own say-so (Mayor Davies,
+  # Aug 4, 2026: "the Illinois POWER Act (House Bill 5513)"); only advocacy
+  # groups attach it to SB4016 as well (owner decision, 2026-10-01).
   labeled_terms:
     - term: POWER Act
-      requires: [HB5513, SB4016]
+      requires: [HB5513]
       note: The bill text does not use the name.
+      attributed_only:
+        ids: [SB4016]
+        attribution: 'advocacy (group|groups|organization|organizations)'
+        label: attribute the link to the advocacy groups that make it
 
 # --- Fetchers (Stage B) -------------------------------------------------------
 fetchers:

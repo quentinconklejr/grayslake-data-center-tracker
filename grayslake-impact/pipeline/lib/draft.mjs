@@ -71,7 +71,7 @@ Rules:
 - Any words inside quotation marks must be copied exactly from a quote, with “ and ” around them.
 - Every number, date and name you write must appear in the quotes.
 - Write dates as "July 31, 2026", never "2026-07-31".
-- The name "POWER Act" is a label the bill text does not use. Use it only if a quote does, only in quotation marks, always with the bill numbers, and add the sentence "The bill text does not use the name." For example: the so-called “POWER Act” (HB5513 / SB4016). The bill text does not use the name.
+- The name "POWER Act" is a label the bill text does not use. Use it only if a quote does, only in quotation marks, always with HB5513, and add the sentence "The bill text does not use the name." For example: the so-called “POWER Act” (HB5513). The bill text does not use the name. SB4016 is the Senate bill with an identical synopsis; name it by number only, and never put it in the same sentence as the name unless you say that advocacy groups make that link.
 - Never name a private individual: call an individual plaintiff "a plaintiff". Never include anyone's health, medical, address or family details. Public officials may be named in their official role.
 - Write in your own words. Anything copied from a quote goes inside quotation marks; never copy a long passage without them.
 - Never write in the first person (I, we, our, us, my) outside quotation marks.

@@ -12,6 +12,7 @@ import { loadFlagContext, flagsForClaim, existingEntryMatches, KEY_FIGURE_TOPICS
 import { jsString, renderTimelineEntry, renderSourceEntry, renderUpdateEntry, validateDraft, CATEGORIES } from '../lib/render.mjs'
 import { draftItem, entryDate, sourceKeyFor, apDate, proseDate, proseDates, instructionFor, billTemplate } from '../lib/draft.mjs'
 import { takeWarnings } from '../lib/log.mjs'
+import { sentences } from '../lib/guard.mjs'
 import { timelineEvents } from '../../src/data/timeline.js'
 import { sources } from '../../src/data/sources.js'
 
@@ -207,35 +208,51 @@ test('drafting: a party claim drafted without "T5 stated" fails the guard', asyn
   assert.equal(ok.action, null, 'a party statement is never drafted as a government action')
 })
 
-test('drafting: the "POWER Act" label is allowed only in quotation marks, beside HB5513 / SB4016, with the note', async () => {
+test('drafting: the "POWER Act" label attaches to HB5513 only, in quotation marks, with the note; a link to SB4016 must be attributed to advocacy groups', async () => {
   const quote = 'He plans to push the POWER Act during the fall veto session, which would require data centers to disclose water use.'
-  const claims = [{ ...baseClaims[0], claim_text: 'He plans to push the bill during the fall veto session.', supporting_quotes: [quote], event_date: null, date_basis: 'unknown' }]
+  // An advocacy group's wording, so SB4016 has evidence when a draft names it.
+  const advocates = 'The POWER Act (SB4016/HB5513) establishes guardrails on data centers.'
+  const claims = [{ ...baseClaims[0], claim_text: 'He plans to push the bill during the fall veto session.', supporting_quotes: [quote, advocates], event_date: null, date_basis: 'unknown' }]
   const run = async description => draftItem(baseItem, claims, ctxFor(stubProvider([{ title: 'Lawmaker plans to push data center bill', description, category: 'policy' }])))
   const reasons = d => d.attempts.flatMap(a => a.failures ?? []).filter(f => f.check === 'labeled_term').map(f => f.reason)
 
-  const unquoted = await run('He plans to push the POWER Act (HB5513 / SB4016) during the fall veto session. The bill text does not use the name.')
+  const unquoted = await run('He plans to push the POWER Act (HB5513) during the fall veto session. The bill text does not use the name.')
   assert.ok(reasons(unquoted).includes('label_not_in_quotation_marks'))
   assert.equal(unquoted.status, 'claims_only')
 
-  const noNumbers = await run('He plans to push the so-called “POWER Act” during the fall veto session. The bill text does not use the name.')
-  assert.ok(reasons(noNumbers).includes('label_without_record_identifiers'))
+  const noNumber = await run('He plans to push the so-called “POWER Act” during the fall veto session. The bill text does not use the name.')
+  assert.ok(reasons(noNumber).includes('label_without_record_identifiers'))
 
-  const oneNumber = await run('He plans to push the so-called “POWER Act” (HB5513) during the fall veto session. The bill text does not use the name.')
-  assert.ok(reasons(oneNumber).includes('label_without_record_identifiers'), 'both bill numbers are required')
+  const senateOnly = await run('He plans to push the so-called “POWER Act” (SB4016) during the fall veto session. The bill text does not use the name.')
+  assert.ok(reasons(senateOnly).includes('label_without_record_identifiers'), 'SB4016 does not stand in for HB5513')
 
-  const noNote = await run('He plans to push the so-called “POWER Act” (HB5513 / SB4016) during the fall veto session.')
+  const noNote = await run('He plans to push the so-called “POWER Act” (HB5513) during the fall veto session.')
   assert.ok(reasons(noNote).includes('label_without_note'))
 
-  // The bill numbers come from config, so the guard accepts them even though the quote has neither.
-  const ok = await run('He plans to push the so-called “POWER Act” (HB5513 / SB4016) during the fall veto session. The bill text does not use the name.')
+  const linked = await run('He plans to push the so-called “POWER Act” (HB5513 / SB4016) during the fall veto session. The bill text does not use the name.')
+  assert.ok(reasons(linked).includes('label_linked_without_attribution'), 'the name may not be tied to SB4016 in the site’s own voice')
+
+  const attributed = await run('He plans to push the so-called “POWER Act” (HB5513) during the fall veto session. The bill text does not use the name. Advocacy groups also call SB4016, the Senate bill with an identical synopsis, the “POWER Act.”')
+  takeWarnings()
+  assert.deepEqual(reasons(attributed), [], JSON.stringify(attributed.attempts))
+
+  // HB5513 and the note come from config, so the guard accepts them although the quote has neither.
+  const ok = await run('He plans to push the so-called “POWER Act” (HB5513) during the fall veto session. The bill text does not use the name. SB4016 is the Senate bill with an identical synopsis.')
   takeWarnings()
   assert.deepEqual(reasons(ok), [])
   assert.equal(ok.guard, 'pass', JSON.stringify(ok.attempts))
   assert.equal(ok.status, 'ready')
 
   // Bill numbers alone, with no label, are not drawn from config: they still need a quote.
-  const bare = await run('He plans to push HB5513 during the fall veto session.')
+  const quoteOnly = [{ ...claims[0], supporting_quotes: [quote] }]
+  const bare = await draftItem(baseItem, quoteOnly, ctxFor(stubProvider([{ title: 'Lawmaker plans to push data center bill', description: 'He plans to push HB5513 during the fall veto session.', category: 'policy' }])))
   assert.ok(bare.attempts[0].failures.some(f => f.check === 'identifier'))
+})
+
+test('guard: sentences are split without breaking "Rep." or "U.S." abbreviations', () => {
+  assert.deepEqual(sentences('Rep. Daniel Didech spoke. The U.S. Army Corps of Engineers has jurisdiction. Done!'),
+    ['Rep. Daniel Didech spoke.', 'The U.S. Army Corps of Engineers has jurisdiction.', 'Done!'])
+  assert.deepEqual(sentences('It is the “POWER Act.” SB4016 is separate.'), ['It is the “POWER Act.”', 'SB4016 is separate.'])
 })
 
 test('drafting: dates in prose read "July 31, 2026"; the timeline date field stays ISO', async () => {
