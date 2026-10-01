@@ -39,6 +39,20 @@ export function apDate(iso) {
   return m ? `${MONTHS_AP[+m[2] - 1]} ${+m[3]}, ${m[1]}` : null
 }
 
+// Dates in the site's prose read "July 31, 2026"; date fields stay ISO.
+const MONTHS_FULL = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+export function proseDate(iso) {
+  const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(iso ?? '')
+  return m && MONTHS_FULL[+m[2] - 1] && +m[3] >= 1 && +m[3] <= 31 ? `${MONTHS_FULL[+m[2] - 1]} ${+m[3]}, ${m[1]}` : null
+}
+
+/** ISO dates in prose become "July 31, 2026"; text inside quotation marks is left as quoted. */
+export function proseDates(s) {
+  return String(s ?? '').split(/(“[^”]*”|"[^"]*")/).map((part, i) => i % 2
+    ? part
+    : part.replace(/\b\d{4}-\d{2}-\d{2}\b/g, iso => proseDate(iso) ?? iso)).join('')
+}
+
 /** How a claim may be written, from its outcome and type. */
 export function instructionFor(c, item) {
   if (c.claim_type === 'allegation') return `ALLEGATION by ${c.speaker ?? 'the filer'}: write it as alleged ("the complaint alleges ...", "${c.speaker ?? 'the plaintiffs'} allege ..."), never as fact`
@@ -56,7 +70,8 @@ Write only from the claims you are given. Each claim has an instruction for how 
 Rules:
 - Any words inside quotation marks must be copied exactly from a quote, with “ and ” around them.
 - Every number, date and name you write must appear in the quotes.
-- Never use the words "POWER Act".
+- Write dates as "July 31, 2026", never "2026-07-31".
+- The name "POWER Act" is a label the bill text does not use. Use it only if a quote does, only in quotation marks, always with the bill numbers, and add the sentence "The bill text does not use the name." For example: the so-called “POWER Act” (HB5513 / SB4016). The bill text does not use the name.
 - Never name a private individual: call an individual plaintiff "a plaintiff". Never include anyone's health, medical, address or family details. Public officials may be named in their official role.
 - Write in your own words. Anything copied from a quote goes inside quotation marks; never copy a long passage without them.
 - Never write in the first person (I, we, our, us, my) outside quotation marks.
@@ -80,7 +95,7 @@ function examplesBlock(examples) {
 /**
  * Title and description for one ilga.gov bill action, from the item title
  * "HB5513 3/27/2026 House: <action>". The action is quoted whole; the bill is
- * named by number only (the "POWER Act" hold).
+ * named by number only: the ilga.gov row never uses the "POWER Act" label.
  */
 export function billTemplate(item) {
   const m = /^([A-Z]{2}\d+) (\d{1,2})\/(\d{1,2})\/(\d{4}) (\w+): (.+)$/.exec(item.title ?? '')
@@ -89,7 +104,7 @@ export function billTemplate(item) {
   const iso = `${yy}-${mo.padStart(2, '0')}-${dd.padStart(2, '0')}`
   return {
     title: `${bill}: ${action}`.slice(0, 110),
-    description: `The Illinois General Assembly’s bill status page for ${bill} records this ${chamber} action on ${apDate(iso)}: “${action}”.`,
+    description: `The Illinois General Assembly’s bill status page for ${bill} records this ${chamber} action on ${proseDate(iso)}: “${action}”.`,
     category: 'policy',
   }
 }
@@ -122,7 +137,7 @@ export function entryDate(claims, docIso, { party } = {}) {
 }
 
 /** The guard's options for this draft's prose. */
-export function guardOptions(claims, item, blockedTerms) {
+export function guardOptions(claims, item, blockedTerms, labeledTerms = []) {
   const evidence = [prepareSource(claims.flatMap(c => c.supporting_quotes).join('\n'), item.guardCfg)]
   const docDates = item.published ? extractDates(item.published.slice(0, 10)) : []
   const req = []
@@ -135,7 +150,7 @@ export function guardOptions(claims, item, blockedTerms) {
   // attribution); 20 for Tier 1 public records, whose wording may be reused
   // but still not at length without quotation marks.
   const copyLimit = item.effectiveTier === 1 && !item.party ? 20 : 12
-  return { evidence, docDates, allegation: claims.some(c => c.claim_type === 'allegation'), requiredAttribution: req, blockedTerms, noUnquotedCopy: copyLimit, noFirstPerson: true }
+  return { evidence, docDates, allegation: claims.some(c => c.claim_type === 'allegation'), requiredAttribution: req, blockedTerms, labeledTerms, noUnquotedCopy: copyLimit, noFirstPerson: true }
 }
 
 const KEY_PREFIX = {
@@ -178,12 +193,12 @@ const ACTION_TYPE = { approval: 'Land-Use Approval', construction: 'Building Per
 
 /**
  * Drafts one item. ctx: { provider, examples, sources, cited (canon url → key),
- * blockedTerms, today (ISO), canonUrl }
+ * blockedTerms, labeledTerms, today (ISO), canonUrl }
  */
 export async function draftItem(item, claims, ctx) {
   const date = entryDate(claims, item.published, { party: item.party })
-  const opts = guardOptions(claims, item, ctx.blockedTerms)
-  const user0 = `${examplesBlock(ctx.examples)}\n\nDocument: ${item.title} (${item.publisher}${item.published ? ', ' + item.published.slice(0, 10) : ''})\nEntry date: ${date.date ?? 'unknown'}\n\n${claimsBlock(claims, item)}`
+  const opts = guardOptions(claims, item, ctx.blockedTerms, ctx.labeledTerms)
+  const user0 = `${examplesBlock(ctx.examples)}\n\nDocument: ${item.title} (${item.publisher}${item.published ? ', ' + (proseDate(item.published) ?? item.published.slice(0, 10)) : ''})\nEntry date: ${proseDate(date.date) ?? 'unknown'}\n\n${claimsBlock(claims, item)}`
   const attempts = []
   let prose = null
   let failures = []
@@ -205,8 +220,9 @@ export async function draftItem(item, claims, ctx) {
     if (!r.ok) { attempts.push({ attempt, schemaErrors: r.errors }); failures = r.errors.map(e => ({ check: 'schema', reason: e })); continue }
     // House style: curly quotation marks. Done in code, before the guard, so
     // the guard checks exactly the text that would be published.
-    r.data.title = curlyQuotes(r.data.title)
-    r.data.description = curlyQuotes(r.data.description)
+    // Dates likewise: "2026-07-31" in prose becomes "July 31, 2026".
+    r.data.title = proseDates(curlyQuotes(r.data.title))
+    r.data.description = proseDates(curlyQuotes(r.data.description))
     const g = checkDraftProse(`${r.data.title}. ${r.data.description}`, item.guardCfg, opts)
     attempts.push({ attempt, title: r.data.title, guard: g.ok, failures: g.failures, notes: g.notes })
     if (g.ok) prose = { ...r.data, guardNotes: g.notes }
@@ -246,7 +262,7 @@ export async function draftItem(item, claims, ctx) {
   const update = {
     date: ctx.today, kind: 'added',
     title: `Added to the timeline: ${prose.title}`,
-    description: `The timeline now includes an entry dated ${apDate(date.date) ?? date.date}, citing ${item.publisher}.`,
+    description: `The timeline now includes an entry dated ${proseDate(date.date) ?? date.date}, citing ${item.publisher}.`,
     link: '/timeline', linkLabel: 'See the timeline',
   }
   // The updates line is generated text too, so it gets the same check. It is

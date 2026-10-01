@@ -59,8 +59,8 @@ for (const [i, entry] of timelineEvents.entries()) {
       f.outsideArticle = fullCheck.failures.length === 0
     }
   }
-  const blocked = checkDraftProse(prose, gcfg, { evidence, blockedTerms: cfg.editorial?.blocked_terms ?? [] })
-    .failures.filter(f => f.check === 'blocked_term')
+  const blocked = checkDraftProse(prose, gcfg, { evidence, blockedTerms: cfg.editorial?.blocked_terms ?? [], labeledTerms: cfg.editorial?.labeled_terms ?? [] })
+    .failures.filter(f => f.check === 'blocked_term' || f.check === 'labeled_term')
 
   const status = !withText.length ? 'UNVERIFIABLE'
     : res.failures.length === 0 ? 'PASS'
@@ -79,7 +79,7 @@ for (const r of results) {
     console.log(`               - ${f.check}: ${f.reason}${f.value ? ` → ${JSON.stringify(f.value)}` : ''}${where}`)
   }
   for (const n of r.notes) console.log(`               · note: ${n.note} → ${JSON.stringify(n.value)}`)
-  for (const b of r.blocked) console.log(`               · editorial hold: contains "${b.value}" (fine in owner text; generated text may not use it)`)
+  for (const b of r.blocked) console.log(`               · editorial: ${b.check === 'labeled_term' ? `"${b.value}" ${b.reason.replace(/_/g, ' ')}${b.detail ? ` (${b.detail})` : ''}` : `hold: contains "${b.value}"`} (fine in owner text; generated text may not)`)
   if (r.missing.length) console.log(`               · no text for: ${r.missing.join(', ')}`)
 }
 

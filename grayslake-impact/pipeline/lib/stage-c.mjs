@@ -152,7 +152,7 @@ export async function processItems(inputs, ctx) {
   for (const [k, s] of Object.entries(sources)) for (const u of [s.url, s.archiveUrl, s.originalUrl]) if (u && /^https?:/.test(u)) cited.set(canonicalUrl(u), k)
   const examples = ['2026-09-08', '2026-07-31', '2026-06-02'].map(date => timelineEvents.find(e => e.date === date && e.description)).filter(Boolean)
   const privacy = makePrivacy(cfg.privacy)
-  const dctx = { provider, examples, sources, cited, blockedTerms: cfg.editorial?.blocked_terms ?? [], today, canonUrl: canonicalUrl, privacy }
+  const dctx = { provider, examples, sources, cited, blockedTerms: cfg.editorial?.blocked_terms ?? [], labeledTerms: cfg.editorial?.labeled_terms ?? [], today, canonUrl: canonicalUrl, privacy }
   const drafts = [], queued = [], leads = [], leadNotes = []
   for (const item of work) {
     // D-5: a Tier 2 article stays queue-only, with a lead note for the owner.

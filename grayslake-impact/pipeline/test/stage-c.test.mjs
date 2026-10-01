@@ -10,7 +10,7 @@ import { makeTriage } from '../lib/triage.mjs'
 import { decide, effectiveTier, signalsFor, corroborationCount, isDraftable } from '../lib/score.mjs'
 import { loadFlagContext, flagsForClaim, existingEntryMatches, KEY_FIGURE_TOPICS, QUESTION_TOPICS } from '../lib/flags.mjs'
 import { jsString, renderTimelineEntry, renderSourceEntry, renderUpdateEntry, validateDraft, CATEGORIES } from '../lib/render.mjs'
-import { draftItem, entryDate, sourceKeyFor, apDate, instructionFor } from '../lib/draft.mjs'
+import { draftItem, entryDate, sourceKeyFor, apDate, proseDate, proseDates, instructionFor, billTemplate } from '../lib/draft.mjs'
 import { takeWarnings } from '../lib/log.mjs'
 import { timelineEvents } from '../../src/data/timeline.js'
 import { sources } from '../../src/data/sources.js'
@@ -169,7 +169,7 @@ const baseItem = {
   registryId: 'lake-county', registryTier: 1, effectiveTier: 1, publisher: 'Lake County, Illinois', party: null, guardCfg: gcfg,
 }
 const baseClaims = [{ claim_text: 'The Board approved a moratorium set to expire May 11, 2027.', claim_type: 'fact', speaker: null, outcome: 'draft_as_fact', supporting_quotes: [QUOTE], event_date: '2026-09-08', date_basis: 'document_date', guardMatch: ['exact'] }]
-const ctxFor = provider => ({ provider, examples: [], sources, cited: new Map(), blockedTerms: cfg.editorial.blocked_terms, today: '2026-10-01', canonUrl: u => u })
+const ctxFor = provider => ({ provider, examples: [], sources, cited: new Map(), blockedTerms: cfg.editorial.blocked_terms, labeledTerms: cfg.editorial.labeled_terms, today: '2026-10-01', canonUrl: u => u })
 
 test('drafting: prose that passes the guard yields valid timeline, sources and updates entries', async () => {
   const d = await draftItem(baseItem, baseClaims, ctxFor(stubProvider([{ title: 'County Board approves data center moratorium', description: "The County Board approved a moratorium on new data center approvals, “set to expire May 11, 2027.”", category: 'policy' }])))
@@ -207,13 +207,57 @@ test('drafting: a party claim drafted without "T5 stated" fails the guard', asyn
   assert.equal(ok.action, null, 'a party statement is never drafted as a government action')
 })
 
-test('drafting: the POWER Act name is blocked in generated text', async () => {
+test('drafting: the "POWER Act" label is allowed only in quotation marks, beside HB5513 / SB4016, with the note', async () => {
   const quote = 'He plans to push the POWER Act during the fall veto session, which would require data centers to disclose water use.'
   const claims = [{ ...baseClaims[0], claim_text: 'He plans to push the bill during the fall veto session.', supporting_quotes: [quote], event_date: null, date_basis: 'unknown' }]
-  const named = { title: 'Lawmaker plans to push POWER Act', description: 'He plans to push the POWER Act during the fall veto session.', category: 'policy' }
-  const d = await draftItem(baseItem, claims, ctxFor(stubProvider([named, named])))
-  assert.ok(d.attempts.every(a => a.failures.some(f => f.check === 'blocked_term')))
-  assert.equal(d.status, 'claims_only')
+  const run = async description => draftItem(baseItem, claims, ctxFor(stubProvider([{ title: 'Lawmaker plans to push data center bill', description, category: 'policy' }])))
+  const reasons = d => d.attempts.flatMap(a => a.failures ?? []).filter(f => f.check === 'labeled_term').map(f => f.reason)
+
+  const unquoted = await run('He plans to push the POWER Act (HB5513 / SB4016) during the fall veto session. The bill text does not use the name.')
+  assert.ok(reasons(unquoted).includes('label_not_in_quotation_marks'))
+  assert.equal(unquoted.status, 'claims_only')
+
+  const noNumbers = await run('He plans to push the so-called “POWER Act” during the fall veto session. The bill text does not use the name.')
+  assert.ok(reasons(noNumbers).includes('label_without_record_identifiers'))
+
+  const oneNumber = await run('He plans to push the so-called “POWER Act” (HB5513) during the fall veto session. The bill text does not use the name.')
+  assert.ok(reasons(oneNumber).includes('label_without_record_identifiers'), 'both bill numbers are required')
+
+  const noNote = await run('He plans to push the so-called “POWER Act” (HB5513 / SB4016) during the fall veto session.')
+  assert.ok(reasons(noNote).includes('label_without_note'))
+
+  // The bill numbers come from config, so the guard accepts them even though the quote has neither.
+  const ok = await run('He plans to push the so-called “POWER Act” (HB5513 / SB4016) during the fall veto session. The bill text does not use the name.')
+  takeWarnings()
+  assert.deepEqual(reasons(ok), [])
+  assert.equal(ok.guard, 'pass', JSON.stringify(ok.attempts))
+  assert.equal(ok.status, 'ready')
+
+  // Bill numbers alone, with no label, are not drawn from config: they still need a quote.
+  const bare = await run('He plans to push HB5513 during the fall veto session.')
+  assert.ok(bare.attempts[0].failures.some(f => f.check === 'identifier'))
+})
+
+test('drafting: dates in prose read "July 31, 2026"; the timeline date field stays ISO', async () => {
+  assert.equal(proseDate('2026-07-31'), 'July 31, 2026')
+  assert.equal(proseDate('2026-09-08T12:00:00Z'), 'September 8, 2026')
+  assert.equal(proseDate('2026-13-01'), null)
+  assert.equal(proseDates('Filed on 2026-07-31.'), 'Filed on July 31, 2026.')
+  assert.equal(proseDates('It says “due 2026-07-31” here.'), 'It says “due 2026-07-31” here.', 'a quotation is left as quoted')
+
+  const iso = { title: 'County Board approves moratorium on 2026-09-08', description: 'On 2026-09-08 the County Board approved a moratorium on new data center approvals, “set to expire May 11, 2027.”', category: 'policy' }
+  const d = await draftItem(baseItem, baseClaims, ctxFor(stubProvider([iso])))
+  takeWarnings()
+  assert.equal(d.status, 'ready', JSON.stringify(d.attempts))
+  assert.equal(d.entry.title, 'County Board approves moratorium on September 8, 2026')
+  assert.match(d.entry.description, /^On September 8, 2026 the County Board/)
+  assert.ok(!/\d{4}-\d{2}-\d{2}/.test(d.entry.title + d.entry.description))
+  assert.equal(d.entry.date, '2026-09-08')
+  assert.match(d.rendered.timeline, /date: ["']2026-09-08["']/)
+  assert.match(d.update.description, /entry dated September 8, 2026,/)
+
+  const bill = billTemplate({ title: 'SB4016 5/30/2027 Senate: Passed Both Houses' })
+  assert.match(bill.description, /on May 30, 2027:/)
 })
 
 // --- fixes from the first live Stage C run ------------------------------------------

@@ -71,9 +71,15 @@ tools:
 # --- Editorial holds -------------------------------------------------------
 # Terms generated text must not contain until the owner lifts the hold.
 editorial:
-  blocked_terms:
+  blocked_terms: []
+  # Labels a source uses but the record does not. Generated text may use one
+  # only inside quotation marks, always with every identifier in `requires`,
+  # and with `note`. Example:
+  #   the so-called "POWER Act" (HB5513 / SB4016). The bill text does not use the name.
+  labeled_terms:
     - term: POWER Act
-      reason: Owner has not yet confirmed which bills carry this name (HB5513 / SB4016).
+      requires: [HB5513, SB4016]
+      note: The bill text does not use the name.
 
 # --- Fetchers (Stage B) -------------------------------------------------------
 fetchers:
@@ -84,7 +90,7 @@ fetchers:
   # Wayback captures requested per run; the rest wait in a queue.
   max_snapshots_per_run: 10
   ilga:
-    # 104th General Assembly. Identified by number only (see editorial hold).
+    # 104th General Assembly. Identified by number; see editorial.labeled_terms.
     bills:
       - { type: HB, number: 5513, gaid: 18, session: 114 }
       - { type: SB, number: 4016, gaid: 18, session: 114 }

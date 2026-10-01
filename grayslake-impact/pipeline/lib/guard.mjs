@@ -381,14 +381,22 @@ export function quotedSpans(text) {
  * opts.docDates      [{month, day, year}] document dates that may be cited
  * opts.allegation    true if the prose reports allegations
  * opts.blockedTerms  [{term, reason}] that must not appear
+ * opts.labeledTerms  [{term, requires, note}] labels a source uses but the
+ *                    record does not: see labeledTermFailures
  * opts.requiredAttribution [{label, test: RegExp}] that must each match
  */
 export function checkDraftProse(text, cfg, opts = {}) {
   const canon = makeCanon(cfg)
-  const evidence = opts.evidence ?? []
   const failures = []
   const notes = []
   const s = String(text ?? '')
+  // A label used under its rule brings its bill numbers and note with it:
+  // they come from config, so a source that says only "POWER Act" still
+  // supports "HB5513 / SB4016" beside it.
+  const used = (opts.labeledTerms ?? []).filter(t => s.toLowerCase().includes(String(t.term).toLowerCase()))
+  const evidence = used.length
+    ? [...(opts.evidence ?? []), prepareSource(used.flatMap(t => [...t.requires, t.note]).join('\n'), cfg)]
+    : opts.evidence ?? []
 
   for (const span of quotedSpans(s)) {
     if (/\.\.\.|…/.test(span.value)) {
@@ -474,8 +482,41 @@ export function checkDraftProse(text, cfg, opts = {}) {
   for (const b of opts.blockedTerms ?? []) {
     if (s.toLowerCase().includes(String(b.term).toLowerCase())) failures.push({ check: 'blocked_term', reason: 'blocked_term', value: b.term, detail: b.reason })
   }
+  failures.push(...labeledTermFailures(s, opts.labeledTerms))
 
   return { ok: failures.length === 0, failures, notes }
+}
+
+/**
+ * A label that a source uses but the record does not (the bill text of
+ * HB5513 / SB4016 never says "POWER Act"). It may appear only inside
+ * quotation marks, always alongside every one of its record identifiers,
+ * and with the note saying the record does not use it:
+ *   the so-called “POWER Act” (HB5513 / SB4016). The bill text does not use the name.
+ */
+export function labeledTermFailures(text, terms = []) {
+  const s = String(text ?? '')
+  const lower = s.toLowerCase()
+  const failures = []
+  for (const t of terms ?? []) {
+    const term = String(t.term).toLowerCase()
+    if (!lower.includes(term)) continue
+    const quoted = quotedSpans(s).map(q => ({ from: q.index, to: q.index + q.value.length + 2 }))
+    for (let i = lower.indexOf(term); i >= 0; i = lower.indexOf(term, i + 1)) {
+      if (!quoted.some(q => q.from < i && i + term.length < q.to)) {
+        failures.push({ check: 'labeled_term', reason: 'label_not_in_quotation_marks', value: t.term })
+        break
+      }
+    }
+    // "HB5513", "HB 5513" and "H.B. 5513" are all the same bill.
+    const compact = s.toUpperCase().replace(/([A-Z])\.(?=[A-Z]\.?\s*\d)/g, '$1').replace(/([A-Z])\.?\s+(?=\d)/g, '$1')
+    const missing = (t.requires ?? []).filter(id => !new RegExp(`\\b${id}\\b`).test(compact))
+    if (missing.length) failures.push({ check: 'labeled_term', reason: 'label_without_record_identifiers', value: t.term, detail: missing.join(', ') })
+    if (t.note && !lower.replace(/\s+/g, ' ').includes(String(t.note).toLowerCase().replace(/[.\s]+$/, ''))) {
+      failures.push({ check: 'labeled_term', reason: 'label_without_note', value: t.term, detail: t.note })
+    }
+  }
+  return failures
 }
 
 // ---------------------------------------------------------------------------
