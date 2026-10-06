@@ -1,18 +1,28 @@
 import { Link } from 'react-router-dom'
 import PageTitle from '../components/ui/PageTitle'
 import Container from '../components/layout/Container'
-import ReportErrorLink from '../components/ui/ReportErrorLink'
 import { pageMeta } from '../data/pageMeta'
 import { updates } from '../data/updates'
 import { tierLabels } from '../data/sourceTiers'
-import { LAST_VERIFIED, SITE_CONTACT } from '../data/siteConfig'
+import { LAST_VERIFIED } from '../data/siteConfig'
 
 /*
- * How the site chooses and labels sources, the review step before anything
- * publishes, and the corrections log. The log is generated from the
+ * The owner's account of the site, the source tiers (labels read from the
+ * registry), and the corrections log. The log is generated from the
  * kind: 'corrected' lines in src/data/updates.js, so a correction logged
  * there appears here with no second copy to keep in step.
  */
+
+// The owner's text, word for word.
+const BODY = [
+  "The Grayslake Data Center Tracker collects the public information about the proposed T5 @ Chicago IV data center campus in Grayslake in one place.",
+  "When I returned to my hometown this past summer, I heard multiple discussions about a data center being built in Grayslake, yet no one had any concrete facts. When I saw the outrage and backlash, I noticed one of the main reasons people were angry was the lack of transparency and information about the plans. I wanted to help everyone, including myself, by putting everything that has been released in one place, so there is less confusion.",
+  "One of the main values of this site is neutrality. I want a spot with all the released information I can find, so visitors can take their own stances based on it. I publish articles, documents, and other records related to the proposed development.",
+  "To keep the information accurate and reliable, I sort my sources into tiers based on what type of source they are: official records, news articles from established outlets, and everything else.",
+  "When the Village, T5, or the plaintiffs in the lawsuit make a claim, I attribute it to them (\"the Village stated\") instead of presenting it as fact, because their statements sometimes conflict. Things shown in official records, like vote results and dates, are stated plainly.",
+  "Before anything goes live, I check the entry and make sure it links to a working source that is also listed on the site. I do my best to avoid mistakes, but they can still happen. My contact information is on the site, and every correction is logged with its date on this page.",
+  "As mentioned, this site does not take a side. Many sources of information are written to persuade the reader, which adds to the confusion, and that is what I want to prevent. The main values of this site are neutrality and reliability."
+]
 
 function fmtDate(iso) {
   return new Date(`${iso}T00:00:00`).toLocaleDateString('en-US', {
@@ -24,7 +34,6 @@ function fmtDate(iso) {
 
 const H2 = 'text-2xl sm:text-3xl font-display text-ink-900 tracking-tight scroll-mt-24'
 const P = 'text-base font-sans text-ink-700 leading-relaxed max-w-2xl'
-const TEXT_LINK = 'text-accent hover:text-accent-hover underline underline-offset-4 decoration-accent'
 
 // The label names shown on the Documents page for each tier, read from the
 // source registry (config/sources.yaml via src/data/sourceTiers.js).
@@ -36,7 +45,7 @@ const TIERS = [
   {
     tier: 1,
     name: 'The record itself',
-    text: 'Village of Grayslake agendas, approved minutes, ordinances, permits and press releases; Lake County Board and Zoning Board of Appeals records; the county’s parcel map data and recorded documents; court filings; bill text and status on ilga.gov; notices and permits from state and federal agencies; and official meeting video. When I cite one, I state what the document says or records and link to it, with a page number where I can.',
+    text: 'Village of Grayslake agendas, approved minutes, ordinances and permits; Lake County Board and Zoning Board of Appeals records; the county’s parcel map data and recorded documents; court filings; bill text and status on ilga.gov; notices and permits from state and federal agencies; and official meeting video. When I cite one, I state what the document says or records and link to it, with a page number where I can. The Village’s press releases, the Mayor’s statements, the Village’s project FAQ and T5’s website are also Tier 1, labeled as party statements.',
   },
   {
     tier: 2,
@@ -55,18 +64,6 @@ const TIERS = [
   },
 ]
 
-const LABELS = [
-  ['What a record says', 'Stated as fact, with the document linked: the acreage an ordinance sets, the date a complaint was filed, a vote result in approved minutes.'],
-  ['Allegations', 'Claims made in a lawsuit are allegations. I write them that way (“the complaint alleges”) and say when no court has ruled on them.'],
-  ['Statements by parties to the lawsuit', 'The Village of Grayslake and T5 Data Centers are both defendants in the pending lawsuit. When either says something about the project, I attribute it (“the Village stated”, “T5 stated”). The only things I take from them without attribution are plain record facts: a meeting date, a vote result, that a document or permit exists, or a number in an official record.'],
-  ['Projections', 'Forecasts, such as tax revenue, jobs or build-out dates, are labeled as projections and attributed to whoever made them.'],
-  ['News reports', 'When I rely on a news report, I name the outlet (“the Daily Herald reported”).'],
-  ['Figures I calculate', 'When I add up figures myself, for example acreage and sale totals from county parcel records, I say that the figure is calculated and what it was calculated from.'],
-  ['Names the record does not use', 'The Village’s mayor calls HB5513 the “POWER Act.” The bill text does not use the name, so I use it only in quotation marks, next to the bill number. Advocacy groups also attach the name to SB4016, the Senate bill with an identical synopsis; when I mention that, I say it is their label.'],
-  ['Quotations', 'Words in quotation marks are copied exactly from the source. I do not shorten a quotation with an ellipsis.'],
-  ['Private individuals', 'I do not name private residents, and I do not publish anyone’s health, address or family details. Public officials are named in their official roles.'],
-]
-
 export default function Methodology() {
   const corrections = updates.filter(u => u.kind === 'corrected')
 
@@ -83,20 +80,16 @@ export default function Methodology() {
         <h1 className="text-4xl sm:text-5xl font-display text-ink-900 tracking-tight leading-[1.05] mb-3">
           Methodology and Corrections
         </h1>
-        <p className={P}>
-          This page explains how I choose sources, how I label what people and organizations say, what
-          happens before anything goes on the site, and how I correct mistakes. Every correction is
-          listed at the bottom, newest first.
-        </p>
+        <div className="space-y-4">
+          {BODY.map(text => (
+            <p key={text.slice(0, 40)} className={P}>{text}</p>
+          ))}
+        </div>
         <p className="text-2xs font-mono text-ink-500 mt-3">Last verified {LAST_VERIFIED}</p>
       </header>
 
       <section aria-labelledby="tiers" className="space-y-5">
         <h2 id="tiers" className={H2}>How I rate sources</h2>
-        <p className={P}>
-          I sort every source into one of four tiers. The tier depends on who published it, not on what
-          the page says about itself.
-        </p>
         <dl className="border-t border-rule">
           {TIERS.map(t => (
             <div key={t.tier} className="border-b border-rule-strong py-5 sm:grid sm:grid-cols-[9rem_minmax(0,1fr)] sm:gap-6">
@@ -109,78 +102,10 @@ export default function Methodology() {
             </div>
           ))}
         </dl>
-        <p className={P}>
-          Every source on the <Link to="/documents" className={TEXT_LINK}>Documents</Link> page carries
-          its tier and the kind of source it is, for example &ldquo;{tierLabels.news_report}.&rdquo; Those
-          labels are generated from the same list of sources and tiers that the review scripts use, not
-          set by hand.
-        </p>
-      </section>
-
-      <section aria-labelledby="labels" className="space-y-5">
-        <h2 id="labels" className={H2}>How I label claims</h2>
-        <dl className="border-t border-rule">
-          {LABELS.map(([term, text]) => (
-            <div key={term} className="border-b border-rule-strong py-5">
-              <dt className="text-lg font-display font-semibold text-ink-900 leading-snug">{term}</dt>
-              <dd className="mt-1.5 text-base font-sans text-ink-700 leading-relaxed max-w-2xl">{text}</dd>
-            </div>
-          ))}
-        </dl>
-      </section>
-
-      <section aria-labelledby="listing" className="space-y-4">
-        <h2 id="listing" className={H2}>How a source gets listed</h2>
-        <p className={P}>
-          Every entry links to at least one source on the <Link to="/documents" className={TEXT_LINK}>Documents</Link> page.
-          For each source I record the publisher, the title, the date and a link. Where I can, I add an
-          archived copy: a snapshot in the Internet Archive&rsquo;s Wayback Machine that I have checked
-          against what I read, or a copy of the PDF on this site. A few sources do not have an archived
-          copy yet, and I archive those by hand.
-        </p>
-        <p className={P}>
-          I also keep a private copy of each document I rely on, with a fingerprint of the file (a SHA-256
-          hash), so I can show later exactly what a source said when I read it.
-        </p>
-        <p className={P}>
-          Some documents, such as signed meeting minutes, are scans with no text in them. I run those
-          through text recognition to find the passages worth reading. I do not quote from that
-          machine-read text. I quote from the document itself.
-        </p>
-      </section>
-
-      <section aria-labelledby="review" className="space-y-4">
-        <h2 id="review" className={H2}>Review before anything publishes</h2>
-        <p className={P}>
-          I use a set of scripts to watch public sources: Village agendas and news posts, the
-          Village&rsquo;s meeting videos, Lake County Board records, and the status of HB5513 and SB4016
-          on ilga.gov. They draft proposed entries only from Tier 1 sources: public records, and statements
-          the Village and T5 publish on their own channels, which are always attributed. A news article
-          never becomes an entry by itself; the scripts write me a note saying which record to check.
-        </p>
-        <p className={P}>
-          Before a proposed entry reaches me, an automated check compares every quotation, number, date,
-          case number and bill number in it with the text of the cited source, and rejects the draft if
-          anything is not there. A second check holds back any draft that names a private person or
-          includes health, address or family details.
-        </p>
-        <p className={P}>
-          Nothing the scripts produce goes on the site by itself. Each proposed change is meant to reach
-          me as a pull request that lists every quotation and where it came from, and I decide whether to
-          publish it after reading it against the sources. For now the scripts run in a test mode and
-          publish nothing. I also run the same check over the existing timeline; the most recent
-          corrections below came out of that review.
-        </p>
       </section>
 
       <section aria-labelledby="corrections" className="space-y-5">
         <h2 id="corrections" className={H2}>Corrections</h2>
-        <p className={P}>
-          When I get something wrong, I fix it and add a dated line to the{' '}
-          <Link to="/updates" className={TEXT_LINK}>Updates</Link> page saying what changed. Those lines
-          stay. To report an error, use the &ldquo;Report an error&rdquo; link at the bottom of any page or
-          email <a href={`mailto:${SITE_CONTACT.email}`} className={TEXT_LINK}>{SITE_CONTACT.email}</a>.
-        </p>
 
         {corrections.length === 0 ? (
           <p className={P}>No corrections have been logged yet.</p>
@@ -207,11 +132,6 @@ export default function Methodology() {
             ))}
           </ol>
         )}
-
-        <p className="text-sm font-sans text-ink-600 leading-relaxed">
-          Spotted something that should be corrected?{' '}
-          <ReportErrorLink className={TEXT_LINK} label="Send it in" />.
-        </p>
       </section>
     </Container>
   )
