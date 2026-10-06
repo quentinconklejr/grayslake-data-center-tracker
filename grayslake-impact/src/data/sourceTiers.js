@@ -22,9 +22,10 @@ export const sourceTiers = {
     "label": "Tier 3 · trade press"
   },
   "dailyherald2026": {
-    "tier": 2,
+    "tier": 3,
     "registryId": "daily-herald",
-    "label": "Tier 2 · established outlet"
+    "label": "Tier 3 · news report (byline unconfirmed)",
+    "byline": "unverified"
   },
   "hoodline2026": {
     "tier": 3,
@@ -42,9 +43,10 @@ export const sourceTiers = {
     "label": "Tier 3 · aggregator"
   },
   "capitolnews2026": {
-    "tier": 2,
+    "tier": 3,
     "registryId": "capitol-news-illinois",
-    "label": "Tier 2 · established outlet"
+    "label": "Tier 3 · news report (byline unconfirmed)",
+    "byline": "unverified"
   },
   "dceo2026": {
     "tier": 1,
@@ -69,12 +71,14 @@ export const sourceTiers = {
   "chitrib_june2026": {
     "tier": 2,
     "registryId": "chicago-tribune",
-    "label": "Tier 2 · established outlet"
+    "label": "Tier 2 · established outlet",
+    "byline": "confirmed"
   },
   "chitrib_jul2026": {
     "tier": 2,
     "registryId": "chicago-tribune",
-    "label": "Tier 2 · established outlet"
+    "label": "Tier 2 · established outlet",
+    "byline": "confirmed"
   },
   "chronicle2026": {
     "tier": 3,
@@ -119,12 +123,14 @@ export const sourceTiers = {
   "crains2024": {
     "tier": 2,
     "registryId": "crains-chicago",
-    "label": "Tier 2 · established outlet"
+    "label": "Tier 2 · established outlet",
+    "byline": "confirmed"
   },
   "dailyherald_jul2026": {
     "tier": 2,
     "registryId": "daily-herald",
-    "label": "Tier 2 · established outlet"
+    "label": "Tier 2 · established outlet",
+    "byline": "confirmed"
   },
   "lakecounty_tad2026": {
     "tier": 1,
@@ -162,9 +168,10 @@ export const sourceTiers = {
     "label": "Tier 1 · public record"
   },
   "dailyherald_oct2025": {
-    "tier": 2,
+    "tier": 3,
     "registryId": "daily-herald",
-    "label": "Tier 2 · established outlet"
+    "label": "Tier 3 · news report (byline unconfirmed)",
+    "byline": "unverified"
   },
   "scannerLawsuit2026": {
     "tier": 3,
@@ -189,7 +196,8 @@ export const sourceTiers = {
   "dailyherald_sep2026": {
     "tier": 2,
     "registryId": "daily-herald",
-    "label": "Tier 2 · established outlet"
+    "label": "Tier 2 · established outlet",
+    "byline": "confirmed"
   },
   "scannerPermit2026": {
     "tier": 3,

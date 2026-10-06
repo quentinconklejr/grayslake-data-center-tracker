@@ -28,10 +28,14 @@ updated: 2026-10-01
 # (scripts/build-source-tiers.js reads them from here, so the page cannot
 # drift from this registry). A source's label is its entry's `kind` if it
 # has one, `party_statement` for a party_statement source, else its tier.
+# A Tier 2 outlet's article counts as Tier 2 only with a confirmed named
+# byline (the citation's `byline` field, read from the archived copy);
+# otherwise it is labeled `tier_2_unbylined` and treated as Tier 3.
 labels:
   tier_1: Tier 1 · public record
   party_statement: Tier 1 · party statement
   tier_2: Tier 2 · established outlet
+  tier_2_unbylined: Tier 3 · news report (byline unconfirmed)
   news_report: Tier 3 · news report
   trade: Tier 3 · trade press
   aggregator: Tier 3 · aggregator

@@ -12,6 +12,15 @@ export const updates = [
   {
     date: '2026-10-06',
     kind: 'corrected',
+    title: 'Three news articles relabeled Tier 3 until their reporters are confirmed',
+    description:
+      'An article from an established outlet now counts as Tier 2 only when a named reporter is confirmed on that article from its archived copy. Three cited articles have no archived copy yet, so the Documents page now labels them \u201cTier 3 \u00b7 news report (byline unconfirmed)\u201d: the Daily Herald\u2019s June 8, 2026 and October 11, 2025 articles and the Capitol News Illinois article. The reporters of the Chicago Tribune\u2019s June 5 and July 2 articles, the Daily Herald\u2019s July 31 and September 1 articles and the 2024 Crain\u2019s Chicago Business article are now recorded.',
+    link: 'C:/Program Files/Git/documents',
+    linkLabel: 'See the documents',
+  },
+  {
+    date: '2026-10-06',
+    kind: 'corrected',
     title: 'Village statements labeled as party statements',
     description:
       'On the Documents page, the Village of Grayslake\u2019s press releases, the Mayor\u2019s statement on the POWER Act and the Village\u2019s project FAQ are now labeled \u201cTier 1 \u00b7 party statement,\u201d the same as T5\u2019s own statements, because the Village is a defendant in the pending lawsuit. The Village\u2019s agendas, minutes, ordinances and permits stay labeled as public records.',

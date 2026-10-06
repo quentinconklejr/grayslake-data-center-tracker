@@ -159,7 +159,6 @@ const KEY_PREFIX = {
   'crains-chicago': 'crains', 'lake-mchenry-scanner': 'scanner', 'chronicle-media': 'chronicle', 't5-data-centers': 't5', clcjawa: 'clcjawa', mundelein: 'mundelein',
 }
 const TOPIC_STOP = new Set('the and for with from that this into over after about village county board grayslake lake data center centers campus t5 chicago new first'.split(' '))
-const AGGREGATORS = new Set(['hoodline', 'govtech', 'baxtel', 'patch'])
 
 export function sourceKeyFor(item, title, existing) {
   const prefix = KEY_PREFIX[item.registryId] ?? (item.registryId ?? 'source').replace(/-(\w)/g, (_, c) => c.toUpperCase())
@@ -175,7 +174,13 @@ export function sourceKeyFor(item, title, existing) {
 function sourceRecord(item, title) {
   const category = item.partyKind === 'court_filing' || item.registryCategory === 'court' ? 'court'
     : item.effectiveTier === 1 && (!item.party || item.party.channel === 'litigation_party') ? 'government' : 'news'
-  const tier = item.registryTier <= 2 ? 'primary' : AGGREGATORS.has(item.registryId) ? 'aggregator' : 'trade'
+  // Tier 2 is per article: record whether this article has a named reporter.
+  // The Documents label comes from the registry and this field, not from here.
+  const byline = item.registryTier === 2
+    ? (item.effectiveTier === 2 && item.byline
+      ? { name: String(item.byline), status: 'confirmed', archivedCopy: item.rawPath ?? undefined, sha256: item.rawSha256 ?? undefined }
+      : { status: 'unverified', reason: 'no named byline on the article as fetched' })
+    : undefined
   return {
     category,
     title: item.title || title,
@@ -184,7 +189,7 @@ function sourceRecord(item, title) {
     date: apDate(item.published) ?? undefined,
     url: item.url,
     archiveUrl: item.snapshot?.verified ? item.snapshot.snapshotUrl : undefined,
-    tier,
+    byline,
   }
 }
 

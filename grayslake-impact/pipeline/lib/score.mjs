@@ -51,6 +51,15 @@ export function decide(rubric, signals) {
   throw new Error('decision table has no matching row (it must end with a catch-all)')
 }
 
+/**
+ * The byline that counts for an existing citation: only one confirmed from
+ * the archived copy (the citation's `byline` field). An `author` string or
+ * page metadata nobody checked does not count.
+ */
+export function confirmedByline(citation) {
+  return citation?.byline?.status === 'confirmed' && citation.byline.name ? citation.byline.name : null
+}
+
 /** Effective tier: a Tier 2 article needs a named byline. */
 export function effectiveTier(tier, byline) {
   if (tier !== 2) return tier

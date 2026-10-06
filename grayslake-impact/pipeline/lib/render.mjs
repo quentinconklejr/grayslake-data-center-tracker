@@ -46,6 +46,7 @@ function renderObject(fields, { quote = '"', indent = '  ', longKeys = ['descrip
   for (const [k, v] of fields) {
     if (v === undefined || v === null) continue
     if (Array.isArray(v)) lines.push(`${inner}${k}: [${v.map(x => jsString(x, quote)).join(', ')}],`)
+    else if (typeof v === 'object') lines.push(`${inner}${k}: { ${Object.entries(v).filter(([, x]) => x !== undefined && x !== null).map(([a, x]) => `${a}: ${jsString(x, quote)}`).join(', ')} },`)
     else if (longKeys.includes(k)) lines.push(`${inner}${k}:`, `${inner}  ${jsString(v, quote)},`)
     else lines.push(`${inner}${k}: ${jsString(v, quote)},`)
   }
@@ -61,7 +62,7 @@ export function renderTimelineEntry(e) {
 export function renderSourceEntry(key, s) {
   const body = renderObject([
     ['category', s.category], ['title', s.title], ['publisher', s.publisher], ['author', s.author], ['date', s.date],
-    ['url', s.url], ['archiveUrl', s.archiveUrl], ['tier', s.tier], ['note', s.note],
+    ['byline', s.byline], ['url', s.url], ['archiveUrl', s.archiveUrl], ['note', s.note],
   ], { longKeys: ['note'], indent: '  ' })
   // sources.js is an object keyed by source key: `  key: {` rather than `  {`.
   return body.replace(/^ {2}\{/, `  ${key}: {`)

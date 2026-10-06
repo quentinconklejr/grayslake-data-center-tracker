@@ -11,7 +11,7 @@ import { lookup } from './registry.mjs'
 import { detectParty, relabelClaims, isOfficialRecord } from './party.mjs'
 import { makePrivacy } from './privacy.mjs'
 import { leadNote, leadNotesMarkdown } from './leads.mjs'
-import { decide, effectiveTier, signalsFor, corroboratingItems, isDraftable } from './score.mjs'
+import { decide, effectiveTier, signalsFor, corroboratingItems, isDraftable, confirmedByline } from './score.mjs'
 import { flagsForClaim, existingEntryMatches } from './flags.mjs'
 import { draftItem } from './draft.mjs'
 import { canonicalUrl } from './dedupe.mjs'
@@ -44,7 +44,7 @@ export function fromCorpus(rec, { registry, store, sources, existsSync }) {
     origin: 'corpus', id: `corpus:${rec.key}`, title: s.title, url: s.url, text: rec.text, kind: rec.kind,
     published: d ? `${d.year}-${String(d.month).padStart(2, '0')}-${String(d.day).padStart(2, '0')}` : null,
     registryId: hit.id, registryTier: hit.tier, registryHit: hit, registryCategory: s.category,
-    publisher: s.publisher, byline: s.author ?? rec.pageMeta?.byline ?? null, sourceKey: rec.key,
+    publisher: s.publisher, byline: confirmedByline(s), sourceKey: rec.key,
     snapshot: s.archiveUrl ? { verified: true, snapshotUrl: s.archiveUrl } : null,
     rawPdf: rec.kind === 'pdf' && existsSync(store.path(`corpus/raw/${rec.key}.pdf`)) ? store.path(`corpus/raw/${rec.key}.pdf`) : null,
   }
