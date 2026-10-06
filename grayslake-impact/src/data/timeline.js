@@ -65,7 +65,7 @@ export const timelineEvents = [
   {
     date: "2026-06-05",
     title: "Village FAQ updated, litigation notice added",
-    description: "The Village of Grayslake\u2019s project FAQ, headed \u201cUpdated as of June 5, 2026,\u201d stated that because of notice of impending litigation, and upon advice of counsel, the Village could not offer further responses to questions about the approved data center development. The FAQ document itself became unreachable by August 5, 2026. The Daily Herald also reported the notice.",
+    description: "The Village of Grayslake\u2019s project FAQ, headed \u201cUpdated as of June 5, 2026,\u201d stated that because of notice of impending litigation, and upon advice of counsel, the Village could not offer further responses to questions about the approved data center development. As of August 5, 2026, this site could not reach the FAQ page on the Village website. The Daily Herald also reported the notice.",
     category: "legal",
     sourceKeys: ["villagefaq_archived", "dailyherald2026"],
   },
