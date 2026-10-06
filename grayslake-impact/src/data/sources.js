@@ -201,6 +201,7 @@ export const sources = {
     publisher: "Illinois General Assembly",
     date: "Retrieved October 1, 2026",
     url: "https://www.ilga.gov/Legislation/BillStatus?DocTypeID=SB&DocNum=4016&GAID=18&SessionID=114",
+    archiveUrl: "https://web.archive.org/web/20261006220326/https://www.ilga.gov/Legislation/BillStatus?DocTypeID=SB&DocNum=4016&GAID=18&SessionID=114",
     note: "Same synopsis as HB5513; Sen. Mary Edly-Allen, whom the Mayor\u2019s statement credits, is a Senate sponsor. The bill text (the latest version on ilga.gov) has no short title and does not use the name \"POWER Act\".",
   },
   trd2024: {

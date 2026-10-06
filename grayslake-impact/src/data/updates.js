@@ -12,6 +12,15 @@ export const updates = [
   {
     date: '2026-10-06',
     kind: 'corrected',
+    title: 'Village FAQ entry: the August 5 date stated as this site\u2019s own observation',
+    description:
+      'The June 5, 2026 Village FAQ entry said the FAQ document became unreachable by August 5, 2026, as if a source said so. It now says what this site observed: as of August 5, 2026, this site could not reach the FAQ page on the Village website.',
+    link: '/timeline',
+    linkLabel: 'See the timeline',
+  },
+  {
+    date: '2026-10-06',
+    kind: 'corrected',
     title: 'Approval entry: the Mayor\u2019s statements attributed to the reports that carry them',
     description:
       'The May 6, 2025 approval entry said Mayor Elizabeth Davies cited 1,500 permanent jobs and major tax revenue during the approval period. It now gives the Chicago Tribune\u2019s report that she spoke of \u201c$300 million in tax revenue to the area over the coming decades,\u201d and attributes the 1,500 jobs to the Daily Herald and Government Technology, which reported it.',
