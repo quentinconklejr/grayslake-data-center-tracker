@@ -12,6 +12,15 @@ export const updates = [
   {
     date: '2026-10-06',
     kind: 'corrected',
+    title: 'Village statements labeled as party statements',
+    description:
+      'On the Documents page, the Village of Grayslake\u2019s press releases, the Mayor\u2019s statement on the POWER Act and the Village\u2019s project FAQ are now labeled \u201cTier 1 \u00b7 party statement,\u201d the same as T5\u2019s own statements, because the Village is a defendant in the pending lawsuit. The Village\u2019s agendas, minutes, ordinances and permits stay labeled as public records.',
+    link: 'C:/Program Files/Git/documents',
+    linkLabel: 'See the documents',
+  },
+  {
+    date: '2026-10-06',
+    kind: 'corrected',
     title: 'Land acquisition entry: the 134.9-acre block\u2019s measure stated',
     description:
       'The May 2, 2024 land acquisition entry now says that the 134.9 acres of T5\u2019s largest contiguous block are calculated from the merged county parcel boundaries, and adds that the county\u2019s own acreage figures for the 50 parcels in that block sum to 135.10.',

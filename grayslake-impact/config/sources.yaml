@@ -163,6 +163,23 @@ sources:
     party: T5 Data Centers
     domains: [t5datacenters.com]
     automate: false   # no fetcher yet; items arrive by link from other sources
+  # The Village's own statements about the project: press releases, the
+  # Mayor's statements and the project FAQ. The Village is a defendant in
+  # 2026CH00000171, so these are its statements, labeled like T5's site (owner
+  # decision 2026-10-06). Its agendas, minutes, ordinances and permits stay
+  # Tier 1 records under village-grayslake. Listed by document, because both
+  # kinds share villageofgrayslake.com/DocumentCenter/View/.
+  - id: village-grayslake-statements
+    name: Village of Grayslake (statements about the project)
+    tier: 1
+    category: party_statement
+    party: Village of Grayslake
+    url_prefixes:
+      - villageofgrayslake.com/DocumentCenter/View/15282/   # Approved T5 Data Center Campus FAQs
+      - villageofgrayslake.com/DocumentCenter/View/16057/   # Mayor Davies statement on the POWER Act, Aug 4, 2026
+      - villageofgrayslake.com/DocumentCenter/View/16069/   # press release, Aug 17, 2026
+      - villageofgrayslake.com/DocumentCenter/View/16083/   # press release, Aug 19, 2026
+    automate: false
 
   # --- Tier 2: established outlets ----------------------------------------
   # A Tier 2 article without a named byline is scored as Tier 3.

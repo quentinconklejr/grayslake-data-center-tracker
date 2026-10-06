@@ -53,8 +53,8 @@ export const sourceTiers = {
   },
   "villageoffaq": {
     "tier": 1,
-    "registryId": "village-grayslake",
-    "label": "Tier 1 · public record"
+    "registryId": "village-grayslake-statements",
+    "label": "Tier 1 · party statement"
   },
   "cub2026": {
     "tier": 3,
@@ -88,18 +88,18 @@ export const sourceTiers = {
   },
   "villagePressRelease0817_2026": {
     "tier": 1,
-    "registryId": "village-grayslake",
-    "label": "Tier 1 · public record"
+    "registryId": "village-grayslake-statements",
+    "label": "Tier 1 · party statement"
   },
   "villagePressRelease0819_2026": {
     "tier": 1,
-    "registryId": "village-grayslake",
-    "label": "Tier 1 · public record"
+    "registryId": "village-grayslake-statements",
+    "label": "Tier 1 · party statement"
   },
   "villagePowerAct2026": {
     "tier": 1,
-    "registryId": "village-grayslake",
-    "label": "Tier 1 · public record"
+    "registryId": "village-grayslake-statements",
+    "label": "Tier 1 · party statement"
   },
   "ilgaHB5513": {
     "tier": 1,
@@ -153,8 +153,8 @@ export const sourceTiers = {
   },
   "villagefaq_archived": {
     "tier": 1,
-    "registryId": "village-grayslake",
-    "label": "Tier 1 · public record"
+    "registryId": "village-grayslake-statements",
+    "label": "Tier 1 · party statement"
   },
   "lakecountygis": {
     "tier": 1,
