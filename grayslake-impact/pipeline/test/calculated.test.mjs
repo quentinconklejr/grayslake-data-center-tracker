@@ -77,3 +77,33 @@ test('calculated: an entry with no stored calculations is left alone', () => {
   assert.equal(r.failures.length, 1)
   assert.deepEqual(r.applied, [])
 })
+
+test('calculated: a two-decimal sum keeps its trailing zero (county figures as recorded)', () => {
+  const r = recompute({ value: '89.35', op: 'sum_acres', decimals: 2, inputs: [inp(A), inp(B)] }, parcels, rows)
+  assert.equal(r.got, '89.35')
+  const D = sq(-87.98, 42.3, 0.001, { pin: '4', acres: 45.33, saleAmount: null, saleDate: null })
+  const p2 = new Map([...parcels, ['4', D]])
+  const t = recompute({ value: '90.00', op: 'sum_acres', decimals: 2, inputs: [inp(A), inp(D)] }, p2, null)
+  assert.equal(t.got, '90.00')
+  assert.ok(t.ok, t.problems.join('; '))
+})
+
+test('calculated: every figure stored in src/data/calculations.js recomputes from the county snapshot', async () => {
+  const { readFileSync } = await import('node:fs')
+  const { calculations } = await import('../../src/data/calculations.js')
+  const snapshot = new Map(JSON.parse(readFileSync(new URL('../../src/data/parcels.geojson', import.meta.url), 'utf8')).features.map(f => [f.properties.pin, f]))
+  const { timelineEvents } = await import('../../src/data/timeline.js')
+  for (const c of calculations) {
+    const entry = timelineEvents.find(e => e.date === c.entry.date && e.title === c.entry.title)
+    assert.ok(entry, `entry ${c.entry.title} exists`)
+    assert.ok(entry.description.includes(c.label), 'the entry carries the label')
+    for (const v of c.values) {
+      const r = recompute(v, snapshot)
+      assert.ok(r.ok, `${v.value}: ${r.problems.join('; ')}`)
+      assert.ok(entry.description.includes(v.value), `${v.value} is printed in the entry`)
+    }
+  }
+  const land = calculations.find(c => c.entry.title === 'Land acquisition begins')
+  assert.equal(land.values.find(v => v.value === '135.10').inputs.length, 50)
+  assert.equal(land.values.find(v => v.value === '134.9').op, 'outline_area')
+})
