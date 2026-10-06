@@ -10,6 +10,15 @@
  */
 export const updates = [
   {
+    date: '2026-10-06',
+    kind: 'corrected',
+    title: 'Land acquisition entry: the 134.9-acre block\u2019s measure stated',
+    description:
+      'The May 2, 2024 land acquisition entry now says that the 134.9 acres of T5\u2019s largest contiguous block are calculated from the merged county parcel boundaries, and adds that the county\u2019s own acreage figures for the 50 parcels in that block sum to 135.10.',
+    link: 'C:/Program Files/Git/timeline',
+    linkLabel: 'See the timeline',
+  },
+  {
     date: '2026-10-01',
     kind: 'corrected',
     title: 'July 2 wetland reporting now cited to the Chicago Tribune original',
