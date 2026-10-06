@@ -85,7 +85,7 @@ export const sources = {
     title: "How do data centers benefit the places where they're built? Local mayors give mixed reviews",
     publisher: "Capitol News Illinois",
     author: "Nikoel Hytrek and UIS Public Affairs Reporting (PAR)",
-    date: "2026",
+    date: "May 9, 2026",
     byline: { name: "Nikoel Hytrek and UIS Public Affairs Reporting (PAR)", status: "confirmed", archivedCopy: "corpus/raw/capitolnews2026.pdf", sha256: "e93b8615b48846bf12b60422c675abb570aeb45a661becd5e119ba8926d0a610", checked: "2026-10-06", from: "PDF of the article saved by the owner" },
     url: "https://capitolnewsillinois.com/news/how-do-data-centers-benefit-the-places-where-theyre-built-local-mayors-give-mixed-reviews/",
     archiveUrl: "https://web.archive.org/web/20260927074150/https://capitolnewsillinois.com/news/how-do-data-centers-benefit-the-places-where-theyre-built-local-mayors-give-mixed-reviews/",

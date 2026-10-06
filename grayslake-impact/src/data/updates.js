@@ -12,6 +12,15 @@ export const updates = [
   {
     date: '2026-10-06',
     kind: 'corrected',
+    title: 'Capitol News Illinois article dated May 9, 2026',
+    description:
+      'The Capitol News Illinois article on how data centers benefit their host communities was dated only \u201c2026\u201d on the Documents page. It now gives the publication date shown on the article, May 9, 2026.',
+    link: '/documents',
+    linkLabel: 'See the documents',
+  },
+  {
+    date: '2026-10-06',
+    kind: 'corrected',
     title: 'Capitol News Illinois article back to Tier 2',
     description:
       'The Capitol News Illinois article on how data centers benefit their host communities is labeled \u201cTier 2 \u00b7 established outlet\u201d again. Its reporters, Nikoel Hytrek and UIS Public Affairs Reporting (PAR), are now confirmed from an archived copy of the article.',
