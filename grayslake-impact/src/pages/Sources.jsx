@@ -4,15 +4,18 @@ import Container from '../components/layout/Container'
 import DocBadges from '../components/ui/DocBadges'
 import { pageMeta } from '../data/pageMeta'
 import { sources } from '../data/sources'
+import { sourceTiers, recordsTier } from '../data/sourceTiers'
 import { docMeta } from '../data/docMeta'
 import { LAST_VERIFIED } from '../data/siteConfig'
 import { recordsPackets, recordsDocuments, recordsFiles } from '../data/records'
 
+// Tier labels come from the source registry (config/sources.yaml) through
+// src/data/sourceTiers.js, generated at build time, so they cannot drift.
 const TIER = {
-  primary:    'text-status-stated',
-  aggregator: 'text-status-disputed',
-  trade:      'text-status-approval',
-  default:    'text-ink-500',
+  1: 'text-status-stated',
+  2: 'text-status-approval',
+  3: 'text-status-disputed',
+  default: 'text-ink-500',
 }
 
 const packet = recordsPackets['t5-2024-2025']
@@ -73,8 +76,9 @@ function Entry({ n, children }) {
   )
 }
 
-function SourceEntry({ n, source }) {
-  const tierCls = TIER[source.tier] ?? TIER.default
+function SourceEntry({ n, sourceKey, source }) {
+  const tier = sourceTiers[sourceKey]
+  const tierCls = TIER[tier?.tier] ?? TIER.default
   // Real, read-from-file metadata for mirrored PDFs only. An external-link
   // source (no localCopy) gets no badges because we cannot inspect the file.
   const meta = source.localCopy ? docMeta[source.localCopy] : null
@@ -82,11 +86,11 @@ function SourceEntry({ n, source }) {
     <Entry n={n}>
       {/* Tier tag on its own metadata row above the title so a long title
           cannot displace it mid-line. File badges ride on the same row. */}
-      {(source.tier || meta) && (
+      {(tier || meta) && (
         <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1.5 mb-1.5">
-          {source.tier ? (
+          {tier ? (
             <p className={`text-2xs font-sans font-semibold uppercase tracking-wide ${tierCls}`}>
-              {source.tier}
+              {tier.label}
             </p>
           ) : <span aria-hidden="true" />}
           {meta && <DocBadges format={formatOf(source.localCopy)} pages={meta.pages} sizeBytes={meta.sizeBytes} />}
@@ -187,7 +191,7 @@ export default function Sources() {
       >
         <Entry n={1}>
           <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1.5 mb-1.5">
-            <p className={`text-2xs font-sans font-semibold uppercase tracking-wide ${TIER.primary}`}>primary</p>
+            <p className={`text-2xs font-sans font-semibold uppercase tracking-wide ${TIER[recordsTier.tier]}`}>{recordsTier.label}</p>
             <DocBadges format="PDF" pages={packet.pages} sizeBytes={packet.sizeBytes} />
           </div>
           <h3 className={H3}>
@@ -222,7 +226,7 @@ export default function Sources() {
           return (
             <Entry key={d.id} n={i + 1}>
               <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1.5 mb-1.5">
-                <p className={`text-2xs font-sans font-semibold uppercase tracking-wide ${TIER.primary}`}>primary</p>
+                <p className={`text-2xs font-sans font-semibold uppercase tracking-wide ${TIER[recordsTier.tier]}`}>{recordsTier.label}</p>
                 <DocBadges format={formatOf(file?.path)} pages={file?.pages} sizeBytes={file?.sizeBytes} />
               </div>
               <h3 className={H3}>
@@ -249,11 +253,11 @@ export default function Sources() {
       </Section>
 
       <Section id="court-filings" title="Court Filings">
-        {byCategory('court').map(([key, s], i) => <SourceEntry key={key} n={i + 1} source={s} />)}
+        {byCategory('court').map(([key, s], i) => <SourceEntry key={key} n={i + 1} sourceKey={key} source={s} />)}
       </Section>
 
       <Section id="news" title="News and Trade Reporting">
-        {byCategory('news').map(([key, s], i) => <SourceEntry key={key} n={i + 1} source={s} />)}
+        {byCategory('news').map(([key, s], i) => <SourceEntry key={key} n={i + 1} sourceKey={key} source={s} />)}
       </Section>
 
       <Section
@@ -261,7 +265,7 @@ export default function Sources() {
         title="Government Notices, Data and Analysis"
         intro="Notices and data published by public bodies, and analysis from utility and environmental groups."
       >
-        {byCategory('government').map(([key, s], i) => <SourceEntry key={key} n={i + 1} source={s} />)}
+        {byCategory('government').map(([key, s], i) => <SourceEntry key={key} n={i + 1} sourceKey={key} source={s} />)}
       </Section>
     </Container>
   )

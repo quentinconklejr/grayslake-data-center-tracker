@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "node scripts/extract-doc-meta.js && vite build && node scripts/build-route-html.js && node scripts/build-seo-files.js",
+    "build": "node scripts/build-source-tiers.js && node scripts/extract-doc-meta.js && vite build && node scripts/build-route-html.js && node scripts/build-seo-files.js",
     "extract-doc-meta": "node scripts/extract-doc-meta.js",
     "check-links": "node scripts/check-links.js",
     "screenshot": "node scripts/screenshot.js",
@@ -26,7 +26,8 @@
     "pipeline:stage-c": "node --use-system-ca pipeline/scripts/run-stage-c.mjs",
     "pipeline:job": "node --use-system-ca pipeline/scripts/run-job.mjs",
     "pipeline:dry-run-prs": "node --use-system-ca pipeline/scripts/dry-run-prs.mjs",
-    "pipeline:ocr": "node --use-system-ca pipeline/scripts/ocr-scans.mjs"
+    "pipeline:ocr": "node --use-system-ca pipeline/scripts/ocr-scans.mjs",
+    "source-tiers": "node scripts/build-source-tiers.js"
   },
   "dependencies": {
     "@fontsource/ibm-plex-mono": "^5.3.0",

@@ -130,8 +130,8 @@ export const keyFigures = [
     value: 'Suspended indefinitely',
     qualifier: 'project itself not on hold',
     detail:
-      'T5 voluntarily suspended its ~15.75-acre Section 404 application on July 31, 2026. The Village said it had advocated for withdrawal and that the mitigation was not necessary for the project to proceed.',
-    sourceKey: 'dailyherald_jul2026',
+      'T5 voluntarily suspended its application to the U.S. Army Corps of Engineers to fill 15.75 acres of wetlands, in a statement the Daily Herald reported on July 31, 2026. The Village said it had advocated for withdrawal and that the mitigation was not necessary for the project to move forward.',
+    sourceKeys: ['dailyherald_jul2026', 'chitrib_june2026'],
   },
   {
     id: 'school-funding',
