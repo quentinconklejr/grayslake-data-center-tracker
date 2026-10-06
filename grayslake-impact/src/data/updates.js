@@ -15,7 +15,7 @@ export const updates = [
     title: 'Three news articles relabeled Tier 3 until their reporters are confirmed',
     description:
       'An article from an established outlet now counts as Tier 2 only when a named reporter is confirmed on that article from its archived copy. Three cited articles have no archived copy yet, so the Documents page now labels them \u201cTier 3 \u00b7 news report (byline unconfirmed)\u201d: the Daily Herald\u2019s June 8, 2026 and October 11, 2025 articles and the Capitol News Illinois article. The reporters of the Chicago Tribune\u2019s June 5 and July 2 articles, the Daily Herald\u2019s July 31 and September 1 articles and the 2024 Crain\u2019s Chicago Business article are now recorded.',
-    link: 'C:/Program Files/Git/documents',
+    link: '/documents',
     linkLabel: 'See the documents',
   },
   {
@@ -24,7 +24,7 @@ export const updates = [
     title: 'Village statements labeled as party statements',
     description:
       'On the Documents page, the Village of Grayslake\u2019s press releases, the Mayor\u2019s statement on the POWER Act and the Village\u2019s project FAQ are now labeled \u201cTier 1 \u00b7 party statement,\u201d the same as T5\u2019s own statements, because the Village is a defendant in the pending lawsuit. The Village\u2019s agendas, minutes, ordinances and permits stay labeled as public records.',
-    link: 'C:/Program Files/Git/documents',
+    link: '/documents',
     linkLabel: 'See the documents',
   },
   {
@@ -33,7 +33,7 @@ export const updates = [
     title: 'Land acquisition entry: the 134.9-acre block\u2019s measure stated',
     description:
       'The May 2, 2024 land acquisition entry now says that the 134.9 acres of T5\u2019s largest contiguous block are calculated from the merged county parcel boundaries, and adds that the county\u2019s own acreage figures for the 50 parcels in that block sum to 135.10.',
-    link: 'C:/Program Files/Git/timeline',
+    link: '/timeline',
     linkLabel: 'See the timeline',
   },
   {
@@ -42,7 +42,7 @@ export const updates = [
     title: 'July 2 wetland reporting now cited to the Chicago Tribune original',
     description:
       'The July 2, 2026 Chicago Tribune article by Joseph States on the wetland fill application and the September 2025 Stormwater Management Commission letter is now cited to the Tribune\u2019s own page, with an archived copy from the day it was published. It was cited to a republication by the Illinois Environmental Council, which carried only the first part of the article.',
-    link: 'C:/Program Files/Git/actions',
+    link: '/actions',
     linkLabel: 'See the actions',
   },
   {
@@ -51,7 +51,7 @@ export const updates = [
     title: 'Documents page labels now show each source\u2019s tier',
     description:
       'The labels on the Documents page now come from the site\u2019s source registry and show each source\u2019s tier. The Lake and McHenry County Scanner and Chronicle Media, which were labeled \u201cprimary,\u201d are now labeled \u201cTier 3 \u00b7 news report\u201d; established outlets such as the Daily Herald and the Chicago Tribune are \u201cTier 2 \u00b7 established outlet\u201d; government records and court filings are \u201cTier 1 \u00b7 public record\u201d; trade publications, aggregators and advocacy groups are labeled as such at Tier 3.',
-    link: 'C:/Program Files/Git/documents',
+    link: '/documents',
     linkLabel: 'See the documents',
   },
   {
