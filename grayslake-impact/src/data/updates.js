@@ -12,6 +12,60 @@ export const updates = [
   {
     date: '2026-10-06',
     kind: 'corrected',
+    title: 'Approval entry: the Mayor\u2019s statements attributed to the reports that carry them',
+    description:
+      'The May 6, 2025 approval entry said Mayor Elizabeth Davies cited 1,500 permanent jobs and major tax revenue during the approval period. It now gives the Chicago Tribune\u2019s report that she spoke of \u201c$300 million in tax revenue to the area over the coming decades,\u201d and attributes the 1,500 jobs to the Daily Herald and Government Technology, which reported it.',
+    link: '/timeline',
+    linkLabel: 'See the timeline',
+  },
+  {
+    date: '2026-10-06',
+    kind: 'corrected',
+    title: 'Site work entry now cites a dated photograph',
+    description:
+      'The October 2025 site work entry relied on a Daily Herald article this site could not check. It now cites the Daily Herald\u2019s photograph of T5 site work at the Cornerstone Business Park in October 2025, published July 31, 2026, and attributes the remaining detail (earthmoving and site preparation on the first phase) to the Daily Herald.',
+    link: '/timeline',
+    linkLabel: 'See the timeline',
+  },
+  {
+    date: '2026-10-06',
+    kind: 'corrected',
+    title: 'Facebook group entry attributed to the Daily Herald',
+    description:
+      'The March 2026 entry stated as fact that a community opposition Facebook group formed and grew to 3,396 members. No source this site can read confirms it, so the entry now says the Daily Herald reported it.',
+    link: '/timeline',
+    linkLabel: 'See the timeline',
+  },
+  {
+    date: '2026-10-06',
+    kind: 'corrected',
+    title: 'Legal action entry now cites the Chicago Tribune',
+    description:
+      'The June 2026 entry said the coalition retained counsel to challenge the approvals as invalid, citing only a Daily Herald article this site could not check. It now gives the Chicago Tribune\u2019s June 5, 2026 report of the coalition\u2019s litigation hold and its attorney\u2019s expectation of a lawsuit, and attributes the rest to the Daily Herald.',
+    link: '/timeline',
+    linkLabel: 'See the timeline',
+  },
+  {
+    date: '2026-10-06',
+    kind: 'corrected',
+    title: 'Village FAQ entry now cites the FAQ itself',
+    description:
+      'The June 5, 2026 entry on the Village FAQ\u2019s litigation notice cited only a Daily Herald article this site could not check. It now cites the archived FAQ, which carries the notice and the heading \u201cUpdated as of June 5, 2026.\u201d',
+    link: '/timeline',
+    linkLabel: 'See the timeline',
+  },
+  {
+    date: '2026-10-06',
+    kind: 'corrected',
+    title: 'Build-out entry now cites the Chicago Tribune and the site plan',
+    description:
+      'The 2029 build-out entry cited a Daily Herald article this site could not check alongside Government Technology and Patch. Its figures now cite the Chicago Tribune (up to 20 buildings, build-out as early as 2029, 1.2 GW of capacity) and the master site plan in the records packet (18 buildings); the Daily Herald citation is removed.',
+    link: '/timeline',
+    linkLabel: 'See the timeline',
+  },
+  {
+    date: '2026-10-06',
+    kind: 'corrected',
     title: 'Three news articles relabeled Tier 3 until their reporters are confirmed',
     description:
       'An article from an established outlet now counts as Tier 2 only when a named reporter is confirmed on that article from its archived copy. Three cited articles have no archived copy yet, so the Documents page now labels them \u201cTier 3 \u00b7 news report (byline unconfirmed)\u201d: the Daily Herald\u2019s June 8, 2026 and October 11, 2025 articles and the Capitol News Illinois article. The reporters of the Chicago Tribune\u2019s June 5 and July 2 articles, the Daily Herald\u2019s July 31 and September 1 articles and the 2024 Crain\u2019s Chicago Business article are now recorded.',

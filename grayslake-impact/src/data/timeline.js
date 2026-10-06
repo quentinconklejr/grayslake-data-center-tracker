@@ -9,9 +9,9 @@ export const timelineEvents = [
   {
     date: "2025-05-06",
     title: "Village approval process complete",
-    description: "The Village FAQ records the approval as completed \u201cover an almost eight-month period between 9/23/2024 and 5/6/2025\u201d after a number of public hearings and Village Board meetings. The ordinances themselves bear this out: the Plan Commission opened its hearing on September 23, 2024, and the last of the five ordinances passed on May 6, 2025. No trustee voted nay on any of the five. Grayslake Mayor Elizabeth Davies cited 1,500 permanent jobs and major tax revenue during this period.",
+    description: "The Village FAQ records the approval as completed \u201cover an almost eight-month period between 9/23/2024 and 5/6/2025\u201d after a number of public hearings and Village Board meetings. The ordinances themselves bear this out: the Plan Commission opened its hearing on September 23, 2024, and the last of the five ordinances passed on May 6, 2025. No trustee voted nay on any of the five. The Chicago Tribune reported that Mayor Elizabeth Davies had spoken of the development\u2019s benefits, including \u201c$300 million in tax revenue to the area over the coming decades.\u201d The Daily Herald and Government Technology reported that she cited 1,500 permanent jobs.",
     category: "approval",
-    sourceKeys: ["villagefaq_archived", "t5RecordsPacket2026", "dailyherald2026", "govtech2025"],
+    sourceKeys: ["villagefaq_archived", "t5RecordsPacket2026", "chitrib_june2026", "govtech2025", "dailyherald2026"],
   },
   {
     date: "2024-05-02",
@@ -23,14 +23,14 @@ export const timelineEvents = [
   {
     date: "2025-10",
     title: "Site work begins",
-    description: "Earthmoving and site preparation work underway on the first phase near Alleghany Road, documented in October 2025 reporting.",
+    description: "A Daily Herald photograph published July 31, 2026 shows T5 site work at the Cornerstone Business Park, at the northeast corner of Alleghany and Peterson roads in Grayslake, in October 2025. The Daily Herald also reported earthmoving and site preparation on the first phase near Alleghany Road.",
     category: "construction",
-    sourceKey: "dailyherald2026",
+    sourceKeys: ["dailyherald_jul2026", "dailyherald2026"],
   },
   {
     date: "2026-03",
-    title: "Community opposition Facebook group formed",
-    description: "Group grew to 3,396 members with thousands of posts and comments.",
+    title: "Daily Herald reports a community opposition Facebook group",
+    description: "The Daily Herald reported that a community opposition group on Facebook, started in March 2026, had grown to 3,396 members with thousands of posts and comments. No other source this site has read gives the group\u2019s size or start date.",
     category: "opposition",
     sourceKey: "dailyherald2026",
   },
@@ -43,10 +43,10 @@ export const timelineEvents = [
   },
   {
     date: "2026-06",
-    title: "Legal action announced",
-    description: "Lake County coalition retains counsel to challenge village approvals as invalid.",
+    title: "Opposition coalition sends the Village a litigation hold",
+    description: "The Chicago Tribune reported on June 5, 2026 that the Lake County Data Center Opposition Coalition had sent the Village a litigation hold, and that Chloe Russell, an attorney representing the coalition, anticipated a lawsuit in the coming months. Mayor Elizabeth Davies confirmed the Village had received a notification regarding litigation. The Daily Herald reported that the coalition had retained counsel to challenge the Village\u2019s approvals as invalid.",
     category: "legal",
-    sourceKey: "dailyherald2026",
+    sourceKeys: ["chitrib_june2026", "dailyherald2026"],
   },
   {
     date: "2026-06-02",
@@ -65,9 +65,9 @@ export const timelineEvents = [
   {
     date: "2026-06-05",
     title: "Village FAQ updated, litigation notice added",
-    description: "The Village of Grayslake FAQ was updated as of June 5, 2026, stating the Village can no longer respond to further questions about the project due to pending litigation. The Daily Herald quoted the notice directly. The FAQ document itself became unreachable by August 5, 2026.",
+    description: "The Village of Grayslake\u2019s project FAQ, headed \u201cUpdated as of June 5, 2026,\u201d stated that because of notice of impending litigation, and upon advice of counsel, the Village could not offer further responses to questions about the approved data center development. The FAQ document itself became unreachable by August 5, 2026. The Daily Herald also reported the notice.",
     category: "legal",
-    sourceKey: "dailyherald2026",
+    sourceKeys: ["villagefaq_archived", "dailyherald2026"],
   },
   {
     date: "2026-06-05",
@@ -121,9 +121,9 @@ export const timelineEvents = [
   {
     date: "2029",
     title: "Full build-out projected",
-    description: "Campus could reach T5\u2019s stated 1.2 GW of leasable IT capacity. The master site plan shows 18 buildings; the ordinances set no building count and allow the number to change within the floor area cap. CEO Pete Marin cited up to 20 as an upper estimate.",
+    description: "T5 has proposed 1.2 GW of capacity, the Chicago Tribune reported. The master site plan shows 18 buildings; the ordinances set no building count and allow the number to change within the floor area cap. The Tribune reported that T5 CEO Pete Marin had indicated the campus could include up to 20 buildings, with full build-out as early as 2029.",
     category: "construction",
-    sourceKeys: ["govtech2025", "dailyherald2026", "patch2026"],
+    sourceKeys: ["chitrib_june2026", "chitrib_jul2026", "t5RecordsPacket2026", "govtech2025", "patch2026"],
   },
   {
     // Was written with desc/type/status and a display-string date while every
