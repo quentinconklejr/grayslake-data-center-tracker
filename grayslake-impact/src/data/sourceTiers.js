@@ -43,10 +43,10 @@ export const sourceTiers = {
     "label": "Tier 3 · aggregator"
   },
   "capitolnews2026": {
-    "tier": 3,
+    "tier": 2,
     "registryId": "capitol-news-illinois",
-    "label": "Tier 3 · news report (byline unconfirmed)",
-    "byline": "unverified"
+    "label": "Tier 2 · established outlet",
+    "byline": "confirmed"
   },
   "dceo2026": {
     "tier": 1,

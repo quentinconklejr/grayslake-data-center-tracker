@@ -12,6 +12,15 @@ export const updates = [
   {
     date: '2026-10-06',
     kind: 'corrected',
+    title: 'Capitol News Illinois article back to Tier 2',
+    description:
+      'The Capitol News Illinois article on how data centers benefit their host communities is labeled \u201cTier 2 \u00b7 established outlet\u201d again. Its reporters, Nikoel Hytrek and UIS Public Affairs Reporting (PAR), are now confirmed from an archived copy of the article.',
+    link: '/documents',
+    linkLabel: 'See the documents',
+  },
+  {
+    date: '2026-10-06',
+    kind: 'corrected',
     title: 'Village FAQ entry: the August 5 date stated as this site\u2019s own observation',
     description:
       'The June 5, 2026 Village FAQ entry said the FAQ document became unreachable by August 5, 2026, as if a source said so. It now says what this site observed: as of August 5, 2026, this site could not reach the FAQ page on the Village website.',
