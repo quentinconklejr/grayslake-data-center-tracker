@@ -1,0 +1,301 @@
+# Source registry: which domains, feeds and channels the pipeline trusts, and
+# at what tier. Tiers are defined in config/credibility-rubric.yaml.
+#
+# The pipeline looks a URL up here and nowhere else. A host that matches no
+# entry is Tier 4 (hard rule tier_from_registry). Nothing a page says about
+# itself can change its tier.
+#
+# Matching
+#   domains           the host or any subdomain of it (www. is ignored)
+#   url_prefixes      exact prefix of the URL after scheme and www.
+#   youtube_channels  channel ids, for youtube.com / youtu.be links and feeds
+# The most specific match wins: url_prefixes, then youtube_channels, then the
+# longest matching domain.
+#
+# Wayback Machine links (web.archive.org/web/<timestamp>/<url>) are looked up
+# by the archived URL, so a snapshot carries the tier of what it is a copy of.
+#
+# Owner decisions recorded here (2026-09-30):
+#   - Tier 2 outlets are the six listed below, each marked
+#     corrections_policy: unverified until the owner confirms it.
+#   - Lake & McHenry County Scanner is Tier 3.
+#   - Court dockets and Recorder searches are manual: `automate: false`.
+
+version: 0.1.0
+updated: 2026-10-01
+
+# Labels the site shows next to each source on the Documents page
+# (scripts/build-source-tiers.js reads them from here, so the page cannot
+# drift from this registry). A source's label is its entry's `kind` if it
+# has one, `party_statement` for a party_statement source, else its tier.
+labels:
+  tier_1: Tier 1 · public record
+  party_statement: Tier 1 · party statement
+  tier_2: Tier 2 · established outlet
+  news_report: Tier 3 · news report
+  trade: Tier 3 · trade press
+  aggregator: Tier 3 · aggregator
+  advocacy: Tier 3 · advocacy group
+  tier_4: Tier 4 · unreviewed
+
+sources:
+  # --- Tier 1: government records -----------------------------------------
+  - id: village-grayslake
+    name: Village of Grayslake
+    tier: 1
+    # Owner decision D-1 (2026-10-01): the Village is a defendant in
+    # 2026CH00000171. Claims from its own channels are attributed ("the
+    # Village stated"); only record facts (dates, votes, document existence,
+    # numbers in official records) are stated as fact.
+    litigation_party: Village of Grayslake
+    domains: [villageofgrayslake.com]
+    automate: true
+  - id: lake-county
+    name: Lake County, Illinois
+    tier: 1
+    domains: [lakecountyil.gov, maps.lakecountyil.gov]
+    automate: true
+  - id: lake-county-legistar
+    name: Lake County Legistar (County Board, ZBA, SMC, committees)
+    tier: 1
+    domains: [lakecounty.legistar.com]
+    url_prefixes: [webapi.legistar.com/v1/lakecounty/]
+    automate: true
+  - id: village-grayslake-youtube
+    name: Village of Grayslake YouTube channel
+    tier: 1
+    youtube_channels: [UCPnLOnmTu9VhW0paDWubHhw]
+    automate: true
+    note: Official meeting video. Auto-captions are never verbatim evidence.
+  - id: ilga
+    name: Illinois General Assembly
+    tier: 1
+    domains: [ilga.gov]
+    automate: true
+  - id: icc
+    name: Illinois Commerce Commission
+    tier: 1
+    domains: [icc.illinois.gov]
+    automate: true
+  - id: iepa
+    name: Illinois EPA
+    tier: 1
+    domains: [epa.illinois.gov]
+    automate: true
+  - id: dceo
+    name: Illinois DCEO
+    tier: 1
+    domains: [dceo.illinois.gov]
+    automate: true
+  - id: mundelein
+    name: Village of Mundelein
+    tier: 1
+    domains: [mundelein.org]
+    automate: true
+  - id: clcjawa
+    name: Central Lake County Joint Action Water Agency
+    tier: 1
+    domains: [clcjawa.com]
+    # CLCJAWA hosts its Jan. 15, 2026 ICC presentation on Google Drive and
+    # links this exact file from www.clcjawa.com (checked 2026-10-01).
+    url_prefixes:
+      - drive.google.com/file/d/14Q7LsFHh36oft_WPXpf2uJ8hxCz6P_Fl
+    automate: true
+  - id: usace-chicago
+    name: US Army Corps of Engineers, Chicago District
+    tier: 1
+    domains: [lrc.usace.army.mil]
+    automate: true
+  - id: pjm
+    name: PJM Interconnection
+    tier: 1
+    domains: [pjm.com, dataminer2.pjm.com]
+    automate: true
+  - id: ferc
+    name: FERC eLibrary
+    tier: 1
+    domains: [ferc.gov]
+    automate: true
+  - id: comed
+    name: ComEd
+    tier: 1
+    domains: [comed.com]
+    automate: true
+    note: Tier 1 as to filings. ComEd statements about itself are attributed by the claim-type rules.
+  - id: lake-county-circuit-clerk
+    name: Lake County Circuit Clerk
+    tier: 1
+    domains: [lakecountycircuitclerk.org]
+    automate: false   # owner decision: court dockets stay manual
+  - id: researchil
+    name: re:SearchIL court records
+    tier: 1
+    domains: [researchil.tylerhost.net]
+    automate: false   # owner decision: court dockets stay manual
+  - id: nineteenth-circuit
+    name: 19th Judicial Circuit Court
+    tier: 1
+    domains: [19thcircuitcourt.state.il.us]
+    automate: false
+  - id: lake-county-recorder-search
+    name: Lake County Recorder property records search
+    tier: 1
+    domains: [lake.il.publicsearch.us]
+    automate: false   # owner decision: Recorder searches stay manual
+  - id: tracker-mirror
+    name: Documents mirrored on this site (public records with a recorded SHA-256)
+    tier: 1
+    url_prefixes:
+      - grayslakedatacentertracker.org/docs/
+      - grayslakedatacentertracker.org/records/
+    automate: false
+    note: Site-relative paths /docs/ and /records/ resolve here.
+
+  # --- Party statements ----------------------------------------------------
+  # A party's own channel is the primary record of what that party SAYS, and
+  # nothing more. Code relabels every claim from a `party_statement` source
+  # as the party's statement ("T5 stated ..."), never as fact, the same way
+  # it treats a party's court filing (owner decision 2026-10-01).
+  - id: t5-data-centers
+    name: T5 Data Centers (company website)
+    tier: 1
+    category: party_statement
+    party: T5 Data Centers
+    domains: [t5datacenters.com]
+    automate: false   # no fetcher yet; items arrive by link from other sources
+  # The Village's own statements about the project: press releases, the
+  # Mayor's statements and the project FAQ. The Village is a defendant in
+  # 2026CH00000171, so these are its statements, labeled like T5's site (owner
+  # decision 2026-10-06). Its agendas, minutes, ordinances and permits stay
+  # Tier 1 records under village-grayslake. Listed by document, because both
+  # kinds share villageofgrayslake.com/DocumentCenter/View/.
+  - id: village-grayslake-statements
+    name: Village of Grayslake (statements about the project)
+    tier: 1
+    category: party_statement
+    party: Village of Grayslake
+    url_prefixes:
+      - villageofgrayslake.com/DocumentCenter/View/15282/   # Approved T5 Data Center Campus FAQs
+      - villageofgrayslake.com/DocumentCenter/View/16057/   # Mayor Davies statement on the POWER Act, Aug 4, 2026
+      - villageofgrayslake.com/DocumentCenter/View/16069/   # press release, Aug 17, 2026
+      - villageofgrayslake.com/DocumentCenter/View/16083/   # press release, Aug 19, 2026
+    automate: false
+
+  # --- Tier 2: established outlets ----------------------------------------
+  # A Tier 2 article without a named byline is scored as Tier 3.
+  - id: daily-herald
+    name: Daily Herald
+    tier: 2
+    domains: [dailyherald.com]
+    corrections_policy: unverified
+    automate: true
+  - id: chicago-tribune
+    name: Chicago Tribune
+    tier: 2
+    domains: [chicagotribune.com]
+    corrections_policy: unverified
+    automate: true
+  - id: lake-county-news-sun
+    name: Lake County News-Sun
+    tier: 2
+    # UNVERIFIED: News-Sun stories are believed to publish on
+    # chicagotribune.com, which the entry above already covers at Tier 2. Add
+    # its own domain or url_prefix here once a real article URL confirms it.
+    domains: []
+    corrections_policy: unverified
+    automate: true
+  - id: chicago-sun-times
+    name: Chicago Sun-Times
+    tier: 2
+    domains: [suntimes.com]
+    corrections_policy: unverified
+    automate: true
+  - id: crains-chicago
+    name: Crain's Chicago Business
+    tier: 2
+    domains: [chicagobusiness.com]
+    corrections_policy: unverified
+    automate: true
+  - id: capitol-news-illinois
+    name: Capitol News Illinois
+    tier: 2
+    domains: [capitolnewsillinois.com]
+    corrections_policy: unverified
+    automate: true
+
+  # --- Tier 3: trade press, aggregators, republishers, advocacy ------------
+  - id: lake-mchenry-scanner
+    name: Lake & McHenry County Scanner
+    tier: 3
+    kind: news_report
+    domains: [lakemchenryscanner.com]
+    automate: true
+    note: Owner decision 2026-09-30.
+  - id: chronicle-media
+    name: Chronicle Media
+    tier: 3
+    kind: news_report
+    domains: [chronicleillinois.com]
+    automate: true
+    note: Not in the owner's Tier 2 list. Placed at Tier 3 pending owner review.
+  - id: patch
+    name: Patch
+    tier: 3
+    kind: aggregator
+    domains: [patch.com]
+    automate: true
+  - id: datacenterdynamics
+    name: Data Center Dynamics
+    tier: 3
+    kind: trade
+    domains: [datacenterdynamics.com]
+    automate: true
+  - id: baxtel
+    name: Baxtel
+    tier: 3
+    kind: trade
+    domains: [baxtel.com]
+    automate: false
+  - id: hoodline
+    name: Hoodline
+    tier: 3
+    kind: aggregator
+    domains: [hoodline.com]
+    automate: false
+  - id: govtech
+    name: Government Technology
+    tier: 3
+    kind: aggregator
+    domains: [govtech.com]
+    automate: false
+  - id: illinois-environmental-council
+    name: Illinois Environmental Council (advocacy; republishes Tribune reporting)
+    tier: 3
+    kind: advocacy
+    domains: [ilenviro.org]
+    automate: false
+  - id: citizens-utility-board
+    name: Citizens Utility Board (advocacy)
+    tier: 3
+    kind: advocacy
+    domains: [citizensutilityboard.org]
+    automate: false
+  - id: alliance-great-lakes
+    name: Alliance for the Great Lakes (advocacy)
+    tier: 3
+    kind: advocacy
+    domains: [greatlakes.org]
+    automate: false
+  - id: the-real-deal
+    name: The Real Deal (real estate trade publication)
+    tier: 3
+    kind: trade
+    domains: [therealdeal.com]
+    automate: false
+    note: Added 2026-10-01; the site cites its May 7, 2024 article on the first land sale.
+
+# Discovery-only services. A hit from one of these is never scored as the
+# service; the pipeline resolves the link and scores the destination.
+discovery_only:
+  - news.google.com
+  - google.com/alerts

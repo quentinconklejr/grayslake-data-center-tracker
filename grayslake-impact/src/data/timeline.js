@@ -9,28 +9,28 @@ export const timelineEvents = [
   {
     date: "2025-05-06",
     title: "Village approval process complete",
-    description: "The Village FAQ records the approval as completed \u201cover an almost eight-month period between 9/23/2024 and 5/6/2025\u201d after a number of public hearings and Village Board meetings. The ordinances themselves bear this out: the Plan Commission opened its hearing on September 23, 2024, and the last of the five ordinances passed on May 6, 2025. No trustee voted nay on any of the five. Grayslake Mayor Elizabeth Davies cited 1,500 permanent jobs and major tax revenue during this period.",
+    description: "The Village FAQ records the approval as completed \u201cover an almost eight-month period between 9/23/2024 and 5/6/2025\u201d after a number of public hearings and Village Board meetings. The ordinances themselves bear this out: the Plan Commission opened its hearing on September 23, 2024, and the last of the five ordinances passed on May 6, 2025. No trustee voted nay on any of the five. The Chicago Tribune reported that Mayor Elizabeth Davies had spoken of the development\u2019s benefits, including \u201c$300 million in tax revenue to the area over the coming decades.\u201d The Daily Herald and Government Technology reported that she cited 1,500 permanent jobs.",
     category: "approval",
-    sourceKeys: ["villagefaq_archived", "t5RecordsPacket2026", "dailyherald2026", "govtech2025"],
+    sourceKeys: ["villagefaq_archived", "t5RecordsPacket2026", "chitrib_june2026", "govtech2025", "dailyherald2026"],
   },
   {
     date: "2024-05-02",
     title: "Land acquisition begins",
-    description: "The first recorded purchase predates the start of the Village approval process by four months. County records show $29,356,282 recorded against three parcels totalling 69.9 acres on May 2, 2024; the approval process began September 23, 2024. A further $17,000,000 was recorded against five parcels totalling 89.3 acres in January 2025, and three further recordings in April and May 2025 bring recorded consideration to $62,968,250. The last of those recordings is dated May 6, 2025, the same day the Village records the approval process as complete. That total covers 55 of the 57 parcels, or 223.8 of the 287.8 acres: two parcels totalling 64.0 acres carry no recorded sale in the county layer. A widely repeated figure of \u201c$29.4 million for 134 acres\u201d pairs the first sale amount with a larger acreage the county does not associate with it; 134.9 acres is the size of T5\u2019s largest contiguous block, not that purchase.",
+    description: "The first recorded purchase predates the start of the Village approval process by four months. County parcel records show $29,356,282 recorded against three parcels on May 2, 2024; the Village FAQ dates the approval process from 9/23/2024 to 5/6/2025. The following totals are calculated from county parcel records. The three parcels sold on May 2, 2024 total 69.9 acres. A further $17,000,000 was recorded against five parcels totalling 89.4 acres in January 2025, and three further recordings in April and May 2025 bring recorded consideration to $62,968,250. The last of those recordings is dated May 6, 2025, the day the Village FAQ gives as the end of the approval process. That total covers 55 of the 57 parcels, or 223.8 of the 287.8 acres: two parcels totalling 64.0 acres carry no recorded sale in the county layer. Larger acreages reported for the first purchase come from news coverage. The Real Deal reported in May 2024 a \u201c$29.4 million sale of vacant land\u201d to a T5 venture planning \u201cmultiple data center buildings across 160 acres,\u201d and, citing Lake County records, that the seller \u201csold four parcels totaling more than 134 acres\u201d and gave T5 an option on another 45 acres. Crain\u2019s Chicago Business reported the project \u201con 160 acres it acquired in Grayslake\u201d and, citing The Real Deal, that \u201cT5 paid $29.4 million for 134 acres.\u201d The current county parcel layer associates the May 2, 2024 sale with three parcels totalling 69.9 acres, calculated from county parcel records; 134.9 acres, calculated from the merged county parcel boundaries, is the size of T5\u2019s largest contiguous block, not that purchase. The county\u2019s own acreage figures for those 50 parcels sum to 135.10.",
     category: "development",
-    sourceKey: "lakecountygis",
+    sourceKeys: ["lakecountygis", "villagefaq_archived", "trd2024", "crains2024"],
   },
   {
     date: "2025-10",
     title: "Site work begins",
-    description: "Earthmoving and site preparation work underway on the first phase near Alleghany Road, documented in October 2025 reporting.",
+    description: "A Daily Herald photograph published July 31, 2026 shows T5 site work at the Cornerstone Business Park, at the northeast corner of Alleghany and Peterson roads in Grayslake, in October 2025. The Daily Herald also reported earthmoving and site preparation on the first phase near Alleghany Road.",
     category: "construction",
-    sourceKey: "dailyherald2026",
+    sourceKeys: ["dailyherald_jul2026", "dailyherald2026"],
   },
   {
     date: "2026-03",
-    title: "Community opposition Facebook group formed",
-    description: "Group grew to 3,396 members with thousands of posts and comments.",
+    title: "Daily Herald reports a community opposition Facebook group",
+    description: "The Daily Herald reported that a community opposition group on Facebook, started in March 2026, had grown to 3,396 members with thousands of posts and comments. No other source this site has read gives the group\u2019s size or start date.",
     category: "opposition",
     sourceKey: "dailyherald2026",
   },
@@ -43,10 +43,10 @@ export const timelineEvents = [
   },
   {
     date: "2026-06",
-    title: "Legal action announced",
-    description: "Lake County coalition retains counsel to challenge village approvals as invalid.",
+    title: "Opposition coalition sends the Village a litigation hold",
+    description: "The Chicago Tribune reported on June 5, 2026 that the Lake County Data Center Opposition Coalition had sent the Village a litigation hold, and that Chloe Russell, an attorney representing the coalition, anticipated a lawsuit in the coming months. Mayor Elizabeth Davies confirmed the Village had received a notification regarding litigation. The Daily Herald reported that the coalition had retained counsel to challenge the Village\u2019s approvals as invalid.",
     category: "legal",
-    sourceKey: "dailyherald2026",
+    sourceKeys: ["chitrib_june2026", "dailyherald2026"],
   },
   {
     date: "2026-06-02",
@@ -65,9 +65,9 @@ export const timelineEvents = [
   {
     date: "2026-06-05",
     title: "Village FAQ updated, litigation notice added",
-    description: "The Village of Grayslake FAQ was updated as of June 5, 2026, stating the Village can no longer respond to further questions about the project due to pending litigation. The Daily Herald quoted the notice directly. The FAQ document itself became unreachable by August 5, 2026.",
+    description: "The Village of Grayslake\u2019s project FAQ, headed \u201cUpdated as of June 5, 2026,\u201d stated that because of notice of impending litigation, and upon advice of counsel, the Village could not offer further responses to questions about the approved data center development. As of August 5, 2026, this site could not reach the FAQ page on the Village website. The Daily Herald also reported the notice.",
     category: "legal",
-    sourceKey: "dailyherald2026",
+    sourceKeys: ["villagefaq_archived", "dailyherald2026"],
   },
   {
     date: "2026-06-05",
@@ -100,9 +100,9 @@ export const timelineEvents = [
   {
     date: "2026-07-31",
     title: "T5 indefinitely suspends wetland permit application",
-    description: "T5 withdrew its Section 404 application to fill approximately 15.75 acres of wetlands, describing the suspension as voluntary and indefinite in response to community questions. The Village said it had strongly advocated for withdrawal and that the mitigation was not necessary for the project to proceed. The project itself is not on hold.",
+    description: "T5 indefinitely suspended its application to the U.S. Army Corps of Engineers to fill 15.75 acres of wetlands, describing the suspension as voluntary and indefinite in response to community questions and concerns. The Village said it had strongly advocated for withdrawal and that the mitigation was not necessary for the project to move forward. The project itself is not on hold.",
     category: "legal",
-    sourceKey: "dailyherald_jul2026",
+    sourceKeys: ["dailyherald_jul2026", "chitrib_june2026"],
   },
   {
     date: "2026-07-31",
@@ -121,9 +121,9 @@ export const timelineEvents = [
   {
     date: "2029",
     title: "Full build-out projected",
-    description: "Campus could reach T5\u2019s stated 1.2 GW of leasable IT capacity. The master site plan shows 18 buildings; the ordinances set no building count and allow the number to change within the floor area cap. CEO Pete Marin cited up to 20 as an upper estimate.",
+    description: "T5 has proposed 1.2 GW of capacity, the Chicago Tribune reported. The master site plan shows 18 buildings; the ordinances set no building count and allow the number to change within the floor area cap. The Tribune reported that T5 CEO Pete Marin had indicated the campus could include up to 20 buildings, with full build-out as early as 2029.",
     category: "construction",
-    sourceKeys: ["govtech2025", "dailyherald2026", "patch2026"],
+    sourceKeys: ["chitrib_june2026", "chitrib_jul2026", "t5RecordsPacket2026", "govtech2025", "patch2026"],
   },
   {
     // Was written with desc/type/status and a display-string date while every
@@ -149,35 +149,31 @@ export const timelineEvents = [
   },
   {
     date: "2026-08-19",
-    title: "Village cancels special public comment session, cites social media threats",
-    description:
-      "On Monday, August 17, 2026, the Village of Grayslake announced a special extended public comment session on the T5 project for Thursday evening, August 20, at the University Center of Lake County. On Wednesday, August 19, the Village canceled the session, stating that recent social media posts and other information over the previous 24 hours had raised safety concerns and that area law enforcement agencies had expressed similar concerns. The Village also announced new security measures for future board meetings, including pre-entry screening for attendees and a prohibition on bags, backpacks and similar items inside village hall.",
+    title: "Village postpones extended public comment session, citing safety concerns",
+    description: "On August 17, 2026, the Village of Grayslake announced a one-time extended public comment session on the approved data center campus for Thursday, August 20 at 6 pm at the University Center of Lake County. On August 19 the Village announced that the session \u201chas been postponed,\u201d stating that the University Center \u201chas informed the Village that it can no longer host the meeting\u201d and that \u201crecent social media posts, and other information, over the past 24 hours have raised safety concerns about the session.\u201d The August 17 release also announced public safety measures for Village Board meetings starting August 18, including pre-entry screening for attendees and a prohibition on bags, backpacks and similar items inside the Village Hall.",
     category: "policy",
-    sourceKey: "scannerCancellation2026",
+    sourceKeys: ["villagePressRelease0817_2026", "villagePressRelease0819_2026"],
   },
   {
     date: "2026-08-18",
     title: "County zoning board recommends data center moratorium, 6-0",
-    description:
-      "The Lake County Zoning Board of Appeals voted 6-0 to recommend a county code amendment establishing an eight-month temporary moratorium on data centers in unincorporated Lake County. Chronicle Media reported more than 225 people attended the hearing and that the county had received more than 1,000 responses through its website. The recommendation moved to the Zoning, Building and Development Committee on September 2 and to the full County Board on September 8. The measure covers unincorporated Lake County only; Chronicle Media reported that County Board approval \u201cdoes not hinder or impact what is done within municipal boundaries and its jurisdictions.\u201d",
+    description: "The Lake County Zoning Board of Appeals voted 6-0 to recommend a county code amendment establishing an eight-month temporary moratorium on data centers in unincorporated Lake County. Chronicle Media reported that more than 125 people filled the meeting room, with another 100 standing in the hallway and stairwell, and that more than 1,000 responses had been sent to a county website. The recommendation moved to the Zoning, Building and Development Committee on September 2 and to the full County Board on September 8. The measure covers unincorporated Lake County only; Chronicle Media reported that County Board approval \u201cdoes not hinder or impact what is done within municipal boundaries and its jurisdictions.\u201d",
     category: "policy",
     sourceKey: "chronicleZba2026",
   },
   {
     date: "2026-08-30",
     title: "State representative says project should not proceed without answers",
-    description:
-      "Illinois State Rep. Daniel Didech (D-Buffalo Grove) said the project should not proceed unless the Village and the developer demonstrate it will not harm energy costs, water quality and availability, noise levels or ecological health, saying residents \u201cdeserve concrete evidence and clear answers on each of these issues and other relevant concerns.\u201d He also criticized limiting public comment to 15 minutes at future meetings, and said he plans to push the POWER Act during the fall veto session, which would require data centers to disclose water and electricity consumption. The Village and T5 were not quoted in response.",
+    description: "Illinois State Rep. Daniel Didech (D-Buffalo Grove) said the project should not proceed unless the Village and the developer demonstrate it will not harm energy costs, water quality and availability, noise levels or ecological health, saying residents \u201cdeserve concrete evidence and clear answers on each of these issues and other relevant questions that may arise.\u201d He also criticized limiting public comment to 15 minutes at future meetings, and said he plans to push for passage of the so-called \u201cPOWER Act\u201d (HB5513) during the fall veto session, legislation that would require data centers to disclose water and electricity consumption. The bill text does not use the name. SB4016 is the Senate bill with an identical synopsis. The Village and T5 were not quoted in response.",
     category: "policy",
-    sourceKey: "scannerDidech2026",
+    sourceKeys: ["scannerDidech2026", "ilgaHB5513", "ilgaSB4016", "villagePowerAct2026"],
   },
   {
     date: "2026-09-01",
     title: "Village issues first building permit; site work to begin immediately",
-    description:
-      "The Village of Grayslake issued the first building permit for the campus, covering an 800,000 sq ft initial facility, and said site work on the first building would begin immediately. This follows the foundation permit issued on July 31. The Village stated the development was \u201csecured without local municipal tax incentives, tax exemptions or TIF subsidies\u201d and projected $1.4 billion in property tax revenue over 20 years across local taxing bodies. That figure is a Village projection, not an assessed valuation. Mayor Elizabeth Davies said that \u201cbecause Grayslake is debt-free, operates on a balanced budget, and gave no money to the developer, we are in a truly unique position.\u201d Reporting put the campus at up to 18 buildings and 10.1 million sq ft, an $18 billion private investment and roughly 1.55 GW of electrical demand. The lawsuit filed July 31 remains pending; no court had ruled and the initial status hearing remains set for October 30.",
+    description: "The Village of Grayslake issued the first building permit for the campus, covering an 800,000 sq ft initial facility, and said site work on the first building would begin immediately. This follows the foundation permit for the first building, which the deputy village manager said in July had already been issued. The Village stated the development was \u201csecured without local municipal tax incentives, tax exemptions or TIF subsidies\u201d and projected $1.4 billion in property tax revenue over 20 years across local taxing bodies. That figure is a Village projection, not an assessed valuation. Mayor Elizabeth Davies said that \u201cbecause Grayslake is debt-free, operates on a balanced budget, and gave no money to the developer, we are in a truly unique position.\u201d Reporting put the campus at up to 18 buildings and 10.1 million sq ft, an $18 billion private investment and roughly 1.55 GW of electrical demand. The lawsuit filed July 31 remains pending; no court had ruled and the initial status hearing remains set for October 30.",
     category: "construction",
-    sourceKeys: ["dailyherald_sep2026", "scannerPermit2026"],
+    sourceKeys: ["dailyherald_sep2026", "scannerPermit2026", "dailyherald_jul2026", "complaint2026"],
   },
   {
     date: "2026-09-08",

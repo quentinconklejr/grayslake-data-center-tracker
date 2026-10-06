@@ -174,8 +174,8 @@
         sourceKey: 'complaint2026',
       },
       {
-        text: "T5's application to fill approximately 15.75 acres of wetlands raised a separate federal adequacy question: a September 2025 Stormwater Management Commission letter found that at least some of those wetlands likely fall under US Army Corps of Engineers jurisdiction, which would require a federal Section 404 permit the village approval process did not cover. T5 suspended that application on July 31, 2026; the jurisdictional question behind it remains unresolved. Avon Township's board separately adopted a resolution in early June 2026 supporting transparency, public information and community engagement regarding the development.",
-        sourceKeys: ['chitrib_jul2026', 'dailyherald_jul2026', 'chronicle2026'],
+        text: "T5's application to the U.S. Army Corps of Engineers to fill 15.75 acres of wetlands raised a separate jurisdictional question. According to the Chicago Tribune, a September 2025 Lake County Stormwater Management Commission letter found that at least some of those wetlands likely fall under Army Corps jurisdiction, and the Army Corps was still determining jurisdiction. The complaint alleges that the Stormwater Management Commission had not completed its review of the wetlands when the Village issued its approvals. T5 suspended the application in a statement the Daily Herald reported on July 31, 2026; no cited source reports how the jurisdictional question was resolved. Avon Township's board separately adopted a resolution in early June 2026 supporting transparency, public information and community engagement regarding the development.",
+        sourceKeys: ['chitrib_jul2026', 'dailyherald_jul2026', 'complaint2026', 'chronicle2026'],
       },
     ],
     unknown: [
