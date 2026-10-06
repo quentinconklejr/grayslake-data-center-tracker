@@ -12,6 +12,15 @@ export const updates = [
   {
     date: '2026-10-06',
     kind: 'corrected',
+    title: 'Capitol News Illinois article dated May 9, 2026',
+    description:
+      'The Capitol News Illinois article on how data centers benefit their host communities was dated only \u201c2026\u201d on the Documents page. It now gives the publication date shown on the article, May 9, 2026.',
+    link: '/documents',
+    linkLabel: 'See the documents',
+  },
+  {
+    date: '2026-10-06',
+    kind: 'corrected',
     title: 'Village FAQ entry: the August 5 date stated as this site\u2019s own observation',
     description:
       'The June 5, 2026 Village FAQ entry said the FAQ document became unreachable by August 5, 2026, as if a source said so. It now says what this site observed: as of August 5, 2026, this site could not reach the FAQ page on the Village website.',

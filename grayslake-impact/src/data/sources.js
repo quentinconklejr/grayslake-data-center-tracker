@@ -83,7 +83,7 @@ export const sources = {
     category: "news",
     title: "How do data centers benefit the places where they're built? Local mayors give mixed reviews",
     publisher: "Capitol News Illinois",
-    date: "2026",
+    date: "May 9, 2026",
     url: "https://capitolnewsillinois.com/news/how-do-data-centers-benefit-the-places-where-theyre-built-local-mayors-give-mixed-reviews/",
     archiveUrl: "https://web.archive.org/web/20260927074150/https://capitolnewsillinois.com/news/how-do-data-centers-benefit-the-places-where-theyre-built-local-mayors-give-mixed-reviews/",
   },
