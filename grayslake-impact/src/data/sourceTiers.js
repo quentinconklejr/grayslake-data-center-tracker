@@ -221,3 +221,16 @@ export const recordsTier = {
   "registryId": "tracker-mirror",
   "label": "Tier 1 · public record"
 }
+
+// Every label the registry defines, keyed as in config/sources.yaml.
+export const tierLabels = {
+  "tier_1": "Tier 1 · public record",
+  "party_statement": "Tier 1 · party statement",
+  "tier_2": "Tier 2 · established outlet",
+  "tier_2_unbylined": "Tier 3 · news report (byline unconfirmed)",
+  "news_report": "Tier 3 · news report",
+  "trade": "Tier 3 · trade press",
+  "aggregator": "Tier 3 · aggregator",
+  "advocacy": "Tier 3 · advocacy group",
+  "tier_4": "Tier 4 · unreviewed"
+}

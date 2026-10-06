@@ -1,111 +1,52 @@
 /**
- * Writes src/data/sourceTiers.js: each source's tier and label, looked up in
- * the source registry (config/sources.yaml) by its URL, so the labels on the
- * Documents page come from the registry and cannot drift from it.
+ * Writes src/data/sourceTiers.js: each source's tier and Documents-page
+ * label, from the source registry, so the labels cannot drift from it.
  *
  *   node scripts/build-source-tiers.js          write the file (runs in `npm run build`)
  *   node scripts/build-source-tiers.js --check  fail if the committed file is stale
  *
- * Lookup follows the pipeline's registry rules (pipeline/lib/registry.mjs):
- * url_prefixes first, then the longest matching domain; www. is ignored;
- * Wayback links are looked up by the URL they archive; site-relative paths
- * (/docs/..., /records/...) are this site's own mirrors. A source is looked
- * up by url, then originalUrl, then archiveUrl. Anything that matches no entry
- * is Tier 4, and the build fails: the rubric never cites a Tier 4 source.
+ * One source of truth: config/sources.yaml is the only registry file, and
+ * pipeline/lib/registry.mjs is the only code that reads it or looks a URL up
+ * in it. This script calls classifyCitation() from there, the same rules the
+ * pipeline uses (pipeline/test/registry.test.mjs fails on a second copy).
  *
- * Tier 2 is per article: a citation from a Tier 2 outlet counts as Tier 2
- * only if its `byline` field is confirmed (a named reporter found in the
- * archived copy). A missing or unverified byline makes it Tier 3, and a Tier 2
- * citation with no `byline` field at all fails the build.
+ * The build fails if a source matches no registry entry (Tier 4: the rubric
+ * never cites one), if a label is missing, or if a Tier 2 citation has no
+ * `byline` field. Tier 2 is per article: without a confirmed byline a Tier 2
+ * outlet's article is labeled Tier 3.
  */
 import { readFileSync, writeFileSync, existsSync } from 'node:fs'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import process from 'node:process'
-import YAML from 'yaml'
+import { loadRegistry, classifyCitation } from '../pipeline/lib/registry.mjs'
 import { sources } from '../src/data/sources.js'
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..')
 const OUT = join(ROOT, 'src/data/sourceTiers.js')
-const SITE_HOST = 'grayslakedatacentertracker.org'
-const registry = YAML.parse(readFileSync(join(ROOT, 'config/sources.yaml'), 'utf8'))
-
-function unwrapWayback(url) {
-  const m = /^https?:\/\/web\.archive\.org\/web\/\d{4,14}[a-z_]*\/(.+)$/i.exec(url)
-  if (!m) return url
-  return /^https?:\/\//i.test(m[1]) ? m[1] : `http://${m[1]}`
-}
-
-function parse(url) {
-  if (typeof url !== 'string' || !url) return null
-  let u = url.trim()
-  if (u.startsWith('/')) u = `https://${SITE_HOST}${u}`
-  u = unwrapWayback(u)
-  try {
-    const p = new URL(u)
-    const host = p.hostname.toLowerCase().replace(/^www\./, '').replace(/\.$/, '')
-    return { host, hostPath: host + p.pathname, url: p }
-  } catch {
-    return null
-  }
-}
-
-export function lookup(url) {
-  const p = parse(url)
-  if (!p) return null
-  for (const s of registry.sources) {
-    for (const prefix of s.url_prefixes ?? []) {
-      if (p.hostPath.toLowerCase().startsWith(prefix.toLowerCase().replace(/^www\./, ''))) return s
-    }
-  }
-  if (/(^|\.)youtube\.com$|(^|\.)youtu\.be$/.test(p.host)) {
-    const channel = p.url.searchParams.get('channel_id') ?? /^\/channel\/([\w-]+)/.exec(p.url.pathname)?.[1]
-    return registry.sources.find(x => channel && (x.youtube_channels ?? []).includes(channel)) ?? null
-  }
-  let best = null
-  for (const s of registry.sources) {
-    for (const d of s.domains ?? []) {
-      const dom = d.toLowerCase().replace(/^www\./, '')
-      if ((p.host === dom || p.host.endsWith(`.${dom}`)) && (!best || dom.length > best.len)) best = { s, len: dom.length }
-    }
-  }
-  return best?.s ?? null
-}
-
-/** A named reporter, confirmed from the archived copy, on this specific article. */
-export function hasConfirmedByline(citation) {
-  return citation?.byline?.status === 'confirmed' && Boolean(citation.byline.name)
-}
-
-function labelKey(entry, citation) {
-  if (!entry) return 'tier_4'
-  if (entry.tier === 2 && !hasConfirmedByline(citation)) return 'tier_2_unbylined'
-  if (entry.kind) return entry.kind
-  if (entry.category === 'party_statement') return 'party_statement'
-  return `tier_${entry.tier}`
-}
+const registry = loadRegistry()
 
 const out = {}
 const problems = []
 for (const [key, s] of Object.entries(sources)) {
-  const entry = [s.url, s.originalUrl, s.archiveUrl].map(lookup).find(Boolean) ?? null
-  const lk = labelKey(entry, s)
-  const label = registry.labels?.[lk]
-  if (!label) problems.push(`${key}: no label "${lk}" in config/sources.yaml`)
-  if (!entry) problems.push(`${key}: ${s.url} matches no registry entry (Tier 4, never cited)`)
-  if (entry?.tier === 2 && !['confirmed', 'unverified'].includes(s.byline?.status)) problems.push(`${key}: Tier 2 citation has no byline field (confirmed or unverified)`)
-  const tier = entry ? (lk === 'tier_2_unbylined' ? 3 : entry.tier) : 4
-  out[key] = { tier, registryId: entry?.id ?? null, label: label ?? null, ...(entry?.tier === 2 ? { byline: s.byline?.status ?? 'missing' } : {}) }
+  const c = classifyCitation(registry, s)
+  if (!c.registryId) problems.push(`${key}: ${s.url} matches no registry entry (Tier 4, never cited)`)
+  if (!c.label) problems.push(`${key}: no label "${c.labelKey}" in config/sources.yaml`)
+  if (c.registryTier === 2 && !['confirmed', 'unverified'].includes(s.byline?.status)) problems.push(`${key}: Tier 2 citation has no byline field (confirmed or unverified)`)
+  out[key] = { tier: c.tier, registryId: c.registryId, label: c.label, ...(c.registryTier === 2 ? { byline: s.byline?.status ?? 'missing' } : {}) }
 }
 // The two record collections on the Documents page are this site's mirrors.
-const mirror = lookup('/records/t5')
-const records = { tier: mirror.tier, registryId: mirror.id, label: registry.labels[labelKey(mirror, null)] }
+const mirror = classifyCitation(registry, { url: '/records/t5' })
+const records = { tier: mirror.tier, registryId: mirror.registryId, label: mirror.label }
 
 const body = `// Generated by scripts/build-source-tiers.js from config/sources.yaml. Do not edit.
 // Each source's tier and Documents-page label, looked up in the source registry.
 export const sourceTiers = ${JSON.stringify(out, null, 2)}
 
 export const recordsTier = ${JSON.stringify(records, null, 2)}
+
+// Every label the registry defines, keyed as in config/sources.yaml.
+export const tierLabels = ${JSON.stringify(registry.labels, null, 2)}
 `
 if (problems.length) {
   console.error(`build-source-tiers: ${problems.length} problem(s):\n  - ${problems.join('\n  - ')}`)

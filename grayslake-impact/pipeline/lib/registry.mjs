@@ -1,7 +1,10 @@
 /**
- * Source registry: URL → tier.
+ * Source registry: URL → tier, and a citation → tier and label.
  *
- * The only place a tier comes from. Anything that matches no entry is Tier 4
+ * The only place a tier comes from: config/sources.yaml is the one registry
+ * file, and this module is the one implementation that reads it. The site
+ * build (scripts/build-source-tiers.js) and the pipeline both call it
+ * (pipeline/test/registry.test.mjs fails if a second copy appears). Anything that matches no entry is Tier 4
  * (rubric hard rule tier_from_registry), including malformed URLs. Wayback
  * snapshots are looked up by the URL they archive. Site-relative paths
  * (/docs/..., /records/...) are this site's own mirrors.
@@ -25,6 +28,12 @@ export function validateRegistry(reg) {
     if (s.category === 'party_statement' && !s.party) errors.push(`${s.id}: a party_statement source must name its party`)
   }
   if (!ids.size) errors.push('registry has no sources')
+  // Every label an entry can resolve to must be defined (when labels are used).
+  if (reg?.labels) {
+    const needed = new Set(['tier_4', 'tier_2_unbylined'])
+    for (const s of reg.sources ?? []) needed.add(s.kind ?? (s.category === 'party_statement' ? 'party_statement' : `tier_${s.tier}`))
+    for (const k of needed) if (!reg.labels[k]) errors.push(`labels: no label for "${k}"`)
+  }
   return errors
 }
 
@@ -103,4 +112,34 @@ function hit(s, matchedBy) {
   // body that is itself a party to the litigation (litigation_party, D-1).
   const party = s.category === 'party_statement' ? s.party : (s.litigation_party ?? null)
   return { tier: s.tier, id: s.id, name: s.name, matchedBy, entry: s, party, partyChannel: s.litigation_party ? 'litigation_party' : (party ? 'party_statement' : null) }
+}
+
+/**
+ * The byline that counts for a citation: a named reporter confirmed from the
+ * archived copy (the citation's `byline` field). An `author` string or page
+ * metadata nobody checked does not count.
+ */
+export function confirmedByline(citation) {
+  return citation?.byline?.status === 'confirmed' && citation.byline.name ? citation.byline.name : null
+}
+
+/**
+ * A citation's tier and Documents-page label. The citation is looked up by its
+ * url, then originalUrl, then archiveUrl. Tier 2 is per article: without a
+ * confirmed byline a Tier 2 outlet's article is Tier 3 ("tier_2_unbylined").
+ * Otherwise the label is the entry's `kind`, `party_statement` for a party's
+ * channel, else its tier. A citation that matches nothing is Tier 4.
+ */
+export function classifyCitation(registry, citation) {
+  const urls = [citation?.url, citation?.originalUrl, citation?.archiveUrl].filter(Boolean)
+  const found = urls.map(u => lookup(registry, u)).find(h => h.id)
+  const entry = found?.entry ?? null
+  let tier = entry?.tier ?? 4
+  let labelKey
+  if (!entry) labelKey = 'tier_4'
+  else if (entry.tier === 2 && !confirmedByline(citation)) { labelKey = 'tier_2_unbylined'; tier = 3 }
+  else if (entry.kind) labelKey = entry.kind
+  else if (entry.category === 'party_statement') labelKey = 'party_statement'
+  else labelKey = `tier_${entry.tier}`
+  return { tier, registryId: entry?.id ?? null, labelKey, label: registry.labels?.[labelKey] ?? null, registryTier: entry?.tier ?? 4 }
 }
