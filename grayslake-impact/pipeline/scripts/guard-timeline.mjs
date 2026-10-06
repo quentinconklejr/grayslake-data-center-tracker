@@ -27,6 +27,7 @@ import { openStore } from '../lib/store.mjs'
 import { prepareSource, checkDraftProse, extractDates, makeCanon, occurrences } from '../lib/guard.mjs'
 import { loadOverrides, applyOverrides } from '../lib/overrides.mjs'
 import { applyCalculations, parseCountyRows } from '../lib/calculated.mjs'
+import { applySiteObservations } from '../lib/observations.mjs'
 import { existsSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { pathToFileURL } from 'node:url'
@@ -80,11 +81,14 @@ for (const [i, entry] of timelineEvents.entries()) {
   // Figures the site calculates, recomputed from their stored parcel inputs.
   const calc = applyCalculations(entry, prose, res.failures, { calculations, parcels, countyRowsOf: k => parseCountyRows(recs.find(r => r.key === k)?.rec?.text ?? store.readJson(`corpus/sources/${k}.json`)?.text) })
   res.failures = calc.failures
+  // This site's own dated observations ("As of <date>, this site could not reach ...").
+  const obs = applySiteObservations(prose, res.failures)
+  res.failures = obs.failures
 
   const status = !withText.length ? 'UNVERIFIABLE'
     : res.failures.length === 0 ? 'PASS'
     : missing.length ? 'UNRESOLVED' : 'FAIL'
-  results.push({ i, date: entry.date, title: entry.title, keys, missing, status, failures: res.failures, notes: res.notes, blocked, overrides: ov.applied, staleOverrides: ov.stale, calculated: calc.applied, calcProblems: calc.problems })
+  results.push({ i, date: entry.date, title: entry.title, keys, missing, status, failures: res.failures, notes: res.notes, blocked, overrides: ov.applied, staleOverrides: ov.stale, calculated: calc.applied, calcProblems: calc.problems, siteObservations: obs.accepted })
 }
 
 // --- console summary ---------------------------------------------------------
@@ -100,6 +104,7 @@ for (const r of results) {
   for (const n of r.notes) console.log(`               · note: ${n.note} → ${JSON.stringify(n.value)}`)
   for (const o of r.overrides) console.log(`               · override: ${o.check} ${JSON.stringify(o.value)} accepted from ${o.source} (config/guard-overrides.yaml)`)
   if (r.calculated.length) console.log(`               · calculated: ${r.calculated.map(c => c.value).join(', ')} recomputed from stored parcel inputs (src/data/calculations.js)`)
+  for (const o of r.siteObservations) console.log(`               · site observation: ${JSON.stringify(o.date)} ("${o.sentence}")`)
   for (const p of r.calcProblems) console.log(`               ! calculated value rejected: ${p}`)
   for (const o of r.staleOverrides) console.log(`               ! stale override: ${o.check} ${JSON.stringify(o.value)} (${o.why})`)
   for (const b of r.blocked) console.log(`               · editorial: ${b.check === 'labeled_term' ? `"${b.value}" ${b.reason.replace(/_/g, ' ')}${b.detail ? ` (${b.detail})` : ''}` : `hold: contains "${b.value}"`} (fine in owner text; generated text may not)`)
@@ -118,6 +123,7 @@ for (const r of results) {
   for (const n of r.notes) md.push(`- note: ${n.note}: \`${n.value}\``)
   for (const o of r.overrides) md.push(`- override: **${o.check}** \`${o.value}\` accepted from ${o.source}, passage \`${o.passage}\`. Reason: ${o.reason}`)
   for (const c of r.calculated) md.push(`- calculated: \`${c.value}\` (${c.op}, ${c.inputs} inputs): ${c.what}`)
+  for (const o of r.siteObservations) md.push(`- site observation: \`${o.date}\`, stated as this site's own observation: "${o.sentence}"`)
   for (const p of r.calcProblems) md.push(`- **calculated value rejected**: ${p}`)
   for (const o of r.staleOverrides) md.push(`- **stale override**: ${o.check} \`${o.value}\` (${o.why})`)
   md.push('')
