@@ -1,0 +1,222 @@
+# Pipeline settings. No secrets in this file: API keys and tokens are read
+# from environment variables named below, never from the repository.
+
+# Where raw source text, leads, logs and shadow-mode drafts are written. This
+# is a local clone of the private repo quentinconklejr/private-info, kept
+# outside this repository. Override with the PRIVATE_INFO_DIR env var.
+private_store:
+  dir: C:/Users/Quentin/private-info
+  remote: https://github.com/quentinconklejr/private-info.git
+
+# --- Model providers -------------------------------------------------------
+# `provider` is the one setting that picks the model. Fallbacks are tried in
+# order only when the primary fails (unreachable, or a schema failure that
+# survives the retry). Both paid/remote fallbacks are off by default.
+provider: ollama
+fallback_providers: []          # e.g. [gemini, claude]; empty = none
+
+providers:
+  ollama:
+    enabled: true
+    paid: false
+    base_url: http://127.0.0.1:11434
+    model: gemma4:12b            # Stage A benchmark winner (2026-10-01); see private-info/reports/bench-*.md
+    num_ctx: 8192                # explicit; tested to 16384 (fits on GPU, scored lower)
+    output_reserve_tokens: 3072  # room kept for the JSON answer
+    chars_per_token: 3.2         # conservative estimate used for chunking
+    temperature: 0
+    seed: 42
+    keep_alive: 10m
+    request_timeout_s: 600
+    rate_limit: { requests_per_minute: 0, concurrency: 1 }   # 0 = no cap
+    # Per-model request options. qwen3 and gemma4 are thinking models
+    # (`ollama show` lists the capability); extraction does not want a
+    # reasoning preamble, so it is turned off for them.
+    model_options:
+      "qwen3:14b": { think: false }
+      "gemma4:12b": { think: false }
+
+  gemini:
+    enabled: false
+    paid: false                  # free tier; becomes paid if billing is on
+    model: gemini-2.5-flash      # UNVERIFIED model id; confirm before enabling
+    api_key_env: GEMINI_API_KEY
+    rate_limit: { requests_per_minute: 10, concurrency: 1 }
+
+  claude:
+    enabled: false
+    paid: true
+    model: claude-opus-5-5
+    api_key_env: ANTHROPIC_API_KEY
+    rate_limit: { requests_per_minute: 20, concurrency: 2 }
+
+# Applies only while a paid provider is enabled. When the month's estimated
+# spend reaches the cap, paid calls stop and the owner is notified.
+spend_cap_usd_per_month: 50
+
+# --- Fetching --------------------------------------------------------------
+http:
+  user_agent: "GrayslakeTrackerBot/0.1 (+https://grayslakedatacentertracker.org/about)"
+  timeout_s: 60                 # the Village site sometimes takes 10+ s
+  min_interval_per_host_s: 5
+  retries: 2
+
+# Binaries the pipeline shells out to. pdftotext ships with Git for Windows;
+# it is not on PATH for Task Scheduler jobs, so the full path is given.
+tools:
+  pdftotext:
+    - pdftotext
+    - C:/Program Files/Git/mingw64/bin/pdftotext.exe
+
+# --- Editorial holds -------------------------------------------------------
+# Terms generated text must not contain until the owner lifts the hold.
+editorial:
+  blocked_terms: []
+  # Labels a source uses but the record does not. Generated text may use one
+  # only inside quotation marks, always with every identifier in `requires`,
+  # and with `note`. A sentence that links the label to an identifier in
+  # `attributed_only` must also name who makes that link. Example:
+  #   the so-called "POWER Act" (HB5513). The bill text does not use the name.
+  #   SB4016 is the Senate bill with an identical synopsis.
+  # The name attaches to HB5513 on the Village's own say-so (Mayor Davies,
+  # Aug 4, 2026: "the Illinois POWER Act (House Bill 5513)"); only advocacy
+  # groups attach it to SB4016 as well (owner decision, 2026-10-01).
+  labeled_terms:
+    - term: POWER Act
+      requires: [HB5513]
+      note: The bill text does not use the name.
+      attributed_only:
+        ids: [SB4016]
+        attribution: 'advocacy (group|groups|organization|organizations)'
+        label: attribute the link to the advocacy groups that make it
+
+# --- Fetchers (Stage B) -------------------------------------------------------
+fetchers:
+  enabled: [village-agendas, village-newsflash, village-youtube, ilga-bills, lake-county-legistar]
+  # First run of a fetcher: items dated within this many days are processed;
+  # older ones are recorded as already seen, so the backlog is not ingested.
+  first_run_window_days: 14
+  # Wayback captures requested per run; the rest wait in a queue.
+  max_snapshots_per_run: 10
+  ilga:
+    # 104th General Assembly. Identified by number; see editorial.labeled_terms.
+    bills:
+      - { type: HB, number: 5513, gaid: 18, session: 114 }
+      - { type: SB, number: 4016, gaid: 18, session: 114 }
+      - { type: SB, number: 2181, gaid: 18, session: 114 }
+
+# --- Triage (Stage C) -----------------------------------------------------------
+# Deterministic: no model decides relevance. An item goes to extraction when
+#   A  it contains a strong term, or a T5 parcel PIN (from parcels.geojson), or
+#   B  a project term and a local term both appear, or
+#   C  the word "T5" appears with a project or local term.
+# Matching is case-insensitive on word boundaries, except "T5", which must be
+# upper case so "t5" in a file name or model number does not count.
+triage:
+  strong_terms:
+    - T5 Data Centers
+    - T5 @ Chicago
+    - T5@Chicago
+    - Chicago IV
+    - T-5 Data
+    - 2026CH00000171
+    - Preservation of Community Well-being
+    - HB5513
+    - HB 5513
+    - SB4016
+    - SB 4016
+    - SB2181
+    - SB 2181
+    # Developer entities and agreements not derived from the data files.
+    - Alter Asset Management
+    - Alter Group
+    - Cornerstone SUP
+    - Cornerstone Property
+    - Heartland
+  # Further strong terms are derived at run time from the site's own data
+  # (triage.mjs derivedTerms): parcel owner names from parcels.geojson, the
+  # project name, party names and ordinance numbers from records.js, and the
+  # case caption from sources.js. The 57 parcel PINs are added as before.
+  project_terms: [data center, data centers, data centre, datacenter, hyperscale]
+  local_terms: [Grayslake, Cornerstone, Peterson Road, Route 83, Alleghany, Lake County, ComEd, Mundelein, Round Lake, Avon Township]
+  # PDF pages kept around each matching page, so a sentence that runs over a
+  # page break is not cut.
+  page_context: 1
+  # Owner decision D-4: only significant bill milestones (chamber passage,
+  # governor action, effective dates), matched against
+  # "HB5513 <date> <chamber>: <action>". Everything else is routine.
+  significant_bill_actions: "Third Reading - Passed|Passed Both Houses|Sent to the Governor|Governor Approved|Governor Vetoed|Veto|Public Act|Effective Date"
+
+# --- Privacy (owner decision D-2) -------------------------------------------------
+# Drafts never name a private individual or give their health, medical,
+# address or family details; individual plaintiffs are "a plaintiff". Public
+# officials and public figures in their official role may be named. A draft
+# that trips the check goes to human review, not to a PR.
+privacy:
+  # The case caption may appear exactly as listed (the parties named in it are
+  # organisations).
+  case_captions:
+    - Preservation of Community Well-being Collective LLC et al. v. Village of Grayslake, T5 Data Centers LLC, and Alter Asset Management Company
+  # People who may be named: officials and public figures in their public role.
+  allowed_people:
+    - Elizabeth Davies
+    - Rhett Taylor
+    - Daniel Didech
+    - Esiah A. Campos
+    - Sandy Hart
+    - Robin D. Meier
+    - Robin Meier
+    - William Soucie
+    - JB Pritzker
+    - Robyn Gabel
+    - Ann M. Williams
+    - Ram Villivalam
+    - Pete Marin
+    - Chloe Russell
+    - Erin Cartwright Weinstein
+    - Sam Borcia
+    - Mick Zawislak
+    - Joseph States
+  # Trustees appear by surname with their title ("Trustee Sahu").
+  allowed_surnames_with_title: [Waldenstrom, Davies, Kornit, Vogel, Magnetta, Sahu, Engdahl, Taylor, Meier, Didech, Hart, Marin]
+
+# --- Scheduled job (Stage D) -----------------------------------------------------
+# One Task Scheduler entry runs pipeline/scripts/run-job.mjs every 30 minutes;
+# the job decides which fetchers are due from these cadences. After sleep or
+# time offline, every overdue fetcher runs once on the next start (fetchers
+# keep their own state, so one run catches up).
+job:
+  # Real PRs and real ntfy pushes need BOTH `live: true` here AND the --live
+  # flag on the command. Anything less is a dry run that writes the PR title,
+  # body and diff, and the ntfy payload, to private-info/reports/dry-run/.
+  live: false
+  cadence_minutes:
+    village-newsflash: 30
+    village-agendas: 120
+    village-youtube: 120
+    lake-county-legistar: 120
+    ilga-bills: 1440
+  lock_stale_minutes: 180          # a lock older than this is from a crashed run
+  max_prs_per_run: 5
+  health_alert_after_hours: 48     # no completed run for this long → alert
+  connectivity_check: [https://www.villageofgrayslake.com/, https://www.ilga.gov/]
+  site_repo:
+    dir: C:/Users/Quentin/grayslake-data-center-tracker
+    github: quentinconklejr/grayslake-data-center-tracker
+    base: main
+    data_dir: grayslake-impact/src/data
+  gh: C:/Program Files/GitHub CLI/gh.exe
+  push_private_store: true
+
+notify:
+  ntfy:
+    enabled: true                  # still dry-run unless job.live and --live
+    server: https://ntfy.sh
+    topic_env: NTFY_TOPIC          # names of env vars; values never in files
+    token_env: NTFY_TOKEN
+    tiers: [1]                     # content alerts only for Tier 1 drafts
+    health_alerts: true
+    # Real ntfy pushes even while the job is a dry run (they touch nothing on
+    # the site). The link points to the dry-run PR file in the private repo.
+    send_in_dry_run: true
+    dry_run_link_base: https://github.com/quentinconklejr/private-info/blob/main/

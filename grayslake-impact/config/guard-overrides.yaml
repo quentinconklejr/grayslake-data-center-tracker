@@ -1,0 +1,29 @@
+# Guard overrides: recorded exceptions for failures the verbatim guard cannot
+# resolve from a source's extracted text, although the source does support the
+# entry. Each one is checked on every run (pipeline/lib/overrides.mjs): it
+# applies only while `passage` is still in the cited source's stored text and,
+# normalized as `normalize` says, contains `value`. Otherwise it is reported as
+# stale and the failure stands.
+#
+# entry      timeline entry: date and title, exactly as in src/data/timeline.js
+# check      the guard check that failed (identifier, number, date, quotation)
+# value      the failing value, exactly as the guard reports it
+# source     the source key whose text holds the passage
+# passage    the passage exactly as it appears in that source's stored text
+# normalize  strip_underscores: remove underscores and spaces before comparing
+# reason     why the guard cannot match it
+# added      date the override was recorded
+
+overrides:
+  - entry: { date: '2026-07-31', title: Lawsuit filed in Lake County Circuit Court }
+    check: identifier
+    value: 2026CH00000171
+    source: complaint2026
+    passage: Case No. _2__0_2_6__C__H_0__0_0__0_0__1_7_1
+    normalize: strip_underscores
+    reason: >-
+      The case number was typed into an underscored blank on the complaint's
+      caption page, so the PDF text layer interleaves underscores with its
+      characters ("_2__0_2_6__C__H_0__0_0__0_0__1_7_1") and the guard cannot
+      match it as one identifier. The number itself is on the complaint.
+    added: '2026-10-01'

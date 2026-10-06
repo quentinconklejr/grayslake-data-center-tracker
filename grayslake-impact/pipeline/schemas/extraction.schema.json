@@ -1,0 +1,40 @@
+{
+  "$comment": "What the model must return for one document chunk. Sent to Ollama as the `format` constraint and checked again with Ajv; a response that fails is retried once, then dropped.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["document", "claims"],
+  "properties": {
+    "document": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["doc_type", "published_date", "byline", "is_about_t5_grayslake", "origin", "repeats_whom"],
+      "properties": {
+        "doc_type": { "type": "string", "enum": ["agenda", "minutes", "ordinance", "filing", "docket", "bill_status", "press_release", "news_article", "video_transcript", "data", "other"] },
+        "published_date": { "type": ["string", "null"] },
+        "byline": { "type": "array", "items": { "type": "string" }, "maxItems": 5 },
+        "is_about_t5_grayslake": { "type": "string", "enum": ["yes", "no", "partly"] },
+        "origin": { "type": "string", "enum": ["originates", "repeats", "unclear"] },
+        "repeats_whom": { "type": ["string", "null"] }
+      }
+    },
+    "claims": {
+      "type": "array",
+      "maxItems": 10,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["claim_text", "claim_type", "speaker", "attribution", "event_date", "date_basis", "supporting_quotes", "timeline_category"],
+        "properties": {
+          "claim_text": { "type": "string", "minLength": 10, "maxLength": 500 },
+          "claim_type": { "type": "string", "enum": ["fact", "quote", "opinion", "allegation", "projection", "procedural"] },
+          "speaker": { "type": ["string", "null"] },
+          "attribution": { "type": "string", "enum": ["named", "unnamed", "document"] },
+          "event_date": { "type": ["string", "null"] },
+          "date_basis": { "type": "string", "enum": ["stated_in_text", "document_date", "unknown"] },
+          "supporting_quotes": { "type": "array", "minItems": 1, "maxItems": 3, "items": { "type": "string", "minLength": 20, "maxLength": 600 } },
+          "timeline_category": { "type": "string", "enum": ["approval", "opposition", "development", "construction", "legal", "policy", "none"] }
+        }
+      }
+    }
+  }
+}

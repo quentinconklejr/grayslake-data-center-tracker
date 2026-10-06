@@ -1,0 +1,381 @@
+# Credibility rubric for the Grayslake Data Center Tracker ingestion pipeline.
+#
+# Status: DRAFT for owner review. Nothing reads this file yet.
+# Plan:   docs/automation-pipeline-plan.md
+#
+# How the pipeline uses it
+# ------------------------
+# The model extracts claims and reports signals: claim type, attribution,
+# whether the source links its own source. CODE applies this rubric to
+# decide what happens next. The model never picks a tier and never decides
+# whether something publishes. A source's tier comes from the source
+# registry (config/sources.yaml, planned) keyed by domain or feed, not from
+# anything the page says about itself.
+#
+# Decisions are ceilings. A modifier can lower a claim's outcome but never
+# raise it above its source's tier. Nothing publishes without the owner
+# merging a pull request, whatever this file says.
+#
+# Basis
+# -----
+# SIFT: Stop, Investigate the source, Find better coverage, Trace claims,
+#   quotes and media to the original context. Mike Caulfield, "SIFT (The
+#   Four Moves)", Hapgood, June 19, 2019.
+#   https://hapgood.us/2019/06/19/sift-the-four-moves/
+# Lateral reading: judge a source by what other sources say about it, not by
+#   how it presents itself. Wineburg, S. & McGrew, S., "Lateral Reading and
+#   the Nature of Expertise: Reading Less and Learning More When Evaluating
+#   Digital Information", Stanford History Education Group Working Paper
+#   2017-A1; published in Teachers College Record 121(11), 2019.
+#   https://purl.stanford.edu/yk133ht8603
+# Civic Online Reasoning (the SHEG/Digital Inquiry Group curriculum built on
+#   that research): "Who's behind the information? What's the evidence?
+#   What do other sources say?"  https://cor.inquirygroup.org/
+# SPJ Code of Ethics: identify sources clearly; consider sources' motives
+#   before promising anonymity; distinguish advocacy and commentary from
+#   news; acknowledge and correct mistakes.
+#   https://www.spj.org/spj-code-of-ethics/
+# The Trust Project, Trust Indicators (best practices incl. corrections
+#   policy, author/expertise, type of work labels such as news vs opinion,
+#   citations and references, methods).
+#   https://thetrustproject.org/trust-indicators/
+# IFCN Code of Principles (non-partisanship, transparency of sources,
+#   open and honest corrections).
+#   https://www.ifcncodeofprinciples.poynter.org/the-commitments
+# AP News Values and Principles (standards for anonymous sources and
+#   attribution). https://www.ap.org/about/news-values-and-principles/
+#
+# All seven URLs were fetched and returned the named page on 2026-09-30.
+
+version: 0.2.0
+updated: 2026-09-30
+
+# ---------------------------------------------------------------------------
+# Tiers
+# ---------------------------------------------------------------------------
+tiers:
+  1:
+    name: primary_record
+    description: >
+      The record itself: government records, court filings, official meeting
+      video or transcripts, and company filings with a regulator or court.
+    examples:
+      - Village of Grayslake agendas, packets, approved minutes, ordinances, permits, press releases
+      - Lake County Board / ZBA / SMC legislation and minutes (Legistar)
+      - Lake County Recorder recorded documents; Lake County GIS parcel layer
+      - Circuit court filings and docket entries (e.g. 2026CH00000171)
+      - ilga.gov bill text and status
+      - ICC e-docket filings; FERC eLibrary filings; PJM queue and published data
+      - IEPA and USACE public notices and permits
+      - Official meeting video posted by the body that held the meeting
+    sift_basis: >
+      "Trace claims to the original context": a Tier 1 source IS the original
+      context, so tracing ends here.
+    publish:
+      outcome: draft_as_fact
+      # What is published as fact is THAT THE DOCUMENT SAYS OR RECORDS X.
+      # Whether X is true depends on the claim type (see claim_types): a
+      # complaint's allegations, a developer's projections and a speaker's
+      # opinions stay attributed even inside a Tier 1 document.
+      framing: "State the fact and link the document (with page or timestamp)."
+      requires:
+        - verbatim_guard_passed
+        - document_link
+        - archive_snapshot_or_local_copy
+      corroboration_required: 0
+
+  2:
+    name: established_outlet
+    description: >
+      An established news outlet with a named reporter on the piece and a
+      published corrections policy.
+    qualifies_when:
+      all:
+        - byline_is_named_person          # checked per article, not per outlet
+        - outlet_corrections_policy_url   # stored in the source registry, checked by a person
+        - outlet_is_in_registry_as_tier_2 # owner approves each outlet once
+    # An outlet that fails any condition on a given article (no byline, a
+    # press-release repost, a sponsored post) drops to Tier 3 for that article.
+    publish:
+      outcome: draft_as_reported
+      framing: "Attribute: \"<Outlet> reported that ...\" or \"according to <Outlet>\"."
+      requires:
+        - verbatim_guard_passed
+        - article_link
+        - archive_snapshot_attempted
+      corroboration_required: 0
+    sift_basis: >
+      "Investigate the source" via lateral reading: the owner checks each
+      outlet's ownership, corrections record and reputation once, off-page,
+      before it enters the registry as Tier 2.
+
+  3:
+    name: secondary_or_unvetted
+    description: >
+      Trade press, aggregators, republishers, blogs, advocacy organisations'
+      posts, newsletters, and Tier 2 outlets' articles that lack a byline.
+    examples:
+      - Data Center Dynamics, Baxtel, Hoodline, Government Technology reposts
+      - Advocacy group blog posts and fact sheets
+    publish:
+      outcome: queue_only
+      framing: >
+        Not cited on its own. Opens a lead. If an independent Tier 1 or
+        Tier 2 source later states the same claim, the entry is drafted from
+        and cited to that source; the Tier 3 item may be listed as secondary.
+      corroboration_required: 1       # independent, Tier 1 or Tier 2
+      corroboration_min_tier: 2
+    sift_basis: >
+      "Find better coverage": look for the claim in a stronger source rather
+      than trying to rehabilitate a weak one.
+
+  4:
+    name: lead_only
+    description: >
+      Social media, anonymous posts, forums, comment sections, unidentified
+      websites, and any domain not in the registry.
+    publish:
+      outcome: never
+      framing: >
+        Stored as a private lead for the owner to investigate. Never drafted,
+        never cited, never quoted, never linked from the site or a public PR.
+    default_for_unknown_domain: true
+    sift_basis: "\"Stop\": an unknown source is a prompt to investigate, not evidence."
+
+# ---------------------------------------------------------------------------
+# Claim types. Applied to every claim, in every tier.
+# ---------------------------------------------------------------------------
+claim_types:
+  fact:
+    description: A checkable statement about an event, number, date, document or action.
+    may_become_fact: true
+  quote:
+    description: Words a named person or body said or wrote.
+    may_become_fact: false
+    rule: >
+      Published only as a quotation attributed to the named speaker, with the
+      exact words. It is a fact that the speaker said it (at Tier 1/2); the
+      content of what they said is not asserted.
+  opinion:
+    description: A judgement, prediction, characterisation or value statement.
+    may_become_fact: false
+    rule: "Attribute to the holder. Never restate in the site's own voice."
+  allegation:
+    description: A claim made in a complaint, petition, objection or accusation.
+    may_become_fact: false
+    rule: >
+      Always framed as alleged ("the complaint alleges"). Follow the site's
+      existing convention: "Allegations, not findings." A court filing is
+      Tier 1 evidence that the allegation was made, not that it is true.
+  projection:
+    description: A forecast or plan (build-out dates, MW, jobs, tax revenue).
+    may_become_fact: false
+    rule: >
+      Attribute to whoever projects it and name it a projection (as the site
+      does: "That figure is a Village projection, not an assessed valuation.").
+      Future-dated timeline entries render as projected automatically.
+  party_statement:
+    description: >
+      What a party to the dispute says about the matter in its own channel:
+      T5's website, or a party's court filing (where it is labelled
+      allegation instead). Never produced by the model; code assigns it.
+    may_become_fact: false
+    rule: >
+      Published only as the party's statement ("T5 stated that ..."), never
+      in the site's own voice.
+  procedural:
+    description: That an item is scheduled, filed, docketed, referred or on an agenda.
+    may_become_fact: true
+    rule: >
+      States only the procedural fact. An agenda item is not an outcome; a
+      filing is not a ruling; draft minutes are not approved minutes.
+
+# ---------------------------------------------------------------------------
+# Modifiers. Each can only hold or lower the outcome.
+# ---------------------------------------------------------------------------
+modifiers:
+  origin:
+    # SIFT "Trace": is this source where the information starts?
+    originates:
+      description: >
+        First-hand: the outlet attended, obtained the document, or
+        interviewed the named person itself.
+      effect: none
+    repeats:
+      description: >
+        Restates another outlet's or body's reporting ("as reported by",
+        "according to the Tribune", syndicated copy, near-duplicate text).
+      effect: >
+        Trace to the original. If the original is found and is Tier 1 or 2,
+        draft from the original instead. If it cannot be found, cap at Tier 3.
+      cap_tier: 3
+    unclear:
+      description: Origin cannot be determined from the text.
+      effect: "Treat as repeats until a person decides otherwise."
+      cap_tier: 3
+
+  links_own_source:
+    # Trust Project indicator "Citations and References".
+    yes:
+      description: The item links or names the specific document it relies on.
+      effect: >
+        Pipeline fetches that document; if it is Tier 1, the claim is
+        re-extracted and verified against it and cited to it.
+    no:
+      effect: "None for Tier 1 and 2. For Tier 3, cannot be corroborated by itself."
+
+  attribution:
+    named:
+      description: Claim attributed to a named person, office or document.
+      effect: none
+    unnamed:
+      description: >
+        "Sources say", "a person familiar with", "officials said" with no name,
+        or no attribution at all for a non-obvious claim.
+      effect: >
+        Never becomes a fact, at any tier. May be drafted only as
+        "<Outlet> reported, citing unnamed sources, that ..." and only from
+        Tier 2, flagged for owner decision. From Tier 3 or 4, lead only.
+      max_outcome: draft_as_reported
+      requires_owner_flag: true
+
+  independent_corroboration:
+    # SIFT "Find better coverage"; lateral reading.
+    counting_rules:
+      - Two items count as independent only if they have different publishers AND neither repeats the other.
+      - Syndicated, republished or near-duplicate text counts once (see dedupe.near_duplicate in the plan).
+      - An item citing another item counts as that item, not as corroboration.
+      - Items that all trace to one press release count as one source, the release.
+      - A Tier 4 item never counts toward corroboration.
+    report_in_pr: true   # every PR states the count and lists the sources counted
+
+  conflict:
+    description: >
+      The claim contradicts an existing timeline entry, key figure, records
+      fact, or another source in the same run.
+    effect: >
+      Never auto-resolved. PR is labelled needs-decision and both passages
+      are shown verbatim side by side. The site's practice is to show both
+      figures with attribution (e.g. 472 vs 473.5 acres), not to pick one.
+    max_outcome: draft_as_reported
+
+  recency:
+    description: The event is older than the article, or the article re-reports old news as new.
+    effect: >
+      The timeline date is the event date supported by a verbatim quote. If
+      only the publication date is supported, the draft says "reported on".
+
+# ---------------------------------------------------------------------------
+# Hard rules. Code enforces these; no configuration or model output overrides them.
+# ---------------------------------------------------------------------------
+hard_rules:
+  - id: no_verbatim_no_claim
+    rule: A claim whose supporting quote is not an exact substring of the retrieved source text is dropped and logged.
+  - id: opinion_never_fact
+    rule: Claims typed opinion, quote, allegation or projection are never written in the site's own voice.
+  - id: unnamed_never_fact
+    rule: Claims resting on unnamed sources are never written as fact.
+  - id: tier_from_registry
+    rule: Tier comes from the source registry. Unknown domains are Tier 4.
+  - id: tier4_never_public
+    rule: Tier 4 material never appears on the site, in a public PR, or in a public issue.
+  - id: model_text_is_not_evidence
+    rule: >
+      Only text the pipeline itself fetched counts as source text. Text the
+      model produced (summaries, web search results, recollection) is never
+      evidence and never satisfies the verbatim guard.
+  - id: human_merge_only
+    rule: Nothing reaches main without the owner merging a PR. The bot cannot merge.
+  - id: party_assertions_attributed
+    rule: >
+      Every claim taken from a party's court filing becomes an allegation, and
+      every claim from a party_statement source (T5's website) becomes a
+      party_statement, whatever type the model gave it. The only exception is
+      a procedural detail (case or bill number, filing or hearing date, court,
+      docket event) with no substantive figure in it.
+  - id: no_rewrite_of_existing
+    rule: >
+      The pipeline adds entries. It proposes corrections to existing content
+      only as a separate PR labelled correction, and never edits records.js,
+      questionStatus.js or keyFigures.js.
+
+# ---------------------------------------------------------------------------
+# Decision table. Evaluated top to bottom; first match wins.
+# ---------------------------------------------------------------------------
+decision_table:
+  - when: { verbatim_guard: fail }
+    outcome: drop_and_log
+  - when: { tier: 4 }
+    outcome: private_lead
+  - when: { tier: 3, independent_tier_1_or_2_corroboration: 0 }
+    outcome: queue_only
+  - when: { tier: 3, independent_tier_1_or_2_corroboration: ">=1" }
+    outcome: redraft_from_corroborating_source
+  - when: { origin: [repeats, unclear], original_found: false }
+    outcome: queue_only
+  - when: { attribution: unnamed, tier: 2 }
+    outcome: draft_as_reported
+    flags: [unnamed_sources, needs_decision]
+  - when: { attribution: unnamed }
+    outcome: queue_only
+  - when: { conflict: true }
+    outcome: draft_as_reported
+    flags: [conflict, needs_decision]
+  - when: { tier: 2 }
+    outcome: draft_as_reported
+  - when: { tier: 1, claim_type: [fact, procedural] }
+    outcome: draft_as_fact
+  - when: { tier: 1, claim_type: [quote, opinion, allegation, projection, party_statement] }
+    outcome: draft_attributed
+  - when: {}
+    outcome: queue_only
+
+outcomes:
+  draft_as_fact:           { pr: true,  site_voice: true,  label: tier-1 }
+  draft_attributed:        { pr: true,  site_voice: false, label: tier-1-attributed }
+  draft_as_reported:       { pr: true,  site_voice: false, label: tier-2 }
+  redraft_from_corroborating_source: { pr: true, site_voice: false, label: corroborated }
+  queue_only:              { pr: false, lead: public_safe, label: needs-corroboration }
+  private_lead:            { pr: false, lead: private_only }
+  drop_and_log:            { pr: false, log: dropped-claims }
+
+# ---------------------------------------------------------------------------
+# Verbatim guard parameters (full design in the plan, section 5).
+# ---------------------------------------------------------------------------
+verbatim_guard:
+  match: exact_substring_after_canonicalization
+  # Canonicalization is applied identically to the source text and the quote.
+  # It never removes, reorders or changes a word.
+  canonicalization:
+    unicode: NFC
+    whitespace: collapse_runs_to_single_space_and_trim
+    typographic_equivalents:
+      "‘": "'"
+      "’": "'"
+      "“": "\""
+      "”": "\""
+      "–": "-"
+      "—": "-"
+      " ": " "
+    remove: ["­"]          # soft hyphen only
+    case_folding: false
+    punctuation_stripping: false
+  quote_rules:
+    min_chars: 40
+    min_words: 6
+    max_chars: 600
+    reject_if_contains: ["...", "…", "[", "]"]   # no elisions, no editorial insertions
+    must_be_unique_or_first_occurrence_recorded: true
+  # Owner decision D-4: a Tier 1 record row (one bill action on ilga.gov) is
+  # quoted whole. Rows are short ("Senate: Passed Both Houses"), so the
+  # minimum is lower; the quote must still be the entire row, exactly.
+  record_quote_rules:
+    min_chars: 10
+    min_words: 2
+  claim_quote_consistency:
+    # Every number, money amount, date and proper name in the drafted claim
+    # must appear in one of that claim's verified quotes.
+    numbers_must_appear_in_quote: true
+    dates_must_appear_in_quote_or_document_metadata: true
+    named_speaker_within_chars_of_quote: 300
+  on_fail: drop_and_log

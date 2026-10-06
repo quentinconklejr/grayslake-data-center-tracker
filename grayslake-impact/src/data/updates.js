@@ -21,6 +21,15 @@ export const updates = [
   {
     date: '2026-10-06',
     kind: 'corrected',
+    title: 'Capitol News Illinois article back to Tier 2',
+    description:
+      'The Capitol News Illinois article on how data centers benefit their host communities is labeled \u201cTier 2 \u00b7 established outlet\u201d again. Its reporters, Nikoel Hytrek and UIS Public Affairs Reporting (PAR), are now confirmed from an archived copy of the article.',
+    link: '/documents',
+    linkLabel: 'See the documents',
+  },
+  {
+    date: '2026-10-06',
+    kind: 'corrected',
     title: 'Village FAQ entry: the August 5 date stated as this site\u2019s own observation',
     description:
       'The June 5, 2026 Village FAQ entry said the FAQ document became unreachable by August 5, 2026, as if a source said so. It now says what this site observed: as of August 5, 2026, this site could not reach the FAQ page on the Village website.',
@@ -80,6 +89,15 @@ export const updates = [
       'The 2029 build-out entry cited a Daily Herald article this site could not check alongside Government Technology and Patch. Its figures now cite the Chicago Tribune (up to 20 buildings, build-out as early as 2029, 1.2 GW of capacity) and the master site plan in the records packet (18 buildings); the Daily Herald citation is removed.',
     link: '/timeline',
     linkLabel: 'See the timeline',
+  },
+  {
+    date: '2026-10-06',
+    kind: 'corrected',
+    title: 'Three news articles relabeled Tier 3 until their reporters are confirmed',
+    description:
+      'An article from an established outlet now counts as Tier 2 only when a named reporter is confirmed on that article from its archived copy. Three cited articles have no archived copy yet, so the Documents page now labels them \u201cTier 3 \u00b7 news report (byline unconfirmed)\u201d: the Daily Herald\u2019s June 8, 2026 and October 11, 2025 articles and the Capitol News Illinois article. The reporters of the Chicago Tribune\u2019s June 5 and July 2 articles, the Daily Herald\u2019s July 31 and September 1 articles and the 2024 Crain\u2019s Chicago Business article are now recorded.',
+    link: '/documents',
+    linkLabel: 'See the documents',
   },
   {
     date: '2026-10-06',
