@@ -10,7 +10,7 @@
 import { readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { ROOT } from './config.mjs'
-import { extractNumbers } from './guard.mjs'
+import { extractNumbers, extractDates } from './guard.mjs'
 
 const read = f => readFileSync(join(ROOT, 'src/data', f), 'utf8')
 
@@ -107,3 +107,43 @@ export function existingEntryMatches(draft, timelineEvents) {
   return out
 }
 
+
+// --- already covered ----------------------------------------------------------------
+
+/**
+ * Entries that already cite a source: timeline events by sourceKey or
+ * sourceKeys, actions by sourceIds.
+ */
+export function entriesCiting(sourceKey, timelineEvents, actions = []) {
+  if (!sourceKey) return []
+  const out = []
+  for (const e of timelineEvents) if ([e.sourceKey, ...(e.sourceKeys ?? [])].includes(sourceKey)) out.push({ file: 'src/data/timeline.js', date: e.date, title: e.title, text: `${e.title} ${e.description ?? ''}` })
+  for (const a of actions) if ((a.sourceIds ?? []).includes(sourceKey)) out.push({ file: 'src/data/actions.js', date: a.date, title: a.id, text: `${a.description ?? ''} ${a.outcome ?? ''}` })
+  return out
+}
+
+// Function words and verbs of saying carry nothing a reader would miss.
+const COVER_STOP = new Set([...STOP, ...'does have has had will would could should currently against which their there them they said stated states says also only more most other such were being some than then what when where while within'.split(' ')])
+// Six-letter stems, so "approved" meets "approval" and "receives" meets "receive".
+const stems = s => new Set((String(s).toLowerCase().match(/[a-z]{4,}/g) ?? []).filter(w => !COVER_STOP.has(w)).map(w => w.slice(0, 6)))
+const figures = s => ({
+  numbers: new Set(extractNumbers(s).map(n => n.value).filter(v => !/^(19|20)\d\d$/.test(v))),
+  dates: new Set(extractDates(s).filter(d => d.year).map(d => `${d.year}-${d.month}-${d.day}`)),
+})
+
+/**
+ * True when an existing entry already says what a claim says: every figure
+ * and full date in the claim appears in the entry, and at least half of the
+ * claim's distinctive words do. A heuristic that leans towards "lacking": a
+ * claim wrongly listed as new costs a look; one wrongly called covered would
+ * be lost.
+ */
+export function claimCovered(claim, entryText) {
+  const mine = figures(claim.claim_text)
+  const theirs = figures(entryText)
+  if (![...mine.numbers].every(n => theirs.numbers.has(n)) || ![...mine.dates].every(d => theirs.dates.has(d))) return false
+  const w = stems(claim.claim_text)
+  if (!w.size) return true
+  const ew = stems(entryText)
+  return [...w].filter(x => ew.has(x)).length / w.size >= 0.5
+}

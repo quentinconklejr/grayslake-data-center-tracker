@@ -150,7 +150,10 @@ For one new event:
    capture succeeded and `verified` set to the pipeline's retrieval date. The PR
    says so explicitly. The owner re-checks before merging.
 3. One `updates.js` line (`kind: 'added'`).
-4. Optionally, one `actions.js` entry when the event is an action by a body.
+4. No `actions.js` entry: an action needs an outcome from the record, which the
+   pipeline does not check, so an action by a body is flagged for the owner
+   instead (changed after the Oct. 1, 2026 dry run, whose action entries
+   carried placeholder outcomes).
 5. Nothing else in `src/`. Checks: `node --check`, import-and-validate against a
    schema, `npm run lint`, `npm run build`, and `node scripts/check-links.js`.
 

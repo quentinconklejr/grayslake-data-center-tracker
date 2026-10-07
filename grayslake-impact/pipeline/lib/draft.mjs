@@ -1,7 +1,6 @@
 /**
  * Drafting: turns one item's scored, guard-passed claims into entries in the
- * src/data formats (timeline.js, sources.js, updates.js, and actions.js for a
- * Tier 1 government action).
+ * src/data formats (timeline.js, sources.js and updates.js).
  *
  * The model writes the title and description, and only from the verified
  * claims, each tagged with how it may be written (state as fact, attribute,
@@ -14,12 +13,21 @@
  *
  * Code, not the model, sets the entry date (from verified claim dates, else
  * the document date), the source key, the source record and the updates line.
+ * Once the title is written, the date must fit the event it names
+ * (fitDate): a filing takes the filing date stamped on the document, an
+ * approval a date a quote gives for the approval itself, a statement the
+ * document's own date. A date that cannot be made to fit sends the draft to
+ * human review.
+ *
+ * actions.js entries are not drafted: an action needs an outcome taken from
+ * the record, which the pipeline does not check. A Tier 1 government action
+ * is flagged for the owner instead.
  */
 import Ajv from 'ajv'
 import { generateValidated } from './extract.mjs'
-import { prepareSource, checkDraftProse, extractDates } from './guard.mjs'
+import { prepareSource, checkDraftProse, extractDates, findPlaceholders } from './guard.mjs'
 import { requiredAttribution } from './party.mjs'
-import { CATEGORIES, renderTimelineEntry, renderSourceEntry, renderUpdateEntry, renderActionEntry, validateDraft } from './render.mjs'
+import { CATEGORIES, renderTimelineEntry, renderSourceEntry, renderUpdateEntry, validateDraft } from './render.mjs'
 
 const DRAFT_SCHEMA = {
   type: 'object',
@@ -59,6 +67,7 @@ export function instructionFor(c, item) {
   if (c.claim_type === 'party_statement') return `PARTY STATEMENT by ${c.speaker}: write "${c.speaker.split(' ')[0]} stated ..." or "according to ${c.speaker.split(' ')[0]}", never as fact`
   if (c.outcome === 'draft_as_reported' || c.outcome === 'redraft_from_corroborating_source') return `REPORTED BY ${item.publisher}: write "${item.publisher} reported ..." or "according to ${item.publisher}"`
   if (['quote', 'opinion'].includes(c.claim_type)) return `ATTRIBUTE to ${c.speaker}: say who said it`
+  if (c.provision) return 'ORDINANCE PROVISION: say what the ordinance provides ("the ordinance provides that ..."); never call it a projection or an estimate'
   if (c.claim_type === 'projection') return `PROJECTION by ${c.speaker ?? item.publisher}: say it is a projection or plan and whose`
   return 'STATE AS FACT'
 }
@@ -114,12 +123,33 @@ export function curlyQuotes(s) {
   return String(s ?? "").replace(/"([^"]+)"/g, "“$1”")
 }
 
+const isoOf = d => `${d.year}-${String(d.month).padStart(2, '0')}-${String(d.day).padStart(2, '0')}`
+
+/**
+ * The filing date stamped on a court document ("FILED 7/31/2026 6:29 PM" at
+ * the top of an e-filed complaint), or null. Only a date right after the
+ * stamp counts: "filed" in the body text is the filer describing something.
+ */
+export function filingStamp(text) {
+  const head = String(text ?? '').slice(0, 5000)
+  for (const m of head.matchAll(/\bFILED\b|\bFiled:/g)) {
+    const after = head.slice(m.index + m[0].length, m.index + m[0].length + 40)
+    const d = extractDates(after).find(x => x.year && x.index <= 12)
+    if (d) return isoOf(d)
+  }
+  return null
+}
+
 /** Most common verified full event date, else the document date. */
-export function entryDate(claims, docIso, { party } = {}) {
+export function entryDate(claims, docIso, { party, text } = {}) {
   const doc = /^\d{4}-\d{2}-\d{2}/.test(docIso ?? '') ? docIso.slice(0, 10) : null
   // A court filing is an event on its filing date, not on the dates it
-  // describes (which reach back to 2024).
-  if (party?.kind === 'court_filing' && doc) return { date: doc, basis: 'filing date (a court filing is dated when filed)' }
+  // describes (which reach back to 2024), and that date is the one stamped on
+  // the document, not one taken from a listing or a citation.
+  if (party?.kind === 'court_filing') {
+    const stamp = filingStamp(text)
+    return stamp ? { date: stamp, basis: 'filing date stamped on the document' } : { date: null, basis: 'court filing with no filing date stamped on the document' }
+  }
   const counts = new Map()
   for (const c of claims) {
     if (c.date_basis !== 'stated_in_text' || !/^\d{4}-\d{2}-\d{2}$/.test(c.event_date ?? '')) continue
@@ -132,8 +162,67 @@ export function entryDate(claims, docIso, { party } = {}) {
     const [date] = [...counts.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))[0]
     return { date, basis: 'event date stated in the quotes' }
   }
-  if (/^\d{4}-\d{2}-\d{2}/.test(docIso ?? '')) return { date: docIso.slice(0, 10), basis: 'document date (no event date stated); written as "reported on" if needed' }
+  if (doc) return { date: doc, basis: 'document date (no event date stated); written as "reported on" if needed' }
   return { date: null, basis: 'no date' }
+}
+
+// The event a title names, checked in this order: "Plaintiffs file complaint"
+// is a filing, "Board approves ordinance" an approval, "Village issues
+// statement" the document itself.
+const FILING_EVENT = /\b(fil(e|es|ed|ing)|sues?|sued|lawsuit)\b/i
+const APPROVAL_EVENT = /\b(approv\w*|authoriz\w*|adopt\w*|pass(es|ed)?|grant(s|ed)|enact\w*)\b/i
+const PUBLICATION_EVENT = /\b(issu(e|es|ed)|publish(es|ed)?|releas(e|es|ed)|post(s|ed)|announc\w*|statement)\b/i
+// A hearing or a published notice comes before an approval; its date is not
+// the approval's.
+const NOT_THE_EVENT = /\b(hearings?|notices?|published|publication|scheduled|agenda)\b/i
+
+export function titleEvent(title) {
+  const t = String(title ?? '')
+  if (FILING_EVENT.test(t)) return 'filing'
+  if (APPROVAL_EVENT.test(t)) return 'approval'
+  if (PUBLICATION_EVENT.test(t)) return 'publication'
+  return null
+}
+
+/**
+ * Dates a source gives for the event itself: claims that name the event
+ * (verb), state the date in the text, and carry it in a quote that is not
+ * about a hearing or a notice. A date after the document is scheduled, not
+ * done. Most common first.
+ */
+function datesForEvent(claims, verb, doc) {
+  const counts = new Map()
+  for (const c of claims) {
+    if (c.date_basis !== 'stated_in_text' || !/^\d{4}-\d{2}-\d{2}$/.test(c.event_date ?? '')) continue
+    if (doc && c.event_date > doc) continue
+    if (!verb.test(c.claim_text ?? '') || NOT_THE_EVENT.test(c.claim_text ?? '')) continue
+    const quoted = (c.supporting_quotes ?? []).some(q => !NOT_THE_EVENT.test(q) && extractDates(q).some(d => d.year && isoOf(d) === c.event_date))
+    if (quoted) counts.set(c.event_date, (counts.get(c.event_date) ?? 0) + 1)
+  }
+  return [...counts.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0])).map(([d]) => d)
+}
+
+/**
+ * The entry date, checked against the event the title names. Returns
+ * { date, basis }, or { date: null, review } when the draft must go to a
+ * person.
+ */
+export function fitDate(title, date, claims, item) {
+  const kind = titleEvent(title)
+  const doc = /^\d{4}-\d{2}-\d{2}/.test(item.published ?? '') ? item.published.slice(0, 10) : null
+  if (kind === 'filing' && item.party?.kind === 'court_filing') {
+    return date.date ? date : { date: null, review: 'the title names a filing, but no filing date is stamped on the document' }
+  }
+  if (kind === 'filing' || kind === 'approval') {
+    const found = datesForEvent(claims, kind === 'filing' ? FILING_EVENT : APPROVAL_EVENT, doc)
+    if (found.includes(date.date)) return { date: date.date, basis: `${kind} date stated in the quotes` }
+    if (found.length) return { date: found[0], basis: `${kind} date stated in the quotes (${date.date ?? 'no date'} was not one)` }
+    return { date: null, review: `the title names ${kind === 'filing' ? 'a filing' : 'an approval'}, but no quote gives a date for the ${kind} itself${date.date ? ` (${date.date} is the ${date.basis})` : ''}` }
+  }
+  if (kind === 'publication') {
+    return doc ? { date: doc, basis: 'document date (the title reports the document itself)' } : { date: null, review: 'the title reports the document itself, but the document has no date' }
+  }
+  return date.date ? date : { date: null, review: 'no entry date' }
 }
 
 /** The guard's options for this draft's prose. */
@@ -201,7 +290,7 @@ const ACTION_TYPE = { approval: 'Land-Use Approval', construction: 'Building Per
  * blockedTerms, labeledTerms, today (ISO), canonUrl }
  */
 export async function draftItem(item, claims, ctx) {
-  const date = entryDate(claims, item.published, { party: item.party })
+  let date = entryDate(claims, item.published, { party: item.party, text: item.text })
   const opts = guardOptions(claims, item, ctx.blockedTerms, ctx.labeledTerms)
   const user0 = `${examplesBlock(ctx.examples)}\n\nDocument: ${item.title} (${item.publisher}${item.published ? ', ' + (proseDate(item.published) ?? item.published.slice(0, 10)) : ''})\nEntry date: ${proseDate(date.date) ?? 'unknown'}\n\n${claimsBlock(claims, item)}`
   const attempts = []
@@ -250,10 +339,14 @@ export async function draftItem(item, claims, ctx) {
       return draft
     }
   }
-  if (!prose || !date.date) {
-    if (!date.date) draft.status = 'claims_only'
+  if (!prose) return draft
+  // The date must fit the event the title names.
+  const fit = fitDate(prose.title, date, claims, item)
+  if (!fit.date) {
+    Object.assign(draft, { status: 'human_review', dateReview: fit.review, heldProse: { title: prose.title, description: prose.description } })
     return draft
   }
+  date = draft.date = { date: fit.date, basis: fit.basis }
 
   // Source: reuse a key the site already has for this URL, else a new record.
   const canon = ctx.canonUrl(item.url)
@@ -277,26 +370,24 @@ export async function draftItem(item, claims, ctx) {
   const meta = prepareSource([item.publisher, prose.title, date.date].join('\n'), item.guardCfg)
   // No copy check here: the line names the publisher, which is copied by design.
   const ug = checkDraftProse(`${update.title}. ${update.description}`, item.guardCfg, { ...opts, evidence: [...opts.evidence, meta], docDates: [...opts.docDates, ...extractDates(date.date ?? '')], requiredAttribution: [], noUnquotedCopy: 0 })
-  let action = null
-  if (item.effectiveTier === 1 && !item.party && JURISDICTION[item.registryId]) {
-    action = {
-      id: `${item.registryId}-${date.date}-${sourceKey}`.toLowerCase(),
-      date: date.date, jurisdiction: JURISDICTION[item.registryId], actionType: ACTION_TYPE[prose.category],
-      description: prose.description, outcome: 'Drafted by the pipeline: state the outcome after checking the record.',
-      sourceIds: [sourceKey], status: date.date <= ctx.today ? 'complete' : 'pending', lastVerified: apDate(ctx.today),
-    }
-  }
+  // A Tier 1 government action is flagged, not drafted (see the header).
+  const actionFlag = item.effectiveTier === 1 && !item.party && JURISDICTION[item.registryId]
+    ? { file: 'src/data/actions.js', note: `may be a ${JURISDICTION[item.registryId]} action (${ACTION_TYPE[prose.category]}); add it by hand with the outcome from the record; not edited` }
+    : null
   const rendered = {
     timeline: renderTimelineEntry(entry),
     source: source ? renderSourceEntry(sourceKey, source) : null,
     update: renderUpdateEntry(update),
-    action: action ? renderActionEntry(action) : null,
+    action: null,
   }
   const validation = await validateDraft(rendered)
+  // Placeholder text never reaches a PR: it fails the guard.
+  const placeholders = findPlaceholders(Object.values(rendered).filter(Boolean).join('\n'))
   Object.assign(draft, {
-    entry, sourceKey, newSource: source, update, action, rendered, validation,
+    entry, sourceKey, newSource: source, update, action: null, actionFlag, rendered, validation,
     updateGuard: ug.ok ? 'pass' : 'fail', updateGuardFailures: ug.failures,
-    status: validation.ok && ug.ok ? 'ready' : 'invalid',
+    status: validation.ok && ug.ok && !placeholders.length ? 'ready' : 'invalid',
   })
+  if (placeholders.length) Object.assign(draft, { guard: 'fail', placeholders })
   return draft
 }

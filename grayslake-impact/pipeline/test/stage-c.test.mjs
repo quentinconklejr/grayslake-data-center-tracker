@@ -164,12 +164,12 @@ function stubProvider(responses) {
   let i = 0
   return { model: 'stub', async generateJSON() { const content = JSON.stringify(responses[Math.min(i++, responses.length - 1)]); return { content, usage: { inputTokens: 1, outputTokens: 1 }, durationMs: 1, warnings: [] } } }
 }
-const QUOTE = 'The Lake County Board approved an ordinance establishing a moratorium on new data center approvals, set to expire May 11, 2027.'
+const QUOTE = 'On September 8, 2026, the Lake County Board approved an ordinance establishing a moratorium on new data center approvals, set to expire May 11, 2027.'
 const baseItem = {
   id: 'shadow:x', title: 'Moratorium ordinance', url: 'https://www.lakecountyil.gov/m/newsflash/Home/Detail/9999', published: '2026-09-08',
   registryId: 'lake-county', registryTier: 1, effectiveTier: 1, publisher: 'Lake County, Illinois', party: null, guardCfg: gcfg,
 }
-const baseClaims = [{ claim_text: 'The Board approved a moratorium set to expire May 11, 2027.', claim_type: 'fact', speaker: null, outcome: 'draft_as_fact', supporting_quotes: [QUOTE], event_date: '2026-09-08', date_basis: 'document_date', guardMatch: ['exact'] }]
+const baseClaims = [{ claim_text: 'On September 8, 2026, the Board approved a moratorium set to expire May 11, 2027.', claim_type: 'fact', speaker: null, outcome: 'draft_as_fact', supporting_quotes: [QUOTE], event_date: '2026-09-08', date_basis: 'stated_in_text', guardMatch: ['exact'] }]
 const ctxFor = provider => ({ provider, examples: [], sources, cited: new Map(), blockedTerms: cfg.editorial.blocked_terms, labeledTerms: cfg.editorial.labeled_terms, today: '2026-10-01', canonUrl: u => u })
 
 test('drafting: prose that passes the guard yields valid timeline, sources and updates entries', async () => {
@@ -181,7 +181,9 @@ test('drafting: prose that passes the guard yields valid timeline, sources and u
   assert.ok(CATEGORIES.includes(d.entry.category))
   assert.match(d.rendered.source, /lakeCounty\w+2026: \{/)
   assert.match(d.rendered.update, /kind: 'added'/)
-  assert.match(d.rendered.action, /sourceIds: \["lakeCounty\w+2026"\]/)
+  assert.equal(d.rendered.action, null, 'actions.js is never drafted: its outcome must come from the record')
+  assert.equal(d.actionFlag.file, 'src/data/actions.js')
+  assert.match(d.actionFlag.note, /Lake County Board action .*not edited/)
 })
 
 test('drafting: a draft with an unsupported number is retried, then left as claims only', async () => {
@@ -352,6 +354,7 @@ test('entry date: a later scheduled date is not the event; a court filing is dat
   const hearing = [{ date_basis: 'stated_in_text', event_date: '2026-10-30' }, { date_basis: 'stated_in_text', event_date: '2026-10-30' }]
   assert.equal(entryDate(hearing, '2026-08-30').date, '2026-08-30', 'the Oct 30 hearing is after the Aug 30 article')
   const filing = [{ date_basis: 'stated_in_text', event_date: '2024-09-23' }, { date_basis: 'stated_in_text', event_date: '2024-09-23' }]
-  assert.equal(entryDate(filing, '2026-07-31', { party: { kind: 'court_filing' } }).date, '2026-07-31')
+  const stamped = 'FILED 7/31/2026 6:29 PM ERIN CARTWRIGHT WEINSTEIN Clerk of the Circuit Court IN THE CIRCUIT COURT'
+  assert.equal(entryDate(filing, '2026-08-02', { party: { kind: 'court_filing' }, text: stamped }).date, '2026-07-31', 'the stamp, not the listing date')
   assert.equal(entryDate(filing, '2026-07-31').date, '2024-09-23', 'a non-filing may report an earlier event')
 })
