@@ -81,6 +81,7 @@ Rules:
 - Every number, date and name you write must appear in the quotes.
 - Write dates as "July 31, 2026", never "2026-07-31".
 - The name "POWER Act" is a label the bill text does not use. Use it only if a quote does, only in quotation marks, always with HB5513, and add the sentence "The bill text does not use the name." For example: the so-called “POWER Act” (HB5513). The bill text does not use the name. SB4016 is the Senate bill with an identical synopsis; name it by number only, and never put it in the same sentence as the name unless you say that advocacy groups make that link.
+- A bill is a proposed bill: write what it "would" do and call it "the proposed bill", never say anyone "projects" or "plans" what a bill does.
 - Name a person as the one who said or wrote something only if that person is named in the quote or right beside it in the document. Otherwise attribute the words to the document's publisher (for example "the Village stated"), even if a person is mentioned elsewhere in the document.
 - Never name a private individual: call an individual plaintiff "a plaintiff". Never include anyone's health, medical, address or family details. Public officials may be named in their official role.
 - Write in your own words. Anything copied from a quote goes inside quotation marks; never copy a long passage without them.
@@ -242,7 +243,8 @@ export function guardOptions(claims, item, blockedTerms, labeledTerms = []) {
   const copyLimit = item.effectiveTier === 1 && !item.party ? 20 : 12
   // A person named as a speaker must be named in the source beside the words
   // (guard.speakerFailures); otherwise the words are the publisher's.
-  const speakers = { speakerSource: item.text || undefined, people: claims.map(c => c.speaker).filter(Boolean), publisher: item.publisher }
+  // Bills are described as proposals ("would"), never as projections or plans.
+  const speakers = { billWording: true, speakerSource: item.text || undefined, people: claims.map(c => c.speaker).filter(Boolean), publisher: item.publisher }
   return { evidence, docDates, allegation: claims.some(c => c.claim_type === 'allegation'), requiredAttribution: req, blockedTerms, labeledTerms, noUnquotedCopy: copyLimit, noFirstPerson: true, ...speakers }
 }
 
@@ -411,17 +413,35 @@ export async function draftItem(item, claims, ctx) {
  */
 async function amendExisting(draft, prose, item, ctx, opts) {
   const t = ctx.amend
+  const base = String(t.entry.description ?? '').trim()
+  const built = await renderAmendment(t, base, [prose.description.trim()], [item.publisher], ctx.today, item.guardCfg, opts)
+  Object.assign(draft, {
+    date: { date: t.entry.date, basis: 'existing entry date (unchanged)' },
+    amend: { file: t.file, date: t.entry.date, title: built.label, added: prose.description, base, publisher: item.publisher, target: t },
+    sourceKey: t.sourceKey, newSource: null, action: null, actionFlag: null, ...built.fields,
+  })
+  if (built.placeholders.length) Object.assign(draft, { guard: 'fail', placeholders: built.placeholders })
+  return draft
+}
+
+/**
+ * The text of a change to an existing entry: its description with the added
+ * sentences appended, one updates.js line naming the publishers, the guard on
+ * that line, and the format check.
+ */
+async function renderAmendment(t, base, added, publishers, today, gcfg, opts = {}) {
   const isAction = t.file === 'src/data/actions.js'
   const label = isAction ? t.entry.id : t.entry.title
-  const description = `${String(t.entry.description ?? '').trim()} ${prose.description.trim()}`
+  const description = [base, ...added].join(' ')
+  const who = [...new Set(publishers)]
   const update = {
-    date: ctx.today, kind: 'added',
+    date: today, kind: 'added',
     title: `Added to ${isAction ? 'the actions entry' : 'the timeline entry'} “${label}”`,
-    description: `The ${isAction ? 'action' : 'entry'} dated ${proseDate(t.entry.date) ?? t.entry.date} now also includes further details from ${item.publisher}.`,
+    description: `The ${isAction ? 'action' : 'entry'} dated ${proseDate(t.entry.date) ?? t.entry.date} now also includes further details from ${who.length > 1 ? `${who.slice(0, -1).join(', ')} and ${who.at(-1)}` : who[0]}.`,
     link: isAction ? '/actions' : '/timeline', linkLabel: isAction ? 'See the actions' : 'See the timeline',
   }
-  const meta = prepareSource([item.publisher, label, t.entry.date].join('\n'), item.guardCfg)
-  const ug = checkDraftProse(`${update.title}. ${update.description}`, item.guardCfg, { ...opts, evidence: [...opts.evidence, meta], docDates: [...opts.docDates, ...extractDates(t.entry.date ?? '')], requiredAttribution: [], noUnquotedCopy: 0, speakerSource: undefined })
+  const meta = prepareSource([...who, label, t.entry.date].join('\n'), gcfg)
+  const ug = checkDraftProse(`${update.title}. ${update.description}`, gcfg, { ...opts, evidence: [...(opts.evidence ?? []), meta], docDates: [...(opts.docDates ?? []), ...extractDates(t.entry.date ?? '')], requiredAttribution: [], noUnquotedCopy: 0, speakerSource: undefined, billWording: false })
   const rendered = {
     timeline: null, source: null, action: null,
     timelineEdit: isAction ? null : { title: t.entry.title, description },
@@ -429,14 +449,58 @@ async function amendExisting(draft, prose, item, ctx, opts) {
     update: renderUpdateEntry(update),
   }
   const validation = await validateDraft(rendered)
-  const placeholders = findPlaceholders([prose.description, rendered.update].join('\n'))
-  Object.assign(draft, {
-    date: { date: t.entry.date, basis: 'existing entry date (unchanged)' },
-    amend: { file: t.file, date: t.entry.date, title: label, added: prose.description },
-    entry: { ...t.entry, description }, sourceKey: t.sourceKey, newSource: null, update, action: null, actionFlag: null, rendered, validation,
-    updateGuard: ug.ok ? 'pass' : 'fail', updateGuardFailures: ug.failures,
-    status: validation.ok && ug.ok && !placeholders.length ? 'ready' : 'invalid',
-  })
-  if (placeholders.length) Object.assign(draft, { guard: 'fail', placeholders })
-  return draft
+  const placeholders = findPlaceholders([...added, rendered.update].join('\n'))
+  return {
+    label, placeholders,
+    fields: {
+      entry: { ...t.entry, description }, update, rendered, validation,
+      updateGuard: ug.ok ? 'pass' : 'fail', updateGuardFailures: ug.failures,
+      status: validation.ok && ug.ok && !placeholders.length ? 'ready' : 'invalid',
+    },
+  }
+}
+
+/**
+ * One entry, one PR: ready drafts that change the same existing entry become
+ * one draft (their added sentences in order, one updates line). Claims stay
+ * within maxClaims per PR; a draft that would go over it waits
+ * (status 'deferred') and is listed in the combined PR. The drafts folded in
+ * keep their own record with status 'combined'. Returns the new list.
+ */
+export async function combineAmendments(drafts, { gcfg, today, maxClaims = 5 }) {
+  const groups = new Map()
+  for (const d of drafts) {
+    if (d.status !== 'ready' || !d.amend) continue
+    const k = `${d.amend.file}|${d.amend.title}`
+    if (!groups.has(k)) groups.set(k, [])
+    groups.get(k).push(d)
+  }
+  const out = [...drafts]
+  for (const group of groups.values()) {
+    if (group.length < 2) continue
+    const take = []
+    let n = 0
+    for (const d of group) {
+      if (take.length && n + d.claims.length > maxClaims) { Object.assign(d, { status: 'deferred', deferredReason: `same entry as a combined PR, which is at the ${maxClaims}-claim limit` }); continue }
+      take.push(d)
+      n += d.claims.length
+    }
+    for (const d of group) if (take.includes(d)) d.status = 'combined'
+    const first = take[0]
+    const built = await renderAmendment(first.amend.target, first.amend.base, take.map(d => d.amend.added.trim()), take.map(d => d.amend.publisher), today, gcfg)
+    const combined = {
+      ...first, ...built.fields,
+      itemId: take.map(d => d.itemId).join(' + '), url: first.url, title: take.map(d => d.title).join(' + '),
+      claims: take.flatMap(d => d.claims), extraClaims: take.flatMap(d => d.extraClaims ?? []),
+      flags: [...new Map(take.flatMap(d => d.flags ?? []).map(f => [`${f.file}|${f.id ?? ''}`, f])).values()],
+      sourceKey: take.map(d => d.sourceKey).join('+'),
+      amend: { ...first.amend, added: take.map(d => d.amend.added.trim()).join(' ') },
+      combinedFrom: take.map(d => ({ itemId: d.itemId, url: d.url, sourceKey: d.sourceKey, publisher: d.amend.publisher, added: d.amend.added, claims: d.claims.length })),
+      deferred: group.filter(d => !take.includes(d)).map(d => ({ itemId: d.itemId, url: d.url, added: d.amend.added })),
+      attempts: take.flatMap(d => d.attempts),
+    }
+    if (built.placeholders.length) Object.assign(combined, { guard: 'fail', placeholders: built.placeholders })
+    out.splice(out.indexOf(first), 0, combined)
+  }
+  return out
 }

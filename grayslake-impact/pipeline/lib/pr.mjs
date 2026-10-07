@@ -45,6 +45,12 @@ export function buildPr(d, { today }) {
       `Made from ${d.claims.length} claim(s) the existing entries lack (at most 5 per PR; ${d.alreadyCovered?.coveredClaims ?? 0} already covered).`,
       ...(d.alreadyCovered?.entries.length > 1 ? ['', 'Other entries citing this source (unchanged):', ...d.alreadyCovered.entries.filter(e => e.title !== d.amend.title).map(e => `- \`${e.file}\` ${e.date} “${e.title}”`)] : []), '',
     ] : []),
+    ...(d.combinedFrom ? [
+      '### Combined: one entry, one PR', '',
+      `${d.combinedFrom.length} drafts change this same entry, so they are one PR:`, '',
+      ...d.combinedFrom.map(c => `- ${c.publisher} (${c.sourceKey}, ${c.claims} claim(s)) · [link](${c.url}): ${c.added}`), '',
+      ...(d.deferred?.length ? ['Not in this PR (it would pass the 5-claim limit); left for a later run:', '', ...d.deferred.map(x => `- ${x.itemId} · ${x.url}`), ''] : []),
+    ] : []),
     ...(d.existing?.length ? ['### Possible existing entry', '', ...d.existing.map(e => `- ${e.date} “${e.title}” (${e.why})`), ''] : []),
     ...(d.flags?.length ? ['### Flags (not edited)', '', ...d.flags.map(f => `- \`${f.file}\`${f.id ? ` \`${f.id}\`` : ''}: ${f.note}`), ''] : []),
     '### Claims and their verbatim quotes', '',

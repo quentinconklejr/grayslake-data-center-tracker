@@ -13,7 +13,7 @@ import { makePrivacy } from './privacy.mjs'
 import { leadNote, leadNotesMarkdown } from './leads.mjs'
 import { decide, effectiveTier, signalsFor, corroboratingItems, isDraftable, confirmedByline } from './score.mjs'
 import { flagsForClaim, existingEntryMatches, entriesCiting, claimCovered } from './flags.mjs'
-import { draftItem } from './draft.mjs'
+import { draftItem, combineAmendments } from './draft.mjs'
 import { canonicalUrl } from './dedupe.mjs'
 import { pdfToText } from './text.mjs'
 import { log } from './log.mjs'
@@ -182,7 +182,8 @@ export async function processItems(inputs, ctx) {
   const examples = ['2026-09-08', '2026-07-31', '2026-06-02'].map(date => timelineEvents.find(e => e.date === date && e.description)).filter(Boolean)
   const privacy = makePrivacy(cfg.privacy)
   const dctx = { provider, examples, sources, cited, blockedTerms: cfg.editorial?.blocked_terms ?? [], labeledTerms: cfg.editorial?.labeled_terms ?? [], today, canonUrl: canonicalUrl, privacy }
-  const drafts = [], queued = [], leads = [], leadNotes = [], covered = []
+  const drafts = [], queued = [], leads = [], leadNotes = [], covered = [], billNotes = []
+  const billActions = cfg.triage?.significant_bill_actions ? new RegExp(cfg.triage.significant_bill_actions, 'i') : null
   for (const item of work) {
     // D-5: a Tier 2 article stays queue-only, with a lead note for the owner.
     if (item.registryTier === 2) leadNotes.push(leadNote(item, item.passingClaims))
@@ -203,8 +204,17 @@ export async function processItems(inputs, ctx) {
       else queued.push(rec)
     }
     if (!draftable.length) continue
-    // Already covered: the source has an entry. Only claims it lacks go on.
     const key = item.sourceKey ?? cited.get(canonicalUrl(item.url)) ?? null
+    // A bill status page: only a milestone (chamber passage, governor action,
+    // effective date) may be drafted. What the bill would do goes in a note.
+    if (isBillPage(item)) {
+      const milestones = draftable.filter(c => isBillMilestone(c, billActions))
+      const described = draftable.filter(c => !milestones.includes(c))
+      if (described.length) billNotes.push({ id: item.id, title: item.title, url: item.url, sourceKey: key, bill: billNumber(item), synopsis: synopsisOf(item.text), described: described.map(c => c.claim_text) })
+      if (!milestones.length) continue
+      draftable = milestones
+    }
+    // Already covered: the source has an entry. Only claims it lacks go on.
     const entries = entriesCiting(key, timelineEvents, actions)
     let coveredNote = null
     let target = null
@@ -236,7 +246,60 @@ export async function processItems(inputs, ctx) {
     d.existing = d.entry && !d.amend ? existingEntryMatches({ ...d.entry, sourceKey: d.sourceKey }, timelineEvents) : []
     drafts.push(d)
   }
-  return { filtered, humanReview, work, drafts, dropped, queued, leads, leadNotes, covered }
+  covered.push(...twinBillNotes(billNotes, timelineEvents, actions))
+  // One entry, one PR: ready changes to the same existing entry become one draft.
+  const combined = await combineAmendments(drafts, { gcfg, today, maxClaims: MAX_CLAIMS_PER_DRAFT })
+  return { filtered, humanReview, work, drafts: combined, dropped, queued, leads, leadNotes, covered }
+}
+
+// --- bills ------------------------------------------------------------------------------
+
+/** An ilga.gov bill status page, fetched (one action row) or from the corpus (the whole page). */
+export const isBillPage = item => item.fetcher === 'ilga-bills' || item.registryId === 'ilga'
+
+/** A claim that records a significant bill action (triage.significant_bill_actions) with its date. */
+export function isBillMilestone(c, re) {
+  if (!re) return false
+  const text = `${c.claim_text ?? ''} ${(c.supporting_quotes ?? []).join(' ')}`
+  return re.test(text) && (extractDates(text).some(d => d.year) || /^\d{4}-\d{2}-\d{2}$/.test(c.event_date ?? ''))
+}
+
+/** "HB5513" from the item's title or URL, else null. */
+export function billNumber(item) {
+  const t = /\b(HB|SB)\s?(\d+)\b/.exec(item.title ?? '')
+  if (t) return `${t[1]}${t[2]}`
+  const u = /DocTypeID=(HB|SB)&DocNum=(\d+)/i.exec(item.url ?? '')
+  return u ? `${u[1].toUpperCase()}${u[2]}` : null
+}
+
+/** The synopsis on a bill status page, whitespace-normalised, or null. */
+export function synopsisOf(text) {
+  const m = /Synopsis As Introduced\s+([\s\S]*?)\s+Actions\b/.exec(String(text ?? ''))
+  return m ? m[1].replace(/\s+/g, ' ').trim() : null
+}
+
+/**
+ * One "already covered" note per synopsis: bills with identical synopses
+ * (HB5513 and SB4016) share a note listing both numbers. Descriptions of
+ * what a bill would do never go in a PR.
+ */
+export function twinBillNotes(notes, timelineEvents, actions) {
+  const groups = new Map()
+  for (const n of notes) {
+    const k = n.synopsis ?? n.id
+    if (!groups.has(k)) groups.set(k, [])
+    groups.get(k).push(n)
+  }
+  return [...groups.values()].map(g => {
+    const seen = new Set()
+    const described = g.flatMap(n => n.described).filter(t => { const k = t.toLowerCase().replace(/\bthe (bill|proposal)\b/g, '').replace(/\W+/g, ' ').trim(); return seen.has(k) ? false : seen.add(k) })
+    const entries = g.flatMap(n => entriesCiting(n.sourceKey, timelineEvents, actions)).filter((e, i, a) => a.findIndex(x => x.file === e.file && x.title === e.title) === i)
+    return {
+      kind: 'bill', id: g.map(n => n.id).join(', '), bills: [...new Set(g.map(n => n.bill ?? n.title))], title: g.map(n => n.title).join('; '),
+      url: g[0].url, sourceKey: g.map(n => n.sourceKey).filter(Boolean).join(', '), identicalSynopsis: g.length > 1,
+      entries: entries.map(({ file, date, title }) => ({ file, date, title })), coveredClaims: 0, lacking: [], described,
+    }
+  })
 }
 
 export function draftMarkdown(d, i) {
@@ -248,6 +311,8 @@ export function draftMarkdown(d, i) {
     `- Date: ${d.date.date ?? 'none'} (${d.date.basis})${d.dateReview ? ` · **human review:** ${d.dateReview}` : ''}`,
     ...(d.placeholders?.length ? [`- **Placeholder text (guard failure):** ${d.placeholders.map(p => JSON.stringify(p.value)).join(', ')}`] : []),
     ...(d.amend ? [`- **Changes the existing entry** ${d.amend.file.replace('src/data/', '')} ${d.amend.date} "${d.amend.title}" (no new entry): adds ${d.claims.length} claim(s) it lacks`] : []),
+    ...(d.combinedFrom ? [`- **Combined** (one entry, one PR) from: ${d.combinedFrom.map(c => c.itemId).join(', ')}${d.deferred?.length ? `; deferred: ${d.deferred.map(x => x.itemId).join(', ')}` : ''}`] : []),
+    ...(d.status === 'combined' ? ['- Folded into the combined draft for this entry (no PR of its own)'] : []),
     ...d.attempts.map(a => `- Attempt ${a.attempt}: ${a.schemaErrors ? 'schema errors ' + a.schemaErrors.join('; ') : a.guard ? 'guard pass' : 'guard FAIL: ' + a.failures.map(f => `${f.check} ${f.reason}${f.value ? ' ' + JSON.stringify(f.value) : ''}`).join('; ')}`),
     ...(d.existing?.length ? [`- **Possible existing entry:** ${d.existing.map(e => `${e.date} "${e.title}" (${e.why})`).join('; ')}`] : []),
     ...(d.flags ?? []).map(f => `- Flag: ${f.file}${f.id ? ' ' + f.id : ''}: ${f.note}`),
@@ -283,7 +348,7 @@ export function writeStageC(store, base, runId, result, extra = {}) {
     claims: { extracted: passed + dropped.length, passedGuard: passed, dropped: dropped.length, guardPassRate: passed + dropped.length ? passed / (passed + dropped.length) : null, relabeled: work.reduce((s, i) => s + i.passingClaims.filter(c => c.relabeled).length, 0) },
     outcomes: Object.fromEntries([...new Set(work.flatMap(i => i.passingClaims.map(c => c.outcome)))].map(o => [o, work.reduce((s, i) => s + i.passingClaims.filter(c => c.outcome === o).length, 0)])),
     drafts: drafts.map(d => ({ item: d.itemId, origin: d.origin, title: d.entry?.title ?? d.heldProse?.title ?? null, tier: d.tier, effectiveTier: d.effectiveTier, party: d.party?.kind ?? null, guard: d.guard, status: d.status, ...(d.dateReview ? { dateReview: d.dateReview } : {}), existing: d.existing.length, flags: d.flags.length, alreadyCovered: Boolean(d.alreadyCovered) })),
-    alreadyCovered: covered.map(n => ({ item: n.id, sourceKey: n.sourceKey, coveredClaims: n.coveredClaims, lacking: n.lacking.length })),
+    alreadyCovered: covered.map(n => ({ item: n.id, sourceKey: n.sourceKey, coveredClaims: n.coveredClaims, lacking: n.lacking.length, ...(n.kind === 'bill' ? { bills: n.bills, described: n.described.length } : {}) })),
     queued: queued.length, privateLeads: leads.length, tier2LeadNotes: leadNotes.length,
     filteredItems: filtered,
   }
@@ -296,7 +361,12 @@ export function writeStageC(store, base, runId, result, extra = {}) {
 /** The "already covered" note: per source, the existing entries and only the claims they lack. */
 export function coveredMarkdown(runId, covered) {
   return [`# Already covered, ${runId}`, '', 'Sources that already have a timeline or actions entry. Only claims the entry lacks are listed; a PR proposing a change to the existing entry opens only when there are some (for a court filing, only a new filing, hearing date, ruling or order).', '',
-    ...covered.flatMap(n => [
+    ...covered.flatMap(n => n.kind === 'bill' ? [
+      `## ${n.bills.join(' and ')}${n.identicalSynopsis ? ' (identical synopses)' : ''}`, '',
+      ...n.entries.map(e => `- Existing: ${e.file.replace('src/data/', '')} ${e.date} "${e.title}"`),
+      `- No PR: a bill status page opens a PR only for a milestone (chamber passage, governor action, effective date). What the proposed bill would do (${n.described.length}):`,
+      ...n.described.map(t => `  - ${t}`), '',
+    ] : [
       `## ${n.title} (${n.sourceKey})`, '',
       ...n.entries.map(e => `- Existing: ${e.file.replace('src/data/', '')} ${e.date} "${e.title}"`),
       n.lacking.length ? `- ${n.court ? 'New court milestones' : 'Claims the entry lacks'} (${n.lacking.length}; ${n.coveredClaims} already covered); PR proposes a change to the existing entry with at most ${MAX_CLAIMS_PER_DRAFT}:` : `- No PR: ${n.court && n.notMilestones.length ? `${n.notMilestones.length} claim(s) the entry lacks, but none is a new filing, hearing date, ruling or order` : `all ${n.coveredClaims} claim(s) are already covered`}.`,
