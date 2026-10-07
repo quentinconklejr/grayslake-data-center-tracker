@@ -117,8 +117,8 @@ export function existingEntryMatches(draft, timelineEvents) {
 export function entriesCiting(sourceKey, timelineEvents, actions = []) {
   if (!sourceKey) return []
   const out = []
-  for (const e of timelineEvents) if ([e.sourceKey, ...(e.sourceKeys ?? [])].includes(sourceKey)) out.push({ file: 'src/data/timeline.js', date: e.date, title: e.title, text: `${e.title} ${e.description ?? ''}` })
-  for (const a of actions) if ((a.sourceIds ?? []).includes(sourceKey)) out.push({ file: 'src/data/actions.js', date: a.date, title: a.id, text: `${a.description ?? ''} ${a.outcome ?? ''}` })
+  for (const e of timelineEvents) if ([e.sourceKey, ...(e.sourceKeys ?? [])].includes(sourceKey)) out.push({ file: 'src/data/timeline.js', date: e.date, title: e.title, text: `${e.title} ${e.description ?? ''}`, entry: e })
+  for (const a of actions) if ((a.sourceIds ?? []).includes(sourceKey)) out.push({ file: 'src/data/actions.js', date: a.date, title: a.id, text: `${a.description ?? ''} ${a.outcome ?? ''}`, entry: a })
   return out
 }
 

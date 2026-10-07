@@ -73,12 +73,11 @@ export async function runFetchers({ fetchers, store, cfg, registry, sources, htt
       const backfilling = backfill && state.seen[cand.key]?.baseline
       if (state.seen[cand.key] && !backfilling) { stats.alreadySeen++; continue }
       if (backfilling) stats.backfilled = (stats.backfilled ?? 0) + 1
-      const inWindow = cand.published && new Date(cand.published) >= since
-      if (firstRun && !inWindow) {
-        state.seen[cand.key] = { at: now.toISOString(), baseline: true }
-        stats.baselined++
-        continue
-      }
+      const inWindow = d => d && new Date(d) >= since
+      const baseline = () => { state.seen[cand.key] = { at: now.toISOString(), baseline: true }; stats.baselined++ }
+      // A fetcher that reads the date off the page is judged by that date, so
+      // on a first run its candidates are fetched before the window is applied.
+      if (firstRun && !f.pageDate && !inWindow(cand.published)) { baseline(); continue }
 
       let doc
       try {
@@ -88,6 +87,9 @@ export async function runFetchers({ fetchers, store, cfg, registry, sources, htt
         log.warn(`${f.name}: could not fetch ${cand.url}: ${err.message}`)
         continue   // not marked seen: retried next run
       }
+      const pageDate = f.pageDate?.(doc) ?? null
+      const published = pageDate ?? cand.published
+      if (firstRun && f.pageDate && !inWindow(published)) { baseline(); continue }
 
       const tierInfo = lookup(registry, cand.tierUrl ?? cand.url)
       // A record cut from a shared page (one bill action of many on the bill's
@@ -106,14 +108,14 @@ export async function runFetchers({ fetchers, store, cfg, registry, sources, htt
       const item = {
         id, runId, fetcher: f.name, key: cand.key,
         url: cand.url, finalUrl: doc.finalUrl ?? cand.url, canonicalUrl: dd.canonicalUrl,
-        title: cand.title, published: cand.published, fetchedAt: new Date().toISOString(),
+        title: cand.title, published, fetchedAt: new Date().toISOString(),
         tier: tierInfo.tier, registryId: tierInfo.id, party: tierInfo.party ?? null,
         kind: doc.kind, contentType: doc.contentType ?? null,
         rawSha256: doc.bytes ? sha256(doc.bytes) : null, rawPath,
         textSha256: sha256(doc.text ?? ''), contentHash: dd.contentHash,
         text: doc.text ?? '', textChars: (doc.text ?? '').length,
         pages: doc.pages ?? null, scannedPages: doc.scannedPages ?? [],
-        meta: { ...(cand.meta ?? {}), ...(doc.meta ? { page: doc.meta } : {}) },
+        meta: { ...(cand.meta ?? {}), ...(doc.meta ? { page: doc.meta } : {}), ...(pageDate && cand.published && pageDate !== cand.published.slice(0, 10) ? { listedDate: cand.published } : {}) },
         update,
         dedupe: {
           duplicateOf: dd.duplicateOf ?? null, reason: dd.reason ?? null,

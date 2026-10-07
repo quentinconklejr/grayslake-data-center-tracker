@@ -18,15 +18,35 @@ import { canonicalUrl } from './dedupe.mjs'
 import { pdfToText } from './text.mjs'
 import { log } from './log.mjs'
 import { FEED as YT_FEED } from './fetchers/village-youtube.mjs'
+import { FETCHERS } from './fetchers/index.mjs'
 
-const MAX_CLAIMS_PER_DRAFT = 8
+// At most this many claims go into one PR; the rest are listed, not drafted.
+const MAX_CLAIMS_PER_DRAFT = 5
+
+// A court filing's later record events: a new filing, a hearing date, a
+// ruling or an order. Only procedural claims with a date count; what the
+// filer alleges is never a milestone.
+const MILESTONE = /\b(filed|filing|hearing|ruled|ruling|order(ed|s)?|judgment|dismiss\w*|granted|denied|continued|set for|status conference)\b/i
+export const isMilestone = c => c.claim_type === 'procedural' && MILESTONE.test(c.claim_text ?? '') && (extractDates(c.claim_text ?? '').some(d => d.year) || /^\d{4}-\d{2}-\d{2}$/.test(c.event_date ?? ''))
+
+/** The existing entry a draft changes: the timeline entry citing only this source, else the one nearest the document's date; an actions entry only if no timeline entry cites it. */
+export function targetEntry(entries, published) {
+  const tl = entries.filter(e => e.file === 'src/data/timeline.js')
+  const pool = tl.length ? tl : entries
+  const sole = pool.filter(e => e.entry.sourceKey && !e.entry.sourceKeys)
+  if (sole.length === 1) return sole[0]
+  const ms = s => Date.parse(String(s ?? '').length === 7 ? `${s}-01` : s)
+  const t = ms(published)
+  return [...pool].sort((a, b) => (Number.isNaN(t) ? 0 : Math.abs(ms(a.date) - t) - Math.abs(ms(b.date) - t)))[0]
+}
 
 /** A Stage B shadow item as a work item. */
 export function fromShadow(it, { registry, store }) {
   const hit = lookup(registry, it.fetcher === 'village-youtube' ? YT_FEED : it.url)
   return {
     origin: 'shadow', id: it.id, itemPath: it._path ?? null, title: it.title, url: it.url, text: it.text, kind: it.kind,
-    published: it.published ? it.published.slice(0, 10) : null,
+    // The page's own date, also for items stored before the runner used it.
+    published: FETCHERS[it.fetcher]?.pageDate?.({ text: it.text, meta: it.meta?.page }) ?? (it.published ? it.published.slice(0, 10) : null),
     registryId: hit.id, registryTier: hit.tier, registryHit: hit, registryCategory: /court/i.test(hit.id ?? '') ? 'court' : null,
     publisher: hit.name ?? 'Unknown', byline: it.meta?.page?.byline ?? null,
     snapshot: it.snapshot, dedupe: it.dedupe, needsHumanReview: it.needsHumanReview, fetcher: it.fetcher,
@@ -54,10 +74,12 @@ export function fromCorpus(rec, { registry, store, sources, existsSync }) {
  * ctx: { cfg, rubric, gcfg, provider, triage, flagCtx, sources, timelineEvents, actions, runId, today, maxChunks, onProgress }
  * Returns { filtered, humanReview, work, drafts, dropped, queued, leads, leadNotes, covered }.
  *
- * A source that already has a timeline or actions entry is not drafted again:
- * its claims are checked against that entry, and only the claims the entry
- * lacks are drafted (the draft carries an "already covered" note). With none
- * lacking there is no draft, only the note in `covered`.
+ * A source that already has a timeline or actions entry never gets a second
+ * entry: its claims are checked against the existing entries, and the claims
+ * they lack (at most MAX_CLAIMS_PER_DRAFT) become a proposed change to one
+ * existing entry (targetEntry). For a court filing only a new milestone
+ * qualifies (isMilestone). With nothing that qualifies there is no draft,
+ * only the "already covered" note in `covered`.
  */
 export async function processItems(inputs, ctx) {
   const { cfg, rubric, gcfg, provider, triage, flagCtx, sources, timelineEvents, runId, today } = ctx
@@ -185,24 +207,33 @@ export async function processItems(inputs, ctx) {
     const key = item.sourceKey ?? cited.get(canonicalUrl(item.url)) ?? null
     const entries = entriesCiting(key, timelineEvents, actions)
     let coveredNote = null
+    let target = null
     if (entries.length) {
       const text = entries.map(e => e.text).join('\n')
-      const lacking = draftable.filter(c => !claimCovered(c, text))
-      coveredNote = { id: item.id, title: item.title, url: item.url, sourceKey: key, entries: entries.map(({ file, date, title }) => ({ file, date, title })), coveredClaims: draftable.length - lacking.length, lacking: lacking.map(c => c.claim_text) }
+      const missing = draftable.filter(c => !claimCovered(c, text))
+      const court = item.party?.kind === 'court_filing' || item.registryCategory === 'court'
+      const lacking = court ? missing.filter(isMilestone) : missing
+      coveredNote = {
+        id: item.id, title: item.title, url: item.url, sourceKey: key, court,
+        entries: entries.map(({ file, date, title }) => ({ file, date, title })),
+        coveredClaims: draftable.length - missing.length, lacking: lacking.map(c => c.claim_text),
+        notMilestones: court ? missing.filter(c => !isMilestone(c)).map(c => c.claim_text) : [],
+      }
       covered.push(coveredNote)
       if (!lacking.length) continue
       draftable = lacking
+      target = { ...targetEntry(entries, item.published), sourceKey: key }
     }
     if (draftable.length > MAX_CLAIMS_PER_DRAFT) log.warn(`${item.id}: ${draftable.length} draftable claims; the first ${MAX_CLAIMS_PER_DRAFT} are drafted, the rest listed`)
     say(`drafting ${item.id} from ${Math.min(draftable.length, MAX_CLAIMS_PER_DRAFT)} claim(s)`)
-    const d = await draftItem(item, draftable.slice(0, MAX_CLAIMS_PER_DRAFT), dctx)
+    const d = await draftItem(item, draftable.slice(0, MAX_CLAIMS_PER_DRAFT), target ? { ...dctx, amend: target } : dctx)
     d.origin = item.origin   // 'shadow' or 'corpus'
     d.fetcher = item.fetcher ?? null
     d.title = item.title
     d.extraClaims = draftable.slice(MAX_CLAIMS_PER_DRAFT).map(c => c.claim_text)
     d.flags = [...new Map([...draftable.flatMap(c => flagsForClaim(c, flagCtx)), ...(d.actionFlag ? [d.actionFlag] : [])].map(f => [`${f.file}|${f.id ?? ''}`, f])).values()]
     d.alreadyCovered = coveredNote
-    d.existing = d.entry ? existingEntryMatches({ ...d.entry, sourceKey: d.sourceKey }, timelineEvents) : []
+    d.existing = d.entry && !d.amend ? existingEntryMatches({ ...d.entry, sourceKey: d.sourceKey }, timelineEvents) : []
     drafts.push(d)
   }
   return { filtered, humanReview, work, drafts, dropped, queued, leads, leadNotes, covered }
@@ -216,14 +247,15 @@ export function draftMarkdown(d, i) {
     `- Draft guard: **${d.guard}** · status: **${d.status}**${d.validation ? ` · format check: ${d.validation.ok ? 'pass' : 'FAIL ' + d.validation.errors.join('; ')}` : ''}${d.updateGuard ? ` · updates line guard: ${d.updateGuard}` : ''}`,
     `- Date: ${d.date.date ?? 'none'} (${d.date.basis})${d.dateReview ? ` · **human review:** ${d.dateReview}` : ''}`,
     ...(d.placeholders?.length ? [`- **Placeholder text (guard failure):** ${d.placeholders.map(p => JSON.stringify(p.value)).join(', ')}`] : []),
-    ...(d.alreadyCovered ? [`- **Already covered** by ${d.alreadyCovered.entries.map(e => `${e.file.replace('src/data/', '')} ${e.date} "${e.title}"`).join('; ')}: drafted only from the ${d.claims.length} claim(s) it lacks`] : []),
+    ...(d.amend ? [`- **Changes the existing entry** ${d.amend.file.replace('src/data/', '')} ${d.amend.date} "${d.amend.title}" (no new entry): adds ${d.claims.length} claim(s) it lacks`] : []),
     ...d.attempts.map(a => `- Attempt ${a.attempt}: ${a.schemaErrors ? 'schema errors ' + a.schemaErrors.join('; ') : a.guard ? 'guard pass' : 'guard FAIL: ' + a.failures.map(f => `${f.check} ${f.reason}${f.value ? ' ' + JSON.stringify(f.value) : ''}`).join('; ')}`),
     ...(d.existing?.length ? [`- **Possible existing entry:** ${d.existing.map(e => `${e.date} "${e.title}" (${e.why})`).join('; ')}`] : []),
     ...(d.flags ?? []).map(f => `- Flag: ${f.file}${f.id ? ' ' + f.id : ''}: ${f.note}`),
     '', '**Claims**', '',
     ...d.claims.map(c => `- [${c.claim_type}${c.relabeled ? ` ← ${c.relabeled.from}` : ''} → ${c.outcome}] ${c.claim_text}\n  - “${c.quotes[0]}” (${c.guardMatch.join(', ')})`),
     '',
-    ...(d.rendered ? ['```js', '// src/data/timeline.js', d.rendered.timeline, ...(d.rendered.source ? ['', '// src/data/sources.js', d.rendered.source] : [`// sources.js: reuses existing key ${d.sourceKey}`]), '', '// src/data/updates.js (top of the array)', d.rendered.update, ...(d.rendered.action ? ['', '// src/data/actions.js', d.rendered.action] : []), '```'] : []),
+    ...(d.rendered?.timelineEdit || d.rendered?.actionEdit ? ['```js', `// ${d.amend.file}: existing entry "${d.amend.title}", description becomes:`, (d.rendered.timelineEdit ?? d.rendered.actionEdit).description, '', '// src/data/updates.js (top of the array)', d.rendered.update, '```'] : []),
+    ...(d.rendered?.timeline ? ['```js', '// src/data/timeline.js', d.rendered.timeline, ...(d.rendered.source ? ['', '// src/data/sources.js', d.rendered.source] : [`// sources.js: reuses existing key ${d.sourceKey}`]), '', '// src/data/updates.js (top of the array)', d.rendered.update, ...(d.rendered.action ? ['', '// src/data/actions.js', d.rendered.action] : []), '```'] : []),
     '',
   ].join('\n')
 }
@@ -263,11 +295,11 @@ export function writeStageC(store, base, runId, result, extra = {}) {
 
 /** The "already covered" note: per source, the existing entries and only the claims they lack. */
 export function coveredMarkdown(runId, covered) {
-  return [`# Already covered, ${runId}`, '', 'Sources that already have a timeline or actions entry. Only claims the entry lacks are listed; a PR opens only when there are some.', '',
+  return [`# Already covered, ${runId}`, '', 'Sources that already have a timeline or actions entry. Only claims the entry lacks are listed; a PR proposing a change to the existing entry opens only when there are some (for a court filing, only a new filing, hearing date, ruling or order).', '',
     ...covered.flatMap(n => [
       `## ${n.title} (${n.sourceKey})`, '',
       ...n.entries.map(e => `- Existing: ${e.file.replace('src/data/', '')} ${e.date} "${e.title}"`),
-      n.lacking.length ? `- Claims the entry lacks (${n.lacking.length}; ${n.coveredClaims} already covered):` : `- Nothing new: all ${n.coveredClaims} claim(s) are already covered. No PR.`,
+      n.lacking.length ? `- ${n.court ? 'New court milestones' : 'Claims the entry lacks'} (${n.lacking.length}; ${n.coveredClaims} already covered); PR proposes a change to the existing entry with at most ${MAX_CLAIMS_PER_DRAFT}:` : `- No PR: ${n.court && n.notMilestones.length ? `${n.notMilestones.length} claim(s) the entry lacks, but none is a new filing, hearing date, ruling or order` : `all ${n.coveredClaims} claim(s) are already covered`}.`,
       ...n.lacking.map(t => `  - ${t}`), '',
     ])].join('\n')
 }

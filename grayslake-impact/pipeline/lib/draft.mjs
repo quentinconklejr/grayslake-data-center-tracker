@@ -81,6 +81,7 @@ Rules:
 - Every number, date and name you write must appear in the quotes.
 - Write dates as "July 31, 2026", never "2026-07-31".
 - The name "POWER Act" is a label the bill text does not use. Use it only if a quote does, only in quotation marks, always with HB5513, and add the sentence "The bill text does not use the name." For example: the so-called “POWER Act” (HB5513). The bill text does not use the name. SB4016 is the Senate bill with an identical synopsis; name it by number only, and never put it in the same sentence as the name unless you say that advocacy groups make that link.
+- Name a person as the one who said or wrote something only if that person is named in the quote or right beside it in the document. Otherwise attribute the words to the document's publisher (for example "the Village stated"), even if a person is mentioned elsewhere in the document.
 - Never name a private individual: call an individual plaintiff "a plaintiff". Never include anyone's health, medical, address or family details. Public officials may be named in their official role.
 - Write in your own words. Anything copied from a quote goes inside quotation marks; never copy a long passage without them.
 - Never write in the first person (I, we, our, us, my) outside quotation marks.
@@ -239,7 +240,10 @@ export function guardOptions(claims, item, blockedTerms, labeledTerms = []) {
   // attribution); 20 for Tier 1 public records, whose wording may be reused
   // but still not at length without quotation marks.
   const copyLimit = item.effectiveTier === 1 && !item.party ? 20 : 12
-  return { evidence, docDates, allegation: claims.some(c => c.claim_type === 'allegation'), requiredAttribution: req, blockedTerms, labeledTerms, noUnquotedCopy: copyLimit, noFirstPerson: true }
+  // A person named as a speaker must be named in the source beside the words
+  // (guard.speakerFailures); otherwise the words are the publisher's.
+  const speakers = { speakerSource: item.text || undefined, people: claims.map(c => c.speaker).filter(Boolean), publisher: item.publisher }
+  return { evidence, docDates, allegation: claims.some(c => c.claim_type === 'allegation'), requiredAttribution: req, blockedTerms, labeledTerms, noUnquotedCopy: copyLimit, noFirstPerson: true, ...speakers }
 }
 
 const KEY_PREFIX = {
@@ -292,7 +296,11 @@ const ACTION_TYPE = { approval: 'Land-Use Approval', construction: 'Building Per
 export async function draftItem(item, claims, ctx) {
   let date = entryDate(claims, item.published, { party: item.party, text: item.text })
   const opts = guardOptions(claims, item, ctx.blockedTerms, ctx.labeledTerms)
-  const user0 = `${examplesBlock(ctx.examples)}\n\nDocument: ${item.title} (${item.publisher}${item.published ? ', ' + (proseDate(item.published) ?? item.published.slice(0, 10)) : ''})\nEntry date: ${proseDate(date.date) ?? 'unknown'}\n\n${claimsBlock(claims, item)}`
+  // A source that already has an entry: the description is what to add to it.
+  const amendNote = ctx.amend
+    ? `\n\nThis source already has an entry on the site. Write the description as only the sentences to ADD to it, saying nothing it already says; the title is not used.\nExisting entry: ${ctx.amend.entry.title ?? ctx.amend.entry.id}: ${ctx.amend.entry.description}`
+    : ''
+  const user0 = `${examplesBlock(ctx.examples)}\n\nDocument: ${item.title} (${item.publisher}${item.published ? ', ' + (proseDate(item.published) ?? item.published.slice(0, 10)) : ''})\nEntry date: ${proseDate(date.date) ?? 'unknown'}${amendNote}\n\n${claimsBlock(claims, item)}`
   const attempts = []
   let prose = null
   let failures = []
@@ -317,7 +325,9 @@ export async function draftItem(item, claims, ctx) {
     // Dates likewise: "2026-07-31" in prose becomes "July 31, 2026".
     r.data.title = proseDates(curlyQuotes(r.data.title))
     r.data.description = proseDates(curlyQuotes(r.data.description))
-    const g = checkDraftProse(`${r.data.title}. ${r.data.description}`, item.guardCfg, opts)
+    // A change to an existing entry publishes only its description: the
+    // title is not used, so it is not checked.
+    const g = checkDraftProse(ctx.amend ? r.data.description : `${r.data.title}. ${r.data.description}`, item.guardCfg, opts)
     attempts.push({ attempt, title: r.data.title, guard: g.ok, failures: g.failures, notes: g.notes })
     if (g.ok) prose = { ...r.data, guardNotes: g.notes }
     else failures = g.failures
@@ -333,13 +343,14 @@ export async function draftItem(item, claims, ctx) {
   // D-2: a draft that names a private person or gives health, address or
   // family details goes to human review, not to a PR.
   if (prose && ctx.privacy) {
-    const pv = ctx.privacy.check(`${prose.title}. ${prose.description}`)
+    const pv = ctx.privacy.check(ctx.amend ? prose.description : `${prose.title}. ${prose.description}`)
     if (!pv.ok) {
       Object.assign(draft, { status: 'human_review', privacy: pv.failures, heldProse: { title: prose.title, description: prose.description } })
       return draft
     }
   }
   if (!prose) return draft
+  if (ctx.amend) return amendExisting(draft, prose, item, ctx, opts)
   // The date must fit the event the title names.
   const fit = fitDate(prose.title, date, claims, item)
   if (!fit.date) {
@@ -369,7 +380,7 @@ export async function draftItem(item, claims, ctx) {
   // Judicial Circuit").
   const meta = prepareSource([item.publisher, prose.title, date.date].join('\n'), item.guardCfg)
   // No copy check here: the line names the publisher, which is copied by design.
-  const ug = checkDraftProse(`${update.title}. ${update.description}`, item.guardCfg, { ...opts, evidence: [...opts.evidence, meta], docDates: [...opts.docDates, ...extractDates(date.date ?? '')], requiredAttribution: [], noUnquotedCopy: 0 })
+  const ug = checkDraftProse(`${update.title}. ${update.description}`, item.guardCfg, { ...opts, evidence: [...opts.evidence, meta], docDates: [...opts.docDates, ...extractDates(date.date ?? '')], requiredAttribution: [], noUnquotedCopy: 0, speakerSource: undefined })
   // A Tier 1 government action is flagged, not drafted (see the header).
   const actionFlag = item.effectiveTier === 1 && !item.party && JURISDICTION[item.registryId]
     ? { file: 'src/data/actions.js', note: `may be a ${JURISDICTION[item.registryId]} action (${ACTION_TYPE[prose.category]}); add it by hand with the outcome from the record; not edited` }
@@ -385,6 +396,44 @@ export async function draftItem(item, claims, ctx) {
   const placeholders = findPlaceholders(Object.values(rendered).filter(Boolean).join('\n'))
   Object.assign(draft, {
     entry, sourceKey, newSource: source, update, action: null, actionFlag, rendered, validation,
+    updateGuard: ug.ok ? 'pass' : 'fail', updateGuardFailures: ug.failures,
+    status: validation.ok && ug.ok && !placeholders.length ? 'ready' : 'invalid',
+  })
+  if (placeholders.length) Object.assign(draft, { guard: 'fail', placeholders })
+  return draft
+}
+
+/**
+ * A proposed change to an existing entry (ctx.amend, from stage-c
+ * targetEntry): the guard-passed prose is appended to that entry's
+ * description. No new timeline, actions or sources entry is ever made; the
+ * entry keeps its date, title and sources.
+ */
+async function amendExisting(draft, prose, item, ctx, opts) {
+  const t = ctx.amend
+  const isAction = t.file === 'src/data/actions.js'
+  const label = isAction ? t.entry.id : t.entry.title
+  const description = `${String(t.entry.description ?? '').trim()} ${prose.description.trim()}`
+  const update = {
+    date: ctx.today, kind: 'added',
+    title: `Added to ${isAction ? 'the actions entry' : 'the timeline entry'} “${label}”`,
+    description: `The ${isAction ? 'action' : 'entry'} dated ${proseDate(t.entry.date) ?? t.entry.date} now also includes further details from ${item.publisher}.`,
+    link: isAction ? '/actions' : '/timeline', linkLabel: isAction ? 'See the actions' : 'See the timeline',
+  }
+  const meta = prepareSource([item.publisher, label, t.entry.date].join('\n'), item.guardCfg)
+  const ug = checkDraftProse(`${update.title}. ${update.description}`, item.guardCfg, { ...opts, evidence: [...opts.evidence, meta], docDates: [...opts.docDates, ...extractDates(t.entry.date ?? '')], requiredAttribution: [], noUnquotedCopy: 0, speakerSource: undefined })
+  const rendered = {
+    timeline: null, source: null, action: null,
+    timelineEdit: isAction ? null : { title: t.entry.title, description },
+    actionEdit: isAction ? { id: t.entry.id, description } : null,
+    update: renderUpdateEntry(update),
+  }
+  const validation = await validateDraft(rendered)
+  const placeholders = findPlaceholders([prose.description, rendered.update].join('\n'))
+  Object.assign(draft, {
+    date: { date: t.entry.date, basis: 'existing entry date (unchanged)' },
+    amend: { file: t.file, date: t.entry.date, title: label, added: prose.description },
+    entry: { ...t.entry, description }, sourceKey: t.sourceKey, newSource: null, update, action: null, actionFlag: null, rendered, validation,
     updateGuard: ug.ok ? 'pass' : 'fail', updateGuardFailures: ug.failures,
     status: validation.ok && ug.ok && !placeholders.length ? 'ready' : 'invalid',
   })

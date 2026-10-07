@@ -97,12 +97,36 @@ export function applySnippets(d, dataDir = join(ROOT, 'src/data')) {
     if (i === -1) throw new Error(`no closing ${closer} line in file`)
     return text.slice(0, i + 1) + snippet + '\n' + text.slice(i + 1)
   }
+  if (d.timelineEdit && d.timeline) throw new Error('a change to an existing entry never adds a second entry')
+  let timeline = d.timeline ? insertBeforeLast(src('timeline.js'), ']', d.timeline) : src('timeline.js')
+  if (d.timelineEdit) timeline = editDescription(timeline, 'title', d.timelineEdit.title, d.timelineEdit.description)
+  let actions = d.action ? insertBeforeLast(src('actions.js'), ']', d.action) : src('actions.js')
+  if (d.actionEdit) actions = editDescription(actions, 'id', d.actionEdit.id, d.actionEdit.description)
   return {
-    'timeline.js': d.timeline ? insertBeforeLast(src('timeline.js'), ']', d.timeline) : src('timeline.js'),
+    'timeline.js': timeline,
     'sources.js': d.source ? insertBeforeLast(src('sources.js'), '}', d.source) : src('sources.js'),
     'updates.js': d.update ? src('updates.js').replace(/export const updates = \[\r?\n/, m => m + d.update + '\n') : src('updates.js'),
-    'actions.js': d.action ? insertBeforeLast(src('actions.js'), ']', d.action) : src('actions.js'),
+    'actions.js': actions,
   }
+}
+
+/**
+ * Replaces the description of the one entry whose `field` is `value`
+ * (timeline.js by title, actions.js by id). Throws unless exactly one entry
+ * matches, so a change can never land on the wrong entry or on none.
+ */
+export function editDescription(text, field, value, description) {
+  const anchors = [`${field}: ${jsString(value)},`, `${field}: ${JSON.stringify(value)},`]
+  const anchor = anchors.find(a => text.split(a).length === 2)
+  if (!anchor) throw new Error(`existing entry with ${field} ${JSON.stringify(value)} not found exactly once`)
+  const at = text.indexOf(anchor)
+  const start = text.lastIndexOf('\n  {', at)
+  const end = text.indexOf('\n  },', at)
+  const block = text.slice(start, end)
+  const nl = text.includes('\r\n') ? '\r\n' : '\n'
+  const re = /(\r?\n {4})description:\s*"(?:[^"\\]|\\.)*",/
+  if (!re.test(block)) throw new Error(`existing entry with ${field} ${JSON.stringify(value)} has no description to change`)
+  return text.slice(0, start) + block.replace(re, () => `${nl}    description:${nl}      ${jsString(description)},`) + text.slice(end)
 }
 export { DATA_FILES }
 
@@ -111,7 +135,8 @@ export async function validateDraft(d) {
   const dir = mkdtempSync(join(tmpdir(), 'draft-validate-'))
   const errors = []
   try {
-    const files = applySnippets(d)
+    let files
+    try { files = applySnippets(d) } catch (e) { return { ok: false, errors: [e.message] } }
     for (const [f, text] of Object.entries(files)) {
       const p = join(dir, f)
       writeFileSync(p, text)
@@ -130,6 +155,14 @@ export async function validateDraft(d) {
       if (!CATEGORIES.includes(e.category)) errors.push(`timeline category "${e.category}" is not one of ${CATEGORIES.join(', ')}`)
       for (const k of [e.sourceKey, ...(e.sourceKeys ?? [])].filter(Boolean)) if (!sources[k]) errors.push(`timeline cites unknown source "${k}"`)
       if (!e.title || !e.description) errors.push('timeline entry needs a title and a description')
+    }
+    if (d.timelineEdit) {
+      const hits = timelineEvents.filter(e => e.title === d.timelineEdit.title)
+      if (hits.length !== 1 || hits[0].description !== d.timelineEdit.description) errors.push(`timeline edit did not apply to exactly one entry "${d.timelineEdit.title}"`)
+    }
+    if (d.actionEdit) {
+      const hits = actions.filter(a => a.id === d.actionEdit.id)
+      if (hits.length !== 1 || hits[0].description !== d.actionEdit.description) errors.push(`actions edit did not apply to exactly one entry "${d.actionEdit.id}"`)
     }
     if (d.update) {
       const u = updates[0]

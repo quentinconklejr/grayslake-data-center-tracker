@@ -180,9 +180,10 @@ test('already covered: only the claims the entry lacks are drafted, and the PR s
   assert.deepEqual(d.claims.map(c => c.claim_text), [lacking.claim_text], 'the covered claim is not drafted')
   assert.equal(d.status, 'ready', JSON.stringify(d.attempts))
   const pr = buildPr(d, { today: '2026-10-07' })
-  assert.match(pr.body, /### Already covered/)
+  // Since the Oct. 7 review: a change to the existing entry, not a second one.
+  assert.match(pr.body, /### Changes an existing entry/)
   assert.match(pr.body, /2026-06-02 “Village of Mundelein publishes statement on T5 development”/)
-  assert.match(pr.body, /only from the 1 claim\(s\) that entry lacks \(1 already covered\)/)
+  assert.match(pr.body, /Made from 1 claim\(s\) the existing entries lack \(at most 5 per PR; 1 already covered\)/)
 })
 
 // --- ordinance clauses ---------------------------------------------------------------------------------

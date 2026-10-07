@@ -384,6 +384,10 @@ export function quotedSpans(text) {
  * opts.labeledTerms  [{term, requires, note}] labels a source uses but the
  *                    record does not: see labeledTermFailures
  * opts.requiredAttribution [{label, test: RegExp}] that must each match
+ * opts.speakerSource the full source text: a person named as a speaker must
+ *                    be named there beside what they are said to have said
+ *                    (speakerFailures); opts.people adds claim speakers,
+ *                    opts.publisher names who to attribute to instead
  */
 export function checkDraftProse(text, cfg, opts = {}) {
   const canon = makeCanon(cfg)
@@ -483,8 +487,80 @@ export function checkDraftProse(text, cfg, opts = {}) {
     if (s.toLowerCase().includes(String(b.term).toLowerCase())) failures.push({ check: 'blocked_term', reason: 'blocked_term', value: b.term, detail: b.reason })
   }
   failures.push(...labeledTermFailures(s, opts.labeledTerms))
+  if (opts.speakerSource) failures.push(...speakerFailures(s, opts.speakerSource, cfg, { people: opts.people, publisher: opts.publisher }))
 
   return { ok: failures.length === 0, failures, notes }
+}
+
+// ---------------------------------------------------------------------------
+// Speakers
+// ---------------------------------------------------------------------------
+
+const PERSON_TITLE = /\b(?:Mayor|Trustee|Rep\.|Representative|Sen\.|Senator|Gov\.|Governor|Judge|Clerk|Commissioner|Chair(?:man|woman)?|Director|Manager|CEO|President|Attorney|Dr\.|Mr\.|Ms\.|Mrs\.)\s+((?:[A-Z][\p{L}'’-]*\.?\s+){0,2}[A-Z][\p{L}'’-]+)/gu
+const NOT_SURNAME = new Set(['Village', 'County', 'Board', 'State', 'City', 'Office', 'Court', 'Department'])
+
+/** People named in prose, as { name, surname }: titled names, and listed names whose surname appears. */
+function peopleIn(text, extra = []) {
+  const out = new Map()
+  for (const m of text.matchAll(PERSON_TITLE)) {
+    const surname = m[1].trim().split(/\s+/).at(-1).replace(/['’]s$/, '')
+    if (!NOT_SURNAME.has(surname)) out.set(surname, m[0])
+  }
+  for (const p of extra) {
+    const words = String(p ?? '').replace(/\b[A-Z]\.\s*/g, '').trim().split(/\s+/)
+    if (words.length < 2 || !words.every(w => /^[A-Z][\p{L}'’-]+$/u.test(w))) continue
+    if (new RegExp(`(?<![\\p{L}])${words.at(-1)}(?![\\p{L}])`, 'u').test(text)) out.set(words.at(-1), p)
+  }
+  return [...out.entries()].map(([surname, name]) => ({ name, surname }))
+}
+
+/**
+ * Speaker attribution: a person may be named as the one who said or wrote
+ * something only where the source names them. For each prose sentence that
+ * names a person outside quotation marks:
+ *   with quotations   each quotation must lie in a source sentence that names
+ *                     the person, or in the sentence just before or after it
+ *   without           the closest source sentence, or a neighbour, must name
+ *                     the person
+ * Otherwise the words belong to the document's publisher or issuer. On Oct. 1
+ * a Mundelein draft gave the Village's own sentence ("does not have any
+ * jurisdiction ...") to the Mayor's social media post two lines above it.
+ */
+export function speakerFailures(prose, sourceRaw, cfg, { people = [], publisher } = {}) {
+  const canon = makeCanon(cfg)
+  const src = String(sourceRaw ?? '').split(/\n+/).flatMap(line => sentences(line)).map(canon).filter(Boolean)
+  const near = i => src.slice(Math.max(0, i - 1), i + 2).join(' ')
+  const names = (hay, surname) => occurrences(hay, surname).length > 0
+  const wordsOf = t => new Set(t.toLowerCase().match(/[\p{L}\p{N}]{4,}/gu) ?? [])
+  const instead = `attribute it to ${publisher ?? 'the document’s publisher'}`
+  const failures = []
+  for (const sent of sentences(prose)) {
+    const outside = sent.replace(/“[^”]*”/g, ' ‖ ').replace(/"[^"]*"/g, ' ‖ ')
+    const who = peopleIn(outside, people)
+    if (!who.length) continue
+    const spans = quotedSpans(sent).map(x => canon(x.value).replace(/[.,]$/, '')).filter(q => countWords(q) >= 3)
+    for (const { name, surname } of who) {
+      if (spans.length) {
+        for (const q of spans) {
+          const head = q.split(' ').slice(0, 8).join(' ')
+          const i = src.findIndex(t => t.includes(q) || t.includes(head))
+          if (i === -1) continue   // a quotation missing from the source fails the quotation check
+          if (!names(near(i), surname)) failures.push({ check: 'speaker', reason: `speaker_not_named_in_source: ${instead}`, value: `${name}: “${q.slice(0, 80)}”` })
+        }
+        continue
+      }
+      const mine = wordsOf(outside.replace(name, ' '))
+      let best = -1
+      let bestScore = 0
+      src.forEach((t, i) => {
+        const w = wordsOf(t)
+        const score = [...mine].filter(x => w.has(x)).length / (mine.size || 1)
+        if (score > bestScore) { best = i; bestScore = score }
+      })
+      if (best === -1 || bestScore < 0.3 || !names(near(best), surname)) failures.push({ check: 'speaker', reason: `speaker_not_named_in_source: ${instead}`, value: `${name}: ${sent.slice(0, 100)}` })
+    }
+  }
+  return failures
 }
 
 /**
