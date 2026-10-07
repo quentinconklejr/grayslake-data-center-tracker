@@ -7,6 +7,10 @@
  *              the parser expects, so a redesign is noticed instead of being
  *              read as "nothing new"
  *   fetchItem  returns { kind, text, bytes?, contentType?, pages?, scannedPages?, meta? }
+ *   pageDate   optional (doc) => ISO date the fetched page or document prints
+ *              for itself. When present it is the item's date, for the
+ *              first-run window and every dated field; the listing's date is
+ *              kept as meta.listedDate
  *   snapshot   'always' (archive each new item's URL), 'page' (archive the
  *              candidate's snapshotTarget once per run), or 'after_triage'
  *              (Stage C decides)
@@ -58,4 +62,19 @@ export function dateFromSlug(slug) {
 export function isoFromAny(s) {
   const t = Date.parse(s)
   return Number.isNaN(t) ? null : new Date(t).toISOString()
+}
+
+/**
+ * The date a CivicPlus page prints for itself: "Posted on October 06, 2026"
+ * (News Flash detail pages, which also list "Related News" with their own
+ * "Posted on" lines; only the text before that list counts). Falls back to
+ * the page's article:published_time. ISO date, or null.
+ */
+export function pagePostedDate(doc) {
+  const own = String(doc?.text ?? '').split(/\bRelated News\b/)[0]
+  const m = /\bPosted on\s+([A-Z][a-z]+\.? \d{1,2},? \d{4})/.exec(own)
+  const d = m ? extractDates(m[1]).find(x => x.year) : null
+  if (d) return `${d.year}-${String(d.month).padStart(2, '0')}-${String(d.day).padStart(2, '0')}`
+  const meta = doc?.meta?.published ? isoFromAny(doc.meta.published) : null
+  return meta ? meta.slice(0, 10) : null
 }

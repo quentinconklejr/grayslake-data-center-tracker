@@ -38,7 +38,13 @@ export function buildPr(d, { today }) {
     `| Guard on the drafted text | ${d.guard} (format check ${d.validation?.ok ? 'pass' : 'FAIL'}) |`,
     `| Entry date | ${d.date.date} (${d.date.basis}) |`,
     '',
-    ...(d.alreadyCovered ? ['### Already covered', '', 'This source already has an entry:', '', ...d.alreadyCovered.entries.map(e => `- \`${e.file}\` ${e.date} “${e.title}”`), '', `This draft is made only from the ${d.alreadyCovered.lacking.length} claim(s) that entry lacks (${d.alreadyCovered.coveredClaims} already covered). Consider adding them to the existing entry instead.`, ''] : []),
+    ...(d.amend ? [
+      '### Changes an existing entry', '',
+      `This source already has an entry. This PR **changes that entry and adds no new one**: \`${d.amend.file}\` ${d.amend.date} “${d.amend.title}” gets these sentences appended to its description:`, '',
+      `> ${d.amend.added}`, '',
+      `Made from ${d.claims.length} claim(s) the existing entries lack (at most 5 per PR; ${d.alreadyCovered?.coveredClaims ?? 0} already covered).`,
+      ...(d.alreadyCovered?.entries.length > 1 ? ['', 'Other entries citing this source (unchanged):', ...d.alreadyCovered.entries.filter(e => e.title !== d.amend.title).map(e => `- \`${e.file}\` ${e.date} “${e.title}”`)] : []), '',
+    ] : []),
     ...(d.existing?.length ? ['### Possible existing entry', '', ...d.existing.map(e => `- ${e.date} “${e.title}” (${e.why})`), ''] : []),
     ...(d.flags?.length ? ['### Flags (not edited)', '', ...d.flags.map(f => `- \`${f.file}\`${f.id ? ` \`${f.id}\`` : ''}: ${f.note}`), ''] : []),
     '### Claims and their verbatim quotes', '',
@@ -52,7 +58,7 @@ export function buildPr(d, { today }) {
     ...(d.newSource ? ['- [ ] Source record is right; set `verified` once checked', d.newSource.archiveUrl ? '' : '- [ ] Archive the source (no verified snapshot yet)'].filter(Boolean) : []),
     '- [ ] Key figures, questions and records flagged above checked by hand',
   ].join('\n')
-  return { branch, title: `Draft: ${d.entry.title}`, body, labels }
+  return { branch, title: d.amend ? `Draft: add to “${d.amend.title}”` : `Draft: ${d.entry.title}`, body, labels }
 }
 
 /** Unified diff of the data files with the draft's snippets inserted. */
