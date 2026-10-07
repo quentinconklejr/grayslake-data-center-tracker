@@ -3,7 +3,7 @@ import PageTitle from '../components/ui/PageTitle'
 import Container from '../components/layout/Container'
 import { pageMeta } from '../data/pageMeta'
 import { figureById } from '../data/keyFigures'
-import { LAST_VERIFIED } from '../data/siteConfig'
+import { LAST_UPDATED } from '../data/siteConfig'
 import { FootnoteProvider, FootnoteList } from '../components/ui/FootnoteContext'
 
 const PRESS_FACTS = [
@@ -103,7 +103,7 @@ export default function Reporters() {
             Pre-formatted AP-style citations and primary figures for newsrooms, researchers, and financial analysts.
           </p>
           <p className="text-2xs font-mono text-ink-500 mt-3">
-            Last verified {LAST_VERIFIED}
+            Last updated {LAST_UPDATED}
           </p>
         </header>
 

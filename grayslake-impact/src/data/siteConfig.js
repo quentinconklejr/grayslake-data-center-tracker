@@ -1,6 +1,13 @@
+import { updates } from './updates.js'
+import { lastUpdateDate, formatLongDate } from '../lib/lastCorrected.js'
+
 export const SITE_TITLE = 'Grayslake Data Center Tracker'
 
-export const LAST_VERIFIED = 'Sep 27, 2026'
+// "Last updated" across the site: the newest dated line in the Updates log
+// (src/data/updates.js), computed so it can never go stale. Never type a
+// date here; pipeline/test/lastUpdated.test.mjs fails if one appears.
+export const LAST_UPDATED_ISO = lastUpdateDate(updates)
+export const LAST_UPDATED = formatLongDate(LAST_UPDATED_ISO)
 
 // Email updates. The signup on the homepage always shows a normal email box
 // and a Subscribe button. It needs one credential to actually deliver, and

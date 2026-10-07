@@ -9,7 +9,7 @@ import Container from '../components/layout/Container'
 import { FootnoteProvider, FootnoteList } from '../components/ui/FootnoteContext'
 import { Fragment } from 'react'
 import { projections } from '../data/projections'
-import { LAST_VERIFIED } from '../data/siteConfig'
+import { LAST_UPDATED } from '../data/siteConfig'
 
 const { schoolFundingComparable: meta } = projections
 
@@ -46,7 +46,7 @@ export default function Schools({ asSection = false }) {
           independently verified. The Lake County Assessor has not valued the campus. Actual
           revenue depends on that valuation and applicable levy rates.
         </p>
-        {!asSection && <p className="text-2xs font-mono text-ink-500 mt-3">Last verified {LAST_VERIFIED}</p>}
+        {!asSection && <p className="text-2xs font-mono text-ink-500 mt-3">Last updated {LAST_UPDATED}</p>}
       </FadeIn>
 
       <FadeIn className="mb-10">

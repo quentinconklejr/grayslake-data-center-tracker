@@ -3,7 +3,7 @@ import Container from '../components/layout/Container'
 import { pageMeta } from '../data/pageMeta'
 import FadeIn from '../components/ui/FadeIn'
 import BackToTop from '../components/ui/BackToTop'
-import { LAST_VERIFIED, SITE_CONTACT } from '../data/siteConfig'
+import { LAST_UPDATED, SITE_CONTACT } from '../data/siteConfig'
 
 // Was a hardcoded personal gmail while every other surface used the
 // university address. Imported so the two cannot drift apart again.
@@ -32,7 +32,7 @@ export default function Accessibility() {
           This site is built to WCAG 2.1 Level AA. Here is what that means and how to reach me if
           something fails.
         </p>
-        <p className="text-2xs font-mono text-ink-500 mt-4">Last reviewed {LAST_VERIFIED}</p>
+        <p className="text-2xs font-mono text-ink-500 mt-4">Site last updated {LAST_UPDATED}</p>
       </FadeIn>
 
       <Section title="What has been done">

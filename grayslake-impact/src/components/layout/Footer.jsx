@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import ReportErrorLink from '../ui/ReportErrorLink'
 import Container from './Container'
-import { SITE_CONTACT, LAST_VERIFIED } from '../../data/siteConfig'
+import { SITE_CONTACT, LAST_UPDATED } from '../../data/siteConfig'
 import { NAV_PRIMARY, NAV_SECONDARY } from '../../data/navLinks'
 
 /*
@@ -44,7 +44,7 @@ export default function Footer() {
             >
               {SITE_CONTACT.email}
             </a>
-            <span className="text-ink-500"> &middot; Last verified <span className="font-mono">{LAST_VERIFIED}</span></span>
+            <span className="text-ink-500"> &middot; Last updated <span className="font-mono">{LAST_UPDATED}</span></span>
           </p>
           <p className="pt-1 text-xs font-display italic text-ink-500 tracking-wide">
             Independent civic reporting.

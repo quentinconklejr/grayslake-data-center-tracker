@@ -3,7 +3,7 @@ import Container from '../components/layout/Container'
 import { pageMeta } from '../data/pageMeta'
 import FadeIn from '../components/ui/FadeIn'
 import BackToTop from '../components/ui/BackToTop'
-import { LAST_VERIFIED, SITE_CONTACT } from '../data/siteConfig'
+import { LAST_UPDATED, SITE_CONTACT } from '../data/siteConfig'
 
 /**
  * Privacy page.
@@ -46,7 +46,7 @@ export default function Privacy() {
           Almost nothing. No cookies, no accounts, no advertising, nothing sold to anyone. Unless you
           type your email into the signup box, I have no idea who you are and no way to find out.
         </p>
-        <p className="text-2xs font-mono text-ink-500 mt-4">Last reviewed {LAST_VERIFIED}</p>
+        <p className="text-2xs font-mono text-ink-500 mt-4">Site last updated {LAST_UPDATED}</p>
       </FadeIn>
 
       <Section title="If you sign up for updates">

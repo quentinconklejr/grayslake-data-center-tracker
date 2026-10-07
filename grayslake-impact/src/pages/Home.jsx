@@ -9,7 +9,7 @@ import Container from '../components/layout/Container'
 import { PARCELS_DATA } from '../data/parcels'
 import { FootnoteProvider, FootnoteList } from '../components/ui/FootnoteContext'
 import { projections } from '../data/projections'
-import { LAST_VERIFIED } from '../data/siteConfig'
+import { LAST_UPDATED } from '../data/siteConfig'
 import { recordsTotals, recordsPackets } from '../data/records'
 
 const { project } = projections
@@ -56,7 +56,7 @@ export default function Home() {
             Farm fields at Peterson and Alleghany roads.
           </p>
           <p className="text-2xs font-mono text-ink-500 pt-1">
-            Every claim linked to its source &middot; Last verified {LAST_VERIFIED}
+            Every claim linked to its source &middot; Last updated {LAST_UPDATED}
           </p>
           <p>
             <Link to="/map" className="inline-flex items-center gap-2 text-base font-sans font-semibold text-accent hover:text-accent-hover min-h-[44px]">

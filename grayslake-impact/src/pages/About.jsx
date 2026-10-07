@@ -3,7 +3,7 @@ import Container from '../components/layout/Container'
 import { pageMeta } from '../data/pageMeta'
 import FadeIn from '../components/ui/FadeIn'
 import BackToTop from '../components/ui/BackToTop'
-import { LAST_VERIFIED, SITE_CONTACT } from '../data/siteConfig'
+import { LAST_UPDATED, SITE_CONTACT } from '../data/siteConfig'
 
 export default function About() {
   return (
@@ -86,7 +86,7 @@ export default function About() {
           <dl className="text-sm font-sans space-y-3 pt-2 border-t border-rule">
             <div className="pt-3">
               <dt className="text-2xs font-sans font-semibold uppercase tracking-wide text-ink-500">Last updated</dt>
-              <dd className="mt-0.5 font-mono text-ink-700">{LAST_VERIFIED}</dd>
+              <dd className="mt-0.5 font-mono text-ink-700">{LAST_UPDATED}</dd>
             </div>
           </dl>
         </aside>

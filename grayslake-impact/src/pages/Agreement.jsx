@@ -6,7 +6,7 @@ import SourceCitation from '../components/ui/SourceCitation'
 import Container from '../components/layout/Container'
 import { FootnoteProvider, FootnoteList } from '../components/ui/FootnoteContext'
 import OnThisPage from '../components/ui/OnThisPage'
-import { LAST_VERIFIED } from '../data/siteConfig'
+import { LAST_UPDATED } from '../data/siteConfig'
 import { sources } from '../data/sources'
 
 /**
@@ -221,7 +221,7 @@ export default function Agreement() {
             published. This site does not have a copy. The page covers what officials have said
             publicly. It is not derived from the document.
           </p>
-          <p className="text-2xs font-mono text-ink-500 mt-4">Last verified {LAST_VERIFIED}</p>
+          <p className="text-2xs font-mono text-ink-500 mt-4">Last updated {LAST_UPDATED}</p>
         </FadeIn>
 
         {/* The shape of the answer, before the detail. */}

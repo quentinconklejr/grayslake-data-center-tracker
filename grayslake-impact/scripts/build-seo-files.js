@@ -2,7 +2,7 @@ import { writeFileSync } from 'node:fs'
 import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { SITE_ORIGIN } from '../src/data/pageMeta.js'
-import { LAST_VERIFIED } from '../src/data/siteConfig.js'
+import { LAST_UPDATED_ISO } from '../src/data/siteConfig.js'
 import { timelineEvents } from '../src/data/timeline.js'
 
 const dist = join(resolve(dirname(fileURLToPath(import.meta.url)), '..'), 'dist')
@@ -32,7 +32,8 @@ const ROUTES = [
   ['/privacy', '0.3', 'yearly'],
 ]
 
-const lastmod = new Date(LAST_VERIFIED + ' UTC').toISOString().slice(0, 10)
+// The newest dated line in the Updates log (computed in siteConfig.js).
+const lastmod = LAST_UPDATED_ISO
 
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">

@@ -5,7 +5,7 @@ import SourceCitation from '../components/ui/SourceCitation'
 import FadeIn from '../components/ui/FadeIn'
 import Container from '../components/layout/Container'
 import { figureById } from '../data/keyFigures'
-import { LAST_VERIFIED } from '../data/siteConfig'
+import { LAST_UPDATED } from '../data/siteConfig'
 import { projections } from '../data/projections'
 
 const { taxingDistricts } = projections
@@ -36,7 +36,7 @@ export default function TaxImpact({ asSection = false }) {
         <p className="text-base font-sans text-ink-700 max-w-2xl leading-relaxed">
           Developer fees, property tax projections, and revenue across eight local taxing bodies.
         </p>
-        {!asSection && <p className="text-2xs font-mono text-ink-500 mt-3">Last verified {LAST_VERIFIED}</p>}
+        {!asSection && <p className="text-2xs font-mono text-ink-500 mt-3">Last updated {LAST_UPDATED}</p>}
       </FadeIn>
 
       <FadeIn className="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 mb-12">

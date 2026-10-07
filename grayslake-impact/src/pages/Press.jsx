@@ -6,7 +6,7 @@ import PageCite from '../components/records/PageCite'
 import DocumentDownload from '../components/records/DocumentDownload'
 import HashBlock from '../components/records/HashBlock'
 import { pageMeta } from '../data/pageMeta'
-import { SITE_CONTACT, LAST_VERIFIED } from '../data/siteConfig'
+import { SITE_CONTACT, LAST_UPDATED } from '../data/siteConfig'
 import {
   recordsPackets,
   recordsDocuments,
@@ -79,7 +79,7 @@ export default function Press() {
           and the site plans, obtained through an Illinois FOIA request. The figures below are taken
           from the documents themselves and each one links to the page it came from.
         </p>
-        <p className="text-2xs font-mono text-ink-500 mt-3">Last verified {LAST_VERIFIED}</p>
+        <p className="text-2xs font-mono text-ink-500 mt-3">Last updated {LAST_UPDATED}</p>
       </header>
 
       <section aria-labelledby="figures">
