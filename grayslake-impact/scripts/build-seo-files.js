@@ -25,6 +25,7 @@ const ROUTES = [
   ['/actions', '0.7', 'weekly'],
   ['/press', '0.6', 'monthly'],
   ['/updates', '0.6', 'weekly'],
+  ['/methodology', '0.5', 'monthly'],
   ['/agreement', '0.8', 'monthly'],
   ['/about', '0.5', 'yearly'],
   ['/accessibility', '0.3', 'yearly'],

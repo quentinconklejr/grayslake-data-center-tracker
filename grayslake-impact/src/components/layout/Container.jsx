@@ -6,6 +6,9 @@
  *   prose    ~65ch, for text-heavy pages (About, Privacy, Accessibility,
  *            Agreement) where reading comfort matters more than fitting
  *            wide data blocks
+ *   reading  44rem (~656px of text), for a single reading column set at
+ *            the larger 19px body size (Methodology): about 75 characters
+ *            a line
  *   default  56rem (~896px), the general-purpose measure for pages that
  *            mix prose with records tables, timelines, and key-figure
  *            lists
@@ -28,6 +31,7 @@ export default function Container({
 }) {
   const width =
     size === 'prose' ? 'max-w-[65ch]'
+    : size === 'reading' ? 'max-w-[44rem]'
     : size === 'wide' ? 'max-w-6xl'
     : size === 'map' ? 'max-w-6xl xl:max-w-[100rem]'
     : 'max-w-4xl'

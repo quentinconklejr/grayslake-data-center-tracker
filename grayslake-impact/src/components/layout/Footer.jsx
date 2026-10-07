@@ -105,6 +105,12 @@ export default function Footer() {
             Updates
           </Link>
           <Link
+            to="/methodology"
+            className="text-ink-600 hover:text-ink-900 underline underline-offset-4 decoration-rule-strong hover:decoration-accent"
+          >
+            Methodology and corrections
+          </Link>
+          <Link
             to="/press"
             className="text-ink-600 hover:text-ink-900 underline underline-offset-4 decoration-rule-strong hover:decoration-accent"
           >
