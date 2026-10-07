@@ -93,6 +93,31 @@ test('D-2: a draft that trips the check goes to human review, not to a PR', asyn
   assert.equal(d.rendered, undefined, 'nothing is rendered for a PR')
 })
 
+// The synopsis on the ilga.gov bill status pages for HB5513 and SB4016
+// (identical on both), as fetched for the corpus.
+const SYNOPSIS = 'Amends the Environmental Protection Act, Energy Efficient Building Act, Illinois Power Agency Act, Public Utilities Act, and related statutes to establish comprehensive environmental, water, and energy regulations for hyperscale data centers. In the Environmental Protection Act, requires cumulative impact assessments, public notice, and community benefits agreements for data centers; prohibits nondisclosure agreements; and creates the Data Center Community Intervenor Compensation Fund and Hyperscale Data Center Public Benefits and Affordability Fund funded by annual fees based on peak demand. Mandates water resource planning, quarterly water usage reporting, water scarcity plans, and Water Impact Permits with public hearings and renewal every 5 years. Requires compliance with stringent energy codes and annual energy and water reporting to the Illinois Commerce Commission. Expands renewable energy procurement programs, establishes a hyperscale data center self-direct program, and strengthens equity, transparency, and labor standards in clean energy initiatives. Creates the Residential Automated Solar Permitting Platform Act to require municipalities and counties to adopt a residential automated solar permitting platform on or before July 1, 2027, and authorizes persons to file a civil action against a municipality or county in violation.'
+
+test('D-2: names of funds, laws and bodies in the HB5513 / SB4016 synopsis are not people', () => {
+  assert.deepEqual(privacy.check(SYNOPSIS).failures, [])
+  // The two drafts held for human review in the Oct. 7 shadow run.
+  const hb = 'The Illinois General Assembly plans to include requirements in the Environmental Protection Act for “cumulative impact assessments, public notice, and community benefits agreements for data centers.” The assembly also plans to create the “Data Center Community Intervenor Compensation Fund and Hyperscale Data Center Public Benefits and Affordability Fund” which would be “funded by annual fees based on peak demand.”'
+  const sb = 'The bill “Creates the Residential Automated Solar Permitting Platform Act to require municipalities and counties to adopt a residential automated solar permitting platform on or before July 1, 2027.”'
+  assert.deepEqual(privacy.check(hb).failures, [])
+  assert.deepEqual(privacy.check(sb).failures, [])
+})
+
+test('D-2: names after a title or a party label, and names merely near a body, are still flagged', () => {
+  const values = t => privacy.check(t).failures.map(f => f.value)
+  assert.deepEqual(values('The letter was signed by Mr. Harold Fund.'), ['Harold Fund'], 'after a title, "Fund" is a surname')
+  assert.deepEqual(values('Plaintiff Mary Anne Fund lives nearby.'), ['Mary Anne Fund'], 'a party in a court filing')
+  assert.deepEqual(values('The plaintiff, Mary Anne Fund, lives nearby.'), ['Mary Anne Fund'])
+  // Before this check, a capitalised party label hid the name after it.
+  assert.deepEqual(values('Plaintiff Mary Anne Fortmann lives nearby.'), ['Mary Anne Fortmann'])
+  assert.deepEqual(values('Plaintiffs Suzanne P. Williams and Robin A. Weller allege harm.'), ['Suzanne P. Williams', 'Robin A. Weller'])
+  assert.deepEqual(values('John Smith of the Lake County Board spoke.'), ['John Smith'], 'only adjacent words make a body\'s name')
+  assert.deepEqual(values('Suzanne P. Williams, Robin A. Weller and Gavin Rychener filed the complaint.'), ['Suzanne P. Williams', 'Robin A. Weller', 'Gavin Rychener'])
+})
+
 test('D-2: claims carrying health details never reach drafting', () => {
   assert.equal(privacy.sensitiveClaim({ claim_text: 'A plaintiff has a pre-existing bronchial health condition.', supporting_quotes: [] }), true)
   assert.equal(privacy.sensitiveClaim({ claim_text: 'The approvals were obtained through deficient hearings.', supporting_quotes: ['obtained through procedurally deficient hearings'] }), false)
