@@ -29,6 +29,11 @@
   does not wake the computer. It reads your user environment variables
   (NTFY_TOPIC, NTFY_TOKEN, IA_S3_ACCESS, IA_S3_SECRET) at each start.
 
+.PARAMETER RepoDir
+  The site repository folder (the one holding grayslake-impact). Defaults to
+  the repository this script sits in, found from the script's own path, so
+  the current folder does not matter.
+
 .PARAMETER Preview
   Print what would be registered and change nothing.
 
@@ -42,13 +47,25 @@
 #>
 [CmdletBinding()]
 param(
-  [string]$RepoDir = (Resolve-Path (Join-Path $PSScriptRoot '..\..\..')).Path,
+  [string]$RepoDir,
   [int]$IntervalMinutes = 30,
   [switch]$Preview,
   [switch]$Unregister
 )
 $ErrorActionPreference = 'Stop'
 $TaskName = 'GrayslakeTracker-ResearchJob'
+
+# Every path below is absolute and comes from this script's own location (or
+# -RepoDir), never from the current folder. Not in the param block: Windows
+# PowerShell 5.1 leaves $PSScriptRoot empty while evaluating param defaults
+# under -File.
+$scriptPath = if ($PSCommandPath) { $PSCommandPath } else { $MyInvocation.MyCommand.Path }
+if (-not $scriptPath) { throw 'Cannot tell where setup-task-scheduler.ps1 is; run it with -File <path>, or pass -RepoDir' }
+if ($RepoDir) {
+  $RepoDir = (Resolve-Path -LiteralPath $RepoDir).Path
+} else {
+  $RepoDir = (Resolve-Path -LiteralPath (Join-Path (Split-Path -Parent $scriptPath) '..\..\..')).Path
+}
 
 if ($Unregister) {
   if ($Preview) { "Would unregister task $TaskName"; return }
@@ -60,10 +77,10 @@ if ($Unregister) {
 $node = (Get-Command node -ErrorAction Stop).Source
 $appDir = Join-Path $RepoDir 'grayslake-impact'
 $script = Join-Path $appDir 'pipeline\scripts\run-job.mjs'
-if (-not (Test-Path $script)) { throw "run-job.mjs not found at $script" }
+if (-not (Test-Path -LiteralPath $script)) { throw "run-job.mjs not found at $script" }
 
 # Dry run only: refuse if the config would make the job live.
-$config = Get-Content (Join-Path $appDir 'config\pipeline.yaml') -Raw
+$config = Get-Content -LiteralPath (Join-Path $appDir 'config\pipeline.yaml') -Raw
 if ($config -match '(?m)^\s+live:\s*true') { throw 'config/pipeline.yaml has job.live: true; this script registers the dry-run job only' }
 
 $arguments = "--use-system-ca `"$script`""
@@ -78,16 +95,21 @@ $settings = New-ScheduledTaskSettingsSet `
   -DontStopIfGoingOnBatteries
 $principal = New-ScheduledTaskPrincipal -UserId "$env:USERDOMAIN\$env:USERNAME" -LogonType Interactive -RunLevel Limited
 
+# The task reads your user environment variables, so that is the one that
+# counts; only whether NTFY_TOPIC is set is printed, never its value.
+$ntfy = if ([Environment]::GetEnvironmentVariable('NTFY_TOPIC', 'User')) { 'set (user environment)' }
+  elseif ($env:NTFY_TOPIC) { 'set in this session only; the task will not see it (set it as a user environment variable)' }
+  else { 'not set (notifications written to files only)' }
+
 if ($Preview) {
   "Task:        $TaskName"
-  "Program:     $node"
-  "Arguments:   $arguments"
+  "Command:     `"$node`" $arguments"
   "Working dir: $appDir"
-  "Every:       $IntervalMinutes minutes, starting 2 minutes after registration"
+  "Schedule:    every $IntervalMinutes minutes, starting 2 minutes after registration"
   "Settings:    StartWhenAvailable, RunOnlyIfNetworkAvailable, IgnoreNew, 2 h limit, runs on battery"
   "Runs as:     $env:USERDOMAIN\$env:USERNAME, only while logged on (no stored password)"
-  "Mode:        dry run only (no --live; job.live is false). ntfy pushes are real if NTFY_TOPIC is set."
-  "NTFY_TOPIC:  $(if ([Environment]::GetEnvironmentVariable('NTFY_TOPIC','User')) { 'set' } else { 'not set (notifications written to files only)' })"
+  "Mode:        dry run (no --live; config job.live is false). ntfy pushes are real if NTFY_TOPIC is set."
+  "NTFY_TOPIC:  $ntfy"
   'Nothing was registered (-Preview).'
   return
 }
