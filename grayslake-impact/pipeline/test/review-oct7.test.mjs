@@ -131,6 +131,15 @@ test('existing entry: the draft changes that entry, never adds a second one, and
   assert.ok(!/^\+\s+date:/m.test(diff.split('updates.js')[0]), 'no date line added to timeline.js')
 })
 
+test('existing entry: only the appended description is checked; the unused title cannot fail the draft', async () => {
+  // The title names the Mayor where the source does not; it is never published.
+  const titled = { ...ADDITION, title: 'Mayor Meier says Mundelein has no jurisdiction in decisions' }
+  const r = await processItems([mundeleinItem()], stageCtx(stub([extraction([fact('Mundelein learned of the project after permits were issued and construction started.', FOUND_OUT)]), titled])))
+  takeWarnings()
+  assert.equal(r.drafts[0].status, 'ready', JSON.stringify(r.drafts[0].attempts))
+  assert.ok(!/Mayor Meier says/.test(applySnippets(r.drafts[0].rendered)['timeline.js']))
+})
+
 test('existing entry: at most 5 claims per PR; the rest are listed, not drafted', async () => {
   const lines = MUNDELEIN_TEXT.split('\n').slice(2)
   const tags = ['alpha', 'bravo', 'charlie', 'delta', 'echo', 'foxtrot', 'golf']

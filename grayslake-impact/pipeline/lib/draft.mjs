@@ -325,7 +325,9 @@ export async function draftItem(item, claims, ctx) {
     // Dates likewise: "2026-07-31" in prose becomes "July 31, 2026".
     r.data.title = proseDates(curlyQuotes(r.data.title))
     r.data.description = proseDates(curlyQuotes(r.data.description))
-    const g = checkDraftProse(`${r.data.title}. ${r.data.description}`, item.guardCfg, opts)
+    // A change to an existing entry publishes only its description: the
+    // title is not used, so it is not checked.
+    const g = checkDraftProse(ctx.amend ? r.data.description : `${r.data.title}. ${r.data.description}`, item.guardCfg, opts)
     attempts.push({ attempt, title: r.data.title, guard: g.ok, failures: g.failures, notes: g.notes })
     if (g.ok) prose = { ...r.data, guardNotes: g.notes }
     else failures = g.failures
@@ -341,7 +343,7 @@ export async function draftItem(item, claims, ctx) {
   // D-2: a draft that names a private person or gives health, address or
   // family details goes to human review, not to a PR.
   if (prose && ctx.privacy) {
-    const pv = ctx.privacy.check(`${prose.title}. ${prose.description}`)
+    const pv = ctx.privacy.check(ctx.amend ? prose.description : `${prose.title}. ${prose.description}`)
     if (!pv.ok) {
       Object.assign(draft, { status: 'human_review', privacy: pv.failures, heldProse: { title: prose.title, description: prose.description } })
       return draft
