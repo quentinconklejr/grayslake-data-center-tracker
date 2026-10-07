@@ -6,6 +6,7 @@ import assert from 'node:assert/strict'
 import { mkdtempSync, mkdirSync, readFileSync, existsSync } from 'node:fs'
 import { join } from 'node:path'
 import { tmpdir } from 'node:os'
+import { spawnSync } from 'node:child_process'
 import { loadPipelineConfig, ROOT } from '../lib/config.mjs'
 import { loadRubric, guardConfig } from '../lib/rubric.mjs'
 import { loadRegistry } from '../lib/registry.mjs'
@@ -260,6 +261,37 @@ test('every scheduled command uses --use-system-ca', () => {
   const pkg = JSON.parse(readFileSync(join(ROOT, 'package.json'), 'utf8'))
   for (const [k, v] of Object.entries(pkg.scripts)) if (k.startsWith('pipeline:') && k !== 'pipeline:test') assert.match(v, /--use-system-ca/, k)
   assert.match(readFileSync(join(ROOT, 'pipeline/scripts/run-job.mjs'), 'utf8'), /execArgv\.includes\('--use-system-ca'\)/)
+})
+
+test('scheduler script finds the repo from its own path, not $PSScriptRoot in param defaults', () => {
+  const ps1 = readFileSync(join(ROOT, 'pipeline/scheduler/setup-task-scheduler.ps1'), 'utf8')
+  const params = ps1.match(/param\(([\s\S]*?)\n\)/)[1]
+  assert.ok(!/\$PSScriptRoot|\$PSCommandPath|\$MyInvocation/.test(params), 'Windows PowerShell 5.1 leaves these empty in param defaults under -File')
+  assert.match(ps1, /\$scriptPath = if \(\$PSCommandPath\) \{ \$PSCommandPath \} else \{ \$MyInvocation\.MyCommand\.Path \}/)
+})
+
+// Runs -Preview the way the owner does (-File, from a folder outside the repo)
+// in every installed PowerShell. -Preview only builds the task objects; it
+// registers nothing.
+test('scheduler -Preview works from any folder and never prints the ntfy topic', { skip: process.platform !== 'win32' }, () => {
+  const script = join(ROOT, 'pipeline/scheduler/setup-task-scheduler.ps1')
+  const secret = 'preview-test-topic-value'
+  for (const exe of ['powershell', 'pwsh']) {
+    const r = spawnSync(exe, ['-NoProfile', '-NonInteractive', '-ExecutionPolicy', 'Bypass', '-File', script, '-Preview'],
+      { cwd: tmpdir(), encoding: 'utf8', env: { ...process.env, NTFY_TOPIC: secret } })
+    if (r.error?.code === 'ENOENT') continue
+    assert.equal(r.status, 0, `${exe}: ${r.stderr}`)
+    const out = r.stdout
+    assert.match(out, /^Task: +GrayslakeTracker-ResearchJob$/m, exe)
+    assert.ok(out.includes(`--use-system-ca "${join(ROOT, 'pipeline', 'scripts', 'run-job.mjs')}"`), `${exe}: command`)
+    assert.ok(out.split(/\r?\n/).includes(`Working dir: ${ROOT}`), `${exe}: working folder`)
+    assert.match(out, /^Schedule: +every 30 minutes/m, exe)
+    assert.match(out, /^Mode: +dry run/m, exe)
+    assert.match(out, /^NTFY_TOPIC: +(set|not set)/m, exe)
+    assert.match(out, /Nothing was registered \(-Preview\)\./, exe)
+    assert.ok(!out.includes(secret) && !r.stderr.includes(secret), `${exe} printed the topic value`)
+    assert.ok(!/--live/.test(out.match(/^Command:.*$/m)[0]), `${exe}: the command never passes --live`)
+  }
 })
 
 test('ntfy in a dry run: real push allowed by config, titled as a dry run, link only', async () => {
