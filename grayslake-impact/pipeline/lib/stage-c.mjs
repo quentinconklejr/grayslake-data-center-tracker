@@ -8,11 +8,11 @@ import { existsSync, readFileSync } from 'node:fs'
 import { chunksFor, extractChunk } from './extract.mjs'
 import { prepareSource, checkClaim, extractDates } from './guard.mjs'
 import { lookup } from './registry.mjs'
-import { detectParty, relabelClaims, isOfficialRecord } from './party.mjs'
+import { detectParty, relabelClaims, relabelClauseProjections, isOfficialRecord } from './party.mjs'
 import { makePrivacy } from './privacy.mjs'
 import { leadNote, leadNotesMarkdown } from './leads.mjs'
 import { decide, effectiveTier, signalsFor, corroboratingItems, isDraftable, confirmedByline } from './score.mjs'
-import { flagsForClaim, existingEntryMatches } from './flags.mjs'
+import { flagsForClaim, existingEntryMatches, entriesCiting, claimCovered } from './flags.mjs'
 import { draftItem } from './draft.mjs'
 import { canonicalUrl } from './dedupe.mjs'
 import { pdfToText } from './text.mjs'
@@ -51,11 +51,17 @@ export function fromCorpus(rec, { registry, store, sources, existsSync }) {
 }
 
 /**
- * ctx: { cfg, rubric, gcfg, provider, triage, flagCtx, sources, timelineEvents, runId, today, maxChunks, onProgress }
- * Returns { filtered, humanReview, work, drafts, dropped, queued, leads }.
+ * ctx: { cfg, rubric, gcfg, provider, triage, flagCtx, sources, timelineEvents, actions, runId, today, maxChunks, onProgress }
+ * Returns { filtered, humanReview, work, drafts, dropped, queued, leads, leadNotes, covered }.
+ *
+ * A source that already has a timeline or actions entry is not drafted again:
+ * its claims are checked against that entry, and only the claims the entry
+ * lacks are drafted (the draft carries an "already covered" note). With none
+ * lacking there is no draft, only the note in `covered`.
  */
 export async function processItems(inputs, ctx) {
   const { cfg, rubric, gcfg, provider, triage, flagCtx, sources, timelineEvents, runId, today } = ctx
+  const actions = ctx.actions ?? []
   const maxChunks = ctx.maxChunks ?? 8
   const say = ctx.onProgress ?? (() => {})
   const filtered = [], humanReview = [], work = [], dropped = []
@@ -135,7 +141,8 @@ export async function processItems(inputs, ctx) {
     }
     item.party = detectParty({ url: item.url, text: item.text, category: item.registryCategory, docType: item.docInfo?.doc_type }, item.registryHit)
     item.partyKind = item.party?.kind ?? null
-    item.passingClaims = relabelClaims(item.claims, item.party, { officialRecord: isOfficialRecord({ docType: item.docInfo?.doc_type, fetcher: item.fetcher }) })
+    const officialRecord = isOfficialRecord({ docType: item.docInfo?.doc_type, fetcher: item.fetcher })
+    item.passingClaims = relabelClauseProjections(relabelClaims(item.claims, item.party, { officialRecord }), { officialRecord })
     item.effectiveTier = effectiveTier(item.registryTier, item.byline ?? item.docInfo?.byline)
     item.docOrigin = item.docInfo?.origin ?? 'unclear'
   }
@@ -153,7 +160,7 @@ export async function processItems(inputs, ctx) {
   const examples = ['2026-09-08', '2026-07-31', '2026-06-02'].map(date => timelineEvents.find(e => e.date === date && e.description)).filter(Boolean)
   const privacy = makePrivacy(cfg.privacy)
   const dctx = { provider, examples, sources, cited, blockedTerms: cfg.editorial?.blocked_terms ?? [], labeledTerms: cfg.editorial?.labeled_terms ?? [], today, canonUrl: canonicalUrl, privacy }
-  const drafts = [], queued = [], leads = [], leadNotes = []
+  const drafts = [], queued = [], leads = [], leadNotes = [], covered = []
   for (const item of work) {
     // D-5: a Tier 2 article stays queue-only, with a lead note for the owner.
     if (item.registryTier === 2) leadNotes.push(leadNote(item, item.passingClaims))
@@ -174,6 +181,18 @@ export async function processItems(inputs, ctx) {
       else queued.push(rec)
     }
     if (!draftable.length) continue
+    // Already covered: the source has an entry. Only claims it lacks go on.
+    const key = item.sourceKey ?? cited.get(canonicalUrl(item.url)) ?? null
+    const entries = entriesCiting(key, timelineEvents, actions)
+    let coveredNote = null
+    if (entries.length) {
+      const text = entries.map(e => e.text).join('\n')
+      const lacking = draftable.filter(c => !claimCovered(c, text))
+      coveredNote = { id: item.id, title: item.title, url: item.url, sourceKey: key, entries: entries.map(({ file, date, title }) => ({ file, date, title })), coveredClaims: draftable.length - lacking.length, lacking: lacking.map(c => c.claim_text) }
+      covered.push(coveredNote)
+      if (!lacking.length) continue
+      draftable = lacking
+    }
     if (draftable.length > MAX_CLAIMS_PER_DRAFT) log.warn(`${item.id}: ${draftable.length} draftable claims; the first ${MAX_CLAIMS_PER_DRAFT} are drafted, the rest listed`)
     say(`drafting ${item.id} from ${Math.min(draftable.length, MAX_CLAIMS_PER_DRAFT)} claim(s)`)
     const d = await draftItem(item, draftable.slice(0, MAX_CLAIMS_PER_DRAFT), dctx)
@@ -181,11 +200,12 @@ export async function processItems(inputs, ctx) {
     d.fetcher = item.fetcher ?? null
     d.title = item.title
     d.extraClaims = draftable.slice(MAX_CLAIMS_PER_DRAFT).map(c => c.claim_text)
-    d.flags = [...new Map(draftable.flatMap(c => flagsForClaim(c, flagCtx)).map(f => [`${f.file}|${f.id ?? ''}`, f])).values()]
+    d.flags = [...new Map([...draftable.flatMap(c => flagsForClaim(c, flagCtx)), ...(d.actionFlag ? [d.actionFlag] : [])].map(f => [`${f.file}|${f.id ?? ''}`, f])).values()]
+    d.alreadyCovered = coveredNote
     d.existing = d.entry ? existingEntryMatches({ ...d.entry, sourceKey: d.sourceKey }, timelineEvents) : []
     drafts.push(d)
   }
-  return { filtered, humanReview, work, drafts, dropped, queued, leads, leadNotes }
+  return { filtered, humanReview, work, drafts, dropped, queued, leads, leadNotes, covered }
 }
 
 export function draftMarkdown(d, i) {
@@ -194,7 +214,9 @@ export function draftMarkdown(d, i) {
     `- Item: ${d.itemId} (${d.origin}) · ${d.url}`,
     `- Tier: registry ${d.tier}, effective ${d.effectiveTier} · party: ${d.party ? `${d.party.kind} (${d.party.party})` : 'none'}`,
     `- Draft guard: **${d.guard}** · status: **${d.status}**${d.validation ? ` · format check: ${d.validation.ok ? 'pass' : 'FAIL ' + d.validation.errors.join('; ')}` : ''}${d.updateGuard ? ` · updates line guard: ${d.updateGuard}` : ''}`,
-    `- Date: ${d.date.date ?? 'none'} (${d.date.basis})`,
+    `- Date: ${d.date.date ?? 'none'} (${d.date.basis})${d.dateReview ? ` · **human review:** ${d.dateReview}` : ''}`,
+    ...(d.placeholders?.length ? [`- **Placeholder text (guard failure):** ${d.placeholders.map(p => JSON.stringify(p.value)).join(', ')}`] : []),
+    ...(d.alreadyCovered ? [`- **Already covered** by ${d.alreadyCovered.entries.map(e => `${e.file.replace('src/data/', '')} ${e.date} "${e.title}"`).join('; ')}: drafted only from the ${d.claims.length} claim(s) it lacks`] : []),
     ...d.attempts.map(a => `- Attempt ${a.attempt}: ${a.schemaErrors ? 'schema errors ' + a.schemaErrors.join('; ') : a.guard ? 'guard pass' : 'guard FAIL: ' + a.failures.map(f => `${f.check} ${f.reason}${f.value ? ' ' + JSON.stringify(f.value) : ''}`).join('; ')}`),
     ...(d.existing?.length ? [`- **Possible existing entry:** ${d.existing.map(e => `${e.date} "${e.title}" (${e.why})`).join('; ')}`] : []),
     ...(d.flags ?? []).map(f => `- Flag: ${f.file}${f.id ? ' ' + f.id : ''}: ${f.note}`),
@@ -208,7 +230,7 @@ export function draftMarkdown(d, i) {
 
 /** Writes drafts, summary, dropped claims, queue and leads to the private store. */
 export function writeStageC(store, base, runId, result, extra = {}) {
-  const { filtered, humanReview, work, drafts, dropped, queued, leads, leadNotes = [] } = result
+  const { filtered, humanReview, work, drafts, dropped, queued, leads, leadNotes = [], covered = [] } = result
   for (const n of leadNotes) store.appendJsonl('shadow/leads/tier2-lead-notes.jsonl', { runId, ...n })
   if (leadNotes.length) store.writeText(`${base}/tier2-lead-notes.md`, `# Tier 2 lead notes, ${runId}\n\nQueue-only (D-5). Confirm against the Tier 1 source before anything is drafted.\n\n${leadNotesMarkdown(leadNotes)}\n`)
   for (const r of dropped) store.appendJsonl('logs/dropped-claims.jsonl', r)
@@ -228,11 +250,24 @@ export function writeStageC(store, base, runId, result, extra = {}) {
     humanReview, extracted: work.length,
     claims: { extracted: passed + dropped.length, passedGuard: passed, dropped: dropped.length, guardPassRate: passed + dropped.length ? passed / (passed + dropped.length) : null, relabeled: work.reduce((s, i) => s + i.passingClaims.filter(c => c.relabeled).length, 0) },
     outcomes: Object.fromEntries([...new Set(work.flatMap(i => i.passingClaims.map(c => c.outcome)))].map(o => [o, work.reduce((s, i) => s + i.passingClaims.filter(c => c.outcome === o).length, 0)])),
-    drafts: drafts.map(d => ({ item: d.itemId, origin: d.origin, title: d.entry?.title ?? null, tier: d.tier, effectiveTier: d.effectiveTier, party: d.party?.kind ?? null, guard: d.guard, status: d.status, existing: d.existing.length, flags: d.flags.length })),
+    drafts: drafts.map(d => ({ item: d.itemId, origin: d.origin, title: d.entry?.title ?? d.heldProse?.title ?? null, tier: d.tier, effectiveTier: d.effectiveTier, party: d.party?.kind ?? null, guard: d.guard, status: d.status, ...(d.dateReview ? { dateReview: d.dateReview } : {}), existing: d.existing.length, flags: d.flags.length, alreadyCovered: Boolean(d.alreadyCovered) })),
+    alreadyCovered: covered.map(n => ({ item: n.id, sourceKey: n.sourceKey, coveredClaims: n.coveredClaims, lacking: n.lacking.length })),
     queued: queued.length, privateLeads: leads.length, tier2LeadNotes: leadNotes.length,
     filteredItems: filtered,
   }
   store.writeJson(`${base}/summary.json`, summary)
+  if (covered.length) store.writeText(`${base}/covered.md`, coveredMarkdown(runId, covered))
   store.writeText(`${base}/drafts.md`, `# Stage C shadow drafts, ${runId}\n\nNothing here is published; no PR was opened.\n\n${drafts.map(draftMarkdown).join('\n')}`)
   return summary
+}
+
+/** The "already covered" note: per source, the existing entries and only the claims they lack. */
+export function coveredMarkdown(runId, covered) {
+  return [`# Already covered, ${runId}`, '', 'Sources that already have a timeline or actions entry. Only claims the entry lacks are listed; a PR opens only when there are some.', '',
+    ...covered.flatMap(n => [
+      `## ${n.title} (${n.sourceKey})`, '',
+      ...n.entries.map(e => `- Existing: ${e.file.replace('src/data/', '')} ${e.date} "${e.title}"`),
+      n.lacking.length ? `- Claims the entry lacks (${n.lacking.length}; ${n.coveredClaims} already covered):` : `- Nothing new: all ${n.coveredClaims} claim(s) are already covered. No PR.`,
+      ...n.lacking.map(t => `  - ${t}`), '',
+    ])].join('\n')
 }

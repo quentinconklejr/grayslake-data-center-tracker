@@ -163,7 +163,7 @@ test('pushing the private store commits and pushes HEAD:main, never forced; noth
 
 // --- a whole job, offline -------------------------------------------------------------------
 
-const QUOTE = 'The Lake County Board approved an ordinance establishing a moratorium on new data center approvals, set to expire May 11, 2027.'
+const QUOTE = 'On September 8, 2026, the Lake County Board approved an ordinance establishing a moratorium on new data center approvals, set to expire May 11, 2027.'
 function stubProvider() {
   return {
     model: 'stub', numCtx: 8192,
@@ -173,7 +173,7 @@ function stubProvider() {
       const content = isDraft
         ? { title: 'County Board approves data center moratorium', description: "The County Board approved a moratorium on new data center approvals, “set to expire May 11, 2027.”", category: 'policy' }
         : { document: { doc_type: 'press_release', published_date: null, byline: [], is_about_t5_grayslake: 'partly', origin: 'originates', repeats_whom: null },
-            claims: [{ claim_text: 'The Lake County Board approved a moratorium set to expire May 11, 2027.', claim_type: 'fact', speaker: null, attribution: 'document', event_date: null, date_basis: 'unknown', supporting_quotes: [QUOTE], timeline_category: 'policy' }] }
+            claims: [{ claim_text: 'On September 8, 2026, the Lake County Board approved a moratorium set to expire May 11, 2027.', claim_type: 'fact', speaker: null, attribution: 'document', event_date: '2026-09-08', date_basis: 'stated_in_text', supporting_quotes: [QUOTE], timeline_category: 'policy' }] }
       return { content: JSON.stringify(content), usage: { inputTokens: 1, outputTokens: 1 }, durationMs: 1, warnings: [] }
     },
   }
@@ -215,6 +215,25 @@ test('job: a full dry run fetches, triages, extracts, drafts, writes PR files an
   const r2 = await quietly(() => runJob({ ...deps, now: new Date(NOW.getTime() + 5 * 60_000) }))
   assert.equal(r2.fetch, undefined)
   assert.equal(r2.prs.length, 0)
+})
+
+test('job: placeholder text in a PR body is a guard failure; no PR file, no ntfy', async () => {
+  const store = tempStore()
+  const provider = stubProvider()
+  const generate = provider.generateJSON
+  // The claim text goes into the PR body; here it carries a fill-in.
+  provider.generateJSON = async args => {
+    const r = await generate(args)
+    return args.schema.properties?.title ? r : { ...r, content: r.content.replace('set to expire May 11, 2027.', 'set to expire May 11, 2027. TODO: confirm the vote') }
+  }
+  const { deps } = jobDeps(store, { provider })
+  const r = await quietly(() => runJob(deps))
+  assert.equal(r.prs.length, 0)
+  assert.equal(r.held.length, 1)
+  assert.match(r.held[0].reason, /placeholder/)
+  assert.deepEqual(r.held[0].values, ['TODO'])
+  assert.ok(!r.notifications.some(n => n.kind === 'draft'))
+  assert.deepEqual(store.list(`reports/dry-run/${r.runId}`), [])
 })
 
 test('job: offline stops early and records it; the next online run catches up', async () => {

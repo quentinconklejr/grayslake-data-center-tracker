@@ -32,6 +32,7 @@ import { FETCHERS } from '../lib/fetchers/index.mjs'
 import { runJob } from '../lib/job.mjs'
 import { sources } from '../../src/data/sources.js'
 import { timelineEvents } from '../../src/data/timeline.js'
+import { actions } from '../../src/data/actions.js'
 
 if (!process.execArgv.includes('--use-system-ca')) {
   console.error('run-job: start node with --use-system-ca (ilga.gov needs the Windows certificate store)')
@@ -67,7 +68,7 @@ const http = makeFetcher(cfg.http)
 const rubric = loadRubric()
 const report = await runJob({
   cfg, store,
-  registry: loadRegistry(), sources, timelineEvents, rubric, gcfg: guardConfig(rubric),
+  registry: loadRegistry(), sources, timelineEvents, actions, rubric, gcfg: guardConfig(rubric),
   provider: createProvider(cfg), triage: makeTriage(cfg.triage).triage, flagCtx: loadFlagContext(),
   http, wayback: makeWayback({ politeFetch: http, userAgent: cfg.http.user_agent }),
   fetchers: Object.fromEntries((cfg.fetchers?.enabled ?? Object.keys(FETCHERS)).map(n => [n, FETCHERS[n]])),

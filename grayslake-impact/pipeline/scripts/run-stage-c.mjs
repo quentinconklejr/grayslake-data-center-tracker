@@ -27,6 +27,7 @@ import { fromShadow, fromCorpus, processItems, writeStageC } from '../lib/stage-
 import { takeWarnings } from '../lib/log.mjs'
 import { sources } from '../../src/data/sources.js'
 import { timelineEvents } from '../../src/data/timeline.js'
+import { actions } from '../../src/data/actions.js'
 
 const has = f => process.argv.includes(`--${f}`)
 const arg = (n, d) => { const i = process.argv.indexOf(`--${n}`); return i === -1 ? d : process.argv[i + 1] }
@@ -68,7 +69,7 @@ if (has('corpus') || has('corpus-only') || ids) {
 
 const result = await processItems(inputs, {
   cfg, rubric, gcfg: guardConfig(rubric), provider, triage: makeTriage(cfg.triage).triage, flagCtx: loadFlagContext(),
-  sources, timelineEvents, runId, today: new Date().toISOString().slice(0, 10), maxChunks: Number(arg('max-chunks', 8)),
+  sources, timelineEvents, actions, runId, today: new Date().toISOString().slice(0, 10), maxChunks: Number(arg('max-chunks', 8)),
   onProgress: m => console.log(m),
 })
 const summary = writeStageC(store, `shadow/stage-c/${runId}`, runId, result, { model: provider.model, numCtx: provider.numCtx, warnings: takeWarnings() })

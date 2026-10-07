@@ -557,6 +557,40 @@ export function sentences(text) {
 }
 
 // ---------------------------------------------------------------------------
+// Placeholder text
+// ---------------------------------------------------------------------------
+
+// Text written to be replaced later. Anything here in a PR body or diff is a
+// guard failure: a placeholder merged by mistake would publish as the site's
+// own words. Source wording such as "TBD" on an agenda is left alone.
+const PLACEHOLDERS = [
+  /Drafted by the pipeline\b[^.\n]*/i,
+  /\bstate the outcome\b[^.\n]*/i,
+  /\bafter checking the record\b/i,
+  /\b(TODO|FIXME)\b/,
+  /\blorem ipsum\b/i,
+  /\[(?:placeholder|insert|fill in|TK)\b[^\]]*\]/i,
+  /<(?:placeholder|insert|fill in)\b[^>]*>/i,
+  /\{\{[^}]*\}\}/,
+]
+
+/** Placeholder text in a string: [{ check: 'placeholder', reason, value }]. */
+export function findPlaceholders(text) {
+  const s = String(text ?? '')
+  const out = []
+  for (const re of PLACEHOLDERS) {
+    const m = s.match(re)
+    if (m) out.push({ check: 'placeholder', reason: 'placeholder text', value: m[0] })
+  }
+  return out
+}
+
+/** The lines a unified diff adds, without the "+" (file headers left out). */
+export function addedLines(diff) {
+  return String(diff ?? '').split('\n').filter(l => l.startsWith('+') && !l.startsWith('+++')).map(l => l.slice(1)).join('\n')
+}
+
+// ---------------------------------------------------------------------------
 // Debugging aid: never used to pass anything.
 // ---------------------------------------------------------------------------
 

@@ -11,7 +11,9 @@
  *      (seen ids, cursors), so one run picks up everything missed
  *   5. Stage C on every stored item not yet processed
  *   6. PRs for ready drafts (dry run: title, body and diff written to
- *      reports/dry-run/<run>/), ntfy for Tier 1 drafts and health alerts
+ *      reports/dry-run/<run>/), ntfy for Tier 1 drafts and health alerts.
+ *      A PR whose body or added lines hold placeholder text is not opened
+ *      (a guard failure, listed in report.held)
  *   7. commit and push the private store
  *
  * Everything with an outside effect (git, gh, ntfy, HTTP) is passed in, so
@@ -20,6 +22,7 @@
 import { runFetchers } from './runner.mjs'
 import { fromShadow, processItems, writeStageC } from './stage-c.mjs'
 import { buildPr, makeDiff, writeDryRun, ghCommandPreview, openLivePr } from './pr.mjs'
+import { findPlaceholders, addedLines } from './guard.mjs'
 import { log, takeWarnings } from './log.mjs'
 
 const MIN = 60_000
@@ -56,7 +59,7 @@ export async function isOnline(urls, fetchImpl = fetch) {
 }
 
 /**
- * deps: { cfg, store, registry, sources, timelineEvents, rubric, gcfg, provider,
+ * deps: { cfg, store, registry, sources, timelineEvents, actions, rubric, gcfg, provider,
  *         triage, flagCtx, http, wayback, fetchers (by name), notifier,
  *         run (cmd, args) → stdout, fetchImpl, liveFlag, now, pushStore }
  */
@@ -67,7 +70,7 @@ export async function runJob(deps) {
   const today = now.toISOString().slice(0, 10)
   const live = jcfg.live === true && deps.liveFlag === true
   const dryDir = `reports/dry-run/${runId}`
-  const report = { runId, mode: live ? 'live' : 'dry-run', startedAt: now.toISOString(), alerts: [], prs: [], notifications: [] }
+  const report = { runId, mode: live ? 'live' : 'dry-run', startedAt: now.toISOString(), alerts: [], prs: [], held: [], notifications: [] }
 
   const lock = acquireLock(store, jcfg.lock_stale_minutes ?? 180, now)
   if (!lock.ok) { report.skipped = `another run holds the lock since ${lock.holder.startedAt}`; return report }
@@ -110,7 +113,7 @@ export async function runJob(deps) {
     if (pending.length) {
       const result = await processItems(pending.map(it => fromShadow(it, { registry: deps.registry, store })), {
         cfg, rubric: deps.rubric, gcfg: deps.gcfg, provider: deps.provider, triage: deps.triage, flagCtx: deps.flagCtx,
-        sources: deps.sources, timelineEvents: deps.timelineEvents, runId, today, maxChunks: 8, onProgress: m => log.info(m),
+        sources: deps.sources, timelineEvents: deps.timelineEvents, actions: deps.actions ?? [], runId, today, maxChunks: 8, onProgress: m => log.info(m),
       })
       report.stageC = writeStageC(store, `shadow/stage-c/${runId}`, runId, result, { model: deps.provider.model })
       delete report.stageC.filteredItems
@@ -119,11 +122,21 @@ export async function runJob(deps) {
     }
 
     // --- PRs and notifications --------------------------------------------------------
-    const ready = drafts.filter(d => d.status === 'ready')
-    if (ready.length > (jcfg.max_prs_per_run ?? 5)) report.alerts.push(`${ready.length} drafts ready; only ${jcfg.max_prs_per_run} PRs opened this run, the rest next run`)
-    for (const [i, d] of ready.slice(0, jcfg.max_prs_per_run ?? 5).entries()) {
+    // Placeholder text in the body or the added lines is a guard failure: no PR.
+    const ready = []
+    for (const d of drafts.filter(x => x.status === 'ready')) {
       const pr = buildPr(d, { today })
       const diff = makeDiff(d, jcfg.site_repo.data_dir)
+      const placeholders = findPlaceholders(`${pr.title}\n${pr.body}\n${addedLines(diff)}`)
+      if (placeholders.length) {
+        Object.assign(d, { status: 'invalid', guard: 'fail', placeholders })
+        report.held.push({ item: d.itemId, title: pr.title, reason: 'placeholder text (guard failure)', values: placeholders.map(p => p.value) })
+        continue
+      }
+      ready.push({ d, pr, diff })
+    }
+    if (ready.length > (jcfg.max_prs_per_run ?? 5)) report.alerts.push(`${ready.length} drafts ready; only ${jcfg.max_prs_per_run} PRs opened this run, the rest next run`)
+    for (const [i, { d, pr, diff }] of ready.slice(0, jcfg.max_prs_per_run ?? 5).entries()) {
       let url
       if (live) {
         url = (await openLivePr(d, pr, { jcfg, liveFlag: deps.liveFlag, run: deps.run })).url

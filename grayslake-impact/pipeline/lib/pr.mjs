@@ -38,6 +38,7 @@ export function buildPr(d, { today }) {
     `| Guard on the drafted text | ${d.guard} (format check ${d.validation?.ok ? 'pass' : 'FAIL'}) |`,
     `| Entry date | ${d.date.date} (${d.date.basis}) |`,
     '',
+    ...(d.alreadyCovered ? ['### Already covered', '', 'This source already has an entry:', '', ...d.alreadyCovered.entries.map(e => `- \`${e.file}\` ${e.date} “${e.title}”`), '', `This draft is made only from the ${d.alreadyCovered.lacking.length} claim(s) that entry lacks (${d.alreadyCovered.coveredClaims} already covered). Consider adding them to the existing entry instead.`, ''] : []),
     ...(d.existing?.length ? ['### Possible existing entry', '', ...d.existing.map(e => `- ${e.date} “${e.title}” (${e.why})`), ''] : []),
     ...(d.flags?.length ? ['### Flags (not edited)', '', ...d.flags.map(f => `- \`${f.file}\`${f.id ? ` \`${f.id}\`` : ''}: ${f.note}`), ''] : []),
     '### Claims and their verbatim quotes', '',

@@ -114,6 +114,30 @@ export function relabelClaims(claims, party, opts = {}) {
   })
 }
 
+// Operative wording of an ordinance or resolution ("shall be", "hereby
+// approves", "be it ordained"), and wording that actually projects.
+const CLAUSE = /\b(shall|hereby|ordain\w*|whereas)\b/i
+const PROJECTING = /\b(expect\w*|estimat\w*|project(ed|ion|ions)\b|anticipat\w*|forecast\w*|predict\w*|likely)\b/i
+
+/**
+ * A clause of an official record is a provision, not a projection: "The
+ * Campus Plan shall be the new General Development Plan" says what the
+ * ordinance does. The model's `projection` becomes `fact` (marked
+ * `provision`, drafted as "the ordinance provides") when the document is an
+ * official record, every quote is clause wording, and no quote projects
+ * anything ("is expected to", "estimated"). Bare "will" is not clause wording,
+ * so a speaker's "will" in minutes stays a projection.
+ */
+export function relabelClauseProjections(claims, { officialRecord = false } = {}) {
+  if (!officialRecord) return claims
+  return claims.map(c => {
+    const quotes = c.supporting_quotes ?? []
+    if (c.claim_type !== 'projection' || !quotes.length) return c
+    if (!quotes.every(q => CLAUSE.test(q)) || quotes.some(q => PROJECTING.test(q))) return c
+    return { ...c, claim_type: 'fact', provision: true, relabeled: { from: 'projection', reason: 'ordinance clause: a provision, not a projection' } }
+  })
+}
+
 /** The attribution a drafted text must contain for a party's claims. */
 export function requiredAttribution(party) {
   if (!party) return []
