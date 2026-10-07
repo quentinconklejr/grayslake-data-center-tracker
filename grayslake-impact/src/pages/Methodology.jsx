@@ -33,7 +33,7 @@ function fmtDate(iso) {
 }
 
 const H2 = 'text-2xl sm:text-3xl font-display text-ink-900 tracking-tight scroll-mt-24'
-const P = 'text-base font-sans text-ink-700 leading-relaxed'
+const P = 'text-lg font-sans text-ink-700 leading-relaxed'
 
 // The label names shown on the Documents page for each tier, read from the
 // source registry (config/sources.yaml via src/data/sourceTiers.js).
@@ -69,7 +69,7 @@ export default function Methodology() {
   const lastUpdated = lastCorrectedDate(updates)
 
   return (
-    <Container size="prose" className="py-12 sm:py-16 space-y-12">
+    <Container size="reading" className="py-12 sm:py-16 space-y-12">
       <PageTitle
         title={pageMeta['/methodology'].title}
         description={pageMeta['/methodology'].description}
@@ -78,7 +78,7 @@ export default function Methodology() {
 
       <header className="border-b border-rule pb-8">
         <p className="text-xs font-display italic text-ink-500 tracking-wide mb-2">How this site works</p>
-        <h1 className="text-4xl sm:text-5xl font-display text-ink-900 tracking-tight leading-[1.05] break-words mb-3">
+        <h1 className="text-4xl font-display text-ink-900 tracking-tight leading-[1.05] break-words mb-3">
           Methodology and Corrections
         </h1>
         {lastUpdated && (
@@ -97,13 +97,13 @@ export default function Methodology() {
         <h2 id="tiers" className={H2}>How I rate sources</h2>
         <dl className="border-t border-rule">
           {TIERS.map(t => (
-            <div key={t.tier} className="border-b border-rule-strong py-5">
+            <div key={t.tier} className="border-b border-rule-strong py-5 sm:grid sm:grid-cols-[9rem_minmax(0,1fr)] sm:gap-6">
               <dt>
                 <span className="block text-2xs font-sans font-semibold uppercase tracking-wide text-ink-500">Tier {t.tier}</span>
                 <span className="block mt-1 text-base font-display font-semibold text-ink-900 leading-snug">{t.name}</span>
                 <span className="block mt-1 text-xs font-sans text-ink-500">Labeled: {labelsFor(t.tier).join(', ')}</span>
               </dt>
-              <dd className="mt-2 text-base font-sans text-ink-700 leading-relaxed">{t.text}</dd>
+              <dd className="mt-2 sm:mt-0 text-lg font-sans text-ink-700 leading-relaxed">{t.text}</dd>
             </div>
           ))}
         </dl>
@@ -122,7 +122,7 @@ export default function Methodology() {
                   {fmtDate(u.date)}
                 </time>
                 <h3 className="text-lg font-display font-semibold text-ink-900 leading-snug">{u.title}</h3>
-                <p className="mt-2 text-base font-sans text-ink-700 leading-relaxed">{u.description}</p>
+                <p className="mt-2 text-lg font-sans text-ink-700 leading-relaxed">{u.description}</p>
                 {u.link && (
                   <p className="mt-3">
                     <Link
