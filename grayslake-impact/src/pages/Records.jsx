@@ -3,7 +3,7 @@ import PageTitle from '../components/ui/PageTitle'
 import Container from '../components/layout/Container'
 import ReportErrorLink from '../components/ui/ReportErrorLink'
 import { pageMeta } from '../data/pageMeta'
-import { LAST_VERIFIED } from '../data/siteConfig'
+import { LAST_UPDATED } from '../data/siteConfig'
 import { recordsPackets, recordsProjects, recordsTotals } from '../data/records'
 
 const packet = recordsPackets['t5-2024-2025']
@@ -37,7 +37,7 @@ export default function Records() {
           pages below carries a link to the page of the document it came from, so you can read the
           sentence it was taken out of rather than take our word for it.
         </p>
-        <p className="text-2xs font-mono text-ink-500 mt-3">Last verified {LAST_VERIFIED}</p>
+        <p className="text-2xs font-mono text-ink-500 mt-3">Last updated {LAST_UPDATED}</p>
       </header>
 
       {/* Packet card. One project today; the layout holds a list. */}

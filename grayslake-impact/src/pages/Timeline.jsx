@@ -5,7 +5,7 @@ import TimelineUI from '../components/ui/Timeline'
 import Container from '../components/layout/Container'
 import { pageMeta } from '../data/pageMeta'
 import { timelineEvents } from '../data/timeline'
-import { LAST_VERIFIED } from '../data/siteConfig'
+import { LAST_UPDATED } from '../data/siteConfig'
 import { FootnoteProvider, FootnoteList } from '../components/ui/FootnoteContext'
 
 // Filter chips use the same dark-inversion pattern as the Actions
@@ -94,7 +94,7 @@ export default function TimelinePage() {
             Chronological record of village approvals, legal filings, opposition actions, and state policy updates.
           </p>
           <p className="text-2xs font-mono text-ink-500 mt-3">
-            Last verified {LAST_VERIFIED}
+            Last updated {LAST_UPDATED}
           </p>
         </header>
 

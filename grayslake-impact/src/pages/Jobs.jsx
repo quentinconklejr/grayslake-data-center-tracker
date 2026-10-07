@@ -11,7 +11,7 @@ import { Fragment } from 'react'
 import { projections } from '../data/projections'
 import Figure from '../components/ui/Figure'
 import { figureById } from '../data/keyFigures'
-import { LAST_VERIFIED } from '../data/siteConfig'
+import { LAST_UPDATED } from '../data/siteConfig'
 
 const { project, jobs } = projections
 
@@ -88,7 +88,7 @@ export default function Jobs({ asSection = false }) {
         <p className="text-base font-sans text-ink-700 max-w-2xl leading-relaxed">
           Three official sources cite different permanent employment figures. Grayslake Mayor Elizabeth Davies cited {jobs.permanentDavies.toLocaleString()} jobs in October 2025. T5 Chief Executive Pete Marin cited more than {jobs.permanentMarin.toLocaleString()} in July 2026. The Village FAQ projects up to {jobs.permanent.toLocaleString()} permanent positions, based on {jobs.permanentBasis}. That maximum assumes full construction of the permitted {jobs.permanentCondition}. T5 has not committed to full buildout. Construction employment is listed separately as {jobs.constructionPhase}, with no headcount published.
         </p>
-        {!asSection && <p className="text-2xs font-mono text-ink-500 mt-3">Last verified {LAST_VERIFIED}</p>}
+        {!asSection && <p className="text-2xs font-mono text-ink-500 mt-3">Last updated {LAST_UPDATED}</p>}
       </FadeIn>
 
       <FadeIn className="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 mb-12">

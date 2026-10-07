@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { keyFigures, figureCopyText } from '../../data/keyFigures'
-import { LAST_VERIFIED, SITE_TITLE } from '../../data/siteConfig'
+import { LAST_UPDATED, SITE_TITLE } from '../../data/siteConfig'
 
 /**
  * Copies the whole figure set as plain text, one figure per line, each already
@@ -21,7 +21,7 @@ export default function CopyAllFigures() {
     const body = keyFigures.map(f => figureCopyText(f.id)).join('\n')
     const text = [
       SITE_TITLE + ' — T5 @ Chicago IV, Grayslake, Illinois',
-      'Figures verified ' + LAST_VERIFIED + '. Source links: https://grayslakedatacentertracker.org/project',
+      'Site last updated ' + LAST_UPDATED + '. Source links: https://grayslakedatacentertracker.org/project',
       '',
       body,
     ].join('\n')

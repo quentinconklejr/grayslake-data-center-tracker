@@ -8,7 +8,7 @@ import FadeIn from '../components/ui/FadeIn'
 import SourceCitation from '../components/ui/SourceCitation'
 import { FootnoteProvider, FootnoteList } from '../components/ui/FootnoteContext'
 import { actions } from '../data/actions'
-import { LAST_VERIFIED } from '../data/siteConfig'
+import { LAST_UPDATED } from '../data/siteConfig'
 
 /*
  * Jurisdictional actions record. Filter chips are the neutral variant of
@@ -120,7 +120,7 @@ export default function Actions() {
           <div className="flex items-center gap-4 mt-4">
             <span className="text-2xs font-mono text-ink-500">{actions.length} actions on file</span>
             <span aria-hidden="true" className="text-ink-400">·</span>
-            <span className="text-2xs font-mono text-ink-500">Last verified {LAST_VERIFIED}</span>
+            <span className="text-2xs font-mono text-ink-500">Last updated {LAST_UPDATED}</span>
           </div>
         </FadeIn>
 

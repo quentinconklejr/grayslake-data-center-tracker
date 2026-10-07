@@ -5,7 +5,7 @@ import SiteMap from '../components/map/SiteMap'
 import ParcelTable from '../components/map/ParcelTable'
 import { PARCELS_DATA } from '../data/parcels'
 import { FootnoteProvider, FootnoteList } from '../components/ui/FootnoteContext'
-import { LAST_VERIFIED } from '../data/siteConfig'
+import { LAST_UPDATED } from '../data/siteConfig'
 
 export default function MapPage() {
   return (
@@ -28,7 +28,7 @@ export default function MapPage() {
             Interactive satellite map and searchable tax directory displaying the 57 recorded Lake County tax parcels associated with T5 Data Centers in Grayslake, Illinois.
           </p>
           <p className="text-2xs font-mono text-ink-500 mt-3">
-            Last verified {LAST_VERIFIED}
+            Last updated {LAST_UPDATED}
           </p>
         </header>
 

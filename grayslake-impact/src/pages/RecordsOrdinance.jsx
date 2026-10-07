@@ -7,7 +7,7 @@ import PdfLink from '../components/records/PdfLink'
 import HashBlock from '../components/records/HashBlock'
 import SignatureNote from '../components/records/SignatureNote'
 import { pageMeta } from '../data/pageMeta'
-import { LAST_VERIFIED } from '../data/siteConfig'
+import { LAST_UPDATED } from '../data/siteConfig'
 import { documentById, recordsDocuments, recordsFiles, filePage } from '../data/records'
 
 const num = n => n.toLocaleString('en-US')
@@ -51,7 +51,7 @@ export default function RecordsOrdinance() {
           {doc.shortTitle}
         </h1>
         <p className="text-base font-sans text-ink-700 max-w-2xl leading-relaxed">{doc.title}</p>
-        <p className="text-2xs font-mono text-ink-500 mt-3">Last verified {LAST_VERIFIED}</p>
+        <p className="text-2xs font-mono text-ink-500 mt-3">Last updated {LAST_UPDATED}</p>
       </header>
 
       {/* At a glance */}

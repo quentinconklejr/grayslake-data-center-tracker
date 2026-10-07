@@ -4,7 +4,7 @@ import Container from '../components/layout/Container'
 import ReportErrorLink from '../components/ui/ReportErrorLink'
 import { pageMeta } from '../data/pageMeta'
 import { updates } from '../data/updates'
-import { LAST_VERIFIED } from '../data/siteConfig'
+import { LAST_UPDATED } from '../data/siteConfig'
 
 const KIND = {
   added: 'text-status-stated',
@@ -38,7 +38,7 @@ export default function Updates() {
           What has been added to this site, and what has been corrected. Anything that changes what
           the site asserts is logged here with a date.
         </p>
-        <p className="text-2xs font-mono text-ink-500 mt-3">Last verified {LAST_VERIFIED}</p>
+        <p className="text-2xs font-mono text-ink-500 mt-3">Last updated {LAST_UPDATED}</p>
       </header>
 
       <ol className="border-t border-rule">

@@ -6,7 +6,7 @@ import { pageMeta } from '../data/pageMeta'
 import { sources } from '../data/sources'
 import { sourceTiers, recordsTier } from '../data/sourceTiers'
 import { docMeta } from '../data/docMeta'
-import { LAST_VERIFIED } from '../data/siteConfig'
+import { LAST_UPDATED } from '../data/siteConfig'
 import { recordsPackets, recordsDocuments, recordsFiles } from '../data/records'
 
 // Tier labels come from the source registry (config/sources.yaml) through
@@ -165,7 +165,7 @@ export default function Sources() {
           All figures on this tracker originate from public filings, meeting records, and verified journalism.
         </p>
         <p className="text-2xs font-mono text-ink-500 mt-3">
-          Last verified {LAST_VERIFIED}
+          Last updated {LAST_UPDATED}
         </p>
 
         <nav aria-label="Document sections" className="mt-6">

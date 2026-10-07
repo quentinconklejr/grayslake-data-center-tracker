@@ -10,7 +10,7 @@ import StatusPill from '../components/records/StatusPill'
 import ScrollTable from '../components/records/ScrollTable'
 import { formatBytes } from '../lib/formatBytes'
 import { pageMeta } from '../data/pageMeta'
-import { LAST_VERIFIED } from '../data/siteConfig'
+import { LAST_UPDATED } from '../data/siteConfig'
 import {
   recordsPackets,
   recordsDocuments,
@@ -101,7 +101,7 @@ export default function RecordsT5() {
           which restart inside every exhibit. Each link opens the same page inside the smaller file
           that document was split into.
         </p>
-        <p className="text-2xs font-mono text-ink-500 mt-3">Last verified {LAST_VERIFIED}</p>
+        <p className="text-2xs font-mono text-ink-500 mt-3">Last updated {LAST_UPDATED}</p>
       </header>
 
       {/* ── 1. Summary ─────────────────────────────────────────────── */}

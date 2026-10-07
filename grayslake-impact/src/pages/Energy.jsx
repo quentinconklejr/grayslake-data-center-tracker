@@ -10,7 +10,7 @@ import { Fragment } from 'react'
 import EvidenceBlock from '../components/ui/EvidenceBlock'
 import { projections } from '../data/projections'
 import { figureById } from '../data/keyFigures'
-import { LAST_VERIFIED } from '../data/siteConfig'
+import { LAST_UPDATED } from '../data/siteConfig'
 
 const { project, capacityFigures, capacityNote } = projections
 // A "Power Buffer" stat used to be derived here, and EnergyDrawChart later
@@ -37,7 +37,7 @@ export default function Energy({ asSection = false }) {
         <p className="text-base font-sans text-ink-700 max-w-2xl leading-relaxed">
           Three electrical capacity figures have been published for the Grayslake campus, all from T5 CEO Pete Marin: {project.totalCapacityMW.toLocaleString()} MW of leasable IT capacity, {project.securedPowerMW.toLocaleString()} MW of secured utility power, and {project.comEdCapacityGW} GW of power secured from ComEd. Each is cited below with its source.
         </p>
-        {!asSection && <p className="text-2xs font-mono text-ink-500 mt-3">Last verified {LAST_VERIFIED}</p>}
+        {!asSection && <p className="text-2xs font-mono text-ink-500 mt-3">Last updated {LAST_UPDATED}</p>}
       </FadeIn>
 
       {/* Secured Power (1,600 MW) and IT Capacity (1,200 MW) used to

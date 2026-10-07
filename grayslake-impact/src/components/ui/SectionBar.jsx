@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useReducedMotion } from 'framer-motion'
-import { LAST_VERIFIED } from '../../data/siteConfig'
+import { LAST_UPDATED } from '../../data/siteConfig'
 
 /*
  * Sticky sub-bar under the site header. Shows the current section title
@@ -57,7 +57,7 @@ export default function SectionBar() {
       <div className="max-w-5xl mx-auto px-6 flex items-center justify-between h-9">
         <span className="text-xs font-display italic text-ink-700 truncate">{current}</span>
         <span className="text-2xs font-mono text-ink-500 shrink-0 ml-4">
-          Last verified {LAST_VERIFIED}
+          Last updated {LAST_UPDATED}
         </span>
       </div>
     </div>
