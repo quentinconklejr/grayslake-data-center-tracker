@@ -158,7 +158,7 @@ export const pageMeta = {
   '/methodology': {
     title: 'Methodology and Corrections',
     description:
-      'How the Grayslake Data Center Tracker rates sources, labels allegations and statements, reviews changes before they publish, and logs every correction.',
+      'How the Grayslake Data Center Tracker rates its sources, labels claims by the Village, T5 and the lawsuit plaintiffs, and logs corrections.',
     ogImage: '/og/about.png',
   },
   '/updates': {
