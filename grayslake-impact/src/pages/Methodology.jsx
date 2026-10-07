@@ -4,7 +4,7 @@ import Container from '../components/layout/Container'
 import { pageMeta } from '../data/pageMeta'
 import { updates } from '../data/updates'
 import { tierLabels } from '../data/sourceTiers'
-import { LAST_VERIFIED } from '../data/siteConfig'
+import { lastCorrectedDate } from '../lib/lastCorrected'
 
 /*
  * The owner's account of the site, the source tiers (labels read from the
@@ -33,7 +33,7 @@ function fmtDate(iso) {
 }
 
 const H2 = 'text-2xl sm:text-3xl font-display text-ink-900 tracking-tight scroll-mt-24'
-const P = 'text-base font-sans text-ink-700 leading-relaxed max-w-2xl'
+const P = 'text-base font-sans text-ink-700 leading-relaxed'
 
 // The label names shown on the Documents page for each tier, read from the
 // source registry (config/sources.yaml via src/data/sourceTiers.js).
@@ -66,9 +66,10 @@ const TIERS = [
 
 export default function Methodology() {
   const corrections = updates.filter(u => u.kind === 'corrected')
+  const lastUpdated = lastCorrectedDate(updates)
 
   return (
-    <Container size="default" className="py-10 sm:py-14 space-y-12">
+    <Container size="prose" className="py-12 sm:py-16 space-y-12">
       <PageTitle
         title={pageMeta['/methodology'].title}
         description={pageMeta['/methodology'].description}
@@ -77,28 +78,32 @@ export default function Methodology() {
 
       <header className="border-b border-rule pb-8">
         <p className="text-xs font-display italic text-ink-500 tracking-wide mb-2">How this site works</p>
-        <h1 className="text-4xl sm:text-5xl font-display text-ink-900 tracking-tight leading-[1.05] mb-3">
+        <h1 className="text-4xl sm:text-5xl font-display text-ink-900 tracking-tight leading-[1.05] break-words mb-3">
           Methodology and Corrections
         </h1>
+        {lastUpdated && (
+          <p className="text-2xs font-mono text-ink-500 mb-8">
+            Last updated <time dateTime={lastUpdated}>{fmtDate(lastUpdated)}</time>
+          </p>
+        )}
         <div className="space-y-4">
           {BODY.map(text => (
             <p key={text.slice(0, 40)} className={P}>{text}</p>
           ))}
         </div>
-        <p className="text-2xs font-mono text-ink-500 mt-3">Last verified {LAST_VERIFIED}</p>
       </header>
 
       <section aria-labelledby="tiers" className="space-y-5">
         <h2 id="tiers" className={H2}>How I rate sources</h2>
         <dl className="border-t border-rule">
           {TIERS.map(t => (
-            <div key={t.tier} className="border-b border-rule-strong py-5 sm:grid sm:grid-cols-[9rem_minmax(0,1fr)] sm:gap-6">
+            <div key={t.tier} className="border-b border-rule-strong py-5">
               <dt>
                 <span className="block text-2xs font-sans font-semibold uppercase tracking-wide text-ink-500">Tier {t.tier}</span>
                 <span className="block mt-1 text-base font-display font-semibold text-ink-900 leading-snug">{t.name}</span>
                 <span className="block mt-1 text-xs font-sans text-ink-500">Labeled: {labelsFor(t.tier).join(', ')}</span>
               </dt>
-              <dd className="mt-2 sm:mt-0 text-base font-sans text-ink-700 leading-relaxed">{t.text}</dd>
+              <dd className="mt-2 text-base font-sans text-ink-700 leading-relaxed">{t.text}</dd>
             </div>
           ))}
         </dl>
@@ -117,7 +122,7 @@ export default function Methodology() {
                   {fmtDate(u.date)}
                 </time>
                 <h3 className="text-lg font-display font-semibold text-ink-900 leading-snug">{u.title}</h3>
-                <p className="mt-2 text-base font-sans text-ink-700 leading-relaxed max-w-2xl">{u.description}</p>
+                <p className="mt-2 text-base font-sans text-ink-700 leading-relaxed">{u.description}</p>
                 {u.link && (
                   <p className="mt-3">
                     <Link
