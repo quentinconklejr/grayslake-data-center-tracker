@@ -488,8 +488,48 @@ export function checkDraftProse(text, cfg, opts = {}) {
   }
   failures.push(...labeledTermFailures(s, opts.labeledTerms))
   if (opts.speakerSource) failures.push(...speakerFailures(s, opts.speakerSource, cfg, { people: opts.people, publisher: opts.publisher }))
+  if (opts.billWording) failures.push(...billWordingFailures(s))
 
   return { ok: failures.length === 0, failures, notes }
+}
+
+// ---------------------------------------------------------------------------
+// Bills
+// ---------------------------------------------------------------------------
+
+const BILL_REF = /\b(bills?|HB\s?\d+|SB\s?\d+|legislation)\b/i
+// What a bill does: in the synopsis's own words or the drafter's.
+const PROVISION = /\b(requir\w*|creat\w*|mandat\w*|establish\w*|prohibit\w*|amend\w*|expand\w*|authoriz\w*|strengthen\w*)\b/i
+// Saying someone "projects" or "plans" what a bill does. Narrow on purpose:
+// "data center projects" and "water scarcity plans" are nouns.
+const PROJECTS_OR_PLANS = /\bproject(s|ed)\s+(that|the|a|an)\b|\bplan(s|ned)?\s+to\b|\bis\s+planning\b/i
+
+/**
+ * Prose that describes a bill must treat it as a proposal: "the proposed
+ * bill would require ...". In each sentence that names a bill, outside
+ * quotation marks:
+ *   no "projects that" / "plans to" where it says what the bill does (Oct. 7:
+ *     "the Illinois General Assembly projects that the bill ...")
+ *   "would" wherever it says what the bill does
+ * and the prose must call it a proposed bill (or proposed legislation) once.
+ */
+export function billWordingFailures(text) {
+  const failures = []
+  let describes = false
+  for (const sent of sentences(text)) {
+    if (!BILL_REF.test(sent)) continue
+    const outside = sent.replace(/“[^”]*”/g, ' ‖ ').replace(/"[^"]*"/g, ' ‖ ')
+    // Only where the sentence says what the bill does: "He plans to push
+    // the bill" is a person's plan, not a description of the bill.
+    if (PROVISION.test(sent)) {
+      describes = true
+      const pp = outside.match(PROJECTS_OR_PLANS)
+      if (pp) failures.push({ check: 'bill_wording', reason: 'bill_projected_or_planned: say what the proposed bill "would" do', value: pp[0] })
+      if (!/\bwould\b/i.test(outside)) failures.push({ check: 'bill_wording', reason: 'bill_provision_without_would', value: sent.slice(0, 100) })
+    }
+  }
+  if (describes && !/\bproposed (bill|legislation)\b/i.test(text)) failures.push({ check: 'bill_wording', reason: 'bill_not_called_proposed', value: 'the proposed bill' })
+  return failures
 }
 
 // ---------------------------------------------------------------------------
