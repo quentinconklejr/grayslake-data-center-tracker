@@ -39,6 +39,13 @@ const NOT_NAME = new Set(`Village Villages County Board Lake Road Route Park Cen
 
 const TITLE_RE = /\b(Mayor|Trustee|Trustees|Rep\.|Representative|Sen\.|Senator|Gov\.|Governor|Judge|Clerk|Chair|Director|CEO|President|Commissioner|Attorney|Dr\.|Mr\.|Ms\.|Mrs\.)\s+$/
 
+// Last words that make a capitalised phrase the name of a fund, law, program
+// or body rather than a person.
+const INSTITUTION_END = /^(Funds?|Acts?|Commissions?|Agency|Agencies|Authority|Authorities|Programs?|Plans?|Codes?|Councils?|Boards?|Committees?|Departments?|Office)$/
+// A party label in a court filing: the name after it is a person in the case.
+const PARTY_RE = /\b(Plaintiffs?|Defendants?|Petitioners?|Respondents?)[,:]?\s+$/i
+const PARTY_LEAD = /^(Plaintiffs?|Defendants?|Petitioners?|Respondents?)\s+/
+
 const norm = s => s.normalize('NFC').replace(/\b[A-Z]\.\s*/g, '').replace(/\s+/g, ' ').trim().toLowerCase()
 
 export function makePrivacy(pcfg = {}) {
@@ -58,12 +65,32 @@ export function makePrivacy(pcfg = {}) {
     // Person-name candidates: two or three capitalised words, optionally with
     // a middle initial, possessive allowed.
     const nameRe = /\b([A-Z][a-z]+(?:[-'][A-Z][a-z]+)?)(\s+[A-Z]\.)?(\s+[A-Z][a-z]+(?:[-'][A-Z][a-z]+)?){1,2}(?:['’]s)?\b/g
-    for (const m of s.matchAll(nameRe)) {
+    const after = new RegExp(nameRe.source, 'y')
+    for (let m of s.matchAll(nameRe)) {
+      // "Plaintiff Mary Anne Fortmann": the capitalised party label starts the
+      // match and would hide the name (it is not a name word). Match again
+      // after the label.
+      const label = PARTY_LEAD.exec(m[0])
+      if (label) {
+        after.lastIndex = m.index + label[0].length
+        m = after.exec(s)
+        if (!m) continue
+      }
       const raw = m[0].replace(/['’]s$/, '')
       const words = raw.replace(/\b[A-Z]\.\s*/g, '').split(/\s+/)
       if (words.some(w => NOT_NAME.has(w))) continue
       if (allowedFull.has(norm(raw))) continue
       const before = s.slice(Math.max(0, m.index - 20), m.index)
+      // The name of a fund, law or body: the run of capitalised words the
+      // candidate starts (the pattern above stops at three) ends in a word
+      // such as Fund or Act. "Data Center Community Intervenor Compensation
+      // Fund" and "Residential Automated Solar Permitting Platform Act" in the
+      // HB5513 / SB4016 synopsis are not people. Not after a title or role
+      // ("Mr.", "Rep.", "Mayor") or a party label ("Plaintiff"): those stay
+      // checked as before. Only directly adjacent words count, so "John Smith
+      // of the Lake County Board" is still a name.
+      const run = `${raw} ${s.slice(m.index + m[0].length).match(/^(?:\s+[A-Z][\p{L}'’-]*)*/u)[0]}`.trim().split(/\s+/)
+      if (INSTITUTION_END.test(run.at(-1)) && !TITLE_RE.test(before) && !PARTY_RE.test(before)) continue
       if (TITLE_RE.test(before) && allowedSurnames.has(words.at(-1).toLowerCase())) continue
       failures.push({ check: 'privacy', reason: 'possible private individual named', value: raw })
     }
